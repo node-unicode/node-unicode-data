@@ -1,0 +1,61 @@
+{
+	"name": "unicode-data",
+	"version": "0.1.0",
+	"description": "JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, blocks, and properties.",
+	"homepage": "http://mths.be/node-unicode-data",
+	"main": "index.js",
+	"keywords": [
+		"unicode",
+		"code points",
+		"regex",
+		"regexp",
+		"data",
+		"generator",
+		"tool"
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "http://mths.be/mit"
+		}
+	],
+	"author": {
+		"name": "Mathias Bynens",
+		"url": "http://mathiasbynens.be/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/mathiasbynens/node-unicode-data.git"
+	},
+	"bugs": {
+		"url": "https://github.com/mathiasbynens/node-unicode-data/issues"
+	},
+	"files": [
+		"LICENSE-MIT.txt",
+		"index.js",
+		"data/",
+		"scripts/",
+		"templates/",
+		"tests/"
+	],
+	"directories": {
+		"test": "tests"
+	},
+	"scripts": {
+		"download": "node scripts/download.js",
+		"generate": "node scripts/generate-data.js",
+		"test": "node tests/tests.js",
+		"cover": "istanbul cover --report html --verbose --dir coverage tests/tests.js"
+	},
+	"dependencies": {
+		"jsesc": "~0.4.2",
+		"lodash": "~1.3.1",
+		"mkdirp": "~0.3.5",
+		"punycode": "~1.2.3",
+		"regenerate": "~0.5.4",
+		"request": "~2.27.0"
+	},
+	"devDependencies": {
+		"istanbul": "~0.1.43"
+	}
+}
