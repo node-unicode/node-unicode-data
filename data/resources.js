@@ -1,30 +1,59 @@
 var resources = [
-	// 1.1.5 has a different format, so disable it for now
-	/*
 	{
 		'version': '1.1.5',
-		'UnicodeData.txt': 'http://unicode.org/Public/1.1-Update/UnicodeData-1.1.5.txt'
+		'main': 'http://unicode.org/Public/1.1-Update/UnicodeData-1.1.5.txt'
 	},
-	*/
 	{
 		'version': '2.0.14',
 		'main': 'http://unicode.org/Public/2.0-Update/UnicodeData-2.0.14.txt'
+	},
+	{
+		'version': '2.1.2',
+		'main': 'http://unicode.org/Public/2.1-Update/UnicodeData-2.1.2.txt'
+	},
+	{
+		'version': '2.1.5',
+		'main': 'http://unicode.org/Public/2.1-Update2/UnicodeData-2.1.5.txt'
+	},
+	{
+		'version': '2.1.8',
+		'main': 'http://unicode.org/Public/2.1-Update3/UnicodeData-2.1.8.txt'
 	},
 	{
 		'version': '2.1.9',
 		'main': 'http://unicode.org/Public/2.1-Update4/UnicodeData-2.1.9.txt'
 	},
 	{
+		'version': '3.0.0',
+		'main': 'http://unicode.org/Public/3.0-Update/UnicodeData-3.0.0.txt',
+		//'blocks': 'http://unicode.org/Public/3.0-Update/Blocks-3.txt', // issue #1
+		//'properties': 'http://unicode.org/Public/3.0-Update/PropList-3.0.0.txt' // issue #2
+	},
+	{
 		'version': '3.0.1',
 		'main': 'http://unicode.org/Public/3.0-Update1/UnicodeData-3.0.1.txt'
+		//'properties': 'http://unicode.org/Public/3.0-Update1/PropList-3.0.1.txt' // issue #2
 	},
-	// 3.2.0 and newer have separate files for Scripts and Blocks
+	{
+		'version': '3.1.0',
+		'main': 'http://unicode.org/Public/3.1-Update/UnicodeData-3.1.0.txt',
+		'scripts': 'http://unicode.org/Public/3.1-Update/Scripts-3.1.0.txt',
+		'blocks': 'http://unicode.org/Public/3.1-Update/Blocks-4.txt',
+		'properties': 'http://unicode.org/Public/3.1-Update/PropList-3.1.0.txt'
+	},
 	{
 		'version': '3.2.0',
 		'main': 'http://unicode.org/Public/3.2-Update/UnicodeData-3.2.0.txt',
 		'scripts': 'http://unicode.org/Public/3.2-Update/Scripts-3.2.0.txt',
 		'blocks': 'http://unicode.org/Public/3.2-Update/Blocks-3.2.0.txt',
 		'properties': 'http://unicode.org/Public/3.2-Update/PropList-3.2.0.txt'
+	},
+	{
+		'version': '4.0.0',
+		'main': 'http://unicode.org/Public/4.0-Update/UnicodeData-4.0.0.txt',
+		'scripts': 'http://unicode.org/Public/4.0-Update/Scripts-4.0.0.txt',
+		'blocks': 'http://unicode.org/Public/4.0-Update/Blocks-4.0.0.txt',
+		'properties': 'http://unicode.org/Public/4.0-Update/PropList-4.0.0.txt'
 	},
 	{
 		'version': '4.0.1',

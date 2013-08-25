@@ -6,6 +6,7 @@
 	"main": "index.js",
 	"keywords": [
 		"unicode",
+		"unicode-data",
 		"code points",
 		"symbols",
 		"characters",
