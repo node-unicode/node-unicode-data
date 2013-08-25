@@ -1,4 +1,4 @@
-# node-unicode-data
+# node-unicode-data [![Build status](https://travis-ci.org/mathiasbynens/node-unicode-data.png?branch=master)](https://travis-ci.org/mathiasbynens/node-unicode-data) [![Dependency status](https://gemnasium.com/mathiasbynens/node-unicode-data.png)](https://gemnasium.com/mathiasbynens/node-unicode-data)
 
 JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, blocks, and properties.
 

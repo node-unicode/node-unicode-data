@@ -73,9 +73,22 @@ var extend = function(destination, source) {
 	}
 };
 
+var readDataFile = function(version, type) {
+	var sourceFile = path.resolve(
+		__dirname,
+		'..', 'data', version + '-' + type + '.txt'
+	);
+	if (!fs.existsSync(sourceFile)) {
+		return;
+	}
+	var source = fs.readFileSync(sourceFile, 'utf-8');
+	return source;
+};
+
 module.exports = {
 	'range': range,
 	'append': append,
 	'extend': extend,
+	'readDataFile': readDataFile,
 	'writeFiles': writeFiles
 };

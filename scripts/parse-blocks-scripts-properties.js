@@ -1,15 +1,12 @@
-var fs = require('fs');
-var path = require('path');
 var utils = require('./utils.js');
 
 var parseBlocksScriptsProperties = function(type, version) {
 	// `type` is 'properties' or 'scripts' or 'block'
 	var map = {};
-	var sourceFile = path.resolve(__dirname, '..', 'data', version + '-' + type + '.txt');
-	if (!fs.existsSync(sourceFile)) {
+	var source = utils.readDataFile(version, type);
+	if (!source) {
 		return;
 	}
-	var source = fs.readFileSync(sourceFile, 'utf-8');
 	var lines = source.split('\n');
 	lines.forEach(function(line) {
 		if (

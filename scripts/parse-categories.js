@@ -1,20 +1,12 @@
-var fs = require('fs');
-var path = require('path');
 var utils = require('./utils.js');
 
 var parseDatabase = function(version) {
 	var symbolMap = {};
-
-	var sourceFile = path.resolve(
-		__dirname,
-		'..', 'data', version + '-database.txt'
-	);
-	if (!fs.existsSync(sourceFile)) {
+	var source = utils.readDataFile(version, 'database');
+	if (!source) {
 		return;
 	}
-	var source = fs.readFileSync(sourceFile, 'utf-8');
 	var lines = source.split('\n');
-
 	var flag = false;
 	var first = 0;
 	lines.forEach(function(line) {
