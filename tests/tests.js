@@ -8,19 +8,29 @@ var newest = resources.pop().version;
 generateData(newest);
 
 var assert = require('assert');
+
 assert.deepEqual(
-	require('./expected/6.2.0-block-Bopomofo.js'),
-	require('../6.2.0/blocks/Bopomofo/code-points.js')
+	require('./expected/' + oldest + '-category-Lm.js'),
+	require('../' + oldest + '/categories/Lm/code-points.js')
 );
 assert.deepEqual(
-	require('./expected/6.2.0-category-Lm.js'),
-	require('../6.2.0/categories/Lm/code-points.js')
+	require('./expected/' + oldest + '-property-ASCII.js'),
+	require('../' + oldest + '/properties/ASCII/code-points.js')
+);
+
+assert.deepEqual(
+	require('./expected/' + newest + '-block-Bopomofo.js'),
+	require('../' + newest + '/blocks/Bopomofo/code-points.js')
 );
 assert.deepEqual(
-	require('./expected/6.2.0-property-STerm.js'),
-	require('../6.2.0/properties/STerm/code-points.js')
+	require('./expected/' + newest + '-category-Lm.js'),
+	require('../' + newest + '/categories/Lm/code-points.js')
 );
 assert.deepEqual(
-	require('./expected/6.2.0-script-Canadian_Aboriginal.js'),
-	require('../6.2.0/scripts/Canadian_Aboriginal/code-points.js')
+	require('./expected/' + newest + '-property-STerm.js'),
+	require('../' + newest + '/properties/STerm/code-points.js')
+);
+assert.deepEqual(
+	require('./expected/' + newest + '-script-Canadian_Aboriginal.js'),
+	require('../' + newest + '/scripts/Canadian_Aboriginal/code-points.js')
 );
