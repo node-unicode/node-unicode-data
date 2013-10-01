@@ -110,6 +110,13 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/6.2.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.2.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.2.0/ucd/PropList.txt'
+	},
+	{
+		'version': '6.3.0',
+		'main': 'http://unicode.org/Public/6.3.0/ucd/UnicodeData.txt',
+		'scripts': 'http://unicode.org/Public/6.3.0/ucd/Scripts.txt',
+		'blocks': 'http://unicode.org/Public/6.3.0/ucd/Blocks.txt',
+		'properties': 'http://unicode.org/Public/6.3.0/ucd/PropList.txt'
 	}
 ];
 
