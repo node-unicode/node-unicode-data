@@ -2,6 +2,7 @@ var resources = require('../data/resources.js');
 var generateData = require('../index.js');
 var utils = require('../scripts/utils.js');
 var template = require('lodash.template');
+var jsesc = require('jsesc');
 var fs = require('fs');
 var path = require('path');
 
@@ -56,7 +57,7 @@ var complicatedWorkThatTakesTime = function(resource, callback) {
 		);
 		fs.writeFileSync(
 			path.resolve(__dirname, '..', version, 'index.js'),
-			compileIndex({ 'version': version })
+			compileIndex({ 'version': version, 'data': jsesc(dirs) })
 		);
 		fs.writeFileSync(
 			path.resolve(__dirname, '..', version, 'package.json'),
