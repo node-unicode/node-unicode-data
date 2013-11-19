@@ -49,7 +49,7 @@
 	},
 	"dependencies": {
 		"jsesc": "~0.4.2",
-		"lodash.template": "~2.2.0",
+		"lodash.template": "~2.3.0",
 		"mkdirp": "~0.3.5",
 		"punycode": "~1.2.3",
 		"regenerate": "~0.5.4",
