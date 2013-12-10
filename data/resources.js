@@ -67,56 +67,65 @@ var resources = [
 		'main': 'http://unicode.org/Public/4.1.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/4.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/4.1.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/4.1.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/4.1.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/4.1.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '5.0.0',
 		'main': 'http://unicode.org/Public/5.0.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/5.0.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.0.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/5.0.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/5.0.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/5.0.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '5.1.0',
 		'main': 'http://unicode.org/Public/5.1.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/5.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.1.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/5.1.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/5.1.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/5.1.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '5.2.0',
 		'main': 'http://unicode.org/Public/5.2.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/5.2.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.2.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/5.2.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/5.2.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/5.2.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '6.0.0',
 		'main': 'http://unicode.org/Public/6.0.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/6.0.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.0.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/6.0.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/6.0.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/6.0.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '6.1.0',
 		'main': 'http://unicode.org/Public/6.1.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/6.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.1.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/6.1.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/6.1.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/6.1.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '6.2.0',
 		'main': 'http://unicode.org/Public/6.2.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/6.2.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.2.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/6.2.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/6.2.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/6.2.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '6.3.0',
 		'main': 'http://unicode.org/Public/6.3.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/6.3.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.3.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/6.3.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/6.3.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/6.3.0/ucd/BidiMirroring.txt',
+		'bidi-brackets': 'http://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt'
 	}
 ];
 
