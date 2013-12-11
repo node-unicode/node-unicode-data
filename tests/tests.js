@@ -46,3 +46,7 @@ assert.deepEqual(
 	require('./expected/' + newest + '-bidi-mirroring.js'),
 	require('../' + newest + '/bidi-mirroring/index.js')
 );
+assert.deepEqual(
+	require('./expected/' + newest + '-bidi-brackets-o.js'),
+	require('../' + newest + '/bidi-brackets/o/code-points.js')
+);
