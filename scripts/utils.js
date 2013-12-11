@@ -42,7 +42,7 @@ var writeFiles = function(options) {
 			__dirname,
 			'..', version, type, item
 		);
-		if (type == 'bidi-mirroring' ||
+		if (type == 'bidi-mirroring' || type == 'bidi-brackets' ||
 			(type == 'properties' && /^Bidi_[A-Z]+$/.test(item)) ||
 			(type == 'categories' && /^[A-Z][a-z]$/.test(item))) {
 			if (!auxMap[type]) {
@@ -81,7 +81,7 @@ var writeFiles = function(options) {
 		}
 		mkdirp.sync(dir);
 		var s = 'module.exports=';
-		if (type == 'bidi-mirroring') {
+		if (/^(bidi-mirroring|bidi-brackets)$/.test(type)) {
 			s += '[];\n';
 			Object.keys(auxMap[type]).forEach(function(k) {
 				// It seems like it would be nice to map both the codepoint

@@ -40,6 +40,12 @@ var generateData = function(version) {
 		'map': parsers.parseMirroring(version),
 		'type': 'bidi-mirroring'
 	}));
+	console.log('Parsing Unicode v%s bidi-brackets…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseBrackets(version),
+		'type': 'bidi-brackets'
+	}));
 	return dirMap;
 };
 

@@ -12,14 +12,14 @@ var parseBlocksScriptsProperties = function(type, version) {
 	lines.forEach(function(line) {
 		if (
 			/^#/.test(line) ||
-			!(/^(blocks|bidi-mirroring)$/.test(type) ?
+			!(/^(blocks|bidi-mirroring|bidi-brackets)$/.test(type) ?
 			 /;\x20/.test(line) : /\x20;\x20/.test(line))
 		) {
 			return;
 		}
 		var data = line.trim().split(';');
 		var charRange = data[0].replace('..', '-').trim();
-		var item = data[1].split(
+		var item = data[ type == 'bidi-brackets' ? 2 : 1 ].split(
 			type == 'blocks' ? ';' : '#'
 		)[0].trim();
 		if (type == 'bidi-mirroring') {
@@ -45,4 +45,5 @@ module.exports = {
 	'parseProperties': parseBlocksScriptsProperties.bind(null, 'properties'),
 	'parseBlocks': parseBlocksScriptsProperties.bind(null, 'blocks'),
 	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring'),
+	'parseBrackets': parseBlocksScriptsProperties.bind(null, 'bidi-brackets')
 };
