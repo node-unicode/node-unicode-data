@@ -11,7 +11,7 @@ var generateData = function(version) {
 		'version': version,
 		'map': parsers.parseCategories(version),
 		'type': function(category) {
-			return /^(?:Any|ASCII|Assigned)$/.test(category)
+			return /^(?:Any|ASCII|Assigned|Bidi_[A-Z]+)$/.test(category)
 				? 'properties'
 				: 'categories';
 		}
@@ -33,6 +33,18 @@ var generateData = function(version) {
 		'version': version,
 		'map': parsers.parseBlocks(version),
 		'type': 'blocks'
+	}));
+	console.log('Parsing Unicode v%s bidi-mirroring…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseMirroring(version),
+		'type': 'bidi-mirroring'
+	}));
+	console.log('Parsing Unicode v%s bidi-brackets…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseBrackets(version),
+		'type': 'bidi-brackets'
 	}));
 	return dirMap;
 };

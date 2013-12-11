@@ -17,6 +17,10 @@ assert.deepEqual(
 	require('./expected/' + oldest + '-property-ASCII.js'),
 	require('../' + oldest + '/properties/ASCII/code-points.js')
 );
+assert.deepEqual(
+	require('./expected/' + oldest + '-property-Bidi_R.js'),
+	require('../' + oldest + '/properties/Bidi_R/code-points.js')
+);
 
 assert.deepEqual(
 	require('./expected/' + newest + '-block-Bopomofo.js'),
@@ -31,6 +35,18 @@ assert.deepEqual(
 	require('../' + newest + '/properties/STerm/code-points.js')
 );
 assert.deepEqual(
+	require('./expected/' + newest + '-property-Bidi_PDI.js'),
+	require('../' + newest + '/properties/Bidi_PDI/code-points.js')
+);
+assert.deepEqual(
 	require('./expected/' + newest + '-script-Canadian_Aboriginal.js'),
 	require('../' + newest + '/scripts/Canadian_Aboriginal/code-points.js')
+);
+assert.deepEqual(
+	require('./expected/' + newest + '-bidi-mirroring.js'),
+	require('../' + newest + '/bidi-mirroring/index.js')
+);
+assert.deepEqual(
+	require('./expected/' + newest + '-bidi-brackets-o.js'),
+	require('../' + newest + '/bidi-brackets/o/code-points.js')
 );

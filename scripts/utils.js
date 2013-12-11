@@ -32,6 +32,7 @@ var writeFiles = function(options) {
 		return;
 	}
 	var dirMap = {};
+	var auxMap = {};
 	Object.keys(map).forEach(function(item) {
 		var codePoints = map[item];
 		var type = typeof options.type == 'function'
@@ -41,6 +42,19 @@ var writeFiles = function(options) {
 			__dirname,
 			'..', version, type, item
 		);
+		if (type == 'bidi-mirroring' || type == 'bidi-brackets' ||
+			(type == 'properties' && /^Bidi_[A-Z]+$/.test(item)) ||
+			(type == 'categories' && /^[A-Z][a-z]$/.test(item))) {
+			if (!auxMap[type]) {
+				auxMap[type] = [];
+			}
+			codePoints.forEach(function(cp) {
+				console.assert(!auxMap[type][cp]);
+				var v = item.slice(type == 'properties' ? 5 : 0);
+				auxMap[type][cp] = v;
+			});
+		}
+		if (type == 'bidi-mirroring') { return; }
 		append(dirMap, type, item);
 		// Create the target directory if it doesn’t exist yet
 		mkdirp.sync(dir);
@@ -60,12 +74,40 @@ var writeFiles = function(options) {
 			}))
 		);
 	});
+	Object.keys(auxMap).forEach(function(type) {
+		var dir = path.resolve(__dirname, '..', version, type);
+		if (!hasKey(dirMap, type)) {
+			dirMap[type] = [];
+		}
+		mkdirp.sync(dir);
+		var s = 'module.exports=';
+		if (/^(bidi-mirroring|bidi-brackets)$/.test(type)) {
+			s += '[];\n';
+			Object.keys(auxMap[type]).forEach(function(k) {
+				// It seems like it would be nice to map both the codepoint
+				// and the character, but that causes problems with
+				// '0' vs codepoint 0, etc.
+				s += 'module.exports[' + k + ']=' +
+					jsesc(auxMap[type][k], { json:true }) +
+					';\n';
+			});
+		} else {
+			s += jsesc(auxMap[type]);
+		}
+		var filename = (type == 'properties') ? 'bidi.js' : 'index.js';
+		fs.writeFileSync(
+			path.resolve(dir, filename), s, 'utf-8'
+		);
+	});
 	return dirMap;
 };
 
 var extend = function(destination, source) {
 	for (var key in source) {
 		if (hasKey(source, key)) {
+			if (!hasKey(destination, key)) {
+				destination[key] = [];
+			}
 			source[key].forEach(function(item) {
 				append(destination, key, item);
 			});
