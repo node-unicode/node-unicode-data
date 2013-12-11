@@ -19,13 +19,23 @@ var codePoints = require('unicode-<%= version %>/categories/Lu/code-points');
 var symbols = require('unicode-<%= version %>/categories/Lu/symbols');
 // Get a regular expression that matches any symbol in a given Unicode category:
 var regex = require('unicode-<%= version %>/categories/Lu/regex');
+// An array which maps codepoints to canonical category:
+var catOfA = require('unicode-<%= version %>/categories')[ 0x41 ];
+// Get the directionality of the letter 'A'
+var d = require('unicode-6.3.0/properties/bidi')[ 0x41 ];
+// What glyph is the mirror image of '«' ?
+var m = require('unicode-6.3.0/bidi-mirroring')[ 0xAB ];
 ```
 
 Other than categories, data on Unicode properties, blocks, and scripts is available too (for recent versions of the Unicode standard). Here’s the full list of the available data for v<%= version %>:
 
 ```js
 <% Object.keys(dirs).forEach(function(type) { %>// <%= type %>:
-<% dirs[type].forEach(function(dir) { %>
+<% if (/^(bidi-mirroring|properties|categories)$/.test(type)) {
+   var extra = (type == 'properties') ? 'bidi' : ''; %>
+require('unicode-<%= version %>/<%= type %>/<%= extra %>');
+<% }
+   dirs[type].forEach(function(dir) { %>
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points');
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols');
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/regex');
