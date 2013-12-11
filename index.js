@@ -11,7 +11,7 @@ var generateData = function(version) {
 		'version': version,
 		'map': parsers.parseCategories(version),
 		'type': function(category) {
-			return /^(?:Any|ASCII|Assigned)$/.test(category)
+			return /^(?:Any|ASCII|Assigned|Bidi_[A-Z]+)$/.test(category)
 				? 'properties'
 				: 'categories';
 		}
