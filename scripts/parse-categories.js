@@ -2,6 +2,7 @@ var utils = require('./utils.js');
 
 var parseDatabase = function(version) {
 	var symbolMap = {};
+	var bidiMap = {};
 	var source = utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
@@ -17,6 +18,7 @@ var parseDatabase = function(version) {
 				flag = false;
 				utils.range(first, codePoint).forEach(function(value) {
 					symbolMap[value] = data[2];
+					bidiMap[value] = data[4];
 				});
 			} else {
 				throw Error('Database exception');
@@ -27,6 +29,7 @@ var parseDatabase = function(version) {
 				first = codePoint;
 			} else {
 				symbolMap[codePoint] = data[2];
+				bidiMap[codePoint] = data[4];
 			}
 		}
 	});
@@ -50,6 +53,9 @@ var parseDatabase = function(version) {
 			if (codePoint <= 0x7F) {
 				categories.push('ASCII');
 			}
+		}
+		if (bidiMap[codePoint]) {
+			categories.push('Bidi_' + bidiMap[codePoint]);
 		}
 		categories.forEach(function(category) {
 			utils.append(categoryMap, category, codePoint);
