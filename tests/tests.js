@@ -42,3 +42,7 @@ assert.deepEqual(
 	require('./expected/' + newest + '-script-Canadian_Aboriginal.js'),
 	require('../' + newest + '/scripts/Canadian_Aboriginal/code-points.js')
 );
+assert.deepEqual(
+	require('./expected/' + newest + '-bidi-mirroring.js'),
+	require('../' + newest + '/bidi-mirroring/index.js')
+);
