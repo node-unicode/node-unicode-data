@@ -35,9 +35,9 @@ Other than categories, data on Unicode properties, blocks, and scripts is availa
 <% Object.keys(dirs).forEach(function(type) { %>// <%= type %>:
 <%
 	if (/^(?:bidi-mirroring|properties|categories)$/.test(type)) {
-		var extra = type == 'properties' ? 'bidi' : '';
+		var extra = type == 'properties' ? '/bidi' : '';
 %>
-require('unicode-<%= version %>/<%= type %>/<%= extra %>');
+require('unicode-<%= version %>/<%= type %><%= extra %>');
 <%
 	}
 	dirs[type].forEach(function(dir) {
@@ -48,7 +48,8 @@ require('unicode-<%= version %>/<%= type %>/<%= dir %>/regex');
 <%
 	});
 });
-%>```
+%>
+```
 
 ## Author
 
