@@ -12,8 +12,11 @@ var parseBlocksScriptsProperties = function(type, version) {
 	lines.forEach(function(line) {
 		if (
 			/^#/.test(line) ||
-			!(/^(blocks|bidi-mirroring|bidi-brackets)$/.test(type) ?
-			 /;\x20/.test(line) : /\x20;\x20/.test(line))
+			!(
+				/^(?:blocks|bidi-mirroring|bidi-brackets)$/.test(type)
+					? /;\x20/.test(line)
+					: /\x20;\x20/.test(line)
+			)
 		) {
 			return;
 		}

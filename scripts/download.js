@@ -29,10 +29,15 @@ console.log('Downloading resources…');
 resources.forEach(function(resource) {
 	var version = resource.version;
 	download(resource.main, version, 'database');
-	['scripts', 'blocks', 'properties', 'bidi-mirroring', 'bidi-brackets'].
-		forEach(function(p) {
-			if (resource[p]) {
-				download(resource[p], version, p);
-			}
-		});
+	[
+		'scripts',
+		'blocks',
+		'properties',
+		'bidi-mirroring',
+		'bidi-brackets'
+	].forEach(function(type) {
+		if (resource[type]) {
+			download(resource[type], version, type);
+		}
+	});
 });

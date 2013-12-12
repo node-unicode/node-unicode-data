@@ -34,13 +34,13 @@ var generateData = function(version) {
 		'map': parsers.parseBlocks(version),
 		'type': 'blocks'
 	}));
-	console.log('Parsing Unicode v%s bidi-mirroring…', version);
+	console.log('Parsing Unicode v%s bidi mirroring…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseMirroring(version),
 		'type': 'bidi-mirroring'
 	}));
-	console.log('Parsing Unicode v%s bidi-brackets…', version);
+	console.log('Parsing Unicode v%s bidi brackets…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseBrackets(version),

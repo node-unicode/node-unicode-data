@@ -42,19 +42,23 @@ var writeFiles = function(options) {
 			__dirname,
 			'..', version, type, item
 		);
-		if (type == 'bidi-mirroring' || type == 'bidi-brackets' ||
+		if (
+			type == 'bidi-mirroring' || type == 'bidi-brackets' ||
 			(type == 'properties' && /^Bidi_[A-Z]+$/.test(item)) ||
-			(type == 'categories' && /^[A-Z][a-z]$/.test(item))) {
+			(type == 'categories' && /^[A-Z][a-z]$/.test(item))
+		) {
 			if (!auxMap[type]) {
 				auxMap[type] = [];
 			}
-			codePoints.forEach(function(cp) {
-				console.assert(!auxMap[type][cp]);
-				var v = item.slice(type == 'properties' ? 5 : 0);
-				auxMap[type][cp] = v;
+			codePoints.forEach(function(codePoint) {
+				console.assert(!auxMap[type][codePoint]);
+				var value = item.slice(type == 'properties' ? 5 : 0);
+				auxMap[type][codePoint] = value;
 			});
 		}
-		if (type == 'bidi-mirroring') { return; }
+		if (type == 'bidi-mirroring') {
+			return;
+		}
 		append(dirMap, type, item);
 		// Create the target directory if it doesn’t exist yet
 		mkdirp.sync(dir);
@@ -80,23 +84,25 @@ var writeFiles = function(options) {
 			dirMap[type] = [];
 		}
 		mkdirp.sync(dir);
-		var s = 'module.exports=';
+		var output = '';
 		if (/^(bidi-mirroring|bidi-brackets)$/.test(type)) {
-			s += '[];\n';
-			Object.keys(auxMap[type]).forEach(function(k) {
-				// It seems like it would be nice to map both the codepoint
-				// and the character, but that causes problems with
-				// '0' vs codepoint 0, etc.
-				s += 'module.exports[' + k + ']=' +
-					jsesc(auxMap[type][k], { json:true }) +
-					';\n';
+			output += 'var x=[];';
+			Object.keys(auxMap[type]).forEach(function(key) {
+				// It seems like it would be nice to map both the code point
+				// and the character, but that causes problems with `'0'` vs.
+				// code point U+0000, etc.
+				output += 'x[' + key + ']=' +
+					jsesc(auxMap[type][key], {
+						'wrap': true
+					}) + ';';
 			});
+			output += 'module.exports=x';
 		} else {
-			s += jsesc(auxMap[type]);
+			output = 'module.exports=' + jsesc(auxMap[type]);
 		}
-		var filename = (type == 'properties') ? 'bidi.js' : 'index.js';
+		var fileName = type == 'properties' ? 'bidi.js' : 'index.js';
 		fs.writeFileSync(
-			path.resolve(dir, filename), s, 'utf-8'
+			path.resolve(dir, fileName), output, 'utf-8'
 		);
 	});
 	return dirMap;

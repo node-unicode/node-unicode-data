@@ -2,7 +2,7 @@
 # Date: 2009-05-22, 12:44:00 PDT [KW]
 #
 # Bidi_Mirroring_Glyph Property
-#
+# 
 # This file is an informative contributory data file in the
 # Unicode Character Database.
 #
@@ -13,27 +13,27 @@
 # where there is another Unicode character that typically has a glyph
 # that is the mirror image of the original character's glyph.
 # The repertoire covered by the file is Unicode 5.2.0.
-#
+# 
 # The file contains a list of lines with mappings from one code point
 # to another one for character-based mirroring.
 # Note that for "real" mirroring, a rendering engine needs to select
 # appropriate alternative glyphs, and that many Unicode characters do not
 # have a mirror-image Unicode character.
-#
+# 
 # Each mapping line contains two fields, separated by a semicolon (';').
 # Each of the two fields contains a code point represented as a
 # variable-length hexadecimal value with 4 to 6 digits.
 # A comment indicates where the characters are "BEST FIT" mirroring.
-#
+# 
 # Code points with the "mirrored" property but no appropriate mirrors are
 # listed as comments at the end of the file.
-#
+# 
 # For information on bidi mirroring, see UAX #9: Bidirectional Algorithm,
 # at http://www.unicode.org/unicode/reports/tr9/
-#
+# 
 # This file was originally created by Markus Scherer.
 # Extended for Unicode 3.2, 4.0, 4.1, 5.0, 5.1, and 5.2 by Ken Whistler.
-#
+# 
 # ############################################################
 
 0028; 0029 # LEFT PARENTHESIS
