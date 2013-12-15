@@ -2,6 +2,24 @@ var utils = require('./scripts/utils.js');
 var parsers = require('./scripts/parse-blocks-scripts-properties.js');
 parsers.parseCategories = require('./scripts/parse-categories.js');
 var extend = utils.extend;
+var fs = require('fs');
+var jsesc = require('jsesc');
+var path = require('path');
+var template = require('lodash.template');
+
+var templatePath = path.resolve(__dirname, 'templates');
+var compileReadMe = template(fs.readFileSync(
+	path.resolve(templatePath, 'README.md'),
+	'utf-8')
+);
+var compilePackage = template(fs.readFileSync(
+	path.resolve(templatePath, 'package.json'),
+	'utf-8')
+);
+var compileIndex = template(fs.readFileSync(
+	path.resolve(templatePath, 'index.js'),
+	'utf-8')
+);
 
 var generateData = function(version) {
 	var dirMap = {};
@@ -46,6 +64,18 @@ var generateData = function(version) {
 		'map': parsers.parseBrackets(version),
 		'type': 'bidi-brackets'
 	}));
+	fs.writeFileSync(
+		path.resolve(__dirname, version, 'README.md'),
+		compileReadMe({ 'version': version, 'dirs': dirMap })
+	);
+	fs.writeFileSync(
+		path.resolve(__dirname, version, 'index.js'),
+		compileIndex({ 'version': version, 'data': jsesc(dirMap) })
+	);
+	fs.writeFileSync(
+		path.resolve(__dirname, version, 'package.json'),
+		compilePackage({ 'version': version })
+	);
 	return dirMap;
 };
 
