@@ -31,8 +31,8 @@ var mirrored = require('unicode-6.3.0/bidi-mirroring')[ 0xAB ];
 
 Other than categories, data on Unicode properties, blocks, and scripts is available too (for recent versions of the Unicode standard). Here’s the full list of the available data for v<%= version %>:
 
-```js
-<% Object.keys(dirs).forEach(function(type) { %>// <%= type %>:
+```js<% Object.keys(dirs).forEach(function(type) { %>
+// <%= type.replace(/-/g, ' ') %>:
 <%
 	if (/^(?:bidi-mirroring|properties|categories)$/.test(type)) {
 		var extra = type == 'properties' ? '/bidi' : '';
@@ -48,8 +48,7 @@ require('unicode-<%= version %>/<%= type %>/<%= dir %>/regex');
 <%
 	});
 });
-%>
-```
+%>```
 
 ## Author
 
