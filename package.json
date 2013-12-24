@@ -53,10 +53,10 @@
 		"mkdirp": "~0.3.5",
 		"punycode": "~1.2.3",
 		"regenerate": "~0.5.4",
-		"request": "~2.29.0",
+		"request": "~2.30.0",
 		"when": "~2.7.0"
 	},
 	"devDependencies": {
-		"istanbul": "~0.1.44"
+		"istanbul": "~0.2.1"
 	}
 }
