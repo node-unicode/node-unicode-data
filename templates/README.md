@@ -21,11 +21,19 @@ var symbols = require('unicode-<%= version %>/categories/Lu/symbols');
 var regex = require('unicode-<%= version %>/categories/Lu/regex');
 // Get the canonical category a given code point belongs to:
 // (Note: U+0041 is LATIN CAPITAL LETTER A)
-var category = require('unicode-6.3.0/categories')[ 0x41 ];
+var category = require('unicode-<%= version %>/categories')[ 0x41 ];
+// Get an array of all code points with the `Bidi_ON` bidi property:
+var on = require('unicode-<%= version %>/bidi/ON/code-points');
 // Get the directionality of a given code point:
-var directionality = require('unicode-6.3.0/properties/bidi')[ 0x41 ];
+var directionality = require('unicode-<%= version %>/bidi')[ 0x41 ];
+<% if (dirs.hasOwnProperty('bidi-mirroring')) { %>
 // What glyph is the mirror image of `«` (U+00AB)?
-var mirrored = require('unicode-6.3.0/bidi-mirroring')[ 0xAB ];
+var mirrored = require('unicode-<%= version %>/bidi-mirroring')[ 0xAB ];
+<% } %>
+<% if (dirs.hasOwnProperty('bidi-brackets')) { %>
+// Get a regular expression that matches all opening brackets:
+var openingBrackets = require('unicode-<%= version %>/bidi-brackets/Open/regex');
+<% } %>
 // …you get the idea.
 ```
 
@@ -34,10 +42,9 @@ Other than categories, data on Unicode properties, blocks, and scripts is availa
 ```js<% Object.keys(dirs).forEach(function(type) { %>
 // <%= type.replace(/-/g, ' ') %>:
 <%
-	if (/^(?:bidi-mirroring|properties|categories)$/.test(type)) {
-		var extra = type == 'properties' ? '/bidi' : '';
+	if (/^(?:bidi|bidi-brackets|bidi-mirroring|categories)$/.test(type)) {
 %>
-require('unicode-<%= version %>/<%= type %><%= extra %>');
+require('unicode-<%= version %>/<%= type %>')[ codePoint ]; // lookup array
 <%
 	}
 	dirs[type].forEach(function(dir) {
