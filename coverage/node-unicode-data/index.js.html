@@ -100,6 +100,11 @@
         .cstat-no { background: #fc8c84; color: #111; }
         .fstat-no { background: #ffc520; color: #111 !important; }
         .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
         .missing-if-branch {
             display: inline-block;
             margin-right: 10px;
@@ -107,9 +112,18 @@
             padding: 0 4px;
             background: black;
             color: yellow;
-            xtext-decoration: line-through;
         }
-        .missing-if-branch .typ {
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
             color: inherit !important;
         }
 
@@ -176,6 +190,8 @@
             margin: 0 !important;
         }
         .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
     </style>
 </head>
 <body>
@@ -183,17 +199,18 @@
     <h1>Code coverage report for <span class="entity">node-unicode-data/index.js</span></h1>
     <h2>
         
-        Statements: <span class="metric">100% <small>(18 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(37 / 37)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(4 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
         Functions: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">100% <small>(18 / 18)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(37 / 37)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">node-unicode-data/</a> &#187; index.js</div>
 </div>
@@ -239,10 +256,74 @@
 38
 39
 40
-41</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">2</span>
@@ -251,8 +332,24 @@
 <span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">105</span>
+<span class="cline-any cline-yes">33</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">72</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">66</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -272,6 +369,18 @@
 <span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -283,6 +392,24 @@
 var parsers = require('./scripts/parse-blocks-scripts-properties.js');
 parsers.parseCategories = require('./scripts/parse-categories.js');
 var extend = utils.extend;
+var fs = require('fs');
+var jsesc = require('jsesc');
+var path = require('path');
+var template = require('lodash.template');
+&nbsp;
+var templatePath = path.resolve(__dirname, 'templates');
+var compileReadMe = template(fs.readFileSync(
+	path.resolve(templatePath, 'README.md'),
+	'utf-8')
+);
+var compilePackage = template(fs.readFileSync(
+	path.resolve(templatePath, 'package.json'),
+	'utf-8')
+);
+var compileIndex = template(fs.readFileSync(
+	path.resolve(templatePath, 'index.js'),
+	'utf-8')
+);
 &nbsp;
 var generateData = function(version) {
 	var dirMap = {};
@@ -292,9 +419,13 @@ var generateData = function(version) {
 		'version': version,
 		'map': parsers.parseCategories(version),
 		'type': function(category) {
-			return /^(?:Any|ASCII|Assigned)$/.test(category)
-				? 'properties'
-				: 'categories';
+			if (/^(?:Bidi_[A-Z]+)$/.test(category)) {
+				return 'bidi';
+			}
+			if (/^(?:Any|ASCII|Assigned)$/.test(category)) {
+				return 'properties';
+			}
+			return 'categories';
 		}
 	}));
 	console.log('Parsing Unicode v%s scripts…', version);
@@ -315,6 +446,30 @@ var generateData = function(version) {
 		'map': parsers.parseBlocks(version),
 		'type': 'blocks'
 	}));
+	console.log('Parsing Unicode v%s bidi mirroring…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseMirroring(version),
+		'type': 'bidi-mirroring'
+	}));
+	console.log('Parsing Unicode v%s bidi brackets…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseBrackets(version),
+		'type': 'bidi-brackets'
+	}));
+	fs.writeFileSync(
+		path.resolve(__dirname, version, 'README.md'),
+		compileReadMe({ 'version': version, 'dirs': dirMap })
+	);
+	fs.writeFileSync(
+		path.resolve(__dirname, version, 'index.js'),
+		compileIndex({ 'version': version, 'data': jsesc(dirMap) })
+	);
+	fs.writeFileSync(
+		path.resolve(__dirname, version, 'package.json'),
+		compilePackage({ 'version': version })
+	);
 	return dirMap;
 };
 &nbsp;
@@ -324,7 +479,7 @@ module.exports = generateData;
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Aug 25 2013 17:58:42 GMT+0200 (CEST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 24 2013 15:41:30 GMT+0100 (CET)</div>
 </div>
 
 <script src="../prettify.js"></script>

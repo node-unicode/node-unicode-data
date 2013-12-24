@@ -100,6 +100,11 @@
         .cstat-no { background: #fc8c84; color: #111; }
         .fstat-no { background: #ffc520; color: #111 !important; }
         .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
         .missing-if-branch {
             display: inline-block;
             margin-right: 10px;
@@ -107,9 +112,18 @@
             padding: 0 4px;
             background: black;
             color: yellow;
-            xtext-decoration: line-through;
         }
-        .missing-if-branch .typ {
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
             color: inherit !important;
         }
 
@@ -176,6 +190,8 @@
             margin: 0 !important;
         }
         .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
     </style>
 </head>
 <body>
@@ -194,6 +210,7 @@
         
         Lines: <span class="metric">100% <small>(2 / 2)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">node-unicode-data/data/</a> &#187; resources.js</div>
 </div>
@@ -315,7 +332,39 @@
 114
 115
 116
-117</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -500,49 +549,65 @@
 		'main': 'http://unicode.org/Public/4.1.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/4.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/4.1.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/4.1.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/4.1.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/4.1.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '5.0.0',
 		'main': 'http://unicode.org/Public/5.0.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/5.0.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.0.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/5.0.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/5.0.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/5.0.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '5.1.0',
 		'main': 'http://unicode.org/Public/5.1.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/5.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.1.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/5.1.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/5.1.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/5.1.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '5.2.0',
 		'main': 'http://unicode.org/Public/5.2.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/5.2.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.2.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/5.2.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/5.2.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/5.2.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '6.0.0',
 		'main': 'http://unicode.org/Public/6.0.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/6.0.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.0.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/6.0.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/6.0.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/6.0.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '6.1.0',
 		'main': 'http://unicode.org/Public/6.1.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/6.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.1.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/6.1.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/6.1.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/6.1.0/ucd/BidiMirroring.txt'
 	},
 	{
 		'version': '6.2.0',
 		'main': 'http://unicode.org/Public/6.2.0/ucd/UnicodeData.txt',
 		'scripts': 'http://unicode.org/Public/6.2.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.2.0/ucd/Blocks.txt',
-		'properties': 'http://unicode.org/Public/6.2.0/ucd/PropList.txt'
+		'properties': 'http://unicode.org/Public/6.2.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/6.2.0/ucd/BidiMirroring.txt'
+	},
+	{
+		'version': '6.3.0',
+		'main': 'http://unicode.org/Public/6.3.0/ucd/UnicodeData.txt',
+		'scripts': 'http://unicode.org/Public/6.3.0/ucd/Scripts.txt',
+		'blocks': 'http://unicode.org/Public/6.3.0/ucd/Blocks.txt',
+		'properties': 'http://unicode.org/Public/6.3.0/ucd/PropList.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/6.3.0/ucd/BidiMirroring.txt',
+		'bidi-brackets': 'http://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt'
 	}
 ];
 &nbsp;
@@ -552,7 +617,7 @@ module.exports = resources;
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Aug 25 2013 17:58:42 GMT+0200 (CEST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 24 2013 15:41:30 GMT+0100 (CET)</div>
 </div>
 
 <script src="../../prettify.js"></script>

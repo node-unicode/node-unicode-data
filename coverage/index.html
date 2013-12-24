@@ -100,6 +100,11 @@
         .cstat-no { background: #fc8c84; color: #111; }
         .fstat-no { background: #ffc520; color: #111 !important; }
         .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
         .missing-if-branch {
             display: inline-block;
             margin-right: 10px;
@@ -107,9 +112,18 @@
             padding: 0 4px;
             background: black;
             color: yellow;
-            xtext-decoration: line-through;
         }
-        .missing-if-branch .typ {
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
             color: inherit !important;
         }
 
@@ -176,6 +190,8 @@
             margin: 0 !important;
         }
         .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
     </style>
 </head>
 <body>
@@ -183,17 +199,18 @@
     <h1>Code coverage report for <span class="entity">All files</span></h1>
     <h2>
         
-        Statements: <span class="metric">98.44% <small>(126 / 128)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">99.64% <small>(555 / 557)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">92.31% <small>(36 / 39)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">95.52% <small>(64 / 67)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Functions: <span class="metric">100% <small>(19 / 19)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(22 / 22)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">98.44% <small>(126 / 128)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">98.96% <small>(190 / 192)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"></div>
 </div>
@@ -218,17 +235,17 @@
 	<td class="file high" data-value="node-unicode-data/"><a href="node-unicode-data/index.html">node-unicode-data/</a></td>
 	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
 	<td data-value="100" class="pct high">100%</td>
-	<td data-value="18" class="abs high">(18&nbsp;/&nbsp;18)</td>
+	<td data-value="37" class="abs high">(37&nbsp;/&nbsp;37)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="4" class="abs high">(4&nbsp;/&nbsp;4)</td>
 	<td data-value="100" class="pct high">100%</td>
 	<td data-value="2" class="abs high">(2&nbsp;/&nbsp;2)</td>
 	<td data-value="100" class="pct high">100%</td>
-	<td data-value="2" class="abs high">(2&nbsp;/&nbsp;2)</td>
-	<td data-value="100" class="pct high">100%</td>
-	<td data-value="18" class="abs high">(18&nbsp;/&nbsp;18)</td>
+	<td data-value="37" class="abs high">(37&nbsp;/&nbsp;37)</td>
 	</tr>
 
 <tr>
-	<td class="file high" data-value="node-unicode-data/6.2.0/blocks/Bopomofo/"><a href="node-unicode-data/6.2.0/blocks/Bopomofo/index.html">node-unicode-data/6.2.0/blocks/Bopomofo/</a></td>
+	<td class="file high" data-value="node-unicode-data/1.1.5/bidi/R/"><a href="node-unicode-data/1.1.5/bidi/R/index.html">node-unicode-data/1.1.5/bidi/R/</a></td>
 	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
 	<td data-value="100" class="pct high">100%</td>
 	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
@@ -241,7 +258,7 @@
 	</tr>
 
 <tr>
-	<td class="file high" data-value="node-unicode-data/6.2.0/categories/Lm/"><a href="node-unicode-data/6.2.0/categories/Lm/index.html">node-unicode-data/6.2.0/categories/Lm/</a></td>
+	<td class="file high" data-value="node-unicode-data/1.1.5/categories/Lm/"><a href="node-unicode-data/1.1.5/categories/Lm/index.html">node-unicode-data/1.1.5/categories/Lm/</a></td>
 	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
 	<td data-value="100" class="pct high">100%</td>
 	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
@@ -254,7 +271,7 @@
 	</tr>
 
 <tr>
-	<td class="file high" data-value="node-unicode-data/6.2.0/properties/STerm/"><a href="node-unicode-data/6.2.0/properties/STerm/index.html">node-unicode-data/6.2.0/properties/STerm/</a></td>
+	<td class="file high" data-value="node-unicode-data/1.1.5/properties/ASCII/"><a href="node-unicode-data/1.1.5/properties/ASCII/index.html">node-unicode-data/1.1.5/properties/ASCII/</a></td>
 	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
 	<td data-value="100" class="pct high">100%</td>
 	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
@@ -267,7 +284,85 @@
 	</tr>
 
 <tr>
-	<td class="file high" data-value="node-unicode-data/6.2.0/scripts/Canadian_Aboriginal/"><a href="node-unicode-data/6.2.0/scripts/Canadian_Aboriginal/index.html">node-unicode-data/6.2.0/scripts/Canadian_Aboriginal/</a></td>
+	<td class="file high" data-value="node-unicode-data/6.3.0/bidi-brackets/Open/"><a href="node-unicode-data/6.3.0/bidi-brackets/Open/index.html">node-unicode-data/6.3.0/bidi-brackets/Open/</a></td>
+	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	</tr>
+
+<tr>
+	<td class="file high" data-value="node-unicode-data/6.3.0/bidi-mirroring/"><a href="node-unicode-data/6.3.0/bidi-mirroring/index.html">node-unicode-data/6.3.0/bidi-mirroring/</a></td>
+	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="366" class="abs high">(366&nbsp;/&nbsp;366)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	</tr>
+
+<tr>
+	<td class="file high" data-value="node-unicode-data/6.3.0/bidi/PDI/"><a href="node-unicode-data/6.3.0/bidi/PDI/index.html">node-unicode-data/6.3.0/bidi/PDI/</a></td>
+	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	</tr>
+
+<tr>
+	<td class="file high" data-value="node-unicode-data/6.3.0/blocks/Bopomofo/"><a href="node-unicode-data/6.3.0/blocks/Bopomofo/index.html">node-unicode-data/6.3.0/blocks/Bopomofo/</a></td>
+	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	</tr>
+
+<tr>
+	<td class="file high" data-value="node-unicode-data/6.3.0/categories/Lm/"><a href="node-unicode-data/6.3.0/categories/Lm/index.html">node-unicode-data/6.3.0/categories/Lm/</a></td>
+	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	</tr>
+
+<tr>
+	<td class="file high" data-value="node-unicode-data/6.3.0/properties/STerm/"><a href="node-unicode-data/6.3.0/properties/STerm/index.html">node-unicode-data/6.3.0/properties/STerm/</a></td>
+	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="0" class="abs high">(0&nbsp;/&nbsp;0)</td>
+	<td data-value="100" class="pct high">100%</td>
+	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
+	</tr>
+
+<tr>
+	<td class="file high" data-value="node-unicode-data/6.3.0/scripts/Canadian_Aboriginal/"><a href="node-unicode-data/6.3.0/scripts/Canadian_Aboriginal/index.html">node-unicode-data/6.3.0/scripts/Canadian_Aboriginal/</a></td>
 	<td data-value="100" class="pic high"><span class="cover-fill cover-full" style="width: 100px;"></span><span class="cover-empty" style="width:0px;"></span></td>
 	<td data-value="100" class="pct high">100%</td>
 	<td data-value="1" class="abs high">(1&nbsp;/&nbsp;1)</td>
@@ -294,15 +389,15 @@
 
 <tr>
 	<td class="file high" data-value="node-unicode-data/scripts/"><a href="node-unicode-data/scripts/index.html">node-unicode-data/scripts/</a></td>
-	<td data-value="98.08" class="pic high"><span class="cover-fill" style="width: 98px;"></span><span class="cover-empty" style="width:2px;"></span></td>
-	<td data-value="98.08" class="pct high">98.08%</td>
-	<td data-value="104" class="abs high">(102&nbsp;/&nbsp;104)</td>
-	<td data-value="91.89" class="pct high">91.89%</td>
-	<td data-value="37" class="abs high">(34&nbsp;/&nbsp;37)</td>
+	<td data-value="98.6" class="pic high"><span class="cover-fill" style="width: 98px;"></span><span class="cover-empty" style="width:2px;"></span></td>
+	<td data-value="98.6" class="pct high">98.6%</td>
+	<td data-value="143" class="abs high">(141&nbsp;/&nbsp;143)</td>
+	<td data-value="95.24" class="pct high">95.24%</td>
+	<td data-value="63" class="abs high">(60&nbsp;/&nbsp;63)</td>
 	<td data-value="100" class="pct high">100%</td>
-	<td data-value="17" class="abs high">(17&nbsp;/&nbsp;17)</td>
-	<td data-value="98.08" class="pct high">98.08%</td>
-	<td data-value="104" class="abs high">(102&nbsp;/&nbsp;104)</td>
+	<td data-value="20" class="abs high">(20&nbsp;/&nbsp;20)</td>
+	<td data-value="98.6" class="pct high">98.6%</td>
+	<td data-value="143" class="abs high">(141&nbsp;/&nbsp;143)</td>
 	</tr>
 
 </tbody>
@@ -310,7 +405,7 @@
 </div>
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Aug 25 2013 17:58:42 GMT+0200 (CEST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 24 2013 15:41:30 GMT+0100 (CET)</div>
 </div>
 
 <script src="prettify.js"></script>

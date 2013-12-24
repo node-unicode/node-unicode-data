@@ -100,6 +100,11 @@
         .cstat-no { background: #fc8c84; color: #111; }
         .fstat-no { background: #ffc520; color: #111 !important; }
         .cbranch-no { background:  yellow !important; color: #111; }
+
+        .cstat-skip { background: #ddd; color: #111; }
+        .fstat-skip { background: #ddd; color: #111 !important; }
+        .cbranch-skip { background: #ddd !important; color: #111; }
+
         .missing-if-branch {
             display: inline-block;
             margin-right: 10px;
@@ -107,9 +112,18 @@
             padding: 0 4px;
             background: black;
             color: yellow;
-            xtext-decoration: line-through;
         }
-        .missing-if-branch .typ {
+
+        .skip-if-branch {
+            display: none;
+            margin-right: 10px;
+            position: relative;
+            padding: 0 4px;
+            background: #ccc;
+            color: white;
+        }
+
+        .missing-if-branch .typ, .skip-if-branch .typ {
             color: inherit !important;
         }
 
@@ -176,6 +190,8 @@
             margin: 0 !important;
         }
         .com { color: #999 !important; }
+        .ignore-none { color: #999; font-weight: normal; }
+
     </style>
 </head>
 <body>
@@ -183,17 +199,18 @@
     <h1>Code coverage report for <span class="entity">node-unicode-data/scripts/parse-categories.js</span></h1>
     <h2>
         
-        Statements: <span class="metric">94.74% <small>(36 / 38)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">95.35% <small>(41 / 43)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Branches: <span class="metric">85.71% <small>(12 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">87.5% <small>(14 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
         Functions: <span class="metric">100% <small>(5 / 5)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
         
-        Lines: <span class="metric">94.74% <small>(36 / 38)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">95.35% <small>(41 / 43)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../index.html">All files</a> &#187; <a href="index.html">node-unicode-data/scripts/</a> &#187; parse-categories.js</div>
 </div>
@@ -260,9 +277,16 @@
 59
 60
 61
-62</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+62
+63
+64
+65
+66
+67
+68</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-yes">2</span>
@@ -272,23 +296,25 @@
 <span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-yes">2</span>
-<span class="cline-any cline-yes">37482</span>
-<span class="cline-any cline-yes">37482</span>
-<span class="cline-any cline-yes">37482</span>
+<span class="cline-any cline-yes">37487</span>
+<span class="cline-any cline-yes">37487</span>
+<span class="cline-any cline-yes">37487</span>
 <span class="cline-any cline-yes">12</span>
 <span class="cline-any cline-yes">12</span>
 <span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-yes">225293</span>
 <span class="cline-any cline-yes">225293</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">37470</span>
+<span class="cline-any cline-yes">37475</span>
 <span class="cline-any cline-yes">12</span>
 <span class="cline-any cline-yes">12</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">37458</span>
+<span class="cline-any cline-yes">37463</span>
+<span class="cline-any cline-yes">37463</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -302,19 +328,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2228224</span>
-<span class="cline-any cline-yes">1965496</span>
+<span class="cline-any cline-yes">1965491</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">262728</span>
-<span class="cline-any cline-yes">262728</span>
-<span class="cline-any cline-yes">262728</span>
+<span class="cline-any cline-yes">262733</span>
+<span class="cline-any cline-yes">262733</span>
+<span class="cline-any cline-yes">262733</span>
 <span class="cline-any cline-yes">4687</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">262728</span>
+<span class="cline-any cline-yes">262733</span>
 <span class="cline-any cline-yes">256</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2228224</span>
-<span class="cline-any cline-yes">6952343</span>
+<span class="cline-any cline-yes">262733</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2228224</span>
+<span class="cline-any cline-yes">7215081</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2</span>
@@ -325,8 +354,9 @@
 &nbsp;
 var parseDatabase = function(version) {
 	var symbolMap = {};
+	var bidiMap = {};
 	var source = utils.readDataFile(version, 'database');
-	<span class="missing-if-branch" title="if path not taken"" >I</span>if (!source) {
+	<span class="missing-if-branch" title="if path not taken" >I</span>if (!source) {
 <span class="cstat-no" title="statement not covered" >		return;</span>
 	}
 	var lines = source.split('\n');
@@ -336,10 +366,11 @@ var parseDatabase = function(version) {
 		var data = line.trim().split(';');
 		var codePoint = parseInt(data[0], 16);
 		if (flag) {
-			<span class="missing-if-branch" title="else path not taken"" >E</span>if (/&lt;.+, Last&gt;/.test(data[1])) {
+			<span class="missing-if-branch" title="else path not taken" >E</span>if (/&lt;.+, Last&gt;/.test(data[1])) {
 				flag = false;
 				utils.range(first, codePoint).forEach(function(value) {
 					symbolMap[value] = data[2];
+					bidiMap[value] = data[4];
 				});
 			} else {
 <span class="cstat-no" title="statement not covered" >				throw Error('Database exception');</span>
@@ -350,6 +381,7 @@ var parseDatabase = function(version) {
 				first = codePoint;
 			} else {
 				symbolMap[codePoint] = data[2];
+				bidiMap[codePoint] = data[4];
 			}
 		}
 	});
@@ -374,6 +406,9 @@ var parseDatabase = function(version) {
 				categories.push('ASCII');
 			}
 		}
+		if (bidiMap[codePoint]) {
+			categories.push('Bidi_' + bidiMap[codePoint]);
+		}
 		categories.forEach(function(category) {
 			utils.append(categoryMap, category, codePoint);
 		});
@@ -387,7 +422,7 @@ module.exports = parseDatabase;
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun Aug 25 2013 17:58:42 GMT+0200 (CEST)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Dec 24 2013 15:41:30 GMT+0100 (CET)</div>
 </div>
 
 <script src="../../prettify.js"></script>
