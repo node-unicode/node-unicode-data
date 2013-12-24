@@ -2,7 +2,7 @@ var punycode = require('punycode');
 var utils = require('./utils.js');
 
 var parseBlocksScriptsProperties = function(type, version) {
-	// `type` is 'properties', 'scripts', 'block', 'bidi-brackets', or
+	// `type` is 'properties', 'scripts', 'blocks', 'bidi-brackets', or
 	// 'bidi-mirroring'
 	var map = {};
 	var source = utils.readDataFile(version, type);

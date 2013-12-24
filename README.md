@@ -18,8 +18,10 @@ var hieroglyphs = require('unicode-6.3.0/scripts/Egyptian_Hieroglyphs/code-point
 // Get the canonical category a given code point belongs to:
 // (Note: U+0041 is LATIN CAPITAL LETTER A)
 var category = require('unicode-6.3.0/categories')[ 0x41 ];
+// Get an array of all code points with the `Bidi_LRE` bidi property:
+var lre = require('unicode-6.3.0/bidi/LRE/code-points');
 // Get the directionality of a given code point:
-var directionality = require('unicode-6.3.0/properties/bidi')[ 0x41 ];
+var directionality = require('unicode-6.3.0/bidi')[ 0x41 ];
 // What glyph is the mirror image of `«` (U+00AB)?
 var mirrored = require('unicode-6.3.0/bidi-mirroring')[ 0xAB ];
 // …you get the idea.

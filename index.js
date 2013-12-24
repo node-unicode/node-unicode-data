@@ -29,9 +29,13 @@ var generateData = function(version) {
 		'version': version,
 		'map': parsers.parseCategories(version),
 		'type': function(category) {
-			return /^(?:Any|ASCII|Assigned|Bidi_[A-Z]+)$/.test(category)
-				? 'properties'
-				: 'categories';
+			if (/^(?:Bidi_[A-Z]+)$/.test(category)) {
+				return 'bidi';
+			}
+			if (/^(?:Any|ASCII|Assigned)$/.test(category)) {
+				return 'properties';
+			}
+			return 'categories';
 		}
 	}));
 	console.log('Parsing Unicode v%s scripts…', version);

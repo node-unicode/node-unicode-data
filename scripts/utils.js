@@ -38,13 +38,16 @@ var writeFiles = function(options) {
 		var type = typeof options.type == 'function'
 			? options.type(item)
 			: options.type;
+		var isBidiProperty = type == 'bidi';
+		if (isBidiProperty) {
+			item = item.replace(/^Bidi_/, '');
+		}
 		var dir = path.resolve(
 			__dirname,
 			'..', version, type, item
 		);
 		if (
-			type == 'bidi-mirroring' || type == 'bidi-brackets' ||
-			(type == 'properties' && /^Bidi_[A-Z]+$/.test(item)) ||
+			type == 'bidi' || type == 'bidi-mirroring' || type == 'bidi-brackets' ||
 			(type == 'categories' && /^[A-Z][a-z]$/.test(item))
 		) {
 			if (!auxMap[type]) {
@@ -52,8 +55,7 @@ var writeFiles = function(options) {
 			}
 			codePoints.forEach(function(codePoint) {
 				console.assert(!auxMap[type][codePoint]);
-				var value = item.slice(type == 'properties' ? 5 : 0);
-				auxMap[type][codePoint] = value;
+				auxMap[type][codePoint] = item;
 			});
 		}
 		if (type == 'bidi-mirroring') {
@@ -90,7 +92,8 @@ var writeFiles = function(options) {
 			Object.keys(auxMap[type]).forEach(function(key) {
 				// It seems like it would be nice to map both the code point
 				// and the character, but that causes problems with `'0'` vs.
-				// code point U+0000, etc.
+				// code point U+0000 etc., as property names are stored as strings in
+				// JavaScript.
 				output += 'x[' + key + ']=' +
 					jsesc(auxMap[type][key], {
 						'wrap': true
@@ -100,9 +103,9 @@ var writeFiles = function(options) {
 		} else {
 			output = 'module.exports=' + jsesc(auxMap[type]);
 		}
-		var fileName = type == 'properties' ? 'bidi.js' : 'index.js';
 		fs.writeFileSync(
-			path.resolve(dir, fileName), output, 'utf-8'
+			path.resolve(dir, 'index.js'),
+			output
 		);
 	});
 	return dirMap;
