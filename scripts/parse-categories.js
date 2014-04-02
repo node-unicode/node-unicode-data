@@ -13,23 +13,26 @@ var parseDatabase = function(version) {
 	lines.forEach(function(line) {
 		var data = line.trim().split(';');
 		var codePoint = parseInt(data[0], 16);
+		var name = data[1];
+		var generalCategory = data[2];
+		var bidiCategory = data[4];
 		if (flag) {
-			if (/<.+, Last>/.test(data[1])) {
+			if (/<.+, Last>/.test(name)) {
 				flag = false;
 				utils.range(first, codePoint).forEach(function(value) {
-					symbolMap[value] = data[2];
-					bidiMap[value] = data[4];
+					symbolMap[value] = generalCategory;
+					bidiMap[value] = bidiCategory;
 				});
 			} else {
 				throw Error('Database exception');
 			}
 		} else {
-			if (/<.+, First>/.test(data[1])) {
+			if (/<.+, First>/.test(name)) {
 				flag = true;
 				first = codePoint;
 			} else {
-				symbolMap[codePoint] = data[2];
-				bidiMap[codePoint] = data[4];
+				symbolMap[codePoint] = generalCategory;
+				bidiMap[codePoint] = bidiCategory;
 			}
 		}
 	});
@@ -41,7 +44,7 @@ var parseDatabase = function(version) {
 	var tmp;
 	utils.range(0x000000, 0x10FFFF).forEach(function(codePoint) {
 		// Note: `Any`, `ASCII`, and `Assigned` are actually properties,
-		// not categories.
+		// not categories. http://unicode.org/reports/tr18/#Categories
 		if (!symbolMap.hasOwnProperty(codePoint)) {
 			categories = ['Any', 'C', 'Cn'];
 		} else {

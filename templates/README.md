@@ -29,8 +29,7 @@ var directionality = require('unicode-<%= version %>/bidi')[ 0x41 ];
 <% if (dirs.hasOwnProperty('bidi-mirroring')) { %>
 // What glyph is the mirror image of `«` (U+00AB)?
 var mirrored = require('unicode-<%= version %>/bidi-mirroring')[ 0xAB ];
-<% } %>
-<% if (dirs.hasOwnProperty('bidi-brackets')) { %>
+<% } if (dirs.hasOwnProperty('bidi-brackets')) { %>
 // Get a regular expression that matches all opening brackets:
 var openingBrackets = require('unicode-<%= version %>/bidi-brackets/Open/regex');
 <% } %>
@@ -59,7 +58,7 @@ require('unicode-<%= version %>/<%= type %>/<%= dir %>/regex');
 
 ## Author
 
-| [![twitter/mathias](http://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70)](http://twitter.com/mathias "Follow @mathias on Twitter") |
+| [![twitter/mathias](https://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70)](https://twitter.com/mathias "Follow @mathias on Twitter") |
 |---|
 | [Mathias Bynens](http://mathiasbynens.be/) |
 
