@@ -71,7 +71,7 @@ var writeFiles = function(options) {
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'regex.js'),
-			'module.exports=/' + regenerate.fromCodePoints(codePoints) + '/'
+			'module.exports=/' + regenerate(codePoints).toString() + '/'
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.js'),
