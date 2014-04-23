@@ -50,6 +50,12 @@ var generateData = function(version) {
 		'map': parsers.parseProperties(version),
 		'type': 'properties'
 	}));
+	console.log('Parsing Unicode v%s derived core properties…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseDerivedCoreProperties(version),
+		'type': 'properties'
+	}));
 	console.log('Parsing Unicode v%s blocks…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,

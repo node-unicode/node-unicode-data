@@ -39,28 +39,32 @@ var resources = [
 		'main': 'http://unicode.org/Public/3.1-Update/UnicodeData-3.1.0.txt',
 		'scripts': 'http://unicode.org/Public/3.1-Update/Scripts-3.1.0.txt',
 		'blocks': 'http://unicode.org/Public/3.1-Update/Blocks-4.txt',
-		'properties': 'http://unicode.org/Public/3.1-Update/PropList-3.1.0.txt'
+		'properties': 'http://unicode.org/Public/3.1-Update/PropList-3.1.0.txt',
+		'derived-core-properties': 'http://unicode.org/Public/3.1-Update/DerivedCoreProperties-3.1.0.txt'
 	},
 	{
 		'version': '3.2.0',
 		'main': 'http://unicode.org/Public/3.2-Update/UnicodeData-3.2.0.txt',
 		'scripts': 'http://unicode.org/Public/3.2-Update/Scripts-3.2.0.txt',
 		'blocks': 'http://unicode.org/Public/3.2-Update/Blocks-3.2.0.txt',
-		'properties': 'http://unicode.org/Public/3.2-Update/PropList-3.2.0.txt'
+		'properties': 'http://unicode.org/Public/3.2-Update/PropList-3.2.0.txt',
+		'derived-core-properties': 'http://unicode.org/Public/3.2-Update/DerivedCoreProperties-3.2.0.txt'
 	},
 	{
 		'version': '4.0.0',
 		'main': 'http://unicode.org/Public/4.0-Update/UnicodeData-4.0.0.txt',
 		'scripts': 'http://unicode.org/Public/4.0-Update/Scripts-4.0.0.txt',
 		'blocks': 'http://unicode.org/Public/4.0-Update/Blocks-4.0.0.txt',
-		'properties': 'http://unicode.org/Public/4.0-Update/PropList-4.0.0.txt'
+		'properties': 'http://unicode.org/Public/4.0-Update/PropList-4.0.0.txt',
+		'derived-core-properties': 'http://unicode.org/Public/4.0-Update/DerivedCoreProperties-4.0.0.txt'
 	},
 	{
 		'version': '4.0.1',
 		'main': 'http://unicode.org/Public/4.0-Update1/UnicodeData-4.0.1.txt',
 		'scripts': 'http://unicode.org/Public/4.0-Update1/Scripts-4.0.1.txt',
 		'blocks': 'http://unicode.org/Public/4.0-Update1/Blocks-4.0.1.txt',
-		'properties': 'http://unicode.org/Public/4.0-Update1/PropList-4.0.1.txt'
+		'properties': 'http://unicode.org/Public/4.0-Update1/PropList-4.0.1.txt',
+		'derived-core-properties': 'http://unicode.org/Public/4.0-Update1/DerivedCoreProperties-4.0.1.txt'
 	},
 	{
 		'version': '4.1.0',
@@ -68,6 +72,7 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/4.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/4.1.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/4.1.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/4.1.0/ucd/DerivedCoreProperties.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/4.1.0/ucd/BidiMirroring.txt'
 	},
 	{
@@ -76,6 +81,7 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/5.0.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.0.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/5.0.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/5.0.0/ucd/DerivedCoreProperties.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.0.0/ucd/BidiMirroring.txt'
 	},
 	{
@@ -84,6 +90,7 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/5.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.1.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/5.1.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/6.1.0/ucd/DerivedCoreProperties.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.1.0/ucd/BidiMirroring.txt'
 	},
 	{
@@ -92,6 +99,7 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/5.2.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/5.2.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/5.2.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/5.2.0/ucd/DerivedCoreProperties.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.2.0/ucd/BidiMirroring.txt'
 	},
 	{
@@ -100,6 +108,7 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/6.0.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.0.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.0.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/6.0.0/ucd/DerivedCoreProperties.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.0.0/ucd/BidiMirroring.txt'
 	},
 	{
@@ -108,6 +117,7 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/6.1.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.1.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.1.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/6.1.0/ucd/DerivedCoreProperties.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.1.0/ucd/BidiMirroring.txt'
 	},
 	{
@@ -116,6 +126,7 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/6.2.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.2.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.2.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/6.2.0/ucd/DerivedCoreProperties.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.2.0/ucd/BidiMirroring.txt'
 	},
 	{
@@ -124,8 +135,9 @@ var resources = [
 		'scripts': 'http://unicode.org/Public/6.3.0/ucd/Scripts.txt',
 		'blocks': 'http://unicode.org/Public/6.3.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.3.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/6.3.0/ucd/DerivedCoreProperties.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.3.0/ucd/BidiMirroring.txt',
-		'bidi-brackets': 'http://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt'
+		'bidi-brackets': 'http://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt',
 	}
 ];
 

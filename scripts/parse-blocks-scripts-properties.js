@@ -2,8 +2,8 @@ var punycode = require('punycode');
 var utils = require('./utils.js');
 
 var parseBlocksScriptsProperties = function(type, version) {
-	// `type` is 'properties', 'scripts', 'blocks', 'bidi-brackets', or
-	// 'bidi-mirroring'
+	// `type` is 'properties', 'derived-core-properties', 'scripts', 'blocks',
+	// 'bidi-brackets', or 'bidi-mirroring'.
 	var map = {};
 	var source = utils.readDataFile(version, type);
 	if (!source) {
@@ -55,6 +55,7 @@ var parseBlocksScriptsProperties = function(type, version) {
 module.exports = {
 	'parseScripts': parseBlocksScriptsProperties.bind(null, 'scripts'),
 	'parseProperties': parseBlocksScriptsProperties.bind(null, 'properties'),
+	'parseDerivedCoreProperties': parseBlocksScriptsProperties.bind(null, 'derived-core-properties'),
 	'parseBlocks': parseBlocksScriptsProperties.bind(null, 'blocks'),
 	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring'),
 	'parseBrackets': parseBlocksScriptsProperties.bind(null, 'bidi-brackets')

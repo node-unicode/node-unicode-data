@@ -34,6 +34,10 @@ assert.deepEqual(
 	require('./expected/' + newest + '-property-STerm.js'),
 	require('../' + newest + '/properties/STerm/code-points.js')
 );
+assert.deepEqual( // Note: `Hex_Digit` is a derived core property.
+	require('./expected/' + newest + '-property-Hex_Digit.js'),
+	require('../' + newest + '/properties/Hex_Digit/code-points.js')
+);
 assert.deepEqual(
 	require('./expected/' + newest + '-bidi-PDI.js'),
 	require('../' + newest + '/bidi/PDI/code-points.js')

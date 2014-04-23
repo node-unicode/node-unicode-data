@@ -33,6 +33,7 @@ resources.forEach(function(resource) {
 		'scripts',
 		'blocks',
 		'properties',
+		'derived-core-properties',
 		'bidi-mirroring',
 		'bidi-brackets'
 	].forEach(function(type) {
