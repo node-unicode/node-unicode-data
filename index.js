@@ -1,6 +1,7 @@
 var utils = require('./scripts/utils.js');
 var parsers = require('./scripts/parse-blocks-scripts-properties.js');
 parsers.parseCategories = require('./scripts/parse-categories.js');
+parsers.parseCaseFolding = require('./scripts/parse-case-folding.js');
 var extend = utils.extend;
 var fs = require('fs');
 var jsesc = require('jsesc');
@@ -16,10 +17,7 @@ var compilePackage = template(fs.readFileSync(
 	path.resolve(templatePath, 'package.json'),
 	'utf-8')
 );
-var compileIndex = template(fs.readFileSync(
-	path.resolve(templatePath, 'index.js'),
-	'utf-8')
-);
+var compileIndex = template('module.exports=<%= data %>');
 
 var generateData = function(version) {
 	var dirMap = {};
@@ -56,6 +54,12 @@ var generateData = function(version) {
 		'map': parsers.parseDerivedCoreProperties(version),
 		'type': 'properties'
 	}));
+	console.log('Parsing Unicode v%s case folding…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseCaseFolding(version),
+		'type': 'case-folding'
+	}));
 	console.log('Parsing Unicode v%s blocks…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
@@ -75,15 +79,15 @@ var generateData = function(version) {
 		'type': 'bidi-brackets'
 	}));
 	fs.writeFileSync(
-		path.resolve(__dirname, version, 'README.md'),
+		path.resolve(__dirname, 'output', 'unicode-' + version, 'README.md'),
 		compileReadMe({ 'version': version, 'dirs': dirMap })
 	);
 	fs.writeFileSync(
-		path.resolve(__dirname, version, 'index.js'),
+		path.resolve(__dirname, 'output', 'unicode-' + version, 'index.js'),
 		compileIndex({ 'version': version, 'data': jsesc(dirMap) })
 	);
 	fs.writeFileSync(
-		path.resolve(__dirname, version, 'package.json'),
+		path.resolve(__dirname, 'output', 'unicode-' + version, 'package.json'),
 		compilePackage({ 'version': version })
 	);
 	return dirMap;

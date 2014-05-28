@@ -34,6 +34,7 @@ resources.forEach(function(resource) {
 		'blocks',
 		'properties',
 		'derived-core-properties',
+		'case-folding',
 		'bidi-mirroring',
 		'bidi-brackets'
 	].forEach(function(type) {

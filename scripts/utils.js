@@ -2,8 +2,8 @@ var fs = require('fs');
 var path = require('path');
 var jsesc = require('jsesc');
 var regenerate = require('regenerate');
-var punycode = require('punycode');
 var mkdirp = require('mkdirp');
+require('string.fromcodepoint');
 
 var range = function(start, stop) {
 	// inclusive, e.g. `range(1, 3)` → `[1, 2, 3]`
@@ -38,13 +38,14 @@ var writeFiles = function(options) {
 		var type = typeof options.type == 'function'
 			? options.type(item)
 			: options.type;
+		var isCaseFolding = type == 'case-folding';
 		var isBidiProperty = type == 'bidi';
 		if (isBidiProperty) {
 			item = item.replace(/^Bidi_/, '');
 		}
 		var dir = path.resolve(
-			__dirname,
-			'..', version, type, item
+			__dirname, '..',
+			'output', 'unicode-' + version, type, item
 		);
 		if (
 			type == 'bidi' || type == 'bidi-mirroring' || type == 'bidi-brackets' ||
@@ -69,19 +70,30 @@ var writeFiles = function(options) {
 			path.resolve(dir, 'code-points.js'),
 			'module.exports=' + jsesc(codePoints)
 		);
-		fs.writeFileSync(
-			path.resolve(dir, 'regex.js'),
-			'module.exports=/' + regenerate(codePoints).toString() + '/'
-		);
+		if (!isCaseFolding) {
+			fs.writeFileSync(
+				path.resolve(dir, 'regex.js'),
+				'module.exports=/' + regenerate(codePoints).toString() + '/'
+			);
+		}
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.js'),
-			'module.exports=' + jsesc(codePoints.map(function(codePoint) {
-				return punycode.ucs2.encode([codePoint]);
-			}))
+			'module.exports=' + jsesc(
+				isCaseFolding ?
+					Object.keys(codePoints).reduce(function(result, current) {
+						result[String.fromCodePoint(current)] = String.fromCodePoint(codePoints[current]);
+						return result;
+					}, {}) :
+					codePoints.map(function(codePoint) {
+						return String.fromCodePoint(codePoint);
+					}))
 		);
 	});
 	Object.keys(auxMap).forEach(function(type) {
-		var dir = path.resolve(__dirname, '..', version, type);
+		var dir = path.resolve(
+			__dirname, '..',
+			'output', 'unicode-' + version, type
+		);
 		if (!hasKey(dirMap, type)) {
 			dirMap[type] = [];
 		}
@@ -126,8 +138,8 @@ var extend = function(destination, source) {
 
 var readDataFile = function(version, type) {
 	var sourceFile = path.resolve(
-		__dirname,
-		'..', 'data', version + '-' + type + '.txt'
+		__dirname, '..',
+		'data', version + '-' + type + '.txt'
 	);
 	if (!fs.existsSync(sourceFile)) {
 		return;

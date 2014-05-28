@@ -1,6 +1,8 @@
 # Unicode v<%= version %> data
 
-JavaScript-compatible Unicode data for use in Node.js. Included: arrays of code points, arrays of symbols, and regular expressions for Unicode v<%= version %>’s categories, scripts, blocks, and properties.
+JavaScript-compatible Unicode data for use in Node.js. Included: arrays of code points, arrays of symbols, and regular expressions for Unicode v<%= version %>’s categories, scripts, blocks, and properties, as well as bidi mirroring and case folding data.
+
+Looking to build a JavaScript-compatible regular expression based on this data? [Use Regenerate.](http://mths.be/regenerate)
 
 The data files in this module are generated as part of the [node-unicode-data](http://mths.be/node-unicode-data) project.
 
@@ -47,11 +49,20 @@ require('unicode-<%= version %>/<%= type %>')[ codePoint ]; // lookup array
 <%
 	}
 	dirs[type].forEach(function(dir) {
+		if ('case-folding' == type) {
+%>
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points'); // lookup table with code point to code point mappings
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points')[ codePoint ]; // lookup table
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols'); // lookup table with symbol to symbol mappings
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols')[ symbol ]; // lookup table
+<%
+		} else {
 %>
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points');
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols');
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/regex');
 <%
+		}
 	});
 });
 %>```
