@@ -81,7 +81,13 @@ var writeFiles = function(options) {
 			'module.exports=' + jsesc(
 				isCaseFolding ?
 					Object.keys(codePoints).reduce(function(result, current) {
-						result[String.fromCodePoint(current)] = String.fromCodePoint(codePoints[current]);
+						var mappings = codePoints[current];
+						if (Array.isArray(mappings)) {
+							mappings = String.fromCodePoint.apply(null, mappings);
+						} else {
+							mappings = String.fromCodePoint(mappings);
+						}
+						result[String.fromCodePoint(current)] = mappings;
 						return result;
 					}, {}) :
 					codePoints.map(function(codePoint) {

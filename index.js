@@ -1,14 +1,16 @@
+var fs = require('fs');
+var path = require('path');
 var utils = require('./scripts/utils.js');
 var parsers = require('./scripts/parse-blocks-scripts-properties.js');
 parsers.parseCategories = require('./scripts/parse-categories.js');
 parsers.parseCaseFolding = require('./scripts/parse-case-folding.js');
 var extend = utils.extend;
-var fs = require('fs');
+var cp = require('cp');
 var jsesc = require('jsesc');
-var path = require('path');
 var template = require('lodash.template');
 
 var templatePath = path.resolve(__dirname, 'templates');
+var staticPath = path.resolve(__dirname, 'static');
 var compileReadMe = template(fs.readFileSync(
 	path.resolve(templatePath, 'README.md'),
 	'utf-8')
@@ -80,7 +82,11 @@ var generateData = function(version) {
 	}));
 	fs.writeFileSync(
 		path.resolve(__dirname, 'output', 'unicode-' + version, 'README.md'),
-		compileReadMe({ 'version': version, 'dirs': dirMap })
+		compileReadMe({
+			'version': version,
+			'dirs': dirMap,
+			'regenerateExample': '<%= set.toString() %>'
+		})
 	);
 	fs.writeFileSync(
 		path.resolve(__dirname, 'output', 'unicode-' + version, 'index.js'),
@@ -90,6 +96,15 @@ var generateData = function(version) {
 		path.resolve(__dirname, 'output', 'unicode-' + version, 'package.json'),
 		compilePackage({ 'version': version })
 	);
+	[
+		'.gitattributes',
+		'.gitignore'
+	].forEach(function(file) {
+		cp.sync(
+			path.resolve(staticPath, file),
+			path.resolve(__dirname, 'output', 'unicode-' + version, file)
+		);
+	});
 	return dirMap;
 };
 
