@@ -36,7 +36,8 @@ resources.forEach(function(resource) {
 		'derived-core-properties',
 		'case-folding',
 		'bidi-mirroring',
-		'bidi-brackets'
+		'bidi-brackets',
+		'emoji'
 	].forEach(function(type) {
 		if (resource[type]) {
 			download(resource[type], version, type);

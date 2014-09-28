@@ -4,6 +4,7 @@ var utils = require('./scripts/utils.js');
 var parsers = require('./scripts/parse-blocks-scripts-properties.js');
 parsers.parseCategories = require('./scripts/parse-categories.js');
 parsers.parseCaseFolding = require('./scripts/parse-case-folding.js');
+parsers.parseEmoji = require('./scripts/parse-emoji.js');
 var extend = utils.extend;
 var cp = require('cp');
 var jsesc = require('jsesc');
@@ -79,6 +80,11 @@ var generateData = function(version) {
 		'version': version,
 		'map': parsers.parseBrackets(version),
 		'type': 'bidi-brackets'
+	}));
+	console.log('Parsing Unicode v%s emoji', version);
+	extend(dirMap, utils.writeEmojiFiles({
+		'version': version,
+		'data': parsers.parseEmoji(version)
 	}));
 	fs.writeFileSync(
 		path.resolve(__dirname, 'output', 'unicode-' + version, 'README.md'),

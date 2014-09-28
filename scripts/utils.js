@@ -129,6 +129,31 @@ var writeFiles = function(options) {
 	return dirMap;
 };
 
+var writeEmojiFiles = function(options) {
+	var type = 'emoji';
+	var version = options.version;
+	var symbols = options.data.symbols;
+	var codePoints = options.data.codePoints;
+	var dir = path.resolve(
+		__dirname, '..',
+		'output', 'unicode-' + version, type
+	);
+	// Create the target directory if it doesn’t exist yet
+	mkdirp.sync(dir);
+	// Save the data to a file
+	fs.writeFileSync(
+		path.resolve(dir, 'code-points.js'),
+		'module.exports=' + jsesc(codePoints)
+	);
+	fs.writeFileSync(
+		path.resolve(dir, 'symbols.js'),
+		'module.exports=' + jsesc(symbols)
+	);
+	return {
+		'emoji': []
+	};
+};
+
 var extend = function(destination, source) {
 	for (var key in source) {
 		if (hasKey(source, key)) {
@@ -159,5 +184,6 @@ module.exports = {
 	'append': append,
 	'extend': extend,
 	'readDataFile': readDataFile,
-	'writeFiles': writeFiles
+	'writeFiles': writeFiles,
+	'writeEmojiFiles': writeEmojiFiles
 };

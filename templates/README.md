@@ -55,11 +55,16 @@ Other than categories, data on Unicode properties, blocks, and scripts is availa
 ```js<% Object.keys(dirs).forEach(function(type) { %>
 // <%= type.replace(/-/g, ' ') %>:
 <%
-	if (/^(?:bidi|bidi-brackets|bidi-mirroring|categories)$/.test(type)) {
+  if (/^(?:bidi|bidi-brackets|bidi-mirroring|categories)$/.test(type)) {
 %>
 require('unicode-<%= version %>/<%= type %>')[ codePoint ]; // lookup array
 <%
-	}
+  } else if ('emoji' == type) {
+%>
+require('unicode-<%= version %>/<%= type %>/code-points');
+require('unicode-<%= version %>/<%= type %>/symbols');
+<%
+  }
 	dirs[type].forEach(function(dir) {
 		if ('case-folding' == type) {
 %>
