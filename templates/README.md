@@ -2,7 +2,7 @@
 
 JavaScript-compatible Unicode data for use in Node.js. Included: arrays of code points, arrays of symbols, and regular expressions for Unicode v<%= version %>’s categories, scripts, blocks, and properties, as well as bidi mirroring and case folding data.
 
-The data files in this module are generated as part of the [node-unicode-data](http://mths.be/node-unicode-data) project. Please report any bugs or requests [in the appropriate issue tracker](https://github.com/mathiasbynens/node-unicode-data/issues).
+The data files in this module are generated as part of the [node-unicode-data](https://mths.be/node-unicode-data) project. Please report any bugs or requests [in the appropriate issue tracker](https://github.com/mathiasbynens/node-unicode-data/issues).
 
 ## Installation
 
@@ -12,7 +12,7 @@ npm install unicode-<%= version %> --save
 
 ## Regular expressions
 
-The Unicode data modules ship with pre-compiled regular expressions for categories, scripts, blocks, and properties. But maybe you want to create a single regular expression that combines several categories, scripts, etc. In that case, [***you should use Regenerate***](http://mths.be/regenerate). For example, to construct a regex that matches all symbols in the Arabic and Greek scripts as per Unicode v6.3.0:
+The Unicode data modules ship with pre-compiled regular expressions for categories, scripts, blocks, and properties. But maybe you want to create a single regular expression that combines several categories, scripts, etc. In that case, [***you should use Regenerate***](https://mths.be/regenerate). For example, to construct a regex that matches all symbols in the Arabic and Greek scripts as per Unicode v6.3.0:
 
 ```js
 var regenerate = require('regenerate');
@@ -87,4 +87,4 @@ require('unicode-<%= version %>/<%= type %>/<%= dir %>/regex');
 
 ## License
 
-This module is available under the [MIT](http://mths.be/mit) license.
+This module is available under the [MIT](https://mths.be/mit) license.

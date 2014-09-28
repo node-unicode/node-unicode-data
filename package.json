@@ -2,7 +2,7 @@
 	"name": "unicode-data",
 	"version": "0.1.0",
 	"description": "JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, blocks, and properties.",
-	"homepage": "http://mths.be/node-unicode-data",
+	"homepage": "https://mths.be/node-unicode-data",
 	"main": "index.js",
 	"keywords": [
 		"unicode",
