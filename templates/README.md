@@ -7,8 +7,10 @@ The data files in this module are generated as part of the [node-unicode-data](h
 ## Installation
 
 ```bash
-npm install unicode-<%= version %> --save
+npm install unicode-<%= version %> --save-dev
 ```
+
+**Note:** _unicode-<%= version %>_ is supposed to be used in build scripts (i.e. as a `devDependency`), and not at runtime (i.e. as a regular `dependency`).
 
 ## Regular expressions
 
