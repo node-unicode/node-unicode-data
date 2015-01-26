@@ -1,1 +1,1 @@
-module.exports=/[\uDB80-\uDBFF]/
+module.exports=/[\uDB80-\uDBFF](?![\uDC00-\uDFFF])/
