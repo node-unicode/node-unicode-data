@@ -1,1 +1,1 @@
-module.exports=/[\uD800-\uDFFF]/
+module.exports=/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]/
