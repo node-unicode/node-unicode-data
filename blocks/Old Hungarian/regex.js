@@ -1,0 +1,1 @@
+module.exports=/\uD803[\uDC80-\uDCFF]/
