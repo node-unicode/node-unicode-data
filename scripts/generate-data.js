@@ -1,32 +1,30 @@
-var resources = require('../data/resources.js');
-var generateData = require('../index.js');
-var utils = require('../scripts/utils.js');
+'use strict';
+
+const resources = require('../data/resources.js');
+const generateData = require('../index.js');
+const utils = require('../scripts/utils.js');
 
 // -----------------------------------------------------------------------------
 
-var cluster = require('cluster');
-var numCPUs = require('os').cpus().length;
+const cluster = require('cluster');
+const numCPUs = require('os').cpus().length;
 
-var i;
-
-var pad = function(number) {
+const pad = function(number) {
 	return ('00' + String(number)).slice(-2);
 };
 
-var getTime = function() {
-	var currentdate = new Date();
+const getTime = function() {
+	const currentdate = new Date();
 	return pad(currentdate.getHours()) + ':' +
 		pad(currentdate.getMinutes()) + ':' +
 		pad(currentdate.getSeconds());
 };
 
-var complicatedWorkThatTakesTime = function(resource, callback) {
-
-	var version;
+const complicatedWorkThatTakesTime = function(resource, callback) {
 
 	if (resource.length) {
 
-		version = resource[0].version;
+		const version = resource[0].version;
 		console.log('[%s] Worker %d \u2192 Unicode v%s',
 			getTime(), cluster.worker.id, version);
 
@@ -44,14 +42,14 @@ var complicatedWorkThatTakesTime = function(resource, callback) {
 
 if (cluster.isMaster) {
 
-	for (i = 0; i < numCPUs; i++) {
+	for (let index = 0; index < numCPUs; index++) {
 		cluster.fork();
 	}
 
 	cluster.on('online', function(worker) {
 
-		var size = Math.round(resources.length / numCPUs);
-		var x = worker.id - 1;
+		const size = Math.round(resources.length / numCPUs);
+		const x = worker.id - 1;
 
 		// divide work
 		if (worker.id === 1) { // first worker

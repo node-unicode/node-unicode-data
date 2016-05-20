@@ -2,7 +2,7 @@
 
 JavaScript-compatible Unicode data for use in Node.js. Included: arrays of code points, arrays of symbols, and regular expressions for Unicode v<%= version %>’s categories, scripts, blocks, and properties, as well as bidi mirroring and case folding data.
 
-The data files in this module are generated as part of the [node-unicode-data](https://mths.be/node-unicode-data) project. Please report any bugs or requests [in the appropriate issue tracker](https://github.com/mathiasbynens/node-unicode-data/issues).
+The data files in this module are generated as part of the [node-unicode-data](https://mths.be/node-unicode-data) project. **Please report any bugs or requests [in the appropriate issue tracker](https://github.com/mathiasbynens/node-unicode-data/issues).**
 
 ## Installation
 
@@ -17,37 +17,37 @@ npm install unicode-<%= version %> --save-dev
 The Unicode data modules ship with pre-compiled regular expressions for categories, scripts, blocks, and properties. But maybe you want to create a single regular expression that combines several categories, scripts, etc. In that case, [***you should use Regenerate***](https://mths.be/regenerate). For example, to construct a regex that matches all symbols in the Arabic and Greek scripts as per Unicode v6.3.0:
 
 ```js
-var regenerate = require('regenerate');
-var set = regenerate()
+const regenerate = require('regenerate');
+const set = regenerate()
   .add(require('unicode-6.3.0/scripts/Arabic/code-points')) // or `…/symbols`, doesn’t matter
   .add(require('unicode-6.3.0/scripts/Greek/code-points')); // or `…/symbols`, doesn’t matter
 console.log(set.toString());
 // Then you might want to use a template like this to write the result to a file, along with any regex flags you might need:
-// var regex = /<%= regenerateExample %>/gim;
+// const regex = /<%= regenerateExample %>/gim;
 ```
 
 ## Usage
 
 ```js
 // Get an array of code points in a given Unicode category:
-var codePoints = require('unicode-<%= version %>/categories/Lu/code-points');
+const codePoints = require('unicode-<%= version %>/categories/Lu/code-points');
 // Get an array of symbols (strings) in a given Unicode category:
-var symbols = require('unicode-<%= version %>/categories/Lu/symbols');
+const symbols = require('unicode-<%= version %>/categories/Lu/symbols');
 // Get a regular expression that matches any symbol in a given Unicode category:
-var regex = require('unicode-<%= version %>/categories/Lu/regex');
+const regex = require('unicode-<%= version %>/categories/Lu/regex');
 // Get the canonical category a given code point belongs to:
 // (Note: U+0041 is LATIN CAPITAL LETTER A)
-var category = require('unicode-<%= version %>/categories')[ 0x41 ];
+const category = require('unicode-<%= version %>/categories')[ 0x41 ];
 // Get an array of all code points with the `Bidi_ON` bidi property:
-var on = require('unicode-<%= version %>/bidi/ON/code-points');
+const on = require('unicode-<%= version %>/bidi/ON/code-points');
 // Get the directionality of a given code point:
-var directionality = require('unicode-<%= version %>/bidi')[ 0x41 ];
+const directionality = require('unicode-<%= version %>/bidi')[ 0x41 ];
 <% if (dirs.hasOwnProperty('bidi-mirroring')) { %>
 // What glyph is the mirror image of `«` (U+00AB)?
-var mirrored = require('unicode-<%= version %>/bidi-mirroring')[ 0xAB ];
+const mirrored = require('unicode-<%= version %>/bidi-mirroring')[ 0xAB ];
 <% } if (dirs.hasOwnProperty('bidi-brackets')) { %>
 // Get a regular expression that matches all opening brackets:
-var openingBrackets = require('unicode-<%= version %>/bidi-brackets/Open/regex');
+const openingBrackets = require('unicode-<%= version %>/bidi-brackets/Open/regex');
 <% } %>
 // …you get the idea.
 ```

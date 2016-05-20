@@ -1,21 +1,22 @@
-var punycode = require('punycode');
-var utils = require('./utils.js');
+'use strict';
 
-var parseBlocksScriptsProperties = function(type, version) {
+const utils = require('./utils.js');
+
+const parseBlocksScriptsProperties = function(type, version) {
 	// `type` is 'properties', 'derived-core-properties', 'scripts', 'blocks',
 	// 'bidi-brackets', or 'bidi-mirroring'.
-	var map = {};
-	var source = utils.readDataFile(version, type);
+	const map = {};
+	const source = utils.readDataFile(version, type);
 	if (!source) {
 		return;
 	}
-	var isBidiBrackets = type == 'bidi-brackets';
-	var bidiBracketMap = {
+	const isBidiBrackets = type == 'bidi-brackets';
+	const bidiBracketMap = {
 		'o': 'Open',
 		'c': 'Close',
 		'n': 'None'
 	};
-	var lines = source.split('\n');
+	const lines = source.split('\n');
 	lines.forEach(function(line) {
 		if (
 			/^#/.test(line) ||
@@ -27,17 +28,17 @@ var parseBlocksScriptsProperties = function(type, version) {
 		) {
 			return;
 		}
-		var data = line.trim().split(';');
-		var charRange = data[0].replace('..', '-').trim();
-		var item = data[ isBidiBrackets ? 2 : 1 ].split(
+		const data = line.trim().split(';');
+		const charRange = data[0].replace('..', '-').trim();
+		let item = data[ isBidiBrackets ? 2 : 1 ].split(
 			type == 'blocks' ? ';' : '#'
 		)[0].trim();
 		if (isBidiBrackets) {
 			item = bidiBracketMap[item];
 		} else if (type == 'bidi-mirroring') {
-			item = punycode.ucs2.encode([parseInt(item, 16)]);
+			item = String.fromCodePoint(parseInt(item, 16));
 		}
-		var rangeParts = charRange.split('-');
+		const rangeParts = charRange.split('-');
 		if (rangeParts.length == 2) {
 			utils.range(
 				parseInt(rangeParts[0], 16),

@@ -1,21 +1,21 @@
-var utils = require('./utils.js');
+const utils = require('./utils.js');
 
-var parseDatabase = function(version) {
-	var symbolMap = {};
-	var bidiMap = {};
-	var source = utils.readDataFile(version, 'database');
+const parseDatabase = function(version) {
+	const symbolMap = {};
+	const bidiMap = {};
+	const source = utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
 	}
-	var lines = source.split('\n');
-	var flag = false;
-	var first = 0;
+	const lines = source.split('\n');
+	let flag = false;
+	let first = 0;
 	lines.forEach(function(line) {
-		var data = line.trim().split(';');
-		var codePoint = parseInt(data[0], 16);
-		var name = data[1];
-		var generalCategory = data[2];
-		var bidiCategory = data[4];
+		const data = line.trim().split(';');
+		const codePoint = parseInt(data[0], 16);
+		const name = data[1];
+		const generalCategory = data[2];
+		const bidiCategory = data[4];
 		if (flag) {
 			if (/<.+, Last>/.test(name)) {
 				flag = false;
@@ -39,16 +39,15 @@ var parseDatabase = function(version) {
 
 	// http://unicode.org/reports/tr44/#GC_Values_Table
 	// http://unicode.org/reports/tr18/#Categories
-	var categoryMap = {};
-	var categories = [];
-	var tmp;
+	const categoryMap = {};
+	let categories = [];
 	utils.range(0x000000, 0x10FFFF).forEach(function(codePoint) {
 		// Note: `Any`, `ASCII`, and `Assigned` are actually properties,
 		// not categories. http://unicode.org/reports/tr18/#Categories
 		if (!symbolMap.hasOwnProperty(codePoint)) {
 			categories = ['Any', 'C', 'Cn'];
 		} else {
-			tmp = symbolMap[codePoint];
+			const tmp = symbolMap[codePoint];
 			categories = ['Any', tmp, tmp.charAt(0), 'Assigned'];
 			if (/^(?:Ll|Lu|Lt)$/.test(tmp)) {
 				categories.push('LC');

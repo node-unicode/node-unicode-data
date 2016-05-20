@@ -39,15 +39,14 @@
 	},
 	"dependencies": {
 		"cp": "^0.2.0",
-		"jsesc": "^0.5.0",
-		"lodash.template": "^3.0.1",
+		"jsesc": "^1.1.0",
+		"lodash.template": "^4.2.4",
 		"mkdirp": "^0.5.1",
 		"regenerate": "^1.2.1",
-		"request": "^2.53.0",
-		"string.fromcodepoint": "^0.2.0",
-		"when": "^3.7.2"
+		"request": "^2.72.0",
+		"when": "^3.7.7"
 	},
 	"devDependencies": {
-		"istanbul": "^0.3.15"
+		"istanbul": "^0.4.3"
 	}
 }

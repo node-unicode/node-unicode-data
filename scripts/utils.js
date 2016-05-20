@@ -1,23 +1,24 @@
-var fs = require('fs');
-var path = require('path');
-var jsesc = require('jsesc');
-var regenerate = require('regenerate');
-var mkdirp = require('mkdirp');
-require('string.fromcodepoint');
+'use strict';
 
-var range = function(start, stop) {
+const fs = require('fs');
+const path = require('path');
+const jsesc = require('jsesc');
+const regenerate = require('regenerate');
+const mkdirp = require('mkdirp');
+
+const range = function(start, stop) {
 	// inclusive, e.g. `range(1, 3)` → `[1, 2, 3]`
 	for (var result = []; start <= stop; result.push(start++));
 	return result;
 };
 
-var object = {};
-var hasOwnProperty = object.hasOwnProperty;
-var hasKey = function(object, key) {
+const object = {};
+const hasOwnProperty = object.hasOwnProperty;
+const hasKey = function(object, key) {
 	return hasOwnProperty.call(object, key);
 };
 
-var append = function(object, key, value) {
+const append = function(object, key, value) {
 	if (hasKey(object, key)) {
 		object[key].push(value);
 	} else {
@@ -25,25 +26,25 @@ var append = function(object, key, value) {
 	}
 };
 
-var writeFiles = function(options) {
-	var version = options.version;
-	var map = options.map;
+const writeFiles = function(options) {
+	const version = options.version;
+	const map = options.map;
 	if (map == null) {
 		return;
 	}
-	var dirMap = {};
-	var auxMap = {};
+	const dirMap = {};
+	const auxMap = {};
 	Object.keys(map).forEach(function(item) {
-		var codePoints = map[item];
-		var type = typeof options.type == 'function'
+		const codePoints = map[item];
+		const type = typeof options.type == 'function'
 			? options.type(item)
 			: options.type;
-		var isCaseFolding = type == 'case-folding';
-		var isBidiProperty = type == 'bidi';
+		const isCaseFolding = type == 'case-folding';
+		const isBidiProperty = type == 'bidi';
 		if (isBidiProperty) {
 			item = item.replace(/^Bidi_/, '');
 		}
-		var dir = path.resolve(
+		const dir = path.resolve(
 			__dirname, '..',
 			'output', 'unicode-' + version, type, item
 		);
@@ -81,7 +82,7 @@ var writeFiles = function(options) {
 			'module.exports=' + jsesc(
 				isCaseFolding ?
 					Object.keys(codePoints).reduce(function(result, current) {
-						var mappings = codePoints[current];
+						let mappings = codePoints[current];
 						if (Array.isArray(mappings)) {
 							mappings = String.fromCodePoint.apply(null, mappings);
 						} else {
@@ -96,7 +97,7 @@ var writeFiles = function(options) {
 		);
 	});
 	Object.keys(auxMap).forEach(function(type) {
-		var dir = path.resolve(
+		const dir = path.resolve(
 			__dirname, '..',
 			'output', 'unicode-' + version, type
 		);
@@ -104,7 +105,7 @@ var writeFiles = function(options) {
 			dirMap[type] = [];
 		}
 		mkdirp.sync(dir);
-		var output = '';
+		let output = '';
 		if (/^(bidi-mirroring|bidi-brackets)$/.test(type)) {
 			output += 'var x=[];';
 			Object.keys(auxMap[type]).forEach(function(key) {
@@ -129,7 +130,7 @@ var writeFiles = function(options) {
 	return dirMap;
 };
 
-var extend = function(destination, source) {
+const extend = function(destination, source) {
 	for (var key in source) {
 		if (hasKey(source, key)) {
 			if (!hasKey(destination, key)) {
@@ -142,15 +143,15 @@ var extend = function(destination, source) {
 	}
 };
 
-var readDataFile = function(version, type) {
-	var sourceFile = path.resolve(
+const readDataFile = function(version, type) {
+	const sourceFile = path.resolve(
 		__dirname, '..',
 		'data', version + '-' + type + '.txt'
 	);
 	if (!fs.existsSync(sourceFile)) {
 		return;
 	}
-	var source = fs.readFileSync(sourceFile, 'utf-8');
+	const source = fs.readFileSync(sourceFile, 'utf-8');
 	return source;
 };
 

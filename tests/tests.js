@@ -1,13 +1,15 @@
-var resources = require('../data/resources.js');
-var generateData = require('../index.js');
+'use strict';
+
+const resources = require('../data/resources.js');
+const generateData = require('../index.js');
 
 // Generate the data for the oldest and newest available Unicode version
-var oldest = resources[0].version;
+const oldest = resources[0].version;
 generateData(oldest);
-var newest = resources.pop().version;
+const newest = resources.pop().version;
 generateData(newest);
 
-var assert = require('assert');
+const assert = require('assert');
 
 assert.deepEqual(
 	require('./expected/' + oldest + '-category-Lm.js'),

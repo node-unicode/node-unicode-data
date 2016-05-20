@@ -1,15 +1,17 @@
-var fs = require('fs');
-var guard = require('when/guard');
-var path = require('path');
-var request = require('request');
-var resources = require('../data/resources.js');
-var when = require('when');
+'use strict';
 
-var PARALLEL_REQUEST_LIMIT = 5;
+const fs = require('fs');
+const guard = require('when/guard');
+const path = require('path');
+const request = require('request');
+const resources = require('../data/resources.js');
+const when = require('when');
 
-var download = function(url, version, type) {
-	var deferred = when.defer();
-	var file = path.resolve(
+const PARALLEL_REQUEST_LIMIT = 5;
+
+const download = function(url, version, type) {
+	const deferred = when.defer();
+	const file = path.resolve(
 		__dirname,
 		'..', 'data', version + '-' + type + '.txt'
 	);
@@ -27,7 +29,7 @@ download = guard(guard.n(PARALLEL_REQUEST_LIMIT), download);
 console.log('Downloading resources…');
 
 resources.forEach(function(resource) {
-	var version = resource.version;
+	const version = resource.version;
 	download(resource.main, version, 'database');
 	[
 		'scripts',
