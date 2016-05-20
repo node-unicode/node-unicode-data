@@ -23,16 +23,17 @@ const download = function(url, version, type) {
 	}).pipe(fs.createWriteStream(file));
 	return deferred.promise;
 };
-// limit maximum parallelism to something reasonable
-download = guard(guard.n(PARALLEL_REQUEST_LIMIT), download);
+// Limit maximum parallelism to something reasonable
+const guardedDownload = guard(guard.n(PARALLEL_REQUEST_LIMIT), download);
 
 console.log('Downloading resources…');
 
 resources.forEach(function(resource) {
 	const version = resource.version;
-	download(resource.main, version, 'database');
+	guardedDownload(resource.main, version, 'database');
 	[
 		'scripts',
+		'script-extensions',
 		'blocks',
 		'properties',
 		'derived-core-properties',
@@ -41,7 +42,7 @@ resources.forEach(function(resource) {
 		'bidi-brackets'
 	].forEach(function(type) {
 		if (resource[type]) {
-			download(resource[type], version, type);
+			guardedDownload(resource[type], version, type);
 		}
 	});
 });
