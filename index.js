@@ -1,28 +1,31 @@
-var fs = require('fs');
-var path = require('path');
-var utils = require('./scripts/utils.js');
-var parsers = require('./scripts/parse-blocks-scripts-properties.js');
+'use strict';
+
+const fs = require('fs');
+const path = require('path');
+const utils = require('./scripts/utils.js');
+const parsers = require('./scripts/parse-blocks-scripts-properties.js');
 parsers.parseCategories = require('./scripts/parse-categories.js');
 parsers.parseCaseFolding = require('./scripts/parse-case-folding.js');
-var extend = utils.extend;
-var cp = require('cp');
-var jsesc = require('jsesc');
-var template = require('lodash.template');
+parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
+const extend = utils.extend;
+const cp = require('cp');
+const jsesc = require('jsesc');
+const template = require('lodash.template');
 
-var templatePath = path.resolve(__dirname, 'templates');
-var staticPath = path.resolve(__dirname, 'static');
-var compileReadMe = template(fs.readFileSync(
+const templatePath = path.resolve(__dirname, 'templates');
+const staticPath = path.resolve(__dirname, 'static');
+const compileReadMe = template(fs.readFileSync(
 	path.resolve(templatePath, 'README.md'),
 	'utf-8')
 );
-var compilePackage = template(fs.readFileSync(
+const compilePackage = template(fs.readFileSync(
 	path.resolve(templatePath, 'package.json'),
 	'utf-8')
 );
-var compileIndex = template('module.exports=<%= data %>');
+const compileIndex = template('module.exports=<%= data %>');
 
-var generateData = function(version) {
-	var dirMap = {};
+const generateData = function(version) {
+	const dirMap = {};
 	console.log('Generating data for Unicode v%s…', version);
 	console.log('Parsing Unicode v%s categories…', version);
 	extend(dirMap, utils.writeFiles({
@@ -39,10 +42,17 @@ var generateData = function(version) {
 		}
 	}));
 	console.log('Parsing Unicode v%s scripts…', version);
+	const scriptsMap = parsers.parseScripts(version)
 	extend(dirMap, utils.writeFiles({
 		'version': version,
-		'map': parsers.parseScripts(version),
+		'map': scriptsMap,
 		'type': 'scripts'
+	}));
+	console.log('Parsing Unicode v%s scripts extensions…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseScriptExtensions(version, scriptsMap),
+		'type': 'script-extensions'
 	}));
 	console.log('Parsing Unicode v%s properties…', version);
 	extend(dirMap, utils.writeFiles({
