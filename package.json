@@ -1,52 +1,54 @@
 {
-	"name": "unicode-data",
-	"version": "0.1.0",
-	"description": "JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, blocks, and properties.",
-	"homepage": "https://mths.be/node-unicode-data",
-	"main": "index.js",
-	"keywords": [
-		"unicode",
-		"code points",
-		"regex",
-		"regexp",
-		"data",
-		"generator",
-		"tool"
-	],
-	"license": "MIT",
-	"author": {
-		"name": "Mathias Bynens",
-		"url": "https://mathiasbynens.be/"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/mathiasbynens/node-unicode-data.git"
-	},
-	"bugs": "https://github.com/mathiasbynens/node-unicode-data/issues",
-	"files": [
-		"LICENSE-MIT.txt",
-		"index.js",
-		"data/",
-		"scripts/",
-		"templates/",
-		"tests/"
-	],
-	"scripts": {
-		"download": "node scripts/download.js",
-		"generate": "node scripts/generate-data.js",
-		"test": "node tests/tests.js",
-		"cover": "istanbul cover --report html --verbose --dir coverage tests/tests.js"
-	},
-	"dependencies": {
-		"cp": "^0.2.0",
-		"jsesc": "^1.1.0",
-		"lodash.template": "^4.2.4",
-		"mkdirp": "^0.5.1",
-		"regenerate": "^1.2.1",
-		"request": "^2.72.0",
-		"when": "^3.7.7"
-	},
-	"devDependencies": {
-		"istanbul": "^0.4.3"
-	}
+  "name": "unicode-data",
+  "version": "0.1.0",
+  "description": "JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, blocks, and properties.",
+  "homepage": "https://mths.be/node-unicode-data",
+  "main": "index.js",
+  "keywords": [
+    "unicode",
+    "code points",
+    "regex",
+    "regexp",
+    "data",
+    "generator",
+    "tool"
+  ],
+  "license": "MIT",
+  "author": {
+    "name": "Mathias Bynens",
+    "url": "https://mathiasbynens.be/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathiasbynens/node-unicode-data.git"
+  },
+  "bugs": "https://github.com/mathiasbynens/node-unicode-data/issues",
+  "files": [
+    "LICENSE-MIT.txt",
+    "index.js",
+    "data/",
+    "scripts/",
+    "templates/",
+    "tests/"
+  ],
+  "scripts": {
+    "download": "node scripts/download.js",
+    "generate": "node scripts/generate-data.js",
+    "test": "node tests/tests.js",
+    "cover": "istanbul cover --report html --verbose --dir coverage tests/tests.js"
+  },
+  "dependencies": {
+    "cp": "^0.2.0",
+    "jsesc": "^1.1.0",
+    "lodash.template": "^4.2.4",
+    "mkdirp": "^0.5.1",
+    "regenerate": "^1.2.1",
+    "request": "^2.72.0",
+    "unicode-property-aliases": "^1.0.0",
+    "unicode-property-value-aliases": "^1.0.1",
+    "when": "^3.7.7"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.3"
+  }
 }
