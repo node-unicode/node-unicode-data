@@ -90,6 +90,12 @@ const generateData = function(version) {
 		'map': parsers.parseBrackets(version),
 		'type': 'bidi-brackets'
 	}));
+	// Sort array values.
+	Object.keys(dirMap).forEach(function(property) {
+		if (Array.isArray(dirMap[property])) {
+			dirMap[property] = dirMap[property].sort();
+		}
+	});
 	fs.writeFileSync(
 		path.resolve(__dirname, 'output', 'unicode-' + version, 'README.md'),
 		compileReadMe({
