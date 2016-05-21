@@ -2,7 +2,8 @@
 
 cd "$(dirname "${BASH_SOURCE}")";
 
-node scripts/generate-data.js;
+rm -rf -- output/*/*!(.git);
+npm run build;
 
 cd output;
 

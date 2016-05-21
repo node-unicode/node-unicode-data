@@ -38,10 +38,10 @@ const regex = require('unicode-<%= version %>/categories/Lu/regex');
 // Get the canonical category a given code point belongs to:
 // (Note: U+0041 is LATIN CAPITAL LETTER A)
 const category = require('unicode-<%= version %>/categories')[ 0x41 ];
-// Get an array of all code points with the `Bidi_ON` bidi property:
-const on = require('unicode-<%= version %>/bidi/ON/code-points');
+// Get an array of all code points with `Bidi_Class=Other_Neutral`:
+const on = require('unicode-<%= version %>/bidi-classes/Other_Neutral/code-points');
 // Get the directionality of a given code point:
-const directionality = require('unicode-<%= version %>/bidi')[ 0x41 ];
+const directionality = require('unicode-<%= version %>/bidi-classes')[ 0x41 ];
 <% if (dirs.hasOwnProperty('bidi-mirroring')) { %>
 // What glyph is the mirror image of `«` (U+00AB)?
 const mirrored = require('unicode-<%= version %>/bidi-mirroring')[ 0xAB ];
@@ -57,7 +57,7 @@ Other than categories, data on Unicode properties, blocks, scripts, and script e
 ```js<% Object.keys(dirs).forEach(function(type) { %>
 // <%= type.replace(/-/g, ' ') %>:
 <%
-	if (/^(?:bidi|bidi-brackets|bidi-mirroring|categories)$/.test(type)) {
+	if (/^(?:bidi-classes|bidi-brackets|bidi-mirroring|categories)$/.test(type)) {
 %>
 require('unicode-<%= version %>/<%= type %>')[ codePoint ]; // lookup array
 <%

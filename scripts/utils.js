@@ -40,8 +40,8 @@ const writeFiles = function(options) {
 			? options.type(item)
 			: options.type;
 		const isCaseFolding = type == 'case-folding';
-		const isBidiProperty = type == 'bidi';
-		if (isBidiProperty) {
+		const isBidiClass = type == 'bidi-classes';
+		if (isBidiClass) {
 			item = item.replace(/^Bidi_/, '');
 		}
 		const dir = path.resolve(
@@ -49,7 +49,7 @@ const writeFiles = function(options) {
 			'output', 'unicode-' + version, type, item
 		);
 		if (
-			type == 'bidi' || type == 'bidi-mirroring' || type == 'bidi-brackets' ||
+			type == 'bidi-classes' || type == 'bidi-mirroring' || type == 'bidi-brackets' ||
 			(type == 'categories' && /^[A-Z][a-z]$/.test(item))
 		) {
 			if (!auxMap[type]) {

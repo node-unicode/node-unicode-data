@@ -1,4 +1,7 @@
+'use strict';
+
 const utils = require('./utils.js');
+const bidiAliases = require('unicode-property-value-aliases').get('Bidi_Class');
 
 const parseDatabase = function(version) {
 	const symbolMap = {};
@@ -15,7 +18,7 @@ const parseDatabase = function(version) {
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
 		const generalCategory = data[2];
-		const bidiCategory = data[4];
+		const bidiCategory = bidiAliases.get(data[4]);
 		if (flag) {
 			if (/<.+, Last>/.test(name)) {
 				flag = false;

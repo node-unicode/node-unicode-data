@@ -32,8 +32,8 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseCategories(version),
 		'type': function(category) {
-			if (/^(?:Bidi_[A-Z]+)$/.test(category)) {
-				return 'bidi';
+			if (/^Bidi_/.test(category)) {
+				return 'bidi-classes';
 			}
 			if (/^(?:Any|ASCII|Assigned)$/.test(category)) {
 				return 'properties';
