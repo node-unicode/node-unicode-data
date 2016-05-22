@@ -109,20 +109,20 @@ const writeFiles = function(options) {
 		mkdirp.sync(dir);
 		let output = '';
 		if (/^(bidi-classes|bidi-mirroring|bidi-brackets)$/.test(type)) {
-			output += 'var x=[];';
+			const map = new Map();
 			Object.keys(auxMap[type]).forEach(function(key) {
-				// It seems like it would be nice to map both the code point
-				// and the character, but that causes problems with `'0'` vs.
-				// code point U+0000 etc., as property names are stored as strings in
-				// JavaScript.
-				output += 'x[' + key + ']=' +
-					jsesc(auxMap[type][key], {
-						'wrap': true
-					}) + ';';
+				const codePoint = Number(key);
+				const value = auxMap[type][key];
+				map.set(codePoint, value);
 			});
-			output += 'module.exports=x';
-		} else {
-			output = 'module.exports=' + jsesc(auxMap[type]);
+			// TODO: `const mapArray = [...map];` and minify it by removing repeated
+			// strings. https://github.com/mathiasbynens/node-unicode-data/issues/27
+			output = `module.exports=${ jsesc(map) }`;
+		} else { // `categories/index.js`
+			// TODO: Minify `array` by removing repeated strings.
+			// https://github.com/mathiasbynens/node-unicode-data/issues/27
+			const array = auxMap[type];
+			output = `var x=${ jsesc(array) };module.exports=new Map(x.entries())`;
 		}
 		fs.writeFileSync(
 			path.resolve(dir, 'index.js'),

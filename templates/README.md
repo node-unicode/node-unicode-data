@@ -40,11 +40,13 @@ const regex = require('unicode-<%= version %>/categories/Lu/regex');
 const category = require('unicode-<%= version %>/categories')[ 0x41 ];
 // Get an array of all code points with `Bidi_Class=Other_Neutral`:
 const on = require('unicode-<%= version %>/bidi-classes/Other_Neutral/code-points');
+// Get a map from code points to bidi classes:
+const bidiClassMap = require('unicode-<%= version %>/bidi-classes');
 // Get the directionality of a given code point:
-const directionality = require('unicode-<%= version %>/bidi-classes')[ 0x41 ];
+const directionality = require('unicode-<%= version %>/bidi-classes').get(0x41);
 <% if (dirs.hasOwnProperty('bidi-mirroring')) { %>
 // What glyph is the mirror image of `«` (U+00AB)?
-const mirrored = require('unicode-<%= version %>/bidi-mirroring')[ 0xAB ];
+const mirrored = require('unicode-<%= version %>/bidi-mirroring').get(0xAB);
 <% } if (dirs.hasOwnProperty('bidi-brackets')) { %>
 // Get a regular expression that matches all opening brackets:
 const openingBrackets = require('unicode-<%= version %>/bidi-brackets/Open/regex');
@@ -59,16 +61,16 @@ Other than categories, data on Unicode properties, blocks, scripts, and script e
 <%
 	if (/^(?:bidi-classes|bidi-brackets|bidi-mirroring|categories)$/.test(type)) {
 %>
-require('unicode-<%= version %>/<%= type %>')[ codePoint ]; // lookup array
+require('unicode-<%= version %>/<%= type %>').get(codePoint); // lookup map
 <%
 	}
 	dirs[type].forEach(function(dir) {
 		if ('case-folding' == type) {
 %>
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points'); // lookup table with code point to code point mappings
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points')[ codePoint ]; // lookup table
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols'); // lookup table with symbol to symbol mappings
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols')[ symbol ]; // lookup table
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points'); // lookup map from code point to code point
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points').get(codePoint);
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols'); // lookup map from symbol to symbol
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols').get(symbol);
 <%
 		} else {
 %>
