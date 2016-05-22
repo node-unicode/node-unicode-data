@@ -49,7 +49,9 @@ const writeFiles = function(options) {
 			'output', 'unicode-' + version, type, item
 		);
 		if (
-			type == 'bidi-classes' || type == 'bidi-mirroring' || type == 'bidi-brackets' ||
+			type == 'bidi-classes' ||
+			type == 'bidi-mirroring' ||
+			type == 'bidi-brackets' ||
 			(type == 'categories' && /^[A-Z][a-z]$/.test(item))
 		) {
 			if (!auxMap[type]) {
@@ -106,7 +108,7 @@ const writeFiles = function(options) {
 		}
 		mkdirp.sync(dir);
 		let output = '';
-		if (/^(bidi-mirroring|bidi-brackets)$/.test(type)) {
+		if (/^(bidi-classes|bidi-mirroring|bidi-brackets)$/.test(type)) {
 			output += 'var x=[];';
 			Object.keys(auxMap[type]).forEach(function(key) {
 				// It seems like it would be nice to map both the code point
