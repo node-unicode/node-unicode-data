@@ -1,6 +1,6 @@
 {
 	"name": "unicode-8.0.0",
-	"version": "0.1.6",
+	"version": "0.2.0",
 	"description": "JavaScript-compatible Unicode data. Arrays of code points, arrays of symbols, and regular expressions for Unicode v8.0.0’s categories, scripts, blocks, bidi, and other properties.",
 	"homepage": "https://github.com/mathiasbynens/unicode-8.0.0",
 	"main": "index.js",
