@@ -83,6 +83,10 @@ require('unicode-8.0.0/properties/Bidi_Control/code-points');
 require('unicode-8.0.0/properties/Bidi_Control/symbols');
 require('unicode-8.0.0/properties/Bidi_Control/regex');
 
+require('unicode-8.0.0/properties/Bidi_Mirrored/code-points');
+require('unicode-8.0.0/properties/Bidi_Mirrored/symbols');
+require('unicode-8.0.0/properties/Bidi_Mirrored/regex');
+
 require('unicode-8.0.0/properties/Case_Ignorable/code-points');
 require('unicode-8.0.0/properties/Case_Ignorable/symbols');
 require('unicode-8.0.0/properties/Case_Ignorable/regex');
