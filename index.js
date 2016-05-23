@@ -32,11 +32,11 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseCategories(version),
 		'type': function(category) {
+			if (/^(?:Any|ASCII|Assigned|Bidi_Mirrored)$/.test(category)) {
+				return 'properties';
+			}
 			if (/^Bidi_/.test(category)) {
 				return 'bidi-classes';
-			}
-			if (/^(?:Any|ASCII|Assigned)$/.test(category)) {
-				return 'properties';
 			}
 			return 'categories';
 		}

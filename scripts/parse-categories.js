@@ -6,6 +6,7 @@ const bidiAliases = require('unicode-property-value-aliases').get('Bidi_Class');
 const parseDatabase = function(version) {
 	const symbolMap = {};
 	const bidiMap = {};
+	const bidiMirrored = new Set();
 	const source = utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
@@ -18,6 +19,10 @@ const parseDatabase = function(version) {
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
 		const generalCategory = data[2];
+		const isBidiMirrored = data[9] == 'Y';
+		if (isBidiMirrored) {
+			bidiMirrored.add(codePoint);
+		}
 		const bidiCategory = bidiAliases.get(data[4]);
 		if (flag) {
 			if (/<.+, Last>/.test(name)) {
@@ -61,6 +66,9 @@ const parseDatabase = function(version) {
 		}
 		if (bidiMap[codePoint]) {
 			categories.push('Bidi_' + bidiMap[codePoint]);
+		}
+		if (bidiMirrored.has(codePoint)) {
+			categories.push('Bidi_Mirrored');
 		}
 		categories.forEach(function(category) {
 			utils.append(categoryMap, category, codePoint);
