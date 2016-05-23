@@ -36,6 +36,7 @@
     "clean": "rm -rf -- output/*/*!(.git)",
     "build": "node scripts/generate-data.js",
     "test": "node tests/tests.js",
+    "t": "node tests/quick.js",
     "cover": "istanbul cover --report html --verbose --dir coverage tests/tests.js"
   },
   "dependencies": {

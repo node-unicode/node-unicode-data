@@ -4,8 +4,8 @@ const utils = require('./utils.js');
 const bidiAliases = require('unicode-property-value-aliases').get('Bidi_Class');
 
 const parseDatabase = function(version) {
-	const symbolMap = {};
-	const bidiMap = {};
+	const symbolMap = new Map();
+	const bidiMap = new Map();
 	const bidiMirrored = new Set();
 	const source = utils.readDataFile(version, 'database');
 	if (!source) {
@@ -28,8 +28,8 @@ const parseDatabase = function(version) {
 			if (/<.+, Last>/.test(name)) {
 				flag = false;
 				utils.range(first, codePoint).forEach(function(value) {
-					symbolMap[value] = generalCategory;
-					bidiMap[value] = bidiCategory;
+					symbolMap.set(value, generalCategory);
+					bidiMap.set(value, bidiCategory);
 				});
 			} else {
 				throw Error('Database exception');
@@ -39,8 +39,8 @@ const parseDatabase = function(version) {
 				flag = true;
 				first = codePoint;
 			} else {
-				symbolMap[codePoint] = generalCategory;
-				bidiMap[codePoint] = bidiCategory;
+				symbolMap.set(codePoint, generalCategory);
+				bidiMap.set(codePoint, bidiCategory);
 			}
 		}
 	});
@@ -52,10 +52,10 @@ const parseDatabase = function(version) {
 	utils.range(0x000000, 0x10FFFF).forEach(function(codePoint) {
 		// Note: `Any`, `ASCII`, and `Assigned` are actually properties,
 		// not categories. http://unicode.org/reports/tr18/#Categories
-		if (!symbolMap.hasOwnProperty(codePoint)) {
+		if (!symbolMap.has(codePoint)) {
 			categories = ['Any', 'C', 'Cn'];
 		} else {
-			const tmp = symbolMap[codePoint];
+			const tmp = symbolMap.get(codePoint);
 			categories = ['Any', tmp, tmp.charAt(0), 'Assigned'];
 			if (/^(?:Ll|Lu|Lt)$/.test(tmp)) {
 				categories.push('LC');
@@ -64,8 +64,8 @@ const parseDatabase = function(version) {
 				categories.push('ASCII');
 			}
 		}
-		if (bidiMap[codePoint]) {
-			categories.push('Bidi_' + bidiMap[codePoint]);
+		if (bidiMap.has(codePoint)) {
+			categories.push('Bidi_' + bidiMap.get(codePoint));
 		}
 		if (bidiMirrored.has(codePoint)) {
 			categories.push('Bidi_Mirrored');

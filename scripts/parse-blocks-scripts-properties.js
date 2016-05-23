@@ -11,11 +11,11 @@ const parseBlocksScriptsProperties = function(type, version) {
 		return;
 	}
 	const isBidiBrackets = type == 'bidi-brackets';
-	const bidiBracketMap = {
-		'o': 'Open',
-		'c': 'Close',
-		'n': 'None'
-	};
+	const bidiBracketMap = new Map([
+		['o', 'Open'],
+		['c', 'Close'],
+		['n', 'None']
+	]);
 	const lines = source.split('\n');
 	lines.forEach(function(line) {
 		if (
@@ -34,7 +34,7 @@ const parseBlocksScriptsProperties = function(type, version) {
 			type == 'blocks' ? ';' : '#'
 		)[0].trim();
 		if (isBidiBrackets) {
-			item = bidiBracketMap[item];
+			item = bidiBracketMap.get(item);
 		} else if (type == 'bidi-mirroring') {
 			item = String.fromCodePoint(parseInt(item, 16));
 		}

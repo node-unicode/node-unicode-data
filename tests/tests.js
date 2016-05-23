@@ -4,11 +4,11 @@ const resources = require('../data/resources.js');
 const generateData = require('../index.js');
 
 // Generate the data for the oldest and newest available Unicode version
-// const oldest = resources[0].version;
-// generateData(oldest);
+const oldest = resources[0].version;
+generateData(oldest);
 const newest = resources.pop().version;
 generateData(newest);
-process.exit();
+
 const assert = require('assert');
 
 assert.deepEqual(
