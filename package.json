@@ -40,12 +40,15 @@
     "cover": "istanbul cover --report html --verbose --dir coverage tests/tests.js"
   },
   "dependencies": {
+    "babel-core": "^6.9.0",
+    "babel-plugin-dedupe-string-literals": "^2.1.0",
     "cp": "^0.2.0",
     "jsesc": "^1.2.0",
     "lodash.template": "^4.2.4",
     "mkdirp": "^0.5.1",
     "regenerate": "^1.2.1",
     "request": "^2.72.0",
+    "uglify-js": "^2.6.2",
     "unicode-property-aliases": "^1.0.0",
     "unicode-property-value-aliases": "^1.0.1",
     "when": "^3.7.7"

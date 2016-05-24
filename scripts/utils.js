@@ -2,9 +2,24 @@
 
 const fs = require('fs');
 const path = require('path');
+const babel = require('babel-core');
 const jsesc = require('jsesc');
-const regenerate = require('regenerate');
 const mkdirp = require('mkdirp');
+const regenerate = require('regenerate');
+const minify = require('uglify-js').minify;
+
+const dedupeStrings = function(code) {
+	const deduped = babel.transform(code, {
+		'plugins': [
+			'dedupe-string-literals'
+		]
+	}).code;
+	// TODO: https://github.com/RReverser/babel-plugin-uglify/issues/3
+	const minified = minify(deduped, {
+		'fromString': true
+	});
+	return deduped;
+};
 
 const range = function(start, stop) {
 	// inclusive, e.g. `range(1, 3)` → `[1, 2, 3]`
@@ -115,13 +130,15 @@ const writeFiles = function(options) {
 				const value = auxMap[type][key];
 				map.set(codePoint, value);
 			});
-			// TODO: `const mapArray = [...map];` and minify it by removing repeated
-			// strings. https://github.com/mathiasbynens/node-unicode-data/issues/27
 			output = `module.exports=${ jsesc(map) }`;
+			if ('bidi-brackets' == type) {
+				// `bidi-classes/index.js` is too large (i.e. too slow to optimize),
+				// and `bidi-mirroring` doesn’t have repeated strings.
+				output = dedupeStrings(output);
+			}
 		} else { // `categories/index.js`
-			// TODO: Minify `array` by removing repeated strings.
-			// https://github.com/mathiasbynens/node-unicode-data/issues/27
 			const array = auxMap[type];
+			// Note: `dedupeStrings` is way too slow here :(
 			output = `var x=${ jsesc(array) };module.exports=new Map(x.entries())`;
 		}
 		fs.writeFileSync(
@@ -158,6 +175,7 @@ const readDataFile = function(version, type) {
 };
 
 module.exports = {
+	'dedupeStrings': dedupeStrings,
 	'range': range,
 	'append': append,
 	'extend': extend,
