@@ -32,7 +32,7 @@ const parseBlocksScriptsProperties = function(type, version) {
 		const charRange = data[0].replace('..', '-').trim();
 		let item = data[ isBidiBrackets ? 2 : 1 ].split(
 			type == 'blocks' ? ';' : '#'
-		)[0].trim();
+		)[0].trim().replace(/\x20/g, '_');
 		if (isBidiBrackets) {
 			item = bidiBracketMap.get(item);
 		} else if (type == 'bidi-mirroring') {
