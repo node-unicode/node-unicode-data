@@ -1,5 +1,6 @@
 'use strict';
 
+const propertyAliases = require('unicode-property-aliases');
 const utils = require('./utils.js');
 
 const parseBlocksScriptsProperties = function(type, version) {
@@ -33,6 +34,22 @@ const parseBlocksScriptsProperties = function(type, version) {
 		let item = data[ isBidiBrackets ? 2 : 1 ].split(
 			type == 'blocks' ? ';' : '#'
 		)[0].trim().replace(/\x20/g, '_');
+		if (type == 'derived-normalization-properties') {
+			if (item == 'FNC') {
+				// Old Unicode versions up to v4.0.0 use the `FNC` alias instead of
+				// `FC_NFKC`.
+				item = 'FC_NFKC_Closure';
+			} else {
+				const canonical = propertyAliases.get(item);
+				if (canonical) {
+					if (/NFKC_Casefold|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(canonical)) {
+						// These are not binary properties.
+						return;
+					}
+					item = canonical;
+				}
+			}
+		}
 		if (isBidiBrackets) {
 			item = bidiBracketMap.get(item);
 		} else if (type == 'bidi-mirroring') {
@@ -57,6 +74,7 @@ module.exports = {
 	'parseScripts': parseBlocksScriptsProperties.bind(null, 'scripts'),
 	'parseProperties': parseBlocksScriptsProperties.bind(null, 'properties'),
 	'parseDerivedCoreProperties': parseBlocksScriptsProperties.bind(null, 'derived-core-properties'),
+	'parseDerivedNormalizationProperties': parseBlocksScriptsProperties.bind(null, 'derived-normalization-properties'),
 	'parseBlocks': parseBlocksScriptsProperties.bind(null, 'blocks'),
 	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring'),
 	'parseBrackets': parseBlocksScriptsProperties.bind(null, 'bidi-brackets')

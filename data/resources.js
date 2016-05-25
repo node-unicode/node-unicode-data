@@ -41,6 +41,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/3.1-Update/Blocks-4.txt',
 		'properties': 'http://unicode.org/Public/3.1-Update/PropList-3.1.0.txt',
 		'derived-core-properties': 'http://unicode.org/Public/3.1-Update/DerivedCoreProperties-3.1.0.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/3.1-Update/DerivedNormalizationProperties-3.1.0.txt',
 		'case-folding': 'http://unicode.org/Public/3.1-Update/CaseFolding-3.txt'
 	},
 	{
@@ -50,6 +51,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/3.2-Update/Blocks-3.2.0.txt',
 		'properties': 'http://unicode.org/Public/3.2-Update/PropList-3.2.0.txt',
 		'derived-core-properties': 'http://unicode.org/Public/3.2-Update/DerivedCoreProperties-3.2.0.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/3.2-Update/DerivedNormalizationProps-3.2.0.txt',
 		'case-folding': 'http://unicode.org/Public/3.2-Update/CaseFolding-3.2.0.txt'
 	},
 	{
@@ -59,6 +61,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/4.0-Update/Blocks-4.0.0.txt',
 		'properties': 'http://unicode.org/Public/4.0-Update/PropList-4.0.0.txt',
 		'derived-core-properties': 'http://unicode.org/Public/4.0-Update/DerivedCoreProperties-4.0.0.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/4.0-Update/DerivedNormalizationProps-4.0.0.txt',
 		'case-folding': 'http://unicode.org/Public/4.0-Update/CaseFolding-4.0.0.txt'
 	},
 	{
@@ -68,6 +71,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/4.0-Update1/Blocks-4.0.1.txt',
 		'properties': 'http://unicode.org/Public/4.0-Update1/PropList-4.0.1.txt',
 		'derived-core-properties': 'http://unicode.org/Public/4.0-Update1/DerivedCoreProperties-4.0.1.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/4.0-Update1/DerivedNormalizationProps-4.0.1.txt',
 		'case-folding': 'http://unicode.org/Public/4.0-Update1/CaseFolding-4.0.1.txt'
 	},
 	{
@@ -77,6 +81,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/4.1.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/4.1.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/4.1.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/4.1.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/4.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/4.1.0/ucd/BidiMirroring.txt'
 	},
@@ -87,6 +92,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/5.0.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/5.0.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/5.0.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/5.0.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/5.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.0.0/ucd/BidiMirroring.txt'
 	},
@@ -97,6 +103,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/5.1.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/5.1.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/5.1.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/5.1.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/5.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.1.0/ucd/BidiMirroring.txt'
 	},
@@ -107,6 +114,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/5.2.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/5.2.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/5.2.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/5.2.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/5.2.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.2.0/ucd/BidiMirroring.txt'
 	},
@@ -118,6 +126,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/6.0.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.0.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/6.0.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/6.0.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/6.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.0.0/ucd/BidiMirroring.txt'
 	},
@@ -129,6 +138,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/6.1.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.1.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/6.1.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/6.1.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/6.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.1.0/ucd/BidiMirroring.txt'
 	},
@@ -140,6 +150,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/6.2.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.2.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/6.2.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/6.2.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/6.2.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.2.0/ucd/BidiMirroring.txt'
 	},
@@ -151,6 +162,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/6.3.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/6.3.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/6.3.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/6.3.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/6.3.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.3.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'http://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt',
@@ -163,6 +175,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/7.0.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/7.0.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/7.0.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/7.0.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/7.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/7.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'http://unicode.org/Public/7.0.0/ucd/BidiBrackets.txt',
@@ -175,6 +188,7 @@ var resources = [
 		'blocks': 'http://unicode.org/Public/8.0.0/ucd/Blocks.txt',
 		'properties': 'http://unicode.org/Public/8.0.0/ucd/PropList.txt',
 		'derived-core-properties': 'http://unicode.org/Public/8.0.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/8.0.0/ucd/DerivedNormalizationProps.txt',
 		'case-folding': 'http://unicode.org/Public/8.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/8.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'http://unicode.org/Public/8.0.0/ucd/BidiBrackets.txt',

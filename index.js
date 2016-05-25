@@ -66,6 +66,12 @@ const generateData = function(version) {
 		'map': parsers.parseDerivedCoreProperties(version),
 		'type': 'properties'
 	}));
+	console.log('Parsing Unicode v%s derived normalization properties…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseDerivedNormalizationProperties(version),
+		'type': 'properties'
+	}));
 	console.log('Parsing Unicode v%s case folding…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
