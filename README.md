@@ -116,6 +116,10 @@ require('unicode-6.2.0/properties/Changes_When_Uppercased/code-points');
 require('unicode-6.2.0/properties/Changes_When_Uppercased/symbols');
 require('unicode-6.2.0/properties/Changes_When_Uppercased/regex');
 
+require('unicode-6.2.0/properties/Composition_Exclusion/code-points');
+require('unicode-6.2.0/properties/Composition_Exclusion/symbols');
+require('unicode-6.2.0/properties/Composition_Exclusion/regex');
+
 require('unicode-6.2.0/properties/Dash/code-points');
 require('unicode-6.2.0/properties/Dash/symbols');
 require('unicode-6.2.0/properties/Dash/regex');
