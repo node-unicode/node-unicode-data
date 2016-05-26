@@ -19,8 +19,8 @@ The Unicode data modules ship with pre-compiled regular expressions for categori
 ```js
 const regenerate = require('regenerate');
 const set = regenerate()
-  .add(require('unicode-6.3.0/scripts/Arabic/code-points')) // or `…/symbols`, doesn’t matter
-  .add(require('unicode-6.3.0/scripts/Greek/code-points')); // or `…/symbols`, doesn’t matter
+	.add(require('unicode-6.3.0/script-extensions/Arabic/code-points')) // or `…/symbols`, doesn’t matter
+	.add(require('unicode-6.3.0/script-extensions/Greek/code-points')); // or `…/symbols`, doesn’t matter
 console.log(set.toString());
 // Then you might want to use a template like this to write the result to a file, along with any regex flags you might need:
 // const regex = /<%= set.toString() %>/gim;
