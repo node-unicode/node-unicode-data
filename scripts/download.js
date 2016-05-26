@@ -38,6 +38,7 @@ resources.forEach(function(resource) {
 		'properties',
 		'derived-core-properties',
 		'derived-normalization-properties',
+		'composition-exclusions',
 		'case-folding',
 		'bidi-mirroring',
 		'bidi-brackets'
