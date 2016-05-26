@@ -1,5 +1,6 @@
 'use strict';
 
+const looseMatch = require('unicode-loose-match');
 const propertyAliases = require('unicode-property-aliases');
 const utils = require('./utils.js');
 
@@ -53,6 +54,9 @@ const parseBlocksScriptsProperties = function(type, version) {
 		}
 		if (isBidiBrackets) {
 			item = bidiBracketMap.get(item);
+		} else if (type == 'blocks') {
+			// Use canonical block names. See #34
+			item = looseMatch('Block', item).value;
 		} else if (type == 'bidi-mirroring') {
 			item = String.fromCodePoint(parseInt(item, 16));
 		}

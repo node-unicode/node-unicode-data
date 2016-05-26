@@ -49,6 +49,7 @@
     "regenerate": "^1.3.0",
     "request": "^2.72.0",
     "uglify-js": "^2.6.2",
+    "unicode-loose-match": "^2.0.6",
     "unicode-property-aliases": "^1.0.0",
     "unicode-property-value-aliases": "^1.0.2",
     "when": "^3.7.7"
