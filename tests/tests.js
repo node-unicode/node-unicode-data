@@ -12,8 +12,8 @@ generateData(newest);
 const assert = require('assert');
 
 assert.deepEqual(
-	require('./expected/' + oldest + '-category-Lm.js'),
-	require('../output/unicode-' + oldest + '/categories/Lm/code-points.js')
+	require('./expected/' + oldest + '-category-Modifier_Letter.js'),
+	require('../output/unicode-' + oldest + '/categories/Modifier_Letter/code-points.js')
 );
 assert.deepEqual(
 	require('./expected/' + oldest + '-property-ASCII.js'),
@@ -29,8 +29,8 @@ assert.deepEqual(
 	require('../output/unicode-' + newest + '/blocks/Bopomofo/code-points.js')
 );
 assert.deepEqual(
-	require('./expected/' + newest + '-category-Lm.js'),
-	require('../output/unicode-' + newest + '/categories/Lm/code-points.js')
+	require('./expected/' + newest + '-category-Modifier_Letter.js'),
+	require('../output/unicode-' + newest + '/categories/Modifier_Letter/code-points.js')
 );
 assert.deepEqual(
 	require('./expected/' + newest + '-property-STerm.js'),

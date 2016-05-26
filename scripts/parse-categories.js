@@ -1,7 +1,9 @@
 'use strict';
 
 const utils = require('./utils.js');
-const bidiAliases = require('unicode-property-value-aliases').get('Bidi_Class');
+const valueAliases = require('unicode-property-value-aliases');
+const bidiAliases = valueAliases.get('Bidi_Class');
+const categoryAliases = valueAliases.get('General_Category');
 
 const parseDatabase = function(version) {
 	const symbolMap = new Map();
@@ -71,7 +73,11 @@ const parseDatabase = function(version) {
 			categories.push('Bidi_Mirrored');
 		}
 		categories.forEach(function(category) {
-			utils.append(categoryMap, category, codePoint);
+			utils.append(
+				categoryMap,
+				categoryAliases.get(category) || category,
+				codePoint
+			);
 		});
 	});
 	return categoryMap;
