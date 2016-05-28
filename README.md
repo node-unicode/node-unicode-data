@@ -19,8 +19,8 @@ The Unicode data modules ship with pre-compiled regular expressions for categori
 ```js
 const regenerate = require('regenerate');
 const set = regenerate()
-  .add(require('unicode-6.3.0/script-extensions/Arabic/code-points')) // or `…/symbols`, doesn’t matter
-  .add(require('unicode-6.3.0/script-extensions/Greek/code-points')); // or `…/symbols`, doesn’t matter
+  .add(require('unicode-6.3.0/Script_Extensions/Arabic/code-points')) // or `…/symbols`, doesn’t matter
+  .add(require('unicode-6.3.0/Script_Extensions/Greek/code-points')); // or `…/symbols`, doesn’t matter
 console.log(set.toString());
 // Then you might want to use a template like this to write the result to a file, along with any regex flags you might need:
 // const regex = /<%= set.toString() %>/gim;
@@ -30,26 +30,26 @@ console.log(set.toString());
 
 ```js
 // Get an array of code points in a given Unicode category:
-const codePoints = require('unicode-8.0.0/categories/Lu/code-points');
+const codePoints = require('unicode-8.0.0/General_Category/Uppercase_Letter/code-points');
 // Get an array of symbols (strings) in a given Unicode category:
-const symbols = require('unicode-8.0.0/categories/Lu/symbols');
+const symbols = require('unicode-8.0.0/General_Category/Uppercase_Letter/symbols');
 // Get a regular expression that matches any symbol in a given Unicode category:
-const regex = require('unicode-8.0.0/categories/Lu/regex');
+const regex = require('unicode-8.0.0/General_Category/Uppercase_Letter/regex');
 // Get the canonical category a given code point belongs to:
 // (Note: U+0041 is LATIN CAPITAL LETTER A)
-const category = require('unicode-8.0.0/categories')[ 0x41 ];
-// Get an array of all code points with `Bidi_Class=Other_Neutral`:
-const on = require('unicode-8.0.0/bidi-classes/Other_Neutral/code-points');
+const category = require('unicode-8.0.0/General_Category').get(0x41);
+// Get an array of all code points with a given bidi class:
+const on = require('unicode-8.0.0/Bidi_Class/Other_Neutral/code-points');
 // Get a map from code points to bidi classes:
-const bidiClassMap = require('unicode-8.0.0/bidi-classes');
+const bidiClassMap = require('unicode-8.0.0/Bidi_Class');
 // Get the directionality of a given code point:
-const directionality = require('unicode-8.0.0/bidi-classes').get(0x41);
+const directionality = require('unicode-8.0.0/Bidi_Class').get(0x41);
 
 // What glyph is the mirror image of `«` (U+00AB)?
-const mirrored = require('unicode-8.0.0/bidi-mirroring').get(0xAB);
+const mirrored = require('unicode-8.0.0/Bidi_Mirroring_Glyph').get(0xAB);
 
 // Get a regular expression that matches all opening brackets:
-const openingBrackets = require('unicode-8.0.0/bidi-brackets/Open/regex');
+const openingBrackets = require('unicode-8.0.0/Bidi_Paired_Bracket_Type/Open/regex');
 
 // …you get the idea.
 ```
@@ -57,2651 +57,2655 @@ const openingBrackets = require('unicode-8.0.0/bidi-brackets/Open/regex');
 Other than categories, data on Unicode properties, blocks, scripts, and script extensions is available too (for recent versions of the Unicode standard). Here’s the full list of the available data for v8.0.0:
 
 ```js
-// properties:
-
-require('unicode-8.0.0/properties/ASCII/code-points');
-require('unicode-8.0.0/properties/ASCII/symbols');
-require('unicode-8.0.0/properties/ASCII/regex');
-
-require('unicode-8.0.0/properties/ASCII_Hex_Digit/code-points');
-require('unicode-8.0.0/properties/ASCII_Hex_Digit/symbols');
-require('unicode-8.0.0/properties/ASCII_Hex_Digit/regex');
-
-require('unicode-8.0.0/properties/Alphabetic/code-points');
-require('unicode-8.0.0/properties/Alphabetic/symbols');
-require('unicode-8.0.0/properties/Alphabetic/regex');
-
-require('unicode-8.0.0/properties/Any/code-points');
-require('unicode-8.0.0/properties/Any/symbols');
-require('unicode-8.0.0/properties/Any/regex');
-
-require('unicode-8.0.0/properties/Assigned/code-points');
-require('unicode-8.0.0/properties/Assigned/symbols');
-require('unicode-8.0.0/properties/Assigned/regex');
-
-require('unicode-8.0.0/properties/Bidi_Control/code-points');
-require('unicode-8.0.0/properties/Bidi_Control/symbols');
-require('unicode-8.0.0/properties/Bidi_Control/regex');
-
-require('unicode-8.0.0/properties/Bidi_Mirrored/code-points');
-require('unicode-8.0.0/properties/Bidi_Mirrored/symbols');
-require('unicode-8.0.0/properties/Bidi_Mirrored/regex');
-
-require('unicode-8.0.0/properties/Case_Ignorable/code-points');
-require('unicode-8.0.0/properties/Case_Ignorable/symbols');
-require('unicode-8.0.0/properties/Case_Ignorable/regex');
-
-require('unicode-8.0.0/properties/Cased/code-points');
-require('unicode-8.0.0/properties/Cased/symbols');
-require('unicode-8.0.0/properties/Cased/regex');
-
-require('unicode-8.0.0/properties/Changes_When_Casefolded/code-points');
-require('unicode-8.0.0/properties/Changes_When_Casefolded/symbols');
-require('unicode-8.0.0/properties/Changes_When_Casefolded/regex');
-
-require('unicode-8.0.0/properties/Changes_When_Casemapped/code-points');
-require('unicode-8.0.0/properties/Changes_When_Casemapped/symbols');
-require('unicode-8.0.0/properties/Changes_When_Casemapped/regex');
-
-require('unicode-8.0.0/properties/Changes_When_Lowercased/code-points');
-require('unicode-8.0.0/properties/Changes_When_Lowercased/symbols');
-require('unicode-8.0.0/properties/Changes_When_Lowercased/regex');
-
-require('unicode-8.0.0/properties/Changes_When_NFKC_Casefolded/code-points');
-require('unicode-8.0.0/properties/Changes_When_NFKC_Casefolded/symbols');
-require('unicode-8.0.0/properties/Changes_When_NFKC_Casefolded/regex');
-
-require('unicode-8.0.0/properties/Changes_When_Titlecased/code-points');
-require('unicode-8.0.0/properties/Changes_When_Titlecased/symbols');
-require('unicode-8.0.0/properties/Changes_When_Titlecased/regex');
-
-require('unicode-8.0.0/properties/Changes_When_Uppercased/code-points');
-require('unicode-8.0.0/properties/Changes_When_Uppercased/symbols');
-require('unicode-8.0.0/properties/Changes_When_Uppercased/regex');
-
-require('unicode-8.0.0/properties/Composition_Exclusion/code-points');
-require('unicode-8.0.0/properties/Composition_Exclusion/symbols');
-require('unicode-8.0.0/properties/Composition_Exclusion/regex');
-
-require('unicode-8.0.0/properties/Dash/code-points');
-require('unicode-8.0.0/properties/Dash/symbols');
-require('unicode-8.0.0/properties/Dash/regex');
-
-require('unicode-8.0.0/properties/Default_Ignorable_Code_Point/code-points');
-require('unicode-8.0.0/properties/Default_Ignorable_Code_Point/symbols');
-require('unicode-8.0.0/properties/Default_Ignorable_Code_Point/regex');
-
-require('unicode-8.0.0/properties/Deprecated/code-points');
-require('unicode-8.0.0/properties/Deprecated/symbols');
-require('unicode-8.0.0/properties/Deprecated/regex');
-
-require('unicode-8.0.0/properties/Diacritic/code-points');
-require('unicode-8.0.0/properties/Diacritic/symbols');
-require('unicode-8.0.0/properties/Diacritic/regex');
-
-require('unicode-8.0.0/properties/Expands_On_NFC/code-points');
-require('unicode-8.0.0/properties/Expands_On_NFC/symbols');
-require('unicode-8.0.0/properties/Expands_On_NFC/regex');
-
-require('unicode-8.0.0/properties/Expands_On_NFD/code-points');
-require('unicode-8.0.0/properties/Expands_On_NFD/symbols');
-require('unicode-8.0.0/properties/Expands_On_NFD/regex');
-
-require('unicode-8.0.0/properties/Expands_On_NFKC/code-points');
-require('unicode-8.0.0/properties/Expands_On_NFKC/symbols');
-require('unicode-8.0.0/properties/Expands_On_NFKC/regex');
-
-require('unicode-8.0.0/properties/Expands_On_NFKD/code-points');
-require('unicode-8.0.0/properties/Expands_On_NFKD/symbols');
-require('unicode-8.0.0/properties/Expands_On_NFKD/regex');
-
-require('unicode-8.0.0/properties/Extender/code-points');
-require('unicode-8.0.0/properties/Extender/symbols');
-require('unicode-8.0.0/properties/Extender/regex');
-
-require('unicode-8.0.0/properties/FC_NFKC_Closure/code-points');
-require('unicode-8.0.0/properties/FC_NFKC_Closure/symbols');
-require('unicode-8.0.0/properties/FC_NFKC_Closure/regex');
-
-require('unicode-8.0.0/properties/Full_Composition_Exclusion/code-points');
-require('unicode-8.0.0/properties/Full_Composition_Exclusion/symbols');
-require('unicode-8.0.0/properties/Full_Composition_Exclusion/regex');
-
-require('unicode-8.0.0/properties/Grapheme_Base/code-points');
-require('unicode-8.0.0/properties/Grapheme_Base/symbols');
-require('unicode-8.0.0/properties/Grapheme_Base/regex');
-
-require('unicode-8.0.0/properties/Grapheme_Extend/code-points');
-require('unicode-8.0.0/properties/Grapheme_Extend/symbols');
-require('unicode-8.0.0/properties/Grapheme_Extend/regex');
-
-require('unicode-8.0.0/properties/Grapheme_Link/code-points');
-require('unicode-8.0.0/properties/Grapheme_Link/symbols');
-require('unicode-8.0.0/properties/Grapheme_Link/regex');
-
-require('unicode-8.0.0/properties/Hex_Digit/code-points');
-require('unicode-8.0.0/properties/Hex_Digit/symbols');
-require('unicode-8.0.0/properties/Hex_Digit/regex');
-
-require('unicode-8.0.0/properties/Hyphen/code-points');
-require('unicode-8.0.0/properties/Hyphen/symbols');
-require('unicode-8.0.0/properties/Hyphen/regex');
-
-require('unicode-8.0.0/properties/IDS_Binary_Operator/code-points');
-require('unicode-8.0.0/properties/IDS_Binary_Operator/symbols');
-require('unicode-8.0.0/properties/IDS_Binary_Operator/regex');
-
-require('unicode-8.0.0/properties/IDS_Trinary_Operator/code-points');
-require('unicode-8.0.0/properties/IDS_Trinary_Operator/symbols');
-require('unicode-8.0.0/properties/IDS_Trinary_Operator/regex');
-
-require('unicode-8.0.0/properties/ID_Continue/code-points');
-require('unicode-8.0.0/properties/ID_Continue/symbols');
-require('unicode-8.0.0/properties/ID_Continue/regex');
-
-require('unicode-8.0.0/properties/ID_Start/code-points');
-require('unicode-8.0.0/properties/ID_Start/symbols');
-require('unicode-8.0.0/properties/ID_Start/regex');
-
-require('unicode-8.0.0/properties/Ideographic/code-points');
-require('unicode-8.0.0/properties/Ideographic/symbols');
-require('unicode-8.0.0/properties/Ideographic/regex');
-
-require('unicode-8.0.0/properties/Join_Control/code-points');
-require('unicode-8.0.0/properties/Join_Control/symbols');
-require('unicode-8.0.0/properties/Join_Control/regex');
-
-require('unicode-8.0.0/properties/Logical_Order_Exception/code-points');
-require('unicode-8.0.0/properties/Logical_Order_Exception/symbols');
-require('unicode-8.0.0/properties/Logical_Order_Exception/regex');
+// `Binary_Property`:
+
+require('unicode-8.0.0/Binary_Property/ASCII/code-points');
+require('unicode-8.0.0/Binary_Property/ASCII/symbols');
+require('unicode-8.0.0/Binary_Property/ASCII/regex');
+
+require('unicode-8.0.0/Binary_Property/ASCII_Hex_Digit/code-points');
+require('unicode-8.0.0/Binary_Property/ASCII_Hex_Digit/symbols');
+require('unicode-8.0.0/Binary_Property/ASCII_Hex_Digit/regex');
+
+require('unicode-8.0.0/Binary_Property/Alphabetic/code-points');
+require('unicode-8.0.0/Binary_Property/Alphabetic/symbols');
+require('unicode-8.0.0/Binary_Property/Alphabetic/regex');
+
+require('unicode-8.0.0/Binary_Property/Any/code-points');
+require('unicode-8.0.0/Binary_Property/Any/symbols');
+require('unicode-8.0.0/Binary_Property/Any/regex');
+
+require('unicode-8.0.0/Binary_Property/Assigned/code-points');
+require('unicode-8.0.0/Binary_Property/Assigned/symbols');
+require('unicode-8.0.0/Binary_Property/Assigned/regex');
+
+require('unicode-8.0.0/Binary_Property/Bidi_Control/code-points');
+require('unicode-8.0.0/Binary_Property/Bidi_Control/symbols');
+require('unicode-8.0.0/Binary_Property/Bidi_Control/regex');
+
+require('unicode-8.0.0/Binary_Property/Bidi_Mirrored/code-points');
+require('unicode-8.0.0/Binary_Property/Bidi_Mirrored/symbols');
+require('unicode-8.0.0/Binary_Property/Bidi_Mirrored/regex');
+
+require('unicode-8.0.0/Binary_Property/Case_Ignorable/code-points');
+require('unicode-8.0.0/Binary_Property/Case_Ignorable/symbols');
+require('unicode-8.0.0/Binary_Property/Case_Ignorable/regex');
+
+require('unicode-8.0.0/Binary_Property/Cased/code-points');
+require('unicode-8.0.0/Binary_Property/Cased/symbols');
+require('unicode-8.0.0/Binary_Property/Cased/regex');
+
+require('unicode-8.0.0/Binary_Property/Changes_When_Casefolded/code-points');
+require('unicode-8.0.0/Binary_Property/Changes_When_Casefolded/symbols');
+require('unicode-8.0.0/Binary_Property/Changes_When_Casefolded/regex');
+
+require('unicode-8.0.0/Binary_Property/Changes_When_Casemapped/code-points');
+require('unicode-8.0.0/Binary_Property/Changes_When_Casemapped/symbols');
+require('unicode-8.0.0/Binary_Property/Changes_When_Casemapped/regex');
+
+require('unicode-8.0.0/Binary_Property/Changes_When_Lowercased/code-points');
+require('unicode-8.0.0/Binary_Property/Changes_When_Lowercased/symbols');
+require('unicode-8.0.0/Binary_Property/Changes_When_Lowercased/regex');
+
+require('unicode-8.0.0/Binary_Property/Changes_When_NFKC_Casefolded/code-points');
+require('unicode-8.0.0/Binary_Property/Changes_When_NFKC_Casefolded/symbols');
+require('unicode-8.0.0/Binary_Property/Changes_When_NFKC_Casefolded/regex');
+
+require('unicode-8.0.0/Binary_Property/Changes_When_Titlecased/code-points');
+require('unicode-8.0.0/Binary_Property/Changes_When_Titlecased/symbols');
+require('unicode-8.0.0/Binary_Property/Changes_When_Titlecased/regex');
+
+require('unicode-8.0.0/Binary_Property/Changes_When_Uppercased/code-points');
+require('unicode-8.0.0/Binary_Property/Changes_When_Uppercased/symbols');
+require('unicode-8.0.0/Binary_Property/Changes_When_Uppercased/regex');
+
+require('unicode-8.0.0/Binary_Property/Composition_Exclusion/code-points');
+require('unicode-8.0.0/Binary_Property/Composition_Exclusion/symbols');
+require('unicode-8.0.0/Binary_Property/Composition_Exclusion/regex');
+
+require('unicode-8.0.0/Binary_Property/Dash/code-points');
+require('unicode-8.0.0/Binary_Property/Dash/symbols');
+require('unicode-8.0.0/Binary_Property/Dash/regex');
+
+require('unicode-8.0.0/Binary_Property/Default_Ignorable_Code_Point/code-points');
+require('unicode-8.0.0/Binary_Property/Default_Ignorable_Code_Point/symbols');
+require('unicode-8.0.0/Binary_Property/Default_Ignorable_Code_Point/regex');
+
+require('unicode-8.0.0/Binary_Property/Deprecated/code-points');
+require('unicode-8.0.0/Binary_Property/Deprecated/symbols');
+require('unicode-8.0.0/Binary_Property/Deprecated/regex');
+
+require('unicode-8.0.0/Binary_Property/Diacritic/code-points');
+require('unicode-8.0.0/Binary_Property/Diacritic/symbols');
+require('unicode-8.0.0/Binary_Property/Diacritic/regex');
+
+require('unicode-8.0.0/Binary_Property/Expands_On_NFC/code-points');
+require('unicode-8.0.0/Binary_Property/Expands_On_NFC/symbols');
+require('unicode-8.0.0/Binary_Property/Expands_On_NFC/regex');
+
+require('unicode-8.0.0/Binary_Property/Expands_On_NFD/code-points');
+require('unicode-8.0.0/Binary_Property/Expands_On_NFD/symbols');
+require('unicode-8.0.0/Binary_Property/Expands_On_NFD/regex');
+
+require('unicode-8.0.0/Binary_Property/Expands_On_NFKC/code-points');
+require('unicode-8.0.0/Binary_Property/Expands_On_NFKC/symbols');
+require('unicode-8.0.0/Binary_Property/Expands_On_NFKC/regex');
+
+require('unicode-8.0.0/Binary_Property/Expands_On_NFKD/code-points');
+require('unicode-8.0.0/Binary_Property/Expands_On_NFKD/symbols');
+require('unicode-8.0.0/Binary_Property/Expands_On_NFKD/regex');
+
+require('unicode-8.0.0/Binary_Property/Extender/code-points');
+require('unicode-8.0.0/Binary_Property/Extender/symbols');
+require('unicode-8.0.0/Binary_Property/Extender/regex');
+
+require('unicode-8.0.0/Binary_Property/FC_NFKC_Closure/code-points');
+require('unicode-8.0.0/Binary_Property/FC_NFKC_Closure/symbols');
+require('unicode-8.0.0/Binary_Property/FC_NFKC_Closure/regex');
+
+require('unicode-8.0.0/Binary_Property/Full_Composition_Exclusion/code-points');
+require('unicode-8.0.0/Binary_Property/Full_Composition_Exclusion/symbols');
+require('unicode-8.0.0/Binary_Property/Full_Composition_Exclusion/regex');
+
+require('unicode-8.0.0/Binary_Property/Grapheme_Base/code-points');
+require('unicode-8.0.0/Binary_Property/Grapheme_Base/symbols');
+require('unicode-8.0.0/Binary_Property/Grapheme_Base/regex');
+
+require('unicode-8.0.0/Binary_Property/Grapheme_Extend/code-points');
+require('unicode-8.0.0/Binary_Property/Grapheme_Extend/symbols');
+require('unicode-8.0.0/Binary_Property/Grapheme_Extend/regex');
+
+require('unicode-8.0.0/Binary_Property/Grapheme_Link/code-points');
+require('unicode-8.0.0/Binary_Property/Grapheme_Link/symbols');
+require('unicode-8.0.0/Binary_Property/Grapheme_Link/regex');
+
+require('unicode-8.0.0/Binary_Property/Hex_Digit/code-points');
+require('unicode-8.0.0/Binary_Property/Hex_Digit/symbols');
+require('unicode-8.0.0/Binary_Property/Hex_Digit/regex');
+
+require('unicode-8.0.0/Binary_Property/Hyphen/code-points');
+require('unicode-8.0.0/Binary_Property/Hyphen/symbols');
+require('unicode-8.0.0/Binary_Property/Hyphen/regex');
+
+require('unicode-8.0.0/Binary_Property/IDS_Binary_Operator/code-points');
+require('unicode-8.0.0/Binary_Property/IDS_Binary_Operator/symbols');
+require('unicode-8.0.0/Binary_Property/IDS_Binary_Operator/regex');
+
+require('unicode-8.0.0/Binary_Property/IDS_Trinary_Operator/code-points');
+require('unicode-8.0.0/Binary_Property/IDS_Trinary_Operator/symbols');
+require('unicode-8.0.0/Binary_Property/IDS_Trinary_Operator/regex');
+
+require('unicode-8.0.0/Binary_Property/ID_Continue/code-points');
+require('unicode-8.0.0/Binary_Property/ID_Continue/symbols');
+require('unicode-8.0.0/Binary_Property/ID_Continue/regex');
+
+require('unicode-8.0.0/Binary_Property/ID_Start/code-points');
+require('unicode-8.0.0/Binary_Property/ID_Start/symbols');
+require('unicode-8.0.0/Binary_Property/ID_Start/regex');
+
+require('unicode-8.0.0/Binary_Property/Ideographic/code-points');
+require('unicode-8.0.0/Binary_Property/Ideographic/symbols');
+require('unicode-8.0.0/Binary_Property/Ideographic/regex');
+
+require('unicode-8.0.0/Binary_Property/Join_Control/code-points');
+require('unicode-8.0.0/Binary_Property/Join_Control/symbols');
+require('unicode-8.0.0/Binary_Property/Join_Control/regex');
+
+require('unicode-8.0.0/Binary_Property/Logical_Order_Exception/code-points');
+require('unicode-8.0.0/Binary_Property/Logical_Order_Exception/symbols');
+require('unicode-8.0.0/Binary_Property/Logical_Order_Exception/regex');
 
-require('unicode-8.0.0/properties/Lowercase/code-points');
-require('unicode-8.0.0/properties/Lowercase/symbols');
-require('unicode-8.0.0/properties/Lowercase/regex');
+require('unicode-8.0.0/Binary_Property/Lowercase/code-points');
+require('unicode-8.0.0/Binary_Property/Lowercase/symbols');
+require('unicode-8.0.0/Binary_Property/Lowercase/regex');
 
-require('unicode-8.0.0/properties/Math/code-points');
-require('unicode-8.0.0/properties/Math/symbols');
-require('unicode-8.0.0/properties/Math/regex');
+require('unicode-8.0.0/Binary_Property/Math/code-points');
+require('unicode-8.0.0/Binary_Property/Math/symbols');
+require('unicode-8.0.0/Binary_Property/Math/regex');
 
-require('unicode-8.0.0/properties/Noncharacter_Code_Point/code-points');
-require('unicode-8.0.0/properties/Noncharacter_Code_Point/symbols');
-require('unicode-8.0.0/properties/Noncharacter_Code_Point/regex');
+require('unicode-8.0.0/Binary_Property/Noncharacter_Code_Point/code-points');
+require('unicode-8.0.0/Binary_Property/Noncharacter_Code_Point/symbols');
+require('unicode-8.0.0/Binary_Property/Noncharacter_Code_Point/regex');
 
-require('unicode-8.0.0/properties/Other_Alphabetic/code-points');
-require('unicode-8.0.0/properties/Other_Alphabetic/symbols');
-require('unicode-8.0.0/properties/Other_Alphabetic/regex');
+require('unicode-8.0.0/Binary_Property/Other_Alphabetic/code-points');
+require('unicode-8.0.0/Binary_Property/Other_Alphabetic/symbols');
+require('unicode-8.0.0/Binary_Property/Other_Alphabetic/regex');
 
-require('unicode-8.0.0/properties/Other_Default_Ignorable_Code_Point/code-points');
-require('unicode-8.0.0/properties/Other_Default_Ignorable_Code_Point/symbols');
-require('unicode-8.0.0/properties/Other_Default_Ignorable_Code_Point/regex');
+require('unicode-8.0.0/Binary_Property/Other_Default_Ignorable_Code_Point/code-points');
+require('unicode-8.0.0/Binary_Property/Other_Default_Ignorable_Code_Point/symbols');
+require('unicode-8.0.0/Binary_Property/Other_Default_Ignorable_Code_Point/regex');
 
-require('unicode-8.0.0/properties/Other_Grapheme_Extend/code-points');
-require('unicode-8.0.0/properties/Other_Grapheme_Extend/symbols');
-require('unicode-8.0.0/properties/Other_Grapheme_Extend/regex');
+require('unicode-8.0.0/Binary_Property/Other_Grapheme_Extend/code-points');
+require('unicode-8.0.0/Binary_Property/Other_Grapheme_Extend/symbols');
+require('unicode-8.0.0/Binary_Property/Other_Grapheme_Extend/regex');
 
-require('unicode-8.0.0/properties/Other_ID_Continue/code-points');
-require('unicode-8.0.0/properties/Other_ID_Continue/symbols');
-require('unicode-8.0.0/properties/Other_ID_Continue/regex');
+require('unicode-8.0.0/Binary_Property/Other_ID_Continue/code-points');
+require('unicode-8.0.0/Binary_Property/Other_ID_Continue/symbols');
+require('unicode-8.0.0/Binary_Property/Other_ID_Continue/regex');
 
-require('unicode-8.0.0/properties/Other_ID_Start/code-points');
-require('unicode-8.0.0/properties/Other_ID_Start/symbols');
-require('unicode-8.0.0/properties/Other_ID_Start/regex');
+require('unicode-8.0.0/Binary_Property/Other_ID_Start/code-points');
+require('unicode-8.0.0/Binary_Property/Other_ID_Start/symbols');
+require('unicode-8.0.0/Binary_Property/Other_ID_Start/regex');
 
-require('unicode-8.0.0/properties/Other_Lowercase/code-points');
-require('unicode-8.0.0/properties/Other_Lowercase/symbols');
-require('unicode-8.0.0/properties/Other_Lowercase/regex');
+require('unicode-8.0.0/Binary_Property/Other_Lowercase/code-points');
+require('unicode-8.0.0/Binary_Property/Other_Lowercase/symbols');
+require('unicode-8.0.0/Binary_Property/Other_Lowercase/regex');
 
-require('unicode-8.0.0/properties/Other_Math/code-points');
-require('unicode-8.0.0/properties/Other_Math/symbols');
-require('unicode-8.0.0/properties/Other_Math/regex');
+require('unicode-8.0.0/Binary_Property/Other_Math/code-points');
+require('unicode-8.0.0/Binary_Property/Other_Math/symbols');
+require('unicode-8.0.0/Binary_Property/Other_Math/regex');
 
-require('unicode-8.0.0/properties/Other_Uppercase/code-points');
-require('unicode-8.0.0/properties/Other_Uppercase/symbols');
-require('unicode-8.0.0/properties/Other_Uppercase/regex');
+require('unicode-8.0.0/Binary_Property/Other_Uppercase/code-points');
+require('unicode-8.0.0/Binary_Property/Other_Uppercase/symbols');
+require('unicode-8.0.0/Binary_Property/Other_Uppercase/regex');
 
-require('unicode-8.0.0/properties/Pattern_Syntax/code-points');
-require('unicode-8.0.0/properties/Pattern_Syntax/symbols');
-require('unicode-8.0.0/properties/Pattern_Syntax/regex');
+require('unicode-8.0.0/Binary_Property/Pattern_Syntax/code-points');
+require('unicode-8.0.0/Binary_Property/Pattern_Syntax/symbols');
+require('unicode-8.0.0/Binary_Property/Pattern_Syntax/regex');
 
-require('unicode-8.0.0/properties/Pattern_White_Space/code-points');
-require('unicode-8.0.0/properties/Pattern_White_Space/symbols');
-require('unicode-8.0.0/properties/Pattern_White_Space/regex');
+require('unicode-8.0.0/Binary_Property/Pattern_White_Space/code-points');
+require('unicode-8.0.0/Binary_Property/Pattern_White_Space/symbols');
+require('unicode-8.0.0/Binary_Property/Pattern_White_Space/regex');
 
-require('unicode-8.0.0/properties/Quotation_Mark/code-points');
-require('unicode-8.0.0/properties/Quotation_Mark/symbols');
-require('unicode-8.0.0/properties/Quotation_Mark/regex');
+require('unicode-8.0.0/Binary_Property/Quotation_Mark/code-points');
+require('unicode-8.0.0/Binary_Property/Quotation_Mark/symbols');
+require('unicode-8.0.0/Binary_Property/Quotation_Mark/regex');
 
-require('unicode-8.0.0/properties/Radical/code-points');
-require('unicode-8.0.0/properties/Radical/symbols');
-require('unicode-8.0.0/properties/Radical/regex');
+require('unicode-8.0.0/Binary_Property/Radical/code-points');
+require('unicode-8.0.0/Binary_Property/Radical/symbols');
+require('unicode-8.0.0/Binary_Property/Radical/regex');
 
-require('unicode-8.0.0/properties/STerm/code-points');
-require('unicode-8.0.0/properties/STerm/symbols');
-require('unicode-8.0.0/properties/STerm/regex');
+require('unicode-8.0.0/Binary_Property/STerm/code-points');
+require('unicode-8.0.0/Binary_Property/STerm/symbols');
+require('unicode-8.0.0/Binary_Property/STerm/regex');
 
-require('unicode-8.0.0/properties/Soft_Dotted/code-points');
-require('unicode-8.0.0/properties/Soft_Dotted/symbols');
-require('unicode-8.0.0/properties/Soft_Dotted/regex');
+require('unicode-8.0.0/Binary_Property/Soft_Dotted/code-points');
+require('unicode-8.0.0/Binary_Property/Soft_Dotted/symbols');
+require('unicode-8.0.0/Binary_Property/Soft_Dotted/regex');
 
-require('unicode-8.0.0/properties/Terminal_Punctuation/code-points');
-require('unicode-8.0.0/properties/Terminal_Punctuation/symbols');
-require('unicode-8.0.0/properties/Terminal_Punctuation/regex');
+require('unicode-8.0.0/Binary_Property/Terminal_Punctuation/code-points');
+require('unicode-8.0.0/Binary_Property/Terminal_Punctuation/symbols');
+require('unicode-8.0.0/Binary_Property/Terminal_Punctuation/regex');
 
-require('unicode-8.0.0/properties/Unified_Ideograph/code-points');
-require('unicode-8.0.0/properties/Unified_Ideograph/symbols');
-require('unicode-8.0.0/properties/Unified_Ideograph/regex');
+require('unicode-8.0.0/Binary_Property/Unified_Ideograph/code-points');
+require('unicode-8.0.0/Binary_Property/Unified_Ideograph/symbols');
+require('unicode-8.0.0/Binary_Property/Unified_Ideograph/regex');
 
-require('unicode-8.0.0/properties/Uppercase/code-points');
-require('unicode-8.0.0/properties/Uppercase/symbols');
-require('unicode-8.0.0/properties/Uppercase/regex');
+require('unicode-8.0.0/Binary_Property/Uppercase/code-points');
+require('unicode-8.0.0/Binary_Property/Uppercase/symbols');
+require('unicode-8.0.0/Binary_Property/Uppercase/regex');
 
-require('unicode-8.0.0/properties/Variation_Selector/code-points');
-require('unicode-8.0.0/properties/Variation_Selector/symbols');
-require('unicode-8.0.0/properties/Variation_Selector/regex');
+require('unicode-8.0.0/Binary_Property/Variation_Selector/code-points');
+require('unicode-8.0.0/Binary_Property/Variation_Selector/symbols');
+require('unicode-8.0.0/Binary_Property/Variation_Selector/regex');
 
-require('unicode-8.0.0/properties/White_Space/code-points');
-require('unicode-8.0.0/properties/White_Space/symbols');
-require('unicode-8.0.0/properties/White_Space/regex');
+require('unicode-8.0.0/Binary_Property/White_Space/code-points');
+require('unicode-8.0.0/Binary_Property/White_Space/symbols');
+require('unicode-8.0.0/Binary_Property/White_Space/regex');
 
-require('unicode-8.0.0/properties/XID_Continue/code-points');
-require('unicode-8.0.0/properties/XID_Continue/symbols');
-require('unicode-8.0.0/properties/XID_Continue/regex');
+require('unicode-8.0.0/Binary_Property/XID_Continue/code-points');
+require('unicode-8.0.0/Binary_Property/XID_Continue/symbols');
+require('unicode-8.0.0/Binary_Property/XID_Continue/regex');
 
-require('unicode-8.0.0/properties/XID_Start/code-points');
-require('unicode-8.0.0/properties/XID_Start/symbols');
-require('unicode-8.0.0/properties/XID_Start/regex');
+require('unicode-8.0.0/Binary_Property/XID_Start/code-points');
+require('unicode-8.0.0/Binary_Property/XID_Start/symbols');
+require('unicode-8.0.0/Binary_Property/XID_Start/regex');
 
-// categories:
+// `General_Category`:
 
-require('unicode-8.0.0/categories').get(codePoint); // lookup map
+require('unicode-8.0.0/General_Category').get(codePoint); // lookup map
 
-require('unicode-8.0.0/categories/Cased_Letter/code-points');
-require('unicode-8.0.0/categories/Cased_Letter/symbols');
-require('unicode-8.0.0/categories/Cased_Letter/regex');
+require('unicode-8.0.0/General_Category/Cased_Letter/code-points');
+require('unicode-8.0.0/General_Category/Cased_Letter/symbols');
+require('unicode-8.0.0/General_Category/Cased_Letter/regex');
 
-require('unicode-8.0.0/categories/Close_Punctuation/code-points');
-require('unicode-8.0.0/categories/Close_Punctuation/symbols');
-require('unicode-8.0.0/categories/Close_Punctuation/regex');
+require('unicode-8.0.0/General_Category/Close_Punctuation/code-points');
+require('unicode-8.0.0/General_Category/Close_Punctuation/symbols');
+require('unicode-8.0.0/General_Category/Close_Punctuation/regex');
 
-require('unicode-8.0.0/categories/Connector_Punctuation/code-points');
-require('unicode-8.0.0/categories/Connector_Punctuation/symbols');
-require('unicode-8.0.0/categories/Connector_Punctuation/regex');
+require('unicode-8.0.0/General_Category/Connector_Punctuation/code-points');
+require('unicode-8.0.0/General_Category/Connector_Punctuation/symbols');
+require('unicode-8.0.0/General_Category/Connector_Punctuation/regex');
 
-require('unicode-8.0.0/categories/Control/code-points');
-require('unicode-8.0.0/categories/Control/symbols');
-require('unicode-8.0.0/categories/Control/regex');
+require('unicode-8.0.0/General_Category/Control/code-points');
+require('unicode-8.0.0/General_Category/Control/symbols');
+require('unicode-8.0.0/General_Category/Control/regex');
 
-require('unicode-8.0.0/categories/Currency_Symbol/code-points');
-require('unicode-8.0.0/categories/Currency_Symbol/symbols');
-require('unicode-8.0.0/categories/Currency_Symbol/regex');
+require('unicode-8.0.0/General_Category/Currency_Symbol/code-points');
+require('unicode-8.0.0/General_Category/Currency_Symbol/symbols');
+require('unicode-8.0.0/General_Category/Currency_Symbol/regex');
 
-require('unicode-8.0.0/categories/Dash_Punctuation/code-points');
-require('unicode-8.0.0/categories/Dash_Punctuation/symbols');
-require('unicode-8.0.0/categories/Dash_Punctuation/regex');
+require('unicode-8.0.0/General_Category/Dash_Punctuation/code-points');
+require('unicode-8.0.0/General_Category/Dash_Punctuation/symbols');
+require('unicode-8.0.0/General_Category/Dash_Punctuation/regex');
 
-require('unicode-8.0.0/categories/Decimal_Number/code-points');
-require('unicode-8.0.0/categories/Decimal_Number/symbols');
-require('unicode-8.0.0/categories/Decimal_Number/regex');
+require('unicode-8.0.0/General_Category/Decimal_Number/code-points');
+require('unicode-8.0.0/General_Category/Decimal_Number/symbols');
+require('unicode-8.0.0/General_Category/Decimal_Number/regex');
 
-require('unicode-8.0.0/categories/Enclosing_Mark/code-points');
-require('unicode-8.0.0/categories/Enclosing_Mark/symbols');
-require('unicode-8.0.0/categories/Enclosing_Mark/regex');
+require('unicode-8.0.0/General_Category/Enclosing_Mark/code-points');
+require('unicode-8.0.0/General_Category/Enclosing_Mark/symbols');
+require('unicode-8.0.0/General_Category/Enclosing_Mark/regex');
 
-require('unicode-8.0.0/categories/Final_Punctuation/code-points');
-require('unicode-8.0.0/categories/Final_Punctuation/symbols');
-require('unicode-8.0.0/categories/Final_Punctuation/regex');
+require('unicode-8.0.0/General_Category/Final_Punctuation/code-points');
+require('unicode-8.0.0/General_Category/Final_Punctuation/symbols');
+require('unicode-8.0.0/General_Category/Final_Punctuation/regex');
 
-require('unicode-8.0.0/categories/Format/code-points');
-require('unicode-8.0.0/categories/Format/symbols');
-require('unicode-8.0.0/categories/Format/regex');
+require('unicode-8.0.0/General_Category/Format/code-points');
+require('unicode-8.0.0/General_Category/Format/symbols');
+require('unicode-8.0.0/General_Category/Format/regex');
 
-require('unicode-8.0.0/categories/Initial_Punctuation/code-points');
-require('unicode-8.0.0/categories/Initial_Punctuation/symbols');
-require('unicode-8.0.0/categories/Initial_Punctuation/regex');
+require('unicode-8.0.0/General_Category/Initial_Punctuation/code-points');
+require('unicode-8.0.0/General_Category/Initial_Punctuation/symbols');
+require('unicode-8.0.0/General_Category/Initial_Punctuation/regex');
 
-require('unicode-8.0.0/categories/Letter/code-points');
-require('unicode-8.0.0/categories/Letter/symbols');
-require('unicode-8.0.0/categories/Letter/regex');
+require('unicode-8.0.0/General_Category/Letter/code-points');
+require('unicode-8.0.0/General_Category/Letter/symbols');
+require('unicode-8.0.0/General_Category/Letter/regex');
 
-require('unicode-8.0.0/categories/Letter_Number/code-points');
-require('unicode-8.0.0/categories/Letter_Number/symbols');
-require('unicode-8.0.0/categories/Letter_Number/regex');
+require('unicode-8.0.0/General_Category/Letter_Number/code-points');
+require('unicode-8.0.0/General_Category/Letter_Number/symbols');
+require('unicode-8.0.0/General_Category/Letter_Number/regex');
 
-require('unicode-8.0.0/categories/Line_Separator/code-points');
-require('unicode-8.0.0/categories/Line_Separator/symbols');
-require('unicode-8.0.0/categories/Line_Separator/regex');
+require('unicode-8.0.0/General_Category/Line_Separator/code-points');
+require('unicode-8.0.0/General_Category/Line_Separator/symbols');
+require('unicode-8.0.0/General_Category/Line_Separator/regex');
 
-require('unicode-8.0.0/categories/Lowercase_Letter/code-points');
-require('unicode-8.0.0/categories/Lowercase_Letter/symbols');
-require('unicode-8.0.0/categories/Lowercase_Letter/regex');
+require('unicode-8.0.0/General_Category/Lowercase_Letter/code-points');
+require('unicode-8.0.0/General_Category/Lowercase_Letter/symbols');
+require('unicode-8.0.0/General_Category/Lowercase_Letter/regex');
 
-require('unicode-8.0.0/categories/Mark/code-points');
-require('unicode-8.0.0/categories/Mark/symbols');
-require('unicode-8.0.0/categories/Mark/regex');
+require('unicode-8.0.0/General_Category/Mark/code-points');
+require('unicode-8.0.0/General_Category/Mark/symbols');
+require('unicode-8.0.0/General_Category/Mark/regex');
 
-require('unicode-8.0.0/categories/Math_Symbol/code-points');
-require('unicode-8.0.0/categories/Math_Symbol/symbols');
-require('unicode-8.0.0/categories/Math_Symbol/regex');
+require('unicode-8.0.0/General_Category/Math_Symbol/code-points');
+require('unicode-8.0.0/General_Category/Math_Symbol/symbols');
+require('unicode-8.0.0/General_Category/Math_Symbol/regex');
 
-require('unicode-8.0.0/categories/Modifier_Letter/code-points');
-require('unicode-8.0.0/categories/Modifier_Letter/symbols');
-require('unicode-8.0.0/categories/Modifier_Letter/regex');
+require('unicode-8.0.0/General_Category/Modifier_Letter/code-points');
+require('unicode-8.0.0/General_Category/Modifier_Letter/symbols');
+require('unicode-8.0.0/General_Category/Modifier_Letter/regex');
 
-require('unicode-8.0.0/categories/Modifier_Symbol/code-points');
-require('unicode-8.0.0/categories/Modifier_Symbol/symbols');
-require('unicode-8.0.0/categories/Modifier_Symbol/regex');
+require('unicode-8.0.0/General_Category/Modifier_Symbol/code-points');
+require('unicode-8.0.0/General_Category/Modifier_Symbol/symbols');
+require('unicode-8.0.0/General_Category/Modifier_Symbol/regex');
 
-require('unicode-8.0.0/categories/Nonspacing_Mark/code-points');
-require('unicode-8.0.0/categories/Nonspacing_Mark/symbols');
-require('unicode-8.0.0/categories/Nonspacing_Mark/regex');
+require('unicode-8.0.0/General_Category/Nonspacing_Mark/code-points');
+require('unicode-8.0.0/General_Category/Nonspacing_Mark/symbols');
+require('unicode-8.0.0/General_Category/Nonspacing_Mark/regex');
 
-require('unicode-8.0.0/categories/Number/code-points');
-require('unicode-8.0.0/categories/Number/symbols');
-require('unicode-8.0.0/categories/Number/regex');
+require('unicode-8.0.0/General_Category/Number/code-points');
+require('unicode-8.0.0/General_Category/Number/symbols');
+require('unicode-8.0.0/General_Category/Number/regex');
 
-require('unicode-8.0.0/categories/Open_Punctuation/code-points');
-require('unicode-8.0.0/categories/Open_Punctuation/symbols');
-require('unicode-8.0.0/categories/Open_Punctuation/regex');
+require('unicode-8.0.0/General_Category/Open_Punctuation/code-points');
+require('unicode-8.0.0/General_Category/Open_Punctuation/symbols');
+require('unicode-8.0.0/General_Category/Open_Punctuation/regex');
 
-require('unicode-8.0.0/categories/Other/code-points');
-require('unicode-8.0.0/categories/Other/symbols');
-require('unicode-8.0.0/categories/Other/regex');
+require('unicode-8.0.0/General_Category/Other/code-points');
+require('unicode-8.0.0/General_Category/Other/symbols');
+require('unicode-8.0.0/General_Category/Other/regex');
 
-require('unicode-8.0.0/categories/Other_Letter/code-points');
-require('unicode-8.0.0/categories/Other_Letter/symbols');
-require('unicode-8.0.0/categories/Other_Letter/regex');
+require('unicode-8.0.0/General_Category/Other_Letter/code-points');
+require('unicode-8.0.0/General_Category/Other_Letter/symbols');
+require('unicode-8.0.0/General_Category/Other_Letter/regex');
 
-require('unicode-8.0.0/categories/Other_Number/code-points');
-require('unicode-8.0.0/categories/Other_Number/symbols');
-require('unicode-8.0.0/categories/Other_Number/regex');
+require('unicode-8.0.0/General_Category/Other_Number/code-points');
+require('unicode-8.0.0/General_Category/Other_Number/symbols');
+require('unicode-8.0.0/General_Category/Other_Number/regex');
 
-require('unicode-8.0.0/categories/Other_Punctuation/code-points');
-require('unicode-8.0.0/categories/Other_Punctuation/symbols');
-require('unicode-8.0.0/categories/Other_Punctuation/regex');
+require('unicode-8.0.0/General_Category/Other_Punctuation/code-points');
+require('unicode-8.0.0/General_Category/Other_Punctuation/symbols');
+require('unicode-8.0.0/General_Category/Other_Punctuation/regex');
 
-require('unicode-8.0.0/categories/Other_Symbol/code-points');
-require('unicode-8.0.0/categories/Other_Symbol/symbols');
-require('unicode-8.0.0/categories/Other_Symbol/regex');
+require('unicode-8.0.0/General_Category/Other_Symbol/code-points');
+require('unicode-8.0.0/General_Category/Other_Symbol/symbols');
+require('unicode-8.0.0/General_Category/Other_Symbol/regex');
 
-require('unicode-8.0.0/categories/Paragraph_Separator/code-points');
-require('unicode-8.0.0/categories/Paragraph_Separator/symbols');
-require('unicode-8.0.0/categories/Paragraph_Separator/regex');
+require('unicode-8.0.0/General_Category/Paragraph_Separator/code-points');
+require('unicode-8.0.0/General_Category/Paragraph_Separator/symbols');
+require('unicode-8.0.0/General_Category/Paragraph_Separator/regex');
 
-require('unicode-8.0.0/categories/Private_Use/code-points');
-require('unicode-8.0.0/categories/Private_Use/symbols');
-require('unicode-8.0.0/categories/Private_Use/regex');
+require('unicode-8.0.0/General_Category/Private_Use/code-points');
+require('unicode-8.0.0/General_Category/Private_Use/symbols');
+require('unicode-8.0.0/General_Category/Private_Use/regex');
 
-require('unicode-8.0.0/categories/Punctuation/code-points');
-require('unicode-8.0.0/categories/Punctuation/symbols');
-require('unicode-8.0.0/categories/Punctuation/regex');
+require('unicode-8.0.0/General_Category/Punctuation/code-points');
+require('unicode-8.0.0/General_Category/Punctuation/symbols');
+require('unicode-8.0.0/General_Category/Punctuation/regex');
 
-require('unicode-8.0.0/categories/Separator/code-points');
-require('unicode-8.0.0/categories/Separator/symbols');
-require('unicode-8.0.0/categories/Separator/regex');
+require('unicode-8.0.0/General_Category/Separator/code-points');
+require('unicode-8.0.0/General_Category/Separator/symbols');
+require('unicode-8.0.0/General_Category/Separator/regex');
 
-require('unicode-8.0.0/categories/Space_Separator/code-points');
-require('unicode-8.0.0/categories/Space_Separator/symbols');
-require('unicode-8.0.0/categories/Space_Separator/regex');
+require('unicode-8.0.0/General_Category/Space_Separator/code-points');
+require('unicode-8.0.0/General_Category/Space_Separator/symbols');
+require('unicode-8.0.0/General_Category/Space_Separator/regex');
 
-require('unicode-8.0.0/categories/Spacing_Mark/code-points');
-require('unicode-8.0.0/categories/Spacing_Mark/symbols');
-require('unicode-8.0.0/categories/Spacing_Mark/regex');
+require('unicode-8.0.0/General_Category/Spacing_Mark/code-points');
+require('unicode-8.0.0/General_Category/Spacing_Mark/symbols');
+require('unicode-8.0.0/General_Category/Spacing_Mark/regex');
 
-require('unicode-8.0.0/categories/Surrogate/code-points');
-require('unicode-8.0.0/categories/Surrogate/symbols');
-require('unicode-8.0.0/categories/Surrogate/regex');
+require('unicode-8.0.0/General_Category/Surrogate/code-points');
+require('unicode-8.0.0/General_Category/Surrogate/symbols');
+require('unicode-8.0.0/General_Category/Surrogate/regex');
 
-require('unicode-8.0.0/categories/Symbol/code-points');
-require('unicode-8.0.0/categories/Symbol/symbols');
-require('unicode-8.0.0/categories/Symbol/regex');
+require('unicode-8.0.0/General_Category/Symbol/code-points');
+require('unicode-8.0.0/General_Category/Symbol/symbols');
+require('unicode-8.0.0/General_Category/Symbol/regex');
 
-require('unicode-8.0.0/categories/Titlecase_Letter/code-points');
-require('unicode-8.0.0/categories/Titlecase_Letter/symbols');
-require('unicode-8.0.0/categories/Titlecase_Letter/regex');
+require('unicode-8.0.0/General_Category/Titlecase_Letter/code-points');
+require('unicode-8.0.0/General_Category/Titlecase_Letter/symbols');
+require('unicode-8.0.0/General_Category/Titlecase_Letter/regex');
 
-require('unicode-8.0.0/categories/Unassigned/code-points');
-require('unicode-8.0.0/categories/Unassigned/symbols');
-require('unicode-8.0.0/categories/Unassigned/regex');
+require('unicode-8.0.0/General_Category/Unassigned/code-points');
+require('unicode-8.0.0/General_Category/Unassigned/symbols');
+require('unicode-8.0.0/General_Category/Unassigned/regex');
 
-require('unicode-8.0.0/categories/Uppercase_Letter/code-points');
-require('unicode-8.0.0/categories/Uppercase_Letter/symbols');
-require('unicode-8.0.0/categories/Uppercase_Letter/regex');
+require('unicode-8.0.0/General_Category/Uppercase_Letter/code-points');
+require('unicode-8.0.0/General_Category/Uppercase_Letter/symbols');
+require('unicode-8.0.0/General_Category/Uppercase_Letter/regex');
 
-// bidi classes:
+// `Bidi_Class`:
 
-require('unicode-8.0.0/bidi-classes').get(codePoint); // lookup map
+require('unicode-8.0.0/Bidi_Class').get(codePoint); // lookup map
 
-require('unicode-8.0.0/bidi-classes/Arabic_Letter/code-points');
-require('unicode-8.0.0/bidi-classes/Arabic_Letter/symbols');
-require('unicode-8.0.0/bidi-classes/Arabic_Letter/regex');
+require('unicode-8.0.0/Bidi_Class/Arabic_Letter/code-points');
+require('unicode-8.0.0/Bidi_Class/Arabic_Letter/symbols');
+require('unicode-8.0.0/Bidi_Class/Arabic_Letter/regex');
 
-require('unicode-8.0.0/bidi-classes/Arabic_Number/code-points');
-require('unicode-8.0.0/bidi-classes/Arabic_Number/symbols');
-require('unicode-8.0.0/bidi-classes/Arabic_Number/regex');
+require('unicode-8.0.0/Bidi_Class/Arabic_Number/code-points');
+require('unicode-8.0.0/Bidi_Class/Arabic_Number/symbols');
+require('unicode-8.0.0/Bidi_Class/Arabic_Number/regex');
 
-require('unicode-8.0.0/bidi-classes/Boundary_Neutral/code-points');
-require('unicode-8.0.0/bidi-classes/Boundary_Neutral/symbols');
-require('unicode-8.0.0/bidi-classes/Boundary_Neutral/regex');
+require('unicode-8.0.0/Bidi_Class/Boundary_Neutral/code-points');
+require('unicode-8.0.0/Bidi_Class/Boundary_Neutral/symbols');
+require('unicode-8.0.0/Bidi_Class/Boundary_Neutral/regex');
 
-require('unicode-8.0.0/bidi-classes/Common_Separator/code-points');
-require('unicode-8.0.0/bidi-classes/Common_Separator/symbols');
-require('unicode-8.0.0/bidi-classes/Common_Separator/regex');
+require('unicode-8.0.0/Bidi_Class/Common_Separator/code-points');
+require('unicode-8.0.0/Bidi_Class/Common_Separator/symbols');
+require('unicode-8.0.0/Bidi_Class/Common_Separator/regex');
 
-require('unicode-8.0.0/bidi-classes/European_Number/code-points');
-require('unicode-8.0.0/bidi-classes/European_Number/symbols');
-require('unicode-8.0.0/bidi-classes/European_Number/regex');
+require('unicode-8.0.0/Bidi_Class/European_Number/code-points');
+require('unicode-8.0.0/Bidi_Class/European_Number/symbols');
+require('unicode-8.0.0/Bidi_Class/European_Number/regex');
 
-require('unicode-8.0.0/bidi-classes/European_Separator/code-points');
-require('unicode-8.0.0/bidi-classes/European_Separator/symbols');
-require('unicode-8.0.0/bidi-classes/European_Separator/regex');
+require('unicode-8.0.0/Bidi_Class/European_Separator/code-points');
+require('unicode-8.0.0/Bidi_Class/European_Separator/symbols');
+require('unicode-8.0.0/Bidi_Class/European_Separator/regex');
 
-require('unicode-8.0.0/bidi-classes/European_Terminator/code-points');
-require('unicode-8.0.0/bidi-classes/European_Terminator/symbols');
-require('unicode-8.0.0/bidi-classes/European_Terminator/regex');
+require('unicode-8.0.0/Bidi_Class/European_Terminator/code-points');
+require('unicode-8.0.0/Bidi_Class/European_Terminator/symbols');
+require('unicode-8.0.0/Bidi_Class/European_Terminator/regex');
 
-require('unicode-8.0.0/bidi-classes/First_Strong_Isolate/code-points');
-require('unicode-8.0.0/bidi-classes/First_Strong_Isolate/symbols');
-require('unicode-8.0.0/bidi-classes/First_Strong_Isolate/regex');
+require('unicode-8.0.0/Bidi_Class/First_Strong_Isolate/code-points');
+require('unicode-8.0.0/Bidi_Class/First_Strong_Isolate/symbols');
+require('unicode-8.0.0/Bidi_Class/First_Strong_Isolate/regex');
 
-require('unicode-8.0.0/bidi-classes/Left_To_Right/code-points');
-require('unicode-8.0.0/bidi-classes/Left_To_Right/symbols');
-require('unicode-8.0.0/bidi-classes/Left_To_Right/regex');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right/code-points');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right/symbols');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right/regex');
 
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Embedding/code-points');
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Embedding/symbols');
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Embedding/regex');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Embedding/code-points');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Embedding/symbols');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Embedding/regex');
 
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Isolate/code-points');
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Isolate/symbols');
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Isolate/regex');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Isolate/code-points');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Isolate/symbols');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Isolate/regex');
 
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Override/code-points');
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Override/symbols');
-require('unicode-8.0.0/bidi-classes/Left_To_Right_Override/regex');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Override/code-points');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Override/symbols');
+require('unicode-8.0.0/Bidi_Class/Left_To_Right_Override/regex');
 
-require('unicode-8.0.0/bidi-classes/Nonspacing_Mark/code-points');
-require('unicode-8.0.0/bidi-classes/Nonspacing_Mark/symbols');
-require('unicode-8.0.0/bidi-classes/Nonspacing_Mark/regex');
+require('unicode-8.0.0/Bidi_Class/Nonspacing_Mark/code-points');
+require('unicode-8.0.0/Bidi_Class/Nonspacing_Mark/symbols');
+require('unicode-8.0.0/Bidi_Class/Nonspacing_Mark/regex');
 
-require('unicode-8.0.0/bidi-classes/Other_Neutral/code-points');
-require('unicode-8.0.0/bidi-classes/Other_Neutral/symbols');
-require('unicode-8.0.0/bidi-classes/Other_Neutral/regex');
+require('unicode-8.0.0/Bidi_Class/Other_Neutral/code-points');
+require('unicode-8.0.0/Bidi_Class/Other_Neutral/symbols');
+require('unicode-8.0.0/Bidi_Class/Other_Neutral/regex');
 
-require('unicode-8.0.0/bidi-classes/Paragraph_Separator/code-points');
-require('unicode-8.0.0/bidi-classes/Paragraph_Separator/symbols');
-require('unicode-8.0.0/bidi-classes/Paragraph_Separator/regex');
+require('unicode-8.0.0/Bidi_Class/Paragraph_Separator/code-points');
+require('unicode-8.0.0/Bidi_Class/Paragraph_Separator/symbols');
+require('unicode-8.0.0/Bidi_Class/Paragraph_Separator/regex');
 
-require('unicode-8.0.0/bidi-classes/Pop_Directional_Format/code-points');
-require('unicode-8.0.0/bidi-classes/Pop_Directional_Format/symbols');
-require('unicode-8.0.0/bidi-classes/Pop_Directional_Format/regex');
+require('unicode-8.0.0/Bidi_Class/Pop_Directional_Format/code-points');
+require('unicode-8.0.0/Bidi_Class/Pop_Directional_Format/symbols');
+require('unicode-8.0.0/Bidi_Class/Pop_Directional_Format/regex');
 
-require('unicode-8.0.0/bidi-classes/Pop_Directional_Isolate/code-points');
-require('unicode-8.0.0/bidi-classes/Pop_Directional_Isolate/symbols');
-require('unicode-8.0.0/bidi-classes/Pop_Directional_Isolate/regex');
+require('unicode-8.0.0/Bidi_Class/Pop_Directional_Isolate/code-points');
+require('unicode-8.0.0/Bidi_Class/Pop_Directional_Isolate/symbols');
+require('unicode-8.0.0/Bidi_Class/Pop_Directional_Isolate/regex');
 
-require('unicode-8.0.0/bidi-classes/Right_To_Left/code-points');
-require('unicode-8.0.0/bidi-classes/Right_To_Left/symbols');
-require('unicode-8.0.0/bidi-classes/Right_To_Left/regex');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left/code-points');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left/symbols');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left/regex');
 
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Embedding/code-points');
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Embedding/symbols');
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Embedding/regex');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Embedding/code-points');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Embedding/symbols');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Embedding/regex');
 
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Isolate/code-points');
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Isolate/symbols');
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Isolate/regex');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Isolate/code-points');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Isolate/symbols');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Isolate/regex');
 
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Override/code-points');
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Override/symbols');
-require('unicode-8.0.0/bidi-classes/Right_To_Left_Override/regex');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Override/code-points');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Override/symbols');
+require('unicode-8.0.0/Bidi_Class/Right_To_Left_Override/regex');
 
-require('unicode-8.0.0/bidi-classes/Segment_Separator/code-points');
-require('unicode-8.0.0/bidi-classes/Segment_Separator/symbols');
-require('unicode-8.0.0/bidi-classes/Segment_Separator/regex');
+require('unicode-8.0.0/Bidi_Class/Segment_Separator/code-points');
+require('unicode-8.0.0/Bidi_Class/Segment_Separator/symbols');
+require('unicode-8.0.0/Bidi_Class/Segment_Separator/regex');
 
-require('unicode-8.0.0/bidi-classes/White_Space/code-points');
-require('unicode-8.0.0/bidi-classes/White_Space/symbols');
-require('unicode-8.0.0/bidi-classes/White_Space/regex');
+require('unicode-8.0.0/Bidi_Class/White_Space/code-points');
+require('unicode-8.0.0/Bidi_Class/White_Space/symbols');
+require('unicode-8.0.0/Bidi_Class/White_Space/regex');
 
-// scripts:
+// `Script`:
 
-require('unicode-8.0.0/scripts/Ahom/code-points');
-require('unicode-8.0.0/scripts/Ahom/symbols');
-require('unicode-8.0.0/scripts/Ahom/regex');
+require('unicode-8.0.0/Script/Ahom/code-points');
+require('unicode-8.0.0/Script/Ahom/symbols');
+require('unicode-8.0.0/Script/Ahom/regex');
 
-require('unicode-8.0.0/scripts/Anatolian_Hieroglyphs/code-points');
-require('unicode-8.0.0/scripts/Anatolian_Hieroglyphs/symbols');
-require('unicode-8.0.0/scripts/Anatolian_Hieroglyphs/regex');
+require('unicode-8.0.0/Script/Anatolian_Hieroglyphs/code-points');
+require('unicode-8.0.0/Script/Anatolian_Hieroglyphs/symbols');
+require('unicode-8.0.0/Script/Anatolian_Hieroglyphs/regex');
 
-require('unicode-8.0.0/scripts/Arabic/code-points');
-require('unicode-8.0.0/scripts/Arabic/symbols');
-require('unicode-8.0.0/scripts/Arabic/regex');
+require('unicode-8.0.0/Script/Arabic/code-points');
+require('unicode-8.0.0/Script/Arabic/symbols');
+require('unicode-8.0.0/Script/Arabic/regex');
 
-require('unicode-8.0.0/scripts/Armenian/code-points');
-require('unicode-8.0.0/scripts/Armenian/symbols');
-require('unicode-8.0.0/scripts/Armenian/regex');
+require('unicode-8.0.0/Script/Armenian/code-points');
+require('unicode-8.0.0/Script/Armenian/symbols');
+require('unicode-8.0.0/Script/Armenian/regex');
 
-require('unicode-8.0.0/scripts/Avestan/code-points');
-require('unicode-8.0.0/scripts/Avestan/symbols');
-require('unicode-8.0.0/scripts/Avestan/regex');
+require('unicode-8.0.0/Script/Avestan/code-points');
+require('unicode-8.0.0/Script/Avestan/symbols');
+require('unicode-8.0.0/Script/Avestan/regex');
 
-require('unicode-8.0.0/scripts/Balinese/code-points');
-require('unicode-8.0.0/scripts/Balinese/symbols');
-require('unicode-8.0.0/scripts/Balinese/regex');
+require('unicode-8.0.0/Script/Balinese/code-points');
+require('unicode-8.0.0/Script/Balinese/symbols');
+require('unicode-8.0.0/Script/Balinese/regex');
 
-require('unicode-8.0.0/scripts/Bamum/code-points');
-require('unicode-8.0.0/scripts/Bamum/symbols');
-require('unicode-8.0.0/scripts/Bamum/regex');
+require('unicode-8.0.0/Script/Bamum/code-points');
+require('unicode-8.0.0/Script/Bamum/symbols');
+require('unicode-8.0.0/Script/Bamum/regex');
 
-require('unicode-8.0.0/scripts/Bassa_Vah/code-points');
-require('unicode-8.0.0/scripts/Bassa_Vah/symbols');
-require('unicode-8.0.0/scripts/Bassa_Vah/regex');
+require('unicode-8.0.0/Script/Bassa_Vah/code-points');
+require('unicode-8.0.0/Script/Bassa_Vah/symbols');
+require('unicode-8.0.0/Script/Bassa_Vah/regex');
 
-require('unicode-8.0.0/scripts/Batak/code-points');
-require('unicode-8.0.0/scripts/Batak/symbols');
-require('unicode-8.0.0/scripts/Batak/regex');
+require('unicode-8.0.0/Script/Batak/code-points');
+require('unicode-8.0.0/Script/Batak/symbols');
+require('unicode-8.0.0/Script/Batak/regex');
 
-require('unicode-8.0.0/scripts/Bengali/code-points');
-require('unicode-8.0.0/scripts/Bengali/symbols');
-require('unicode-8.0.0/scripts/Bengali/regex');
+require('unicode-8.0.0/Script/Bengali/code-points');
+require('unicode-8.0.0/Script/Bengali/symbols');
+require('unicode-8.0.0/Script/Bengali/regex');
 
-require('unicode-8.0.0/scripts/Bopomofo/code-points');
-require('unicode-8.0.0/scripts/Bopomofo/symbols');
-require('unicode-8.0.0/scripts/Bopomofo/regex');
+require('unicode-8.0.0/Script/Bopomofo/code-points');
+require('unicode-8.0.0/Script/Bopomofo/symbols');
+require('unicode-8.0.0/Script/Bopomofo/regex');
 
-require('unicode-8.0.0/scripts/Brahmi/code-points');
-require('unicode-8.0.0/scripts/Brahmi/symbols');
-require('unicode-8.0.0/scripts/Brahmi/regex');
+require('unicode-8.0.0/Script/Brahmi/code-points');
+require('unicode-8.0.0/Script/Brahmi/symbols');
+require('unicode-8.0.0/Script/Brahmi/regex');
 
-require('unicode-8.0.0/scripts/Braille/code-points');
-require('unicode-8.0.0/scripts/Braille/symbols');
-require('unicode-8.0.0/scripts/Braille/regex');
+require('unicode-8.0.0/Script/Braille/code-points');
+require('unicode-8.0.0/Script/Braille/symbols');
+require('unicode-8.0.0/Script/Braille/regex');
 
-require('unicode-8.0.0/scripts/Buginese/code-points');
-require('unicode-8.0.0/scripts/Buginese/symbols');
-require('unicode-8.0.0/scripts/Buginese/regex');
+require('unicode-8.0.0/Script/Buginese/code-points');
+require('unicode-8.0.0/Script/Buginese/symbols');
+require('unicode-8.0.0/Script/Buginese/regex');
 
-require('unicode-8.0.0/scripts/Buhid/code-points');
-require('unicode-8.0.0/scripts/Buhid/symbols');
-require('unicode-8.0.0/scripts/Buhid/regex');
+require('unicode-8.0.0/Script/Buhid/code-points');
+require('unicode-8.0.0/Script/Buhid/symbols');
+require('unicode-8.0.0/Script/Buhid/regex');
 
-require('unicode-8.0.0/scripts/Canadian_Aboriginal/code-points');
-require('unicode-8.0.0/scripts/Canadian_Aboriginal/symbols');
-require('unicode-8.0.0/scripts/Canadian_Aboriginal/regex');
+require('unicode-8.0.0/Script/Canadian_Aboriginal/code-points');
+require('unicode-8.0.0/Script/Canadian_Aboriginal/symbols');
+require('unicode-8.0.0/Script/Canadian_Aboriginal/regex');
 
-require('unicode-8.0.0/scripts/Carian/code-points');
-require('unicode-8.0.0/scripts/Carian/symbols');
-require('unicode-8.0.0/scripts/Carian/regex');
+require('unicode-8.0.0/Script/Carian/code-points');
+require('unicode-8.0.0/Script/Carian/symbols');
+require('unicode-8.0.0/Script/Carian/regex');
 
-require('unicode-8.0.0/scripts/Caucasian_Albanian/code-points');
-require('unicode-8.0.0/scripts/Caucasian_Albanian/symbols');
-require('unicode-8.0.0/scripts/Caucasian_Albanian/regex');
+require('unicode-8.0.0/Script/Caucasian_Albanian/code-points');
+require('unicode-8.0.0/Script/Caucasian_Albanian/symbols');
+require('unicode-8.0.0/Script/Caucasian_Albanian/regex');
 
-require('unicode-8.0.0/scripts/Chakma/code-points');
-require('unicode-8.0.0/scripts/Chakma/symbols');
-require('unicode-8.0.0/scripts/Chakma/regex');
+require('unicode-8.0.0/Script/Chakma/code-points');
+require('unicode-8.0.0/Script/Chakma/symbols');
+require('unicode-8.0.0/Script/Chakma/regex');
 
-require('unicode-8.0.0/scripts/Cham/code-points');
-require('unicode-8.0.0/scripts/Cham/symbols');
-require('unicode-8.0.0/scripts/Cham/regex');
+require('unicode-8.0.0/Script/Cham/code-points');
+require('unicode-8.0.0/Script/Cham/symbols');
+require('unicode-8.0.0/Script/Cham/regex');
 
-require('unicode-8.0.0/scripts/Cherokee/code-points');
-require('unicode-8.0.0/scripts/Cherokee/symbols');
-require('unicode-8.0.0/scripts/Cherokee/regex');
+require('unicode-8.0.0/Script/Cherokee/code-points');
+require('unicode-8.0.0/Script/Cherokee/symbols');
+require('unicode-8.0.0/Script/Cherokee/regex');
 
-require('unicode-8.0.0/scripts/Common/code-points');
-require('unicode-8.0.0/scripts/Common/symbols');
-require('unicode-8.0.0/scripts/Common/regex');
+require('unicode-8.0.0/Script/Common/code-points');
+require('unicode-8.0.0/Script/Common/symbols');
+require('unicode-8.0.0/Script/Common/regex');
 
-require('unicode-8.0.0/scripts/Coptic/code-points');
-require('unicode-8.0.0/scripts/Coptic/symbols');
-require('unicode-8.0.0/scripts/Coptic/regex');
+require('unicode-8.0.0/Script/Coptic/code-points');
+require('unicode-8.0.0/Script/Coptic/symbols');
+require('unicode-8.0.0/Script/Coptic/regex');
 
-require('unicode-8.0.0/scripts/Cuneiform/code-points');
-require('unicode-8.0.0/scripts/Cuneiform/symbols');
-require('unicode-8.0.0/scripts/Cuneiform/regex');
+require('unicode-8.0.0/Script/Cuneiform/code-points');
+require('unicode-8.0.0/Script/Cuneiform/symbols');
+require('unicode-8.0.0/Script/Cuneiform/regex');
 
-require('unicode-8.0.0/scripts/Cypriot/code-points');
-require('unicode-8.0.0/scripts/Cypriot/symbols');
-require('unicode-8.0.0/scripts/Cypriot/regex');
+require('unicode-8.0.0/Script/Cypriot/code-points');
+require('unicode-8.0.0/Script/Cypriot/symbols');
+require('unicode-8.0.0/Script/Cypriot/regex');
 
-require('unicode-8.0.0/scripts/Cyrillic/code-points');
-require('unicode-8.0.0/scripts/Cyrillic/symbols');
-require('unicode-8.0.0/scripts/Cyrillic/regex');
+require('unicode-8.0.0/Script/Cyrillic/code-points');
+require('unicode-8.0.0/Script/Cyrillic/symbols');
+require('unicode-8.0.0/Script/Cyrillic/regex');
 
-require('unicode-8.0.0/scripts/Deseret/code-points');
-require('unicode-8.0.0/scripts/Deseret/symbols');
-require('unicode-8.0.0/scripts/Deseret/regex');
+require('unicode-8.0.0/Script/Deseret/code-points');
+require('unicode-8.0.0/Script/Deseret/symbols');
+require('unicode-8.0.0/Script/Deseret/regex');
 
-require('unicode-8.0.0/scripts/Devanagari/code-points');
-require('unicode-8.0.0/scripts/Devanagari/symbols');
-require('unicode-8.0.0/scripts/Devanagari/regex');
+require('unicode-8.0.0/Script/Devanagari/code-points');
+require('unicode-8.0.0/Script/Devanagari/symbols');
+require('unicode-8.0.0/Script/Devanagari/regex');
 
-require('unicode-8.0.0/scripts/Duployan/code-points');
-require('unicode-8.0.0/scripts/Duployan/symbols');
-require('unicode-8.0.0/scripts/Duployan/regex');
+require('unicode-8.0.0/Script/Duployan/code-points');
+require('unicode-8.0.0/Script/Duployan/symbols');
+require('unicode-8.0.0/Script/Duployan/regex');
 
-require('unicode-8.0.0/scripts/Egyptian_Hieroglyphs/code-points');
-require('unicode-8.0.0/scripts/Egyptian_Hieroglyphs/symbols');
-require('unicode-8.0.0/scripts/Egyptian_Hieroglyphs/regex');
+require('unicode-8.0.0/Script/Egyptian_Hieroglyphs/code-points');
+require('unicode-8.0.0/Script/Egyptian_Hieroglyphs/symbols');
+require('unicode-8.0.0/Script/Egyptian_Hieroglyphs/regex');
 
-require('unicode-8.0.0/scripts/Elbasan/code-points');
-require('unicode-8.0.0/scripts/Elbasan/symbols');
-require('unicode-8.0.0/scripts/Elbasan/regex');
+require('unicode-8.0.0/Script/Elbasan/code-points');
+require('unicode-8.0.0/Script/Elbasan/symbols');
+require('unicode-8.0.0/Script/Elbasan/regex');
 
-require('unicode-8.0.0/scripts/Ethiopic/code-points');
-require('unicode-8.0.0/scripts/Ethiopic/symbols');
-require('unicode-8.0.0/scripts/Ethiopic/regex');
+require('unicode-8.0.0/Script/Ethiopic/code-points');
+require('unicode-8.0.0/Script/Ethiopic/symbols');
+require('unicode-8.0.0/Script/Ethiopic/regex');
 
-require('unicode-8.0.0/scripts/Georgian/code-points');
-require('unicode-8.0.0/scripts/Georgian/symbols');
-require('unicode-8.0.0/scripts/Georgian/regex');
+require('unicode-8.0.0/Script/Georgian/code-points');
+require('unicode-8.0.0/Script/Georgian/symbols');
+require('unicode-8.0.0/Script/Georgian/regex');
 
-require('unicode-8.0.0/scripts/Glagolitic/code-points');
-require('unicode-8.0.0/scripts/Glagolitic/symbols');
-require('unicode-8.0.0/scripts/Glagolitic/regex');
+require('unicode-8.0.0/Script/Glagolitic/code-points');
+require('unicode-8.0.0/Script/Glagolitic/symbols');
+require('unicode-8.0.0/Script/Glagolitic/regex');
 
-require('unicode-8.0.0/scripts/Gothic/code-points');
-require('unicode-8.0.0/scripts/Gothic/symbols');
-require('unicode-8.0.0/scripts/Gothic/regex');
+require('unicode-8.0.0/Script/Gothic/code-points');
+require('unicode-8.0.0/Script/Gothic/symbols');
+require('unicode-8.0.0/Script/Gothic/regex');
 
-require('unicode-8.0.0/scripts/Grantha/code-points');
-require('unicode-8.0.0/scripts/Grantha/symbols');
-require('unicode-8.0.0/scripts/Grantha/regex');
+require('unicode-8.0.0/Script/Grantha/code-points');
+require('unicode-8.0.0/Script/Grantha/symbols');
+require('unicode-8.0.0/Script/Grantha/regex');
 
-require('unicode-8.0.0/scripts/Greek/code-points');
-require('unicode-8.0.0/scripts/Greek/symbols');
-require('unicode-8.0.0/scripts/Greek/regex');
+require('unicode-8.0.0/Script/Greek/code-points');
+require('unicode-8.0.0/Script/Greek/symbols');
+require('unicode-8.0.0/Script/Greek/regex');
 
-require('unicode-8.0.0/scripts/Gujarati/code-points');
-require('unicode-8.0.0/scripts/Gujarati/symbols');
-require('unicode-8.0.0/scripts/Gujarati/regex');
+require('unicode-8.0.0/Script/Gujarati/code-points');
+require('unicode-8.0.0/Script/Gujarati/symbols');
+require('unicode-8.0.0/Script/Gujarati/regex');
 
-require('unicode-8.0.0/scripts/Gurmukhi/code-points');
-require('unicode-8.0.0/scripts/Gurmukhi/symbols');
-require('unicode-8.0.0/scripts/Gurmukhi/regex');
+require('unicode-8.0.0/Script/Gurmukhi/code-points');
+require('unicode-8.0.0/Script/Gurmukhi/symbols');
+require('unicode-8.0.0/Script/Gurmukhi/regex');
 
-require('unicode-8.0.0/scripts/Han/code-points');
-require('unicode-8.0.0/scripts/Han/symbols');
-require('unicode-8.0.0/scripts/Han/regex');
+require('unicode-8.0.0/Script/Han/code-points');
+require('unicode-8.0.0/Script/Han/symbols');
+require('unicode-8.0.0/Script/Han/regex');
 
-require('unicode-8.0.0/scripts/Hangul/code-points');
-require('unicode-8.0.0/scripts/Hangul/symbols');
-require('unicode-8.0.0/scripts/Hangul/regex');
+require('unicode-8.0.0/Script/Hangul/code-points');
+require('unicode-8.0.0/Script/Hangul/symbols');
+require('unicode-8.0.0/Script/Hangul/regex');
 
-require('unicode-8.0.0/scripts/Hanunoo/code-points');
-require('unicode-8.0.0/scripts/Hanunoo/symbols');
-require('unicode-8.0.0/scripts/Hanunoo/regex');
+require('unicode-8.0.0/Script/Hanunoo/code-points');
+require('unicode-8.0.0/Script/Hanunoo/symbols');
+require('unicode-8.0.0/Script/Hanunoo/regex');
 
-require('unicode-8.0.0/scripts/Hatran/code-points');
-require('unicode-8.0.0/scripts/Hatran/symbols');
-require('unicode-8.0.0/scripts/Hatran/regex');
+require('unicode-8.0.0/Script/Hatran/code-points');
+require('unicode-8.0.0/Script/Hatran/symbols');
+require('unicode-8.0.0/Script/Hatran/regex');
 
-require('unicode-8.0.0/scripts/Hebrew/code-points');
-require('unicode-8.0.0/scripts/Hebrew/symbols');
-require('unicode-8.0.0/scripts/Hebrew/regex');
+require('unicode-8.0.0/Script/Hebrew/code-points');
+require('unicode-8.0.0/Script/Hebrew/symbols');
+require('unicode-8.0.0/Script/Hebrew/regex');
 
-require('unicode-8.0.0/scripts/Hiragana/code-points');
-require('unicode-8.0.0/scripts/Hiragana/symbols');
-require('unicode-8.0.0/scripts/Hiragana/regex');
+require('unicode-8.0.0/Script/Hiragana/code-points');
+require('unicode-8.0.0/Script/Hiragana/symbols');
+require('unicode-8.0.0/Script/Hiragana/regex');
 
-require('unicode-8.0.0/scripts/Imperial_Aramaic/code-points');
-require('unicode-8.0.0/scripts/Imperial_Aramaic/symbols');
-require('unicode-8.0.0/scripts/Imperial_Aramaic/regex');
+require('unicode-8.0.0/Script/Imperial_Aramaic/code-points');
+require('unicode-8.0.0/Script/Imperial_Aramaic/symbols');
+require('unicode-8.0.0/Script/Imperial_Aramaic/regex');
 
-require('unicode-8.0.0/scripts/Inherited/code-points');
-require('unicode-8.0.0/scripts/Inherited/symbols');
-require('unicode-8.0.0/scripts/Inherited/regex');
+require('unicode-8.0.0/Script/Inherited/code-points');
+require('unicode-8.0.0/Script/Inherited/symbols');
+require('unicode-8.0.0/Script/Inherited/regex');
 
-require('unicode-8.0.0/scripts/Inscriptional_Pahlavi/code-points');
-require('unicode-8.0.0/scripts/Inscriptional_Pahlavi/symbols');
-require('unicode-8.0.0/scripts/Inscriptional_Pahlavi/regex');
+require('unicode-8.0.0/Script/Inscriptional_Pahlavi/code-points');
+require('unicode-8.0.0/Script/Inscriptional_Pahlavi/symbols');
+require('unicode-8.0.0/Script/Inscriptional_Pahlavi/regex');
 
-require('unicode-8.0.0/scripts/Inscriptional_Parthian/code-points');
-require('unicode-8.0.0/scripts/Inscriptional_Parthian/symbols');
-require('unicode-8.0.0/scripts/Inscriptional_Parthian/regex');
+require('unicode-8.0.0/Script/Inscriptional_Parthian/code-points');
+require('unicode-8.0.0/Script/Inscriptional_Parthian/symbols');
+require('unicode-8.0.0/Script/Inscriptional_Parthian/regex');
 
-require('unicode-8.0.0/scripts/Javanese/code-points');
-require('unicode-8.0.0/scripts/Javanese/symbols');
-require('unicode-8.0.0/scripts/Javanese/regex');
+require('unicode-8.0.0/Script/Javanese/code-points');
+require('unicode-8.0.0/Script/Javanese/symbols');
+require('unicode-8.0.0/Script/Javanese/regex');
 
-require('unicode-8.0.0/scripts/Kaithi/code-points');
-require('unicode-8.0.0/scripts/Kaithi/symbols');
-require('unicode-8.0.0/scripts/Kaithi/regex');
+require('unicode-8.0.0/Script/Kaithi/code-points');
+require('unicode-8.0.0/Script/Kaithi/symbols');
+require('unicode-8.0.0/Script/Kaithi/regex');
 
-require('unicode-8.0.0/scripts/Kannada/code-points');
-require('unicode-8.0.0/scripts/Kannada/symbols');
-require('unicode-8.0.0/scripts/Kannada/regex');
+require('unicode-8.0.0/Script/Kannada/code-points');
+require('unicode-8.0.0/Script/Kannada/symbols');
+require('unicode-8.0.0/Script/Kannada/regex');
 
-require('unicode-8.0.0/scripts/Katakana/code-points');
-require('unicode-8.0.0/scripts/Katakana/symbols');
-require('unicode-8.0.0/scripts/Katakana/regex');
+require('unicode-8.0.0/Script/Katakana/code-points');
+require('unicode-8.0.0/Script/Katakana/symbols');
+require('unicode-8.0.0/Script/Katakana/regex');
 
-require('unicode-8.0.0/scripts/Kayah_Li/code-points');
-require('unicode-8.0.0/scripts/Kayah_Li/symbols');
-require('unicode-8.0.0/scripts/Kayah_Li/regex');
+require('unicode-8.0.0/Script/Kayah_Li/code-points');
+require('unicode-8.0.0/Script/Kayah_Li/symbols');
+require('unicode-8.0.0/Script/Kayah_Li/regex');
 
-require('unicode-8.0.0/scripts/Kharoshthi/code-points');
-require('unicode-8.0.0/scripts/Kharoshthi/symbols');
-require('unicode-8.0.0/scripts/Kharoshthi/regex');
+require('unicode-8.0.0/Script/Kharoshthi/code-points');
+require('unicode-8.0.0/Script/Kharoshthi/symbols');
+require('unicode-8.0.0/Script/Kharoshthi/regex');
 
-require('unicode-8.0.0/scripts/Khmer/code-points');
-require('unicode-8.0.0/scripts/Khmer/symbols');
-require('unicode-8.0.0/scripts/Khmer/regex');
+require('unicode-8.0.0/Script/Khmer/code-points');
+require('unicode-8.0.0/Script/Khmer/symbols');
+require('unicode-8.0.0/Script/Khmer/regex');
 
-require('unicode-8.0.0/scripts/Khojki/code-points');
-require('unicode-8.0.0/scripts/Khojki/symbols');
-require('unicode-8.0.0/scripts/Khojki/regex');
+require('unicode-8.0.0/Script/Khojki/code-points');
+require('unicode-8.0.0/Script/Khojki/symbols');
+require('unicode-8.0.0/Script/Khojki/regex');
 
-require('unicode-8.0.0/scripts/Khudawadi/code-points');
-require('unicode-8.0.0/scripts/Khudawadi/symbols');
-require('unicode-8.0.0/scripts/Khudawadi/regex');
+require('unicode-8.0.0/Script/Khudawadi/code-points');
+require('unicode-8.0.0/Script/Khudawadi/symbols');
+require('unicode-8.0.0/Script/Khudawadi/regex');
 
-require('unicode-8.0.0/scripts/Lao/code-points');
-require('unicode-8.0.0/scripts/Lao/symbols');
-require('unicode-8.0.0/scripts/Lao/regex');
+require('unicode-8.0.0/Script/Lao/code-points');
+require('unicode-8.0.0/Script/Lao/symbols');
+require('unicode-8.0.0/Script/Lao/regex');
 
-require('unicode-8.0.0/scripts/Latin/code-points');
-require('unicode-8.0.0/scripts/Latin/symbols');
-require('unicode-8.0.0/scripts/Latin/regex');
+require('unicode-8.0.0/Script/Latin/code-points');
+require('unicode-8.0.0/Script/Latin/symbols');
+require('unicode-8.0.0/Script/Latin/regex');
 
-require('unicode-8.0.0/scripts/Lepcha/code-points');
-require('unicode-8.0.0/scripts/Lepcha/symbols');
-require('unicode-8.0.0/scripts/Lepcha/regex');
+require('unicode-8.0.0/Script/Lepcha/code-points');
+require('unicode-8.0.0/Script/Lepcha/symbols');
+require('unicode-8.0.0/Script/Lepcha/regex');
 
-require('unicode-8.0.0/scripts/Limbu/code-points');
-require('unicode-8.0.0/scripts/Limbu/symbols');
-require('unicode-8.0.0/scripts/Limbu/regex');
+require('unicode-8.0.0/Script/Limbu/code-points');
+require('unicode-8.0.0/Script/Limbu/symbols');
+require('unicode-8.0.0/Script/Limbu/regex');
 
-require('unicode-8.0.0/scripts/Linear_A/code-points');
-require('unicode-8.0.0/scripts/Linear_A/symbols');
-require('unicode-8.0.0/scripts/Linear_A/regex');
+require('unicode-8.0.0/Script/Linear_A/code-points');
+require('unicode-8.0.0/Script/Linear_A/symbols');
+require('unicode-8.0.0/Script/Linear_A/regex');
 
-require('unicode-8.0.0/scripts/Linear_B/code-points');
-require('unicode-8.0.0/scripts/Linear_B/symbols');
-require('unicode-8.0.0/scripts/Linear_B/regex');
+require('unicode-8.0.0/Script/Linear_B/code-points');
+require('unicode-8.0.0/Script/Linear_B/symbols');
+require('unicode-8.0.0/Script/Linear_B/regex');
 
-require('unicode-8.0.0/scripts/Lisu/code-points');
-require('unicode-8.0.0/scripts/Lisu/symbols');
-require('unicode-8.0.0/scripts/Lisu/regex');
+require('unicode-8.0.0/Script/Lisu/code-points');
+require('unicode-8.0.0/Script/Lisu/symbols');
+require('unicode-8.0.0/Script/Lisu/regex');
 
-require('unicode-8.0.0/scripts/Lycian/code-points');
-require('unicode-8.0.0/scripts/Lycian/symbols');
-require('unicode-8.0.0/scripts/Lycian/regex');
+require('unicode-8.0.0/Script/Lycian/code-points');
+require('unicode-8.0.0/Script/Lycian/symbols');
+require('unicode-8.0.0/Script/Lycian/regex');
 
-require('unicode-8.0.0/scripts/Lydian/code-points');
-require('unicode-8.0.0/scripts/Lydian/symbols');
-require('unicode-8.0.0/scripts/Lydian/regex');
+require('unicode-8.0.0/Script/Lydian/code-points');
+require('unicode-8.0.0/Script/Lydian/symbols');
+require('unicode-8.0.0/Script/Lydian/regex');
 
-require('unicode-8.0.0/scripts/Mahajani/code-points');
-require('unicode-8.0.0/scripts/Mahajani/symbols');
-require('unicode-8.0.0/scripts/Mahajani/regex');
+require('unicode-8.0.0/Script/Mahajani/code-points');
+require('unicode-8.0.0/Script/Mahajani/symbols');
+require('unicode-8.0.0/Script/Mahajani/regex');
 
-require('unicode-8.0.0/scripts/Malayalam/code-points');
-require('unicode-8.0.0/scripts/Malayalam/symbols');
-require('unicode-8.0.0/scripts/Malayalam/regex');
+require('unicode-8.0.0/Script/Malayalam/code-points');
+require('unicode-8.0.0/Script/Malayalam/symbols');
+require('unicode-8.0.0/Script/Malayalam/regex');
 
-require('unicode-8.0.0/scripts/Mandaic/code-points');
-require('unicode-8.0.0/scripts/Mandaic/symbols');
-require('unicode-8.0.0/scripts/Mandaic/regex');
+require('unicode-8.0.0/Script/Mandaic/code-points');
+require('unicode-8.0.0/Script/Mandaic/symbols');
+require('unicode-8.0.0/Script/Mandaic/regex');
 
-require('unicode-8.0.0/scripts/Manichaean/code-points');
-require('unicode-8.0.0/scripts/Manichaean/symbols');
-require('unicode-8.0.0/scripts/Manichaean/regex');
+require('unicode-8.0.0/Script/Manichaean/code-points');
+require('unicode-8.0.0/Script/Manichaean/symbols');
+require('unicode-8.0.0/Script/Manichaean/regex');
 
-require('unicode-8.0.0/scripts/Meetei_Mayek/code-points');
-require('unicode-8.0.0/scripts/Meetei_Mayek/symbols');
-require('unicode-8.0.0/scripts/Meetei_Mayek/regex');
+require('unicode-8.0.0/Script/Meetei_Mayek/code-points');
+require('unicode-8.0.0/Script/Meetei_Mayek/symbols');
+require('unicode-8.0.0/Script/Meetei_Mayek/regex');
 
-require('unicode-8.0.0/scripts/Mende_Kikakui/code-points');
-require('unicode-8.0.0/scripts/Mende_Kikakui/symbols');
-require('unicode-8.0.0/scripts/Mende_Kikakui/regex');
+require('unicode-8.0.0/Script/Mende_Kikakui/code-points');
+require('unicode-8.0.0/Script/Mende_Kikakui/symbols');
+require('unicode-8.0.0/Script/Mende_Kikakui/regex');
 
-require('unicode-8.0.0/scripts/Meroitic_Cursive/code-points');
-require('unicode-8.0.0/scripts/Meroitic_Cursive/symbols');
-require('unicode-8.0.0/scripts/Meroitic_Cursive/regex');
+require('unicode-8.0.0/Script/Meroitic_Cursive/code-points');
+require('unicode-8.0.0/Script/Meroitic_Cursive/symbols');
+require('unicode-8.0.0/Script/Meroitic_Cursive/regex');
 
-require('unicode-8.0.0/scripts/Meroitic_Hieroglyphs/code-points');
-require('unicode-8.0.0/scripts/Meroitic_Hieroglyphs/symbols');
-require('unicode-8.0.0/scripts/Meroitic_Hieroglyphs/regex');
+require('unicode-8.0.0/Script/Meroitic_Hieroglyphs/code-points');
+require('unicode-8.0.0/Script/Meroitic_Hieroglyphs/symbols');
+require('unicode-8.0.0/Script/Meroitic_Hieroglyphs/regex');
 
-require('unicode-8.0.0/scripts/Miao/code-points');
-require('unicode-8.0.0/scripts/Miao/symbols');
-require('unicode-8.0.0/scripts/Miao/regex');
+require('unicode-8.0.0/Script/Miao/code-points');
+require('unicode-8.0.0/Script/Miao/symbols');
+require('unicode-8.0.0/Script/Miao/regex');
 
-require('unicode-8.0.0/scripts/Modi/code-points');
-require('unicode-8.0.0/scripts/Modi/symbols');
-require('unicode-8.0.0/scripts/Modi/regex');
+require('unicode-8.0.0/Script/Modi/code-points');
+require('unicode-8.0.0/Script/Modi/symbols');
+require('unicode-8.0.0/Script/Modi/regex');
 
-require('unicode-8.0.0/scripts/Mongolian/code-points');
-require('unicode-8.0.0/scripts/Mongolian/symbols');
-require('unicode-8.0.0/scripts/Mongolian/regex');
+require('unicode-8.0.0/Script/Mongolian/code-points');
+require('unicode-8.0.0/Script/Mongolian/symbols');
+require('unicode-8.0.0/Script/Mongolian/regex');
 
-require('unicode-8.0.0/scripts/Mro/code-points');
-require('unicode-8.0.0/scripts/Mro/symbols');
-require('unicode-8.0.0/scripts/Mro/regex');
+require('unicode-8.0.0/Script/Mro/code-points');
+require('unicode-8.0.0/Script/Mro/symbols');
+require('unicode-8.0.0/Script/Mro/regex');
 
-require('unicode-8.0.0/scripts/Multani/code-points');
-require('unicode-8.0.0/scripts/Multani/symbols');
-require('unicode-8.0.0/scripts/Multani/regex');
+require('unicode-8.0.0/Script/Multani/code-points');
+require('unicode-8.0.0/Script/Multani/symbols');
+require('unicode-8.0.0/Script/Multani/regex');
 
-require('unicode-8.0.0/scripts/Myanmar/code-points');
-require('unicode-8.0.0/scripts/Myanmar/symbols');
-require('unicode-8.0.0/scripts/Myanmar/regex');
+require('unicode-8.0.0/Script/Myanmar/code-points');
+require('unicode-8.0.0/Script/Myanmar/symbols');
+require('unicode-8.0.0/Script/Myanmar/regex');
 
-require('unicode-8.0.0/scripts/Nabataean/code-points');
-require('unicode-8.0.0/scripts/Nabataean/symbols');
-require('unicode-8.0.0/scripts/Nabataean/regex');
+require('unicode-8.0.0/Script/Nabataean/code-points');
+require('unicode-8.0.0/Script/Nabataean/symbols');
+require('unicode-8.0.0/Script/Nabataean/regex');
 
-require('unicode-8.0.0/scripts/New_Tai_Lue/code-points');
-require('unicode-8.0.0/scripts/New_Tai_Lue/symbols');
-require('unicode-8.0.0/scripts/New_Tai_Lue/regex');
+require('unicode-8.0.0/Script/New_Tai_Lue/code-points');
+require('unicode-8.0.0/Script/New_Tai_Lue/symbols');
+require('unicode-8.0.0/Script/New_Tai_Lue/regex');
 
-require('unicode-8.0.0/scripts/Nko/code-points');
-require('unicode-8.0.0/scripts/Nko/symbols');
-require('unicode-8.0.0/scripts/Nko/regex');
+require('unicode-8.0.0/Script/Nko/code-points');
+require('unicode-8.0.0/Script/Nko/symbols');
+require('unicode-8.0.0/Script/Nko/regex');
 
-require('unicode-8.0.0/scripts/Ogham/code-points');
-require('unicode-8.0.0/scripts/Ogham/symbols');
-require('unicode-8.0.0/scripts/Ogham/regex');
+require('unicode-8.0.0/Script/Ogham/code-points');
+require('unicode-8.0.0/Script/Ogham/symbols');
+require('unicode-8.0.0/Script/Ogham/regex');
 
-require('unicode-8.0.0/scripts/Ol_Chiki/code-points');
-require('unicode-8.0.0/scripts/Ol_Chiki/symbols');
-require('unicode-8.0.0/scripts/Ol_Chiki/regex');
+require('unicode-8.0.0/Script/Ol_Chiki/code-points');
+require('unicode-8.0.0/Script/Ol_Chiki/symbols');
+require('unicode-8.0.0/Script/Ol_Chiki/regex');
 
-require('unicode-8.0.0/scripts/Old_Hungarian/code-points');
-require('unicode-8.0.0/scripts/Old_Hungarian/symbols');
-require('unicode-8.0.0/scripts/Old_Hungarian/regex');
+require('unicode-8.0.0/Script/Old_Hungarian/code-points');
+require('unicode-8.0.0/Script/Old_Hungarian/symbols');
+require('unicode-8.0.0/Script/Old_Hungarian/regex');
 
-require('unicode-8.0.0/scripts/Old_Italic/code-points');
-require('unicode-8.0.0/scripts/Old_Italic/symbols');
-require('unicode-8.0.0/scripts/Old_Italic/regex');
+require('unicode-8.0.0/Script/Old_Italic/code-points');
+require('unicode-8.0.0/Script/Old_Italic/symbols');
+require('unicode-8.0.0/Script/Old_Italic/regex');
 
-require('unicode-8.0.0/scripts/Old_North_Arabian/code-points');
-require('unicode-8.0.0/scripts/Old_North_Arabian/symbols');
-require('unicode-8.0.0/scripts/Old_North_Arabian/regex');
+require('unicode-8.0.0/Script/Old_North_Arabian/code-points');
+require('unicode-8.0.0/Script/Old_North_Arabian/symbols');
+require('unicode-8.0.0/Script/Old_North_Arabian/regex');
 
-require('unicode-8.0.0/scripts/Old_Permic/code-points');
-require('unicode-8.0.0/scripts/Old_Permic/symbols');
-require('unicode-8.0.0/scripts/Old_Permic/regex');
+require('unicode-8.0.0/Script/Old_Permic/code-points');
+require('unicode-8.0.0/Script/Old_Permic/symbols');
+require('unicode-8.0.0/Script/Old_Permic/regex');
 
-require('unicode-8.0.0/scripts/Old_Persian/code-points');
-require('unicode-8.0.0/scripts/Old_Persian/symbols');
-require('unicode-8.0.0/scripts/Old_Persian/regex');
+require('unicode-8.0.0/Script/Old_Persian/code-points');
+require('unicode-8.0.0/Script/Old_Persian/symbols');
+require('unicode-8.0.0/Script/Old_Persian/regex');
 
-require('unicode-8.0.0/scripts/Old_South_Arabian/code-points');
-require('unicode-8.0.0/scripts/Old_South_Arabian/symbols');
-require('unicode-8.0.0/scripts/Old_South_Arabian/regex');
+require('unicode-8.0.0/Script/Old_South_Arabian/code-points');
+require('unicode-8.0.0/Script/Old_South_Arabian/symbols');
+require('unicode-8.0.0/Script/Old_South_Arabian/regex');
 
-require('unicode-8.0.0/scripts/Old_Turkic/code-points');
-require('unicode-8.0.0/scripts/Old_Turkic/symbols');
-require('unicode-8.0.0/scripts/Old_Turkic/regex');
+require('unicode-8.0.0/Script/Old_Turkic/code-points');
+require('unicode-8.0.0/Script/Old_Turkic/symbols');
+require('unicode-8.0.0/Script/Old_Turkic/regex');
 
-require('unicode-8.0.0/scripts/Oriya/code-points');
-require('unicode-8.0.0/scripts/Oriya/symbols');
-require('unicode-8.0.0/scripts/Oriya/regex');
+require('unicode-8.0.0/Script/Oriya/code-points');
+require('unicode-8.0.0/Script/Oriya/symbols');
+require('unicode-8.0.0/Script/Oriya/regex');
 
-require('unicode-8.0.0/scripts/Osmanya/code-points');
-require('unicode-8.0.0/scripts/Osmanya/symbols');
-require('unicode-8.0.0/scripts/Osmanya/regex');
+require('unicode-8.0.0/Script/Osmanya/code-points');
+require('unicode-8.0.0/Script/Osmanya/symbols');
+require('unicode-8.0.0/Script/Osmanya/regex');
 
-require('unicode-8.0.0/scripts/Pahawh_Hmong/code-points');
-require('unicode-8.0.0/scripts/Pahawh_Hmong/symbols');
-require('unicode-8.0.0/scripts/Pahawh_Hmong/regex');
+require('unicode-8.0.0/Script/Pahawh_Hmong/code-points');
+require('unicode-8.0.0/Script/Pahawh_Hmong/symbols');
+require('unicode-8.0.0/Script/Pahawh_Hmong/regex');
 
-require('unicode-8.0.0/scripts/Palmyrene/code-points');
-require('unicode-8.0.0/scripts/Palmyrene/symbols');
-require('unicode-8.0.0/scripts/Palmyrene/regex');
+require('unicode-8.0.0/Script/Palmyrene/code-points');
+require('unicode-8.0.0/Script/Palmyrene/symbols');
+require('unicode-8.0.0/Script/Palmyrene/regex');
 
-require('unicode-8.0.0/scripts/Pau_Cin_Hau/code-points');
-require('unicode-8.0.0/scripts/Pau_Cin_Hau/symbols');
-require('unicode-8.0.0/scripts/Pau_Cin_Hau/regex');
+require('unicode-8.0.0/Script/Pau_Cin_Hau/code-points');
+require('unicode-8.0.0/Script/Pau_Cin_Hau/symbols');
+require('unicode-8.0.0/Script/Pau_Cin_Hau/regex');
 
-require('unicode-8.0.0/scripts/Phags_Pa/code-points');
-require('unicode-8.0.0/scripts/Phags_Pa/symbols');
-require('unicode-8.0.0/scripts/Phags_Pa/regex');
+require('unicode-8.0.0/Script/Phags_Pa/code-points');
+require('unicode-8.0.0/Script/Phags_Pa/symbols');
+require('unicode-8.0.0/Script/Phags_Pa/regex');
 
-require('unicode-8.0.0/scripts/Phoenician/code-points');
-require('unicode-8.0.0/scripts/Phoenician/symbols');
-require('unicode-8.0.0/scripts/Phoenician/regex');
+require('unicode-8.0.0/Script/Phoenician/code-points');
+require('unicode-8.0.0/Script/Phoenician/symbols');
+require('unicode-8.0.0/Script/Phoenician/regex');
 
-require('unicode-8.0.0/scripts/Psalter_Pahlavi/code-points');
-require('unicode-8.0.0/scripts/Psalter_Pahlavi/symbols');
-require('unicode-8.0.0/scripts/Psalter_Pahlavi/regex');
+require('unicode-8.0.0/Script/Psalter_Pahlavi/code-points');
+require('unicode-8.0.0/Script/Psalter_Pahlavi/symbols');
+require('unicode-8.0.0/Script/Psalter_Pahlavi/regex');
 
-require('unicode-8.0.0/scripts/Rejang/code-points');
-require('unicode-8.0.0/scripts/Rejang/symbols');
-require('unicode-8.0.0/scripts/Rejang/regex');
+require('unicode-8.0.0/Script/Rejang/code-points');
+require('unicode-8.0.0/Script/Rejang/symbols');
+require('unicode-8.0.0/Script/Rejang/regex');
 
-require('unicode-8.0.0/scripts/Runic/code-points');
-require('unicode-8.0.0/scripts/Runic/symbols');
-require('unicode-8.0.0/scripts/Runic/regex');
+require('unicode-8.0.0/Script/Runic/code-points');
+require('unicode-8.0.0/Script/Runic/symbols');
+require('unicode-8.0.0/Script/Runic/regex');
 
-require('unicode-8.0.0/scripts/Samaritan/code-points');
-require('unicode-8.0.0/scripts/Samaritan/symbols');
-require('unicode-8.0.0/scripts/Samaritan/regex');
+require('unicode-8.0.0/Script/Samaritan/code-points');
+require('unicode-8.0.0/Script/Samaritan/symbols');
+require('unicode-8.0.0/Script/Samaritan/regex');
 
-require('unicode-8.0.0/scripts/Saurashtra/code-points');
-require('unicode-8.0.0/scripts/Saurashtra/symbols');
-require('unicode-8.0.0/scripts/Saurashtra/regex');
+require('unicode-8.0.0/Script/Saurashtra/code-points');
+require('unicode-8.0.0/Script/Saurashtra/symbols');
+require('unicode-8.0.0/Script/Saurashtra/regex');
 
-require('unicode-8.0.0/scripts/Sharada/code-points');
-require('unicode-8.0.0/scripts/Sharada/symbols');
-require('unicode-8.0.0/scripts/Sharada/regex');
+require('unicode-8.0.0/Script/Sharada/code-points');
+require('unicode-8.0.0/Script/Sharada/symbols');
+require('unicode-8.0.0/Script/Sharada/regex');
 
-require('unicode-8.0.0/scripts/Shavian/code-points');
-require('unicode-8.0.0/scripts/Shavian/symbols');
-require('unicode-8.0.0/scripts/Shavian/regex');
+require('unicode-8.0.0/Script/Shavian/code-points');
+require('unicode-8.0.0/Script/Shavian/symbols');
+require('unicode-8.0.0/Script/Shavian/regex');
 
-require('unicode-8.0.0/scripts/Siddham/code-points');
-require('unicode-8.0.0/scripts/Siddham/symbols');
-require('unicode-8.0.0/scripts/Siddham/regex');
+require('unicode-8.0.0/Script/Siddham/code-points');
+require('unicode-8.0.0/Script/Siddham/symbols');
+require('unicode-8.0.0/Script/Siddham/regex');
 
-require('unicode-8.0.0/scripts/SignWriting/code-points');
-require('unicode-8.0.0/scripts/SignWriting/symbols');
-require('unicode-8.0.0/scripts/SignWriting/regex');
+require('unicode-8.0.0/Script/SignWriting/code-points');
+require('unicode-8.0.0/Script/SignWriting/symbols');
+require('unicode-8.0.0/Script/SignWriting/regex');
 
-require('unicode-8.0.0/scripts/Sinhala/code-points');
-require('unicode-8.0.0/scripts/Sinhala/symbols');
-require('unicode-8.0.0/scripts/Sinhala/regex');
+require('unicode-8.0.0/Script/Sinhala/code-points');
+require('unicode-8.0.0/Script/Sinhala/symbols');
+require('unicode-8.0.0/Script/Sinhala/regex');
 
-require('unicode-8.0.0/scripts/Sora_Sompeng/code-points');
-require('unicode-8.0.0/scripts/Sora_Sompeng/symbols');
-require('unicode-8.0.0/scripts/Sora_Sompeng/regex');
+require('unicode-8.0.0/Script/Sora_Sompeng/code-points');
+require('unicode-8.0.0/Script/Sora_Sompeng/symbols');
+require('unicode-8.0.0/Script/Sora_Sompeng/regex');
 
-require('unicode-8.0.0/scripts/Sundanese/code-points');
-require('unicode-8.0.0/scripts/Sundanese/symbols');
-require('unicode-8.0.0/scripts/Sundanese/regex');
+require('unicode-8.0.0/Script/Sundanese/code-points');
+require('unicode-8.0.0/Script/Sundanese/symbols');
+require('unicode-8.0.0/Script/Sundanese/regex');
 
-require('unicode-8.0.0/scripts/Syloti_Nagri/code-points');
-require('unicode-8.0.0/scripts/Syloti_Nagri/symbols');
-require('unicode-8.0.0/scripts/Syloti_Nagri/regex');
+require('unicode-8.0.0/Script/Syloti_Nagri/code-points');
+require('unicode-8.0.0/Script/Syloti_Nagri/symbols');
+require('unicode-8.0.0/Script/Syloti_Nagri/regex');
 
-require('unicode-8.0.0/scripts/Syriac/code-points');
-require('unicode-8.0.0/scripts/Syriac/symbols');
-require('unicode-8.0.0/scripts/Syriac/regex');
+require('unicode-8.0.0/Script/Syriac/code-points');
+require('unicode-8.0.0/Script/Syriac/symbols');
+require('unicode-8.0.0/Script/Syriac/regex');
 
-require('unicode-8.0.0/scripts/Tagalog/code-points');
-require('unicode-8.0.0/scripts/Tagalog/symbols');
-require('unicode-8.0.0/scripts/Tagalog/regex');
+require('unicode-8.0.0/Script/Tagalog/code-points');
+require('unicode-8.0.0/Script/Tagalog/symbols');
+require('unicode-8.0.0/Script/Tagalog/regex');
 
-require('unicode-8.0.0/scripts/Tagbanwa/code-points');
-require('unicode-8.0.0/scripts/Tagbanwa/symbols');
-require('unicode-8.0.0/scripts/Tagbanwa/regex');
+require('unicode-8.0.0/Script/Tagbanwa/code-points');
+require('unicode-8.0.0/Script/Tagbanwa/symbols');
+require('unicode-8.0.0/Script/Tagbanwa/regex');
 
-require('unicode-8.0.0/scripts/Tai_Le/code-points');
-require('unicode-8.0.0/scripts/Tai_Le/symbols');
-require('unicode-8.0.0/scripts/Tai_Le/regex');
+require('unicode-8.0.0/Script/Tai_Le/code-points');
+require('unicode-8.0.0/Script/Tai_Le/symbols');
+require('unicode-8.0.0/Script/Tai_Le/regex');
 
-require('unicode-8.0.0/scripts/Tai_Tham/code-points');
-require('unicode-8.0.0/scripts/Tai_Tham/symbols');
-require('unicode-8.0.0/scripts/Tai_Tham/regex');
+require('unicode-8.0.0/Script/Tai_Tham/code-points');
+require('unicode-8.0.0/Script/Tai_Tham/symbols');
+require('unicode-8.0.0/Script/Tai_Tham/regex');
 
-require('unicode-8.0.0/scripts/Tai_Viet/code-points');
-require('unicode-8.0.0/scripts/Tai_Viet/symbols');
-require('unicode-8.0.0/scripts/Tai_Viet/regex');
+require('unicode-8.0.0/Script/Tai_Viet/code-points');
+require('unicode-8.0.0/Script/Tai_Viet/symbols');
+require('unicode-8.0.0/Script/Tai_Viet/regex');
 
-require('unicode-8.0.0/scripts/Takri/code-points');
-require('unicode-8.0.0/scripts/Takri/symbols');
-require('unicode-8.0.0/scripts/Takri/regex');
+require('unicode-8.0.0/Script/Takri/code-points');
+require('unicode-8.0.0/Script/Takri/symbols');
+require('unicode-8.0.0/Script/Takri/regex');
 
-require('unicode-8.0.0/scripts/Tamil/code-points');
-require('unicode-8.0.0/scripts/Tamil/symbols');
-require('unicode-8.0.0/scripts/Tamil/regex');
+require('unicode-8.0.0/Script/Tamil/code-points');
+require('unicode-8.0.0/Script/Tamil/symbols');
+require('unicode-8.0.0/Script/Tamil/regex');
 
-require('unicode-8.0.0/scripts/Telugu/code-points');
-require('unicode-8.0.0/scripts/Telugu/symbols');
-require('unicode-8.0.0/scripts/Telugu/regex');
+require('unicode-8.0.0/Script/Telugu/code-points');
+require('unicode-8.0.0/Script/Telugu/symbols');
+require('unicode-8.0.0/Script/Telugu/regex');
 
-require('unicode-8.0.0/scripts/Thaana/code-points');
-require('unicode-8.0.0/scripts/Thaana/symbols');
-require('unicode-8.0.0/scripts/Thaana/regex');
+require('unicode-8.0.0/Script/Thaana/code-points');
+require('unicode-8.0.0/Script/Thaana/symbols');
+require('unicode-8.0.0/Script/Thaana/regex');
 
-require('unicode-8.0.0/scripts/Thai/code-points');
-require('unicode-8.0.0/scripts/Thai/symbols');
-require('unicode-8.0.0/scripts/Thai/regex');
+require('unicode-8.0.0/Script/Thai/code-points');
+require('unicode-8.0.0/Script/Thai/symbols');
+require('unicode-8.0.0/Script/Thai/regex');
 
-require('unicode-8.0.0/scripts/Tibetan/code-points');
-require('unicode-8.0.0/scripts/Tibetan/symbols');
-require('unicode-8.0.0/scripts/Tibetan/regex');
+require('unicode-8.0.0/Script/Tibetan/code-points');
+require('unicode-8.0.0/Script/Tibetan/symbols');
+require('unicode-8.0.0/Script/Tibetan/regex');
 
-require('unicode-8.0.0/scripts/Tifinagh/code-points');
-require('unicode-8.0.0/scripts/Tifinagh/symbols');
-require('unicode-8.0.0/scripts/Tifinagh/regex');
+require('unicode-8.0.0/Script/Tifinagh/code-points');
+require('unicode-8.0.0/Script/Tifinagh/symbols');
+require('unicode-8.0.0/Script/Tifinagh/regex');
 
-require('unicode-8.0.0/scripts/Tirhuta/code-points');
-require('unicode-8.0.0/scripts/Tirhuta/symbols');
-require('unicode-8.0.0/scripts/Tirhuta/regex');
+require('unicode-8.0.0/Script/Tirhuta/code-points');
+require('unicode-8.0.0/Script/Tirhuta/symbols');
+require('unicode-8.0.0/Script/Tirhuta/regex');
 
-require('unicode-8.0.0/scripts/Ugaritic/code-points');
-require('unicode-8.0.0/scripts/Ugaritic/symbols');
-require('unicode-8.0.0/scripts/Ugaritic/regex');
+require('unicode-8.0.0/Script/Ugaritic/code-points');
+require('unicode-8.0.0/Script/Ugaritic/symbols');
+require('unicode-8.0.0/Script/Ugaritic/regex');
 
-require('unicode-8.0.0/scripts/Vai/code-points');
-require('unicode-8.0.0/scripts/Vai/symbols');
-require('unicode-8.0.0/scripts/Vai/regex');
+require('unicode-8.0.0/Script/Vai/code-points');
+require('unicode-8.0.0/Script/Vai/symbols');
+require('unicode-8.0.0/Script/Vai/regex');
 
-require('unicode-8.0.0/scripts/Warang_Citi/code-points');
-require('unicode-8.0.0/scripts/Warang_Citi/symbols');
-require('unicode-8.0.0/scripts/Warang_Citi/regex');
+require('unicode-8.0.0/Script/Warang_Citi/code-points');
+require('unicode-8.0.0/Script/Warang_Citi/symbols');
+require('unicode-8.0.0/Script/Warang_Citi/regex');
 
-require('unicode-8.0.0/scripts/Yi/code-points');
-require('unicode-8.0.0/scripts/Yi/symbols');
-require('unicode-8.0.0/scripts/Yi/regex');
+require('unicode-8.0.0/Script/Yi/code-points');
+require('unicode-8.0.0/Script/Yi/symbols');
+require('unicode-8.0.0/Script/Yi/regex');
 
-// script extensions:
+// `Script_Extensions`:
 
-require('unicode-8.0.0/script-extensions/Ahom/code-points');
-require('unicode-8.0.0/script-extensions/Ahom/symbols');
-require('unicode-8.0.0/script-extensions/Ahom/regex');
+require('unicode-8.0.0/Script_Extensions/Ahom/code-points');
+require('unicode-8.0.0/Script_Extensions/Ahom/symbols');
+require('unicode-8.0.0/Script_Extensions/Ahom/regex');
 
-require('unicode-8.0.0/script-extensions/Anatolian_Hieroglyphs/code-points');
-require('unicode-8.0.0/script-extensions/Anatolian_Hieroglyphs/symbols');
-require('unicode-8.0.0/script-extensions/Anatolian_Hieroglyphs/regex');
+require('unicode-8.0.0/Script_Extensions/Anatolian_Hieroglyphs/code-points');
+require('unicode-8.0.0/Script_Extensions/Anatolian_Hieroglyphs/symbols');
+require('unicode-8.0.0/Script_Extensions/Anatolian_Hieroglyphs/regex');
 
-require('unicode-8.0.0/script-extensions/Arabic/code-points');
-require('unicode-8.0.0/script-extensions/Arabic/symbols');
-require('unicode-8.0.0/script-extensions/Arabic/regex');
+require('unicode-8.0.0/Script_Extensions/Arabic/code-points');
+require('unicode-8.0.0/Script_Extensions/Arabic/symbols');
+require('unicode-8.0.0/Script_Extensions/Arabic/regex');
 
-require('unicode-8.0.0/script-extensions/Armenian/code-points');
-require('unicode-8.0.0/script-extensions/Armenian/symbols');
-require('unicode-8.0.0/script-extensions/Armenian/regex');
+require('unicode-8.0.0/Script_Extensions/Armenian/code-points');
+require('unicode-8.0.0/Script_Extensions/Armenian/symbols');
+require('unicode-8.0.0/Script_Extensions/Armenian/regex');
 
-require('unicode-8.0.0/script-extensions/Avestan/code-points');
-require('unicode-8.0.0/script-extensions/Avestan/symbols');
-require('unicode-8.0.0/script-extensions/Avestan/regex');
+require('unicode-8.0.0/Script_Extensions/Avestan/code-points');
+require('unicode-8.0.0/Script_Extensions/Avestan/symbols');
+require('unicode-8.0.0/Script_Extensions/Avestan/regex');
 
-require('unicode-8.0.0/script-extensions/Balinese/code-points');
-require('unicode-8.0.0/script-extensions/Balinese/symbols');
-require('unicode-8.0.0/script-extensions/Balinese/regex');
+require('unicode-8.0.0/Script_Extensions/Balinese/code-points');
+require('unicode-8.0.0/Script_Extensions/Balinese/symbols');
+require('unicode-8.0.0/Script_Extensions/Balinese/regex');
 
-require('unicode-8.0.0/script-extensions/Bamum/code-points');
-require('unicode-8.0.0/script-extensions/Bamum/symbols');
-require('unicode-8.0.0/script-extensions/Bamum/regex');
+require('unicode-8.0.0/Script_Extensions/Bamum/code-points');
+require('unicode-8.0.0/Script_Extensions/Bamum/symbols');
+require('unicode-8.0.0/Script_Extensions/Bamum/regex');
 
-require('unicode-8.0.0/script-extensions/Bassa_Vah/code-points');
-require('unicode-8.0.0/script-extensions/Bassa_Vah/symbols');
-require('unicode-8.0.0/script-extensions/Bassa_Vah/regex');
+require('unicode-8.0.0/Script_Extensions/Bassa_Vah/code-points');
+require('unicode-8.0.0/Script_Extensions/Bassa_Vah/symbols');
+require('unicode-8.0.0/Script_Extensions/Bassa_Vah/regex');
 
-require('unicode-8.0.0/script-extensions/Batak/code-points');
-require('unicode-8.0.0/script-extensions/Batak/symbols');
-require('unicode-8.0.0/script-extensions/Batak/regex');
+require('unicode-8.0.0/Script_Extensions/Batak/code-points');
+require('unicode-8.0.0/Script_Extensions/Batak/symbols');
+require('unicode-8.0.0/Script_Extensions/Batak/regex');
 
-require('unicode-8.0.0/script-extensions/Bengali/code-points');
-require('unicode-8.0.0/script-extensions/Bengali/symbols');
-require('unicode-8.0.0/script-extensions/Bengali/regex');
+require('unicode-8.0.0/Script_Extensions/Bengali/code-points');
+require('unicode-8.0.0/Script_Extensions/Bengali/symbols');
+require('unicode-8.0.0/Script_Extensions/Bengali/regex');
 
-require('unicode-8.0.0/script-extensions/Bopomofo/code-points');
-require('unicode-8.0.0/script-extensions/Bopomofo/symbols');
-require('unicode-8.0.0/script-extensions/Bopomofo/regex');
+require('unicode-8.0.0/Script_Extensions/Bopomofo/code-points');
+require('unicode-8.0.0/Script_Extensions/Bopomofo/symbols');
+require('unicode-8.0.0/Script_Extensions/Bopomofo/regex');
 
-require('unicode-8.0.0/script-extensions/Brahmi/code-points');
-require('unicode-8.0.0/script-extensions/Brahmi/symbols');
-require('unicode-8.0.0/script-extensions/Brahmi/regex');
+require('unicode-8.0.0/Script_Extensions/Brahmi/code-points');
+require('unicode-8.0.0/Script_Extensions/Brahmi/symbols');
+require('unicode-8.0.0/Script_Extensions/Brahmi/regex');
 
-require('unicode-8.0.0/script-extensions/Braille/code-points');
-require('unicode-8.0.0/script-extensions/Braille/symbols');
-require('unicode-8.0.0/script-extensions/Braille/regex');
+require('unicode-8.0.0/Script_Extensions/Braille/code-points');
+require('unicode-8.0.0/Script_Extensions/Braille/symbols');
+require('unicode-8.0.0/Script_Extensions/Braille/regex');
 
-require('unicode-8.0.0/script-extensions/Buginese/code-points');
-require('unicode-8.0.0/script-extensions/Buginese/symbols');
-require('unicode-8.0.0/script-extensions/Buginese/regex');
+require('unicode-8.0.0/Script_Extensions/Buginese/code-points');
+require('unicode-8.0.0/Script_Extensions/Buginese/symbols');
+require('unicode-8.0.0/Script_Extensions/Buginese/regex');
 
-require('unicode-8.0.0/script-extensions/Buhid/code-points');
-require('unicode-8.0.0/script-extensions/Buhid/symbols');
-require('unicode-8.0.0/script-extensions/Buhid/regex');
+require('unicode-8.0.0/Script_Extensions/Buhid/code-points');
+require('unicode-8.0.0/Script_Extensions/Buhid/symbols');
+require('unicode-8.0.0/Script_Extensions/Buhid/regex');
 
-require('unicode-8.0.0/script-extensions/Canadian_Aboriginal/code-points');
-require('unicode-8.0.0/script-extensions/Canadian_Aboriginal/symbols');
-require('unicode-8.0.0/script-extensions/Canadian_Aboriginal/regex');
+require('unicode-8.0.0/Script_Extensions/Canadian_Aboriginal/code-points');
+require('unicode-8.0.0/Script_Extensions/Canadian_Aboriginal/symbols');
+require('unicode-8.0.0/Script_Extensions/Canadian_Aboriginal/regex');
 
-require('unicode-8.0.0/script-extensions/Carian/code-points');
-require('unicode-8.0.0/script-extensions/Carian/symbols');
-require('unicode-8.0.0/script-extensions/Carian/regex');
+require('unicode-8.0.0/Script_Extensions/Carian/code-points');
+require('unicode-8.0.0/Script_Extensions/Carian/symbols');
+require('unicode-8.0.0/Script_Extensions/Carian/regex');
 
-require('unicode-8.0.0/script-extensions/Caucasian_Albanian/code-points');
-require('unicode-8.0.0/script-extensions/Caucasian_Albanian/symbols');
-require('unicode-8.0.0/script-extensions/Caucasian_Albanian/regex');
+require('unicode-8.0.0/Script_Extensions/Caucasian_Albanian/code-points');
+require('unicode-8.0.0/Script_Extensions/Caucasian_Albanian/symbols');
+require('unicode-8.0.0/Script_Extensions/Caucasian_Albanian/regex');
 
-require('unicode-8.0.0/script-extensions/Chakma/code-points');
-require('unicode-8.0.0/script-extensions/Chakma/symbols');
-require('unicode-8.0.0/script-extensions/Chakma/regex');
+require('unicode-8.0.0/Script_Extensions/Chakma/code-points');
+require('unicode-8.0.0/Script_Extensions/Chakma/symbols');
+require('unicode-8.0.0/Script_Extensions/Chakma/regex');
 
-require('unicode-8.0.0/script-extensions/Cham/code-points');
-require('unicode-8.0.0/script-extensions/Cham/symbols');
-require('unicode-8.0.0/script-extensions/Cham/regex');
+require('unicode-8.0.0/Script_Extensions/Cham/code-points');
+require('unicode-8.0.0/Script_Extensions/Cham/symbols');
+require('unicode-8.0.0/Script_Extensions/Cham/regex');
 
-require('unicode-8.0.0/script-extensions/Cherokee/code-points');
-require('unicode-8.0.0/script-extensions/Cherokee/symbols');
-require('unicode-8.0.0/script-extensions/Cherokee/regex');
+require('unicode-8.0.0/Script_Extensions/Cherokee/code-points');
+require('unicode-8.0.0/Script_Extensions/Cherokee/symbols');
+require('unicode-8.0.0/Script_Extensions/Cherokee/regex');
 
-require('unicode-8.0.0/script-extensions/Common/code-points');
-require('unicode-8.0.0/script-extensions/Common/symbols');
-require('unicode-8.0.0/script-extensions/Common/regex');
+require('unicode-8.0.0/Script_Extensions/Common/code-points');
+require('unicode-8.0.0/Script_Extensions/Common/symbols');
+require('unicode-8.0.0/Script_Extensions/Common/regex');
 
-require('unicode-8.0.0/script-extensions/Coptic/code-points');
-require('unicode-8.0.0/script-extensions/Coptic/symbols');
-require('unicode-8.0.0/script-extensions/Coptic/regex');
+require('unicode-8.0.0/Script_Extensions/Coptic/code-points');
+require('unicode-8.0.0/Script_Extensions/Coptic/symbols');
+require('unicode-8.0.0/Script_Extensions/Coptic/regex');
 
-require('unicode-8.0.0/script-extensions/Cuneiform/code-points');
-require('unicode-8.0.0/script-extensions/Cuneiform/symbols');
-require('unicode-8.0.0/script-extensions/Cuneiform/regex');
+require('unicode-8.0.0/Script_Extensions/Cuneiform/code-points');
+require('unicode-8.0.0/Script_Extensions/Cuneiform/symbols');
+require('unicode-8.0.0/Script_Extensions/Cuneiform/regex');
 
-require('unicode-8.0.0/script-extensions/Cypriot/code-points');
-require('unicode-8.0.0/script-extensions/Cypriot/symbols');
-require('unicode-8.0.0/script-extensions/Cypriot/regex');
+require('unicode-8.0.0/Script_Extensions/Cypriot/code-points');
+require('unicode-8.0.0/Script_Extensions/Cypriot/symbols');
+require('unicode-8.0.0/Script_Extensions/Cypriot/regex');
 
-require('unicode-8.0.0/script-extensions/Cyrillic/code-points');
-require('unicode-8.0.0/script-extensions/Cyrillic/symbols');
-require('unicode-8.0.0/script-extensions/Cyrillic/regex');
+require('unicode-8.0.0/Script_Extensions/Cyrillic/code-points');
+require('unicode-8.0.0/Script_Extensions/Cyrillic/symbols');
+require('unicode-8.0.0/Script_Extensions/Cyrillic/regex');
 
-require('unicode-8.0.0/script-extensions/Deseret/code-points');
-require('unicode-8.0.0/script-extensions/Deseret/symbols');
-require('unicode-8.0.0/script-extensions/Deseret/regex');
+require('unicode-8.0.0/Script_Extensions/Deseret/code-points');
+require('unicode-8.0.0/Script_Extensions/Deseret/symbols');
+require('unicode-8.0.0/Script_Extensions/Deseret/regex');
 
-require('unicode-8.0.0/script-extensions/Devanagari/code-points');
-require('unicode-8.0.0/script-extensions/Devanagari/symbols');
-require('unicode-8.0.0/script-extensions/Devanagari/regex');
+require('unicode-8.0.0/Script_Extensions/Devanagari/code-points');
+require('unicode-8.0.0/Script_Extensions/Devanagari/symbols');
+require('unicode-8.0.0/Script_Extensions/Devanagari/regex');
 
-require('unicode-8.0.0/script-extensions/Duployan/code-points');
-require('unicode-8.0.0/script-extensions/Duployan/symbols');
-require('unicode-8.0.0/script-extensions/Duployan/regex');
+require('unicode-8.0.0/Script_Extensions/Duployan/code-points');
+require('unicode-8.0.0/Script_Extensions/Duployan/symbols');
+require('unicode-8.0.0/Script_Extensions/Duployan/regex');
 
-require('unicode-8.0.0/script-extensions/Egyptian_Hieroglyphs/code-points');
-require('unicode-8.0.0/script-extensions/Egyptian_Hieroglyphs/symbols');
-require('unicode-8.0.0/script-extensions/Egyptian_Hieroglyphs/regex');
+require('unicode-8.0.0/Script_Extensions/Egyptian_Hieroglyphs/code-points');
+require('unicode-8.0.0/Script_Extensions/Egyptian_Hieroglyphs/symbols');
+require('unicode-8.0.0/Script_Extensions/Egyptian_Hieroglyphs/regex');
 
-require('unicode-8.0.0/script-extensions/Elbasan/code-points');
-require('unicode-8.0.0/script-extensions/Elbasan/symbols');
-require('unicode-8.0.0/script-extensions/Elbasan/regex');
+require('unicode-8.0.0/Script_Extensions/Elbasan/code-points');
+require('unicode-8.0.0/Script_Extensions/Elbasan/symbols');
+require('unicode-8.0.0/Script_Extensions/Elbasan/regex');
 
-require('unicode-8.0.0/script-extensions/Ethiopic/code-points');
-require('unicode-8.0.0/script-extensions/Ethiopic/symbols');
-require('unicode-8.0.0/script-extensions/Ethiopic/regex');
+require('unicode-8.0.0/Script_Extensions/Ethiopic/code-points');
+require('unicode-8.0.0/Script_Extensions/Ethiopic/symbols');
+require('unicode-8.0.0/Script_Extensions/Ethiopic/regex');
 
-require('unicode-8.0.0/script-extensions/Georgian/code-points');
-require('unicode-8.0.0/script-extensions/Georgian/symbols');
-require('unicode-8.0.0/script-extensions/Georgian/regex');
+require('unicode-8.0.0/Script_Extensions/Georgian/code-points');
+require('unicode-8.0.0/Script_Extensions/Georgian/symbols');
+require('unicode-8.0.0/Script_Extensions/Georgian/regex');
 
-require('unicode-8.0.0/script-extensions/Glagolitic/code-points');
-require('unicode-8.0.0/script-extensions/Glagolitic/symbols');
-require('unicode-8.0.0/script-extensions/Glagolitic/regex');
+require('unicode-8.0.0/Script_Extensions/Glagolitic/code-points');
+require('unicode-8.0.0/Script_Extensions/Glagolitic/symbols');
+require('unicode-8.0.0/Script_Extensions/Glagolitic/regex');
 
-require('unicode-8.0.0/script-extensions/Gothic/code-points');
-require('unicode-8.0.0/script-extensions/Gothic/symbols');
-require('unicode-8.0.0/script-extensions/Gothic/regex');
+require('unicode-8.0.0/Script_Extensions/Gothic/code-points');
+require('unicode-8.0.0/Script_Extensions/Gothic/symbols');
+require('unicode-8.0.0/Script_Extensions/Gothic/regex');
 
-require('unicode-8.0.0/script-extensions/Grantha/code-points');
-require('unicode-8.0.0/script-extensions/Grantha/symbols');
-require('unicode-8.0.0/script-extensions/Grantha/regex');
+require('unicode-8.0.0/Script_Extensions/Grantha/code-points');
+require('unicode-8.0.0/Script_Extensions/Grantha/symbols');
+require('unicode-8.0.0/Script_Extensions/Grantha/regex');
 
-require('unicode-8.0.0/script-extensions/Greek/code-points');
-require('unicode-8.0.0/script-extensions/Greek/symbols');
-require('unicode-8.0.0/script-extensions/Greek/regex');
+require('unicode-8.0.0/Script_Extensions/Greek/code-points');
+require('unicode-8.0.0/Script_Extensions/Greek/symbols');
+require('unicode-8.0.0/Script_Extensions/Greek/regex');
 
-require('unicode-8.0.0/script-extensions/Gujarati/code-points');
-require('unicode-8.0.0/script-extensions/Gujarati/symbols');
-require('unicode-8.0.0/script-extensions/Gujarati/regex');
+require('unicode-8.0.0/Script_Extensions/Gujarati/code-points');
+require('unicode-8.0.0/Script_Extensions/Gujarati/symbols');
+require('unicode-8.0.0/Script_Extensions/Gujarati/regex');
 
-require('unicode-8.0.0/script-extensions/Gurmukhi/code-points');
-require('unicode-8.0.0/script-extensions/Gurmukhi/symbols');
-require('unicode-8.0.0/script-extensions/Gurmukhi/regex');
+require('unicode-8.0.0/Script_Extensions/Gurmukhi/code-points');
+require('unicode-8.0.0/Script_Extensions/Gurmukhi/symbols');
+require('unicode-8.0.0/Script_Extensions/Gurmukhi/regex');
 
-require('unicode-8.0.0/script-extensions/Han/code-points');
-require('unicode-8.0.0/script-extensions/Han/symbols');
-require('unicode-8.0.0/script-extensions/Han/regex');
+require('unicode-8.0.0/Script_Extensions/Han/code-points');
+require('unicode-8.0.0/Script_Extensions/Han/symbols');
+require('unicode-8.0.0/Script_Extensions/Han/regex');
 
-require('unicode-8.0.0/script-extensions/Hangul/code-points');
-require('unicode-8.0.0/script-extensions/Hangul/symbols');
-require('unicode-8.0.0/script-extensions/Hangul/regex');
+require('unicode-8.0.0/Script_Extensions/Hangul/code-points');
+require('unicode-8.0.0/Script_Extensions/Hangul/symbols');
+require('unicode-8.0.0/Script_Extensions/Hangul/regex');
 
-require('unicode-8.0.0/script-extensions/Hanunoo/code-points');
-require('unicode-8.0.0/script-extensions/Hanunoo/symbols');
-require('unicode-8.0.0/script-extensions/Hanunoo/regex');
+require('unicode-8.0.0/Script_Extensions/Hanunoo/code-points');
+require('unicode-8.0.0/Script_Extensions/Hanunoo/symbols');
+require('unicode-8.0.0/Script_Extensions/Hanunoo/regex');
 
-require('unicode-8.0.0/script-extensions/Hatran/code-points');
-require('unicode-8.0.0/script-extensions/Hatran/symbols');
-require('unicode-8.0.0/script-extensions/Hatran/regex');
+require('unicode-8.0.0/Script_Extensions/Hatran/code-points');
+require('unicode-8.0.0/Script_Extensions/Hatran/symbols');
+require('unicode-8.0.0/Script_Extensions/Hatran/regex');
 
-require('unicode-8.0.0/script-extensions/Hebrew/code-points');
-require('unicode-8.0.0/script-extensions/Hebrew/symbols');
-require('unicode-8.0.0/script-extensions/Hebrew/regex');
+require('unicode-8.0.0/Script_Extensions/Hebrew/code-points');
+require('unicode-8.0.0/Script_Extensions/Hebrew/symbols');
+require('unicode-8.0.0/Script_Extensions/Hebrew/regex');
 
-require('unicode-8.0.0/script-extensions/Hiragana/code-points');
-require('unicode-8.0.0/script-extensions/Hiragana/symbols');
-require('unicode-8.0.0/script-extensions/Hiragana/regex');
+require('unicode-8.0.0/Script_Extensions/Hiragana/code-points');
+require('unicode-8.0.0/Script_Extensions/Hiragana/symbols');
+require('unicode-8.0.0/Script_Extensions/Hiragana/regex');
 
-require('unicode-8.0.0/script-extensions/Imperial_Aramaic/code-points');
-require('unicode-8.0.0/script-extensions/Imperial_Aramaic/symbols');
-require('unicode-8.0.0/script-extensions/Imperial_Aramaic/regex');
+require('unicode-8.0.0/Script_Extensions/Imperial_Aramaic/code-points');
+require('unicode-8.0.0/Script_Extensions/Imperial_Aramaic/symbols');
+require('unicode-8.0.0/Script_Extensions/Imperial_Aramaic/regex');
 
-require('unicode-8.0.0/script-extensions/Inherited/code-points');
-require('unicode-8.0.0/script-extensions/Inherited/symbols');
-require('unicode-8.0.0/script-extensions/Inherited/regex');
+require('unicode-8.0.0/Script_Extensions/Inherited/code-points');
+require('unicode-8.0.0/Script_Extensions/Inherited/symbols');
+require('unicode-8.0.0/Script_Extensions/Inherited/regex');
 
-require('unicode-8.0.0/script-extensions/Inscriptional_Pahlavi/code-points');
-require('unicode-8.0.0/script-extensions/Inscriptional_Pahlavi/symbols');
-require('unicode-8.0.0/script-extensions/Inscriptional_Pahlavi/regex');
+require('unicode-8.0.0/Script_Extensions/Inscriptional_Pahlavi/code-points');
+require('unicode-8.0.0/Script_Extensions/Inscriptional_Pahlavi/symbols');
+require('unicode-8.0.0/Script_Extensions/Inscriptional_Pahlavi/regex');
 
-require('unicode-8.0.0/script-extensions/Inscriptional_Parthian/code-points');
-require('unicode-8.0.0/script-extensions/Inscriptional_Parthian/symbols');
-require('unicode-8.0.0/script-extensions/Inscriptional_Parthian/regex');
+require('unicode-8.0.0/Script_Extensions/Inscriptional_Parthian/code-points');
+require('unicode-8.0.0/Script_Extensions/Inscriptional_Parthian/symbols');
+require('unicode-8.0.0/Script_Extensions/Inscriptional_Parthian/regex');
 
-require('unicode-8.0.0/script-extensions/Javanese/code-points');
-require('unicode-8.0.0/script-extensions/Javanese/symbols');
-require('unicode-8.0.0/script-extensions/Javanese/regex');
+require('unicode-8.0.0/Script_Extensions/Javanese/code-points');
+require('unicode-8.0.0/Script_Extensions/Javanese/symbols');
+require('unicode-8.0.0/Script_Extensions/Javanese/regex');
 
-require('unicode-8.0.0/script-extensions/Kaithi/code-points');
-require('unicode-8.0.0/script-extensions/Kaithi/symbols');
-require('unicode-8.0.0/script-extensions/Kaithi/regex');
+require('unicode-8.0.0/Script_Extensions/Kaithi/code-points');
+require('unicode-8.0.0/Script_Extensions/Kaithi/symbols');
+require('unicode-8.0.0/Script_Extensions/Kaithi/regex');
 
-require('unicode-8.0.0/script-extensions/Kannada/code-points');
-require('unicode-8.0.0/script-extensions/Kannada/symbols');
-require('unicode-8.0.0/script-extensions/Kannada/regex');
+require('unicode-8.0.0/Script_Extensions/Kannada/code-points');
+require('unicode-8.0.0/Script_Extensions/Kannada/symbols');
+require('unicode-8.0.0/Script_Extensions/Kannada/regex');
 
-require('unicode-8.0.0/script-extensions/Katakana/code-points');
-require('unicode-8.0.0/script-extensions/Katakana/symbols');
-require('unicode-8.0.0/script-extensions/Katakana/regex');
+require('unicode-8.0.0/Script_Extensions/Katakana/code-points');
+require('unicode-8.0.0/Script_Extensions/Katakana/symbols');
+require('unicode-8.0.0/Script_Extensions/Katakana/regex');
 
-require('unicode-8.0.0/script-extensions/Kayah_Li/code-points');
-require('unicode-8.0.0/script-extensions/Kayah_Li/symbols');
-require('unicode-8.0.0/script-extensions/Kayah_Li/regex');
+require('unicode-8.0.0/Script_Extensions/Kayah_Li/code-points');
+require('unicode-8.0.0/Script_Extensions/Kayah_Li/symbols');
+require('unicode-8.0.0/Script_Extensions/Kayah_Li/regex');
 
-require('unicode-8.0.0/script-extensions/Kharoshthi/code-points');
-require('unicode-8.0.0/script-extensions/Kharoshthi/symbols');
-require('unicode-8.0.0/script-extensions/Kharoshthi/regex');
+require('unicode-8.0.0/Script_Extensions/Kharoshthi/code-points');
+require('unicode-8.0.0/Script_Extensions/Kharoshthi/symbols');
+require('unicode-8.0.0/Script_Extensions/Kharoshthi/regex');
 
-require('unicode-8.0.0/script-extensions/Khmer/code-points');
-require('unicode-8.0.0/script-extensions/Khmer/symbols');
-require('unicode-8.0.0/script-extensions/Khmer/regex');
+require('unicode-8.0.0/Script_Extensions/Khmer/code-points');
+require('unicode-8.0.0/Script_Extensions/Khmer/symbols');
+require('unicode-8.0.0/Script_Extensions/Khmer/regex');
 
-require('unicode-8.0.0/script-extensions/Khojki/code-points');
-require('unicode-8.0.0/script-extensions/Khojki/symbols');
-require('unicode-8.0.0/script-extensions/Khojki/regex');
+require('unicode-8.0.0/Script_Extensions/Khojki/code-points');
+require('unicode-8.0.0/Script_Extensions/Khojki/symbols');
+require('unicode-8.0.0/Script_Extensions/Khojki/regex');
 
-require('unicode-8.0.0/script-extensions/Khudawadi/code-points');
-require('unicode-8.0.0/script-extensions/Khudawadi/symbols');
-require('unicode-8.0.0/script-extensions/Khudawadi/regex');
+require('unicode-8.0.0/Script_Extensions/Khudawadi/code-points');
+require('unicode-8.0.0/Script_Extensions/Khudawadi/symbols');
+require('unicode-8.0.0/Script_Extensions/Khudawadi/regex');
 
-require('unicode-8.0.0/script-extensions/Lao/code-points');
-require('unicode-8.0.0/script-extensions/Lao/symbols');
-require('unicode-8.0.0/script-extensions/Lao/regex');
+require('unicode-8.0.0/Script_Extensions/Lao/code-points');
+require('unicode-8.0.0/Script_Extensions/Lao/symbols');
+require('unicode-8.0.0/Script_Extensions/Lao/regex');
 
-require('unicode-8.0.0/script-extensions/Latin/code-points');
-require('unicode-8.0.0/script-extensions/Latin/symbols');
-require('unicode-8.0.0/script-extensions/Latin/regex');
+require('unicode-8.0.0/Script_Extensions/Latin/code-points');
+require('unicode-8.0.0/Script_Extensions/Latin/symbols');
+require('unicode-8.0.0/Script_Extensions/Latin/regex');
 
-require('unicode-8.0.0/script-extensions/Lepcha/code-points');
-require('unicode-8.0.0/script-extensions/Lepcha/symbols');
-require('unicode-8.0.0/script-extensions/Lepcha/regex');
+require('unicode-8.0.0/Script_Extensions/Lepcha/code-points');
+require('unicode-8.0.0/Script_Extensions/Lepcha/symbols');
+require('unicode-8.0.0/Script_Extensions/Lepcha/regex');
 
-require('unicode-8.0.0/script-extensions/Limbu/code-points');
-require('unicode-8.0.0/script-extensions/Limbu/symbols');
-require('unicode-8.0.0/script-extensions/Limbu/regex');
+require('unicode-8.0.0/Script_Extensions/Limbu/code-points');
+require('unicode-8.0.0/Script_Extensions/Limbu/symbols');
+require('unicode-8.0.0/Script_Extensions/Limbu/regex');
 
-require('unicode-8.0.0/script-extensions/Linear_A/code-points');
-require('unicode-8.0.0/script-extensions/Linear_A/symbols');
-require('unicode-8.0.0/script-extensions/Linear_A/regex');
+require('unicode-8.0.0/Script_Extensions/Linear_A/code-points');
+require('unicode-8.0.0/Script_Extensions/Linear_A/symbols');
+require('unicode-8.0.0/Script_Extensions/Linear_A/regex');
 
-require('unicode-8.0.0/script-extensions/Linear_B/code-points');
-require('unicode-8.0.0/script-extensions/Linear_B/symbols');
-require('unicode-8.0.0/script-extensions/Linear_B/regex');
+require('unicode-8.0.0/Script_Extensions/Linear_B/code-points');
+require('unicode-8.0.0/Script_Extensions/Linear_B/symbols');
+require('unicode-8.0.0/Script_Extensions/Linear_B/regex');
 
-require('unicode-8.0.0/script-extensions/Lisu/code-points');
-require('unicode-8.0.0/script-extensions/Lisu/symbols');
-require('unicode-8.0.0/script-extensions/Lisu/regex');
+require('unicode-8.0.0/Script_Extensions/Lisu/code-points');
+require('unicode-8.0.0/Script_Extensions/Lisu/symbols');
+require('unicode-8.0.0/Script_Extensions/Lisu/regex');
 
-require('unicode-8.0.0/script-extensions/Lycian/code-points');
-require('unicode-8.0.0/script-extensions/Lycian/symbols');
-require('unicode-8.0.0/script-extensions/Lycian/regex');
+require('unicode-8.0.0/Script_Extensions/Lycian/code-points');
+require('unicode-8.0.0/Script_Extensions/Lycian/symbols');
+require('unicode-8.0.0/Script_Extensions/Lycian/regex');
 
-require('unicode-8.0.0/script-extensions/Lydian/code-points');
-require('unicode-8.0.0/script-extensions/Lydian/symbols');
-require('unicode-8.0.0/script-extensions/Lydian/regex');
+require('unicode-8.0.0/Script_Extensions/Lydian/code-points');
+require('unicode-8.0.0/Script_Extensions/Lydian/symbols');
+require('unicode-8.0.0/Script_Extensions/Lydian/regex');
 
-require('unicode-8.0.0/script-extensions/Mahajani/code-points');
-require('unicode-8.0.0/script-extensions/Mahajani/symbols');
-require('unicode-8.0.0/script-extensions/Mahajani/regex');
+require('unicode-8.0.0/Script_Extensions/Mahajani/code-points');
+require('unicode-8.0.0/Script_Extensions/Mahajani/symbols');
+require('unicode-8.0.0/Script_Extensions/Mahajani/regex');
 
-require('unicode-8.0.0/script-extensions/Malayalam/code-points');
-require('unicode-8.0.0/script-extensions/Malayalam/symbols');
-require('unicode-8.0.0/script-extensions/Malayalam/regex');
+require('unicode-8.0.0/Script_Extensions/Malayalam/code-points');
+require('unicode-8.0.0/Script_Extensions/Malayalam/symbols');
+require('unicode-8.0.0/Script_Extensions/Malayalam/regex');
 
-require('unicode-8.0.0/script-extensions/Mandaic/code-points');
-require('unicode-8.0.0/script-extensions/Mandaic/symbols');
-require('unicode-8.0.0/script-extensions/Mandaic/regex');
+require('unicode-8.0.0/Script_Extensions/Mandaic/code-points');
+require('unicode-8.0.0/Script_Extensions/Mandaic/symbols');
+require('unicode-8.0.0/Script_Extensions/Mandaic/regex');
 
-require('unicode-8.0.0/script-extensions/Manichaean/code-points');
-require('unicode-8.0.0/script-extensions/Manichaean/symbols');
-require('unicode-8.0.0/script-extensions/Manichaean/regex');
+require('unicode-8.0.0/Script_Extensions/Manichaean/code-points');
+require('unicode-8.0.0/Script_Extensions/Manichaean/symbols');
+require('unicode-8.0.0/Script_Extensions/Manichaean/regex');
 
-require('unicode-8.0.0/script-extensions/Meetei_Mayek/code-points');
-require('unicode-8.0.0/script-extensions/Meetei_Mayek/symbols');
-require('unicode-8.0.0/script-extensions/Meetei_Mayek/regex');
+require('unicode-8.0.0/Script_Extensions/Meetei_Mayek/code-points');
+require('unicode-8.0.0/Script_Extensions/Meetei_Mayek/symbols');
+require('unicode-8.0.0/Script_Extensions/Meetei_Mayek/regex');
 
-require('unicode-8.0.0/script-extensions/Mende_Kikakui/code-points');
-require('unicode-8.0.0/script-extensions/Mende_Kikakui/symbols');
-require('unicode-8.0.0/script-extensions/Mende_Kikakui/regex');
+require('unicode-8.0.0/Script_Extensions/Mende_Kikakui/code-points');
+require('unicode-8.0.0/Script_Extensions/Mende_Kikakui/symbols');
+require('unicode-8.0.0/Script_Extensions/Mende_Kikakui/regex');
 
-require('unicode-8.0.0/script-extensions/Meroitic_Cursive/code-points');
-require('unicode-8.0.0/script-extensions/Meroitic_Cursive/symbols');
-require('unicode-8.0.0/script-extensions/Meroitic_Cursive/regex');
+require('unicode-8.0.0/Script_Extensions/Meroitic_Cursive/code-points');
+require('unicode-8.0.0/Script_Extensions/Meroitic_Cursive/symbols');
+require('unicode-8.0.0/Script_Extensions/Meroitic_Cursive/regex');
 
-require('unicode-8.0.0/script-extensions/Meroitic_Hieroglyphs/code-points');
-require('unicode-8.0.0/script-extensions/Meroitic_Hieroglyphs/symbols');
-require('unicode-8.0.0/script-extensions/Meroitic_Hieroglyphs/regex');
+require('unicode-8.0.0/Script_Extensions/Meroitic_Hieroglyphs/code-points');
+require('unicode-8.0.0/Script_Extensions/Meroitic_Hieroglyphs/symbols');
+require('unicode-8.0.0/Script_Extensions/Meroitic_Hieroglyphs/regex');
 
-require('unicode-8.0.0/script-extensions/Miao/code-points');
-require('unicode-8.0.0/script-extensions/Miao/symbols');
-require('unicode-8.0.0/script-extensions/Miao/regex');
+require('unicode-8.0.0/Script_Extensions/Miao/code-points');
+require('unicode-8.0.0/Script_Extensions/Miao/symbols');
+require('unicode-8.0.0/Script_Extensions/Miao/regex');
 
-require('unicode-8.0.0/script-extensions/Modi/code-points');
-require('unicode-8.0.0/script-extensions/Modi/symbols');
-require('unicode-8.0.0/script-extensions/Modi/regex');
+require('unicode-8.0.0/Script_Extensions/Modi/code-points');
+require('unicode-8.0.0/Script_Extensions/Modi/symbols');
+require('unicode-8.0.0/Script_Extensions/Modi/regex');
 
-require('unicode-8.0.0/script-extensions/Mongolian/code-points');
-require('unicode-8.0.0/script-extensions/Mongolian/symbols');
-require('unicode-8.0.0/script-extensions/Mongolian/regex');
+require('unicode-8.0.0/Script_Extensions/Mongolian/code-points');
+require('unicode-8.0.0/Script_Extensions/Mongolian/symbols');
+require('unicode-8.0.0/Script_Extensions/Mongolian/regex');
 
-require('unicode-8.0.0/script-extensions/Mro/code-points');
-require('unicode-8.0.0/script-extensions/Mro/symbols');
-require('unicode-8.0.0/script-extensions/Mro/regex');
+require('unicode-8.0.0/Script_Extensions/Mro/code-points');
+require('unicode-8.0.0/Script_Extensions/Mro/symbols');
+require('unicode-8.0.0/Script_Extensions/Mro/regex');
 
-require('unicode-8.0.0/script-extensions/Multani/code-points');
-require('unicode-8.0.0/script-extensions/Multani/symbols');
-require('unicode-8.0.0/script-extensions/Multani/regex');
+require('unicode-8.0.0/Script_Extensions/Multani/code-points');
+require('unicode-8.0.0/Script_Extensions/Multani/symbols');
+require('unicode-8.0.0/Script_Extensions/Multani/regex');
 
-require('unicode-8.0.0/script-extensions/Myanmar/code-points');
-require('unicode-8.0.0/script-extensions/Myanmar/symbols');
-require('unicode-8.0.0/script-extensions/Myanmar/regex');
+require('unicode-8.0.0/Script_Extensions/Myanmar/code-points');
+require('unicode-8.0.0/Script_Extensions/Myanmar/symbols');
+require('unicode-8.0.0/Script_Extensions/Myanmar/regex');
 
-require('unicode-8.0.0/script-extensions/Nabataean/code-points');
-require('unicode-8.0.0/script-extensions/Nabataean/symbols');
-require('unicode-8.0.0/script-extensions/Nabataean/regex');
+require('unicode-8.0.0/Script_Extensions/Nabataean/code-points');
+require('unicode-8.0.0/Script_Extensions/Nabataean/symbols');
+require('unicode-8.0.0/Script_Extensions/Nabataean/regex');
 
-require('unicode-8.0.0/script-extensions/New_Tai_Lue/code-points');
-require('unicode-8.0.0/script-extensions/New_Tai_Lue/symbols');
-require('unicode-8.0.0/script-extensions/New_Tai_Lue/regex');
+require('unicode-8.0.0/Script_Extensions/New_Tai_Lue/code-points');
+require('unicode-8.0.0/Script_Extensions/New_Tai_Lue/symbols');
+require('unicode-8.0.0/Script_Extensions/New_Tai_Lue/regex');
 
-require('unicode-8.0.0/script-extensions/Nko/code-points');
-require('unicode-8.0.0/script-extensions/Nko/symbols');
-require('unicode-8.0.0/script-extensions/Nko/regex');
+require('unicode-8.0.0/Script_Extensions/Nko/code-points');
+require('unicode-8.0.0/Script_Extensions/Nko/symbols');
+require('unicode-8.0.0/Script_Extensions/Nko/regex');
 
-require('unicode-8.0.0/script-extensions/Ogham/code-points');
-require('unicode-8.0.0/script-extensions/Ogham/symbols');
-require('unicode-8.0.0/script-extensions/Ogham/regex');
+require('unicode-8.0.0/Script_Extensions/Ogham/code-points');
+require('unicode-8.0.0/Script_Extensions/Ogham/symbols');
+require('unicode-8.0.0/Script_Extensions/Ogham/regex');
 
-require('unicode-8.0.0/script-extensions/Ol_Chiki/code-points');
-require('unicode-8.0.0/script-extensions/Ol_Chiki/symbols');
-require('unicode-8.0.0/script-extensions/Ol_Chiki/regex');
+require('unicode-8.0.0/Script_Extensions/Ol_Chiki/code-points');
+require('unicode-8.0.0/Script_Extensions/Ol_Chiki/symbols');
+require('unicode-8.0.0/Script_Extensions/Ol_Chiki/regex');
 
-require('unicode-8.0.0/script-extensions/Old_Hungarian/code-points');
-require('unicode-8.0.0/script-extensions/Old_Hungarian/symbols');
-require('unicode-8.0.0/script-extensions/Old_Hungarian/regex');
+require('unicode-8.0.0/Script_Extensions/Old_Hungarian/code-points');
+require('unicode-8.0.0/Script_Extensions/Old_Hungarian/symbols');
+require('unicode-8.0.0/Script_Extensions/Old_Hungarian/regex');
 
-require('unicode-8.0.0/script-extensions/Old_Italic/code-points');
-require('unicode-8.0.0/script-extensions/Old_Italic/symbols');
-require('unicode-8.0.0/script-extensions/Old_Italic/regex');
+require('unicode-8.0.0/Script_Extensions/Old_Italic/code-points');
+require('unicode-8.0.0/Script_Extensions/Old_Italic/symbols');
+require('unicode-8.0.0/Script_Extensions/Old_Italic/regex');
 
-require('unicode-8.0.0/script-extensions/Old_North_Arabian/code-points');
-require('unicode-8.0.0/script-extensions/Old_North_Arabian/symbols');
-require('unicode-8.0.0/script-extensions/Old_North_Arabian/regex');
+require('unicode-8.0.0/Script_Extensions/Old_North_Arabian/code-points');
+require('unicode-8.0.0/Script_Extensions/Old_North_Arabian/symbols');
+require('unicode-8.0.0/Script_Extensions/Old_North_Arabian/regex');
 
-require('unicode-8.0.0/script-extensions/Old_Permic/code-points');
-require('unicode-8.0.0/script-extensions/Old_Permic/symbols');
-require('unicode-8.0.0/script-extensions/Old_Permic/regex');
+require('unicode-8.0.0/Script_Extensions/Old_Permic/code-points');
+require('unicode-8.0.0/Script_Extensions/Old_Permic/symbols');
+require('unicode-8.0.0/Script_Extensions/Old_Permic/regex');
 
-require('unicode-8.0.0/script-extensions/Old_Persian/code-points');
-require('unicode-8.0.0/script-extensions/Old_Persian/symbols');
-require('unicode-8.0.0/script-extensions/Old_Persian/regex');
+require('unicode-8.0.0/Script_Extensions/Old_Persian/code-points');
+require('unicode-8.0.0/Script_Extensions/Old_Persian/symbols');
+require('unicode-8.0.0/Script_Extensions/Old_Persian/regex');
 
-require('unicode-8.0.0/script-extensions/Old_South_Arabian/code-points');
-require('unicode-8.0.0/script-extensions/Old_South_Arabian/symbols');
-require('unicode-8.0.0/script-extensions/Old_South_Arabian/regex');
+require('unicode-8.0.0/Script_Extensions/Old_South_Arabian/code-points');
+require('unicode-8.0.0/Script_Extensions/Old_South_Arabian/symbols');
+require('unicode-8.0.0/Script_Extensions/Old_South_Arabian/regex');
 
-require('unicode-8.0.0/script-extensions/Old_Turkic/code-points');
-require('unicode-8.0.0/script-extensions/Old_Turkic/symbols');
-require('unicode-8.0.0/script-extensions/Old_Turkic/regex');
+require('unicode-8.0.0/Script_Extensions/Old_Turkic/code-points');
+require('unicode-8.0.0/Script_Extensions/Old_Turkic/symbols');
+require('unicode-8.0.0/Script_Extensions/Old_Turkic/regex');
 
-require('unicode-8.0.0/script-extensions/Oriya/code-points');
-require('unicode-8.0.0/script-extensions/Oriya/symbols');
-require('unicode-8.0.0/script-extensions/Oriya/regex');
+require('unicode-8.0.0/Script_Extensions/Oriya/code-points');
+require('unicode-8.0.0/Script_Extensions/Oriya/symbols');
+require('unicode-8.0.0/Script_Extensions/Oriya/regex');
 
-require('unicode-8.0.0/script-extensions/Osmanya/code-points');
-require('unicode-8.0.0/script-extensions/Osmanya/symbols');
-require('unicode-8.0.0/script-extensions/Osmanya/regex');
+require('unicode-8.0.0/Script_Extensions/Osmanya/code-points');
+require('unicode-8.0.0/Script_Extensions/Osmanya/symbols');
+require('unicode-8.0.0/Script_Extensions/Osmanya/regex');
 
-require('unicode-8.0.0/script-extensions/Pahawh_Hmong/code-points');
-require('unicode-8.0.0/script-extensions/Pahawh_Hmong/symbols');
-require('unicode-8.0.0/script-extensions/Pahawh_Hmong/regex');
+require('unicode-8.0.0/Script_Extensions/Pahawh_Hmong/code-points');
+require('unicode-8.0.0/Script_Extensions/Pahawh_Hmong/symbols');
+require('unicode-8.0.0/Script_Extensions/Pahawh_Hmong/regex');
 
-require('unicode-8.0.0/script-extensions/Palmyrene/code-points');
-require('unicode-8.0.0/script-extensions/Palmyrene/symbols');
-require('unicode-8.0.0/script-extensions/Palmyrene/regex');
+require('unicode-8.0.0/Script_Extensions/Palmyrene/code-points');
+require('unicode-8.0.0/Script_Extensions/Palmyrene/symbols');
+require('unicode-8.0.0/Script_Extensions/Palmyrene/regex');
 
-require('unicode-8.0.0/script-extensions/Pau_Cin_Hau/code-points');
-require('unicode-8.0.0/script-extensions/Pau_Cin_Hau/symbols');
-require('unicode-8.0.0/script-extensions/Pau_Cin_Hau/regex');
+require('unicode-8.0.0/Script_Extensions/Pau_Cin_Hau/code-points');
+require('unicode-8.0.0/Script_Extensions/Pau_Cin_Hau/symbols');
+require('unicode-8.0.0/Script_Extensions/Pau_Cin_Hau/regex');
 
-require('unicode-8.0.0/script-extensions/Phags_Pa/code-points');
-require('unicode-8.0.0/script-extensions/Phags_Pa/symbols');
-require('unicode-8.0.0/script-extensions/Phags_Pa/regex');
+require('unicode-8.0.0/Script_Extensions/Phags_Pa/code-points');
+require('unicode-8.0.0/Script_Extensions/Phags_Pa/symbols');
+require('unicode-8.0.0/Script_Extensions/Phags_Pa/regex');
 
-require('unicode-8.0.0/script-extensions/Phoenician/code-points');
-require('unicode-8.0.0/script-extensions/Phoenician/symbols');
-require('unicode-8.0.0/script-extensions/Phoenician/regex');
+require('unicode-8.0.0/Script_Extensions/Phoenician/code-points');
+require('unicode-8.0.0/Script_Extensions/Phoenician/symbols');
+require('unicode-8.0.0/Script_Extensions/Phoenician/regex');
 
-require('unicode-8.0.0/script-extensions/Psalter_Pahlavi/code-points');
-require('unicode-8.0.0/script-extensions/Psalter_Pahlavi/symbols');
-require('unicode-8.0.0/script-extensions/Psalter_Pahlavi/regex');
+require('unicode-8.0.0/Script_Extensions/Psalter_Pahlavi/code-points');
+require('unicode-8.0.0/Script_Extensions/Psalter_Pahlavi/symbols');
+require('unicode-8.0.0/Script_Extensions/Psalter_Pahlavi/regex');
 
-require('unicode-8.0.0/script-extensions/Rejang/code-points');
-require('unicode-8.0.0/script-extensions/Rejang/symbols');
-require('unicode-8.0.0/script-extensions/Rejang/regex');
+require('unicode-8.0.0/Script_Extensions/Rejang/code-points');
+require('unicode-8.0.0/Script_Extensions/Rejang/symbols');
+require('unicode-8.0.0/Script_Extensions/Rejang/regex');
 
-require('unicode-8.0.0/script-extensions/Runic/code-points');
-require('unicode-8.0.0/script-extensions/Runic/symbols');
-require('unicode-8.0.0/script-extensions/Runic/regex');
+require('unicode-8.0.0/Script_Extensions/Runic/code-points');
+require('unicode-8.0.0/Script_Extensions/Runic/symbols');
+require('unicode-8.0.0/Script_Extensions/Runic/regex');
 
-require('unicode-8.0.0/script-extensions/Samaritan/code-points');
-require('unicode-8.0.0/script-extensions/Samaritan/symbols');
-require('unicode-8.0.0/script-extensions/Samaritan/regex');
+require('unicode-8.0.0/Script_Extensions/Samaritan/code-points');
+require('unicode-8.0.0/Script_Extensions/Samaritan/symbols');
+require('unicode-8.0.0/Script_Extensions/Samaritan/regex');
 
-require('unicode-8.0.0/script-extensions/Saurashtra/code-points');
-require('unicode-8.0.0/script-extensions/Saurashtra/symbols');
-require('unicode-8.0.0/script-extensions/Saurashtra/regex');
+require('unicode-8.0.0/Script_Extensions/Saurashtra/code-points');
+require('unicode-8.0.0/Script_Extensions/Saurashtra/symbols');
+require('unicode-8.0.0/Script_Extensions/Saurashtra/regex');
 
-require('unicode-8.0.0/script-extensions/Sharada/code-points');
-require('unicode-8.0.0/script-extensions/Sharada/symbols');
-require('unicode-8.0.0/script-extensions/Sharada/regex');
+require('unicode-8.0.0/Script_Extensions/Sharada/code-points');
+require('unicode-8.0.0/Script_Extensions/Sharada/symbols');
+require('unicode-8.0.0/Script_Extensions/Sharada/regex');
 
-require('unicode-8.0.0/script-extensions/Shavian/code-points');
-require('unicode-8.0.0/script-extensions/Shavian/symbols');
-require('unicode-8.0.0/script-extensions/Shavian/regex');
+require('unicode-8.0.0/Script_Extensions/Shavian/code-points');
+require('unicode-8.0.0/Script_Extensions/Shavian/symbols');
+require('unicode-8.0.0/Script_Extensions/Shavian/regex');
 
-require('unicode-8.0.0/script-extensions/Siddham/code-points');
-require('unicode-8.0.0/script-extensions/Siddham/symbols');
-require('unicode-8.0.0/script-extensions/Siddham/regex');
+require('unicode-8.0.0/Script_Extensions/Siddham/code-points');
+require('unicode-8.0.0/Script_Extensions/Siddham/symbols');
+require('unicode-8.0.0/Script_Extensions/Siddham/regex');
 
-require('unicode-8.0.0/script-extensions/SignWriting/code-points');
-require('unicode-8.0.0/script-extensions/SignWriting/symbols');
-require('unicode-8.0.0/script-extensions/SignWriting/regex');
+require('unicode-8.0.0/Script_Extensions/SignWriting/code-points');
+require('unicode-8.0.0/Script_Extensions/SignWriting/symbols');
+require('unicode-8.0.0/Script_Extensions/SignWriting/regex');
 
-require('unicode-8.0.0/script-extensions/Sinhala/code-points');
-require('unicode-8.0.0/script-extensions/Sinhala/symbols');
-require('unicode-8.0.0/script-extensions/Sinhala/regex');
+require('unicode-8.0.0/Script_Extensions/Sinhala/code-points');
+require('unicode-8.0.0/Script_Extensions/Sinhala/symbols');
+require('unicode-8.0.0/Script_Extensions/Sinhala/regex');
 
-require('unicode-8.0.0/script-extensions/Sora_Sompeng/code-points');
-require('unicode-8.0.0/script-extensions/Sora_Sompeng/symbols');
-require('unicode-8.0.0/script-extensions/Sora_Sompeng/regex');
+require('unicode-8.0.0/Script_Extensions/Sora_Sompeng/code-points');
+require('unicode-8.0.0/Script_Extensions/Sora_Sompeng/symbols');
+require('unicode-8.0.0/Script_Extensions/Sora_Sompeng/regex');
 
-require('unicode-8.0.0/script-extensions/Sundanese/code-points');
-require('unicode-8.0.0/script-extensions/Sundanese/symbols');
-require('unicode-8.0.0/script-extensions/Sundanese/regex');
+require('unicode-8.0.0/Script_Extensions/Sundanese/code-points');
+require('unicode-8.0.0/Script_Extensions/Sundanese/symbols');
+require('unicode-8.0.0/Script_Extensions/Sundanese/regex');
 
-require('unicode-8.0.0/script-extensions/Syloti_Nagri/code-points');
-require('unicode-8.0.0/script-extensions/Syloti_Nagri/symbols');
-require('unicode-8.0.0/script-extensions/Syloti_Nagri/regex');
+require('unicode-8.0.0/Script_Extensions/Syloti_Nagri/code-points');
+require('unicode-8.0.0/Script_Extensions/Syloti_Nagri/symbols');
+require('unicode-8.0.0/Script_Extensions/Syloti_Nagri/regex');
 
-require('unicode-8.0.0/script-extensions/Syriac/code-points');
-require('unicode-8.0.0/script-extensions/Syriac/symbols');
-require('unicode-8.0.0/script-extensions/Syriac/regex');
+require('unicode-8.0.0/Script_Extensions/Syriac/code-points');
+require('unicode-8.0.0/Script_Extensions/Syriac/symbols');
+require('unicode-8.0.0/Script_Extensions/Syriac/regex');
 
-require('unicode-8.0.0/script-extensions/Tagalog/code-points');
-require('unicode-8.0.0/script-extensions/Tagalog/symbols');
-require('unicode-8.0.0/script-extensions/Tagalog/regex');
+require('unicode-8.0.0/Script_Extensions/Tagalog/code-points');
+require('unicode-8.0.0/Script_Extensions/Tagalog/symbols');
+require('unicode-8.0.0/Script_Extensions/Tagalog/regex');
 
-require('unicode-8.0.0/script-extensions/Tagbanwa/code-points');
-require('unicode-8.0.0/script-extensions/Tagbanwa/symbols');
-require('unicode-8.0.0/script-extensions/Tagbanwa/regex');
+require('unicode-8.0.0/Script_Extensions/Tagbanwa/code-points');
+require('unicode-8.0.0/Script_Extensions/Tagbanwa/symbols');
+require('unicode-8.0.0/Script_Extensions/Tagbanwa/regex');
 
-require('unicode-8.0.0/script-extensions/Tai_Le/code-points');
-require('unicode-8.0.0/script-extensions/Tai_Le/symbols');
-require('unicode-8.0.0/script-extensions/Tai_Le/regex');
+require('unicode-8.0.0/Script_Extensions/Tai_Le/code-points');
+require('unicode-8.0.0/Script_Extensions/Tai_Le/symbols');
+require('unicode-8.0.0/Script_Extensions/Tai_Le/regex');
 
-require('unicode-8.0.0/script-extensions/Tai_Tham/code-points');
-require('unicode-8.0.0/script-extensions/Tai_Tham/symbols');
-require('unicode-8.0.0/script-extensions/Tai_Tham/regex');
+require('unicode-8.0.0/Script_Extensions/Tai_Tham/code-points');
+require('unicode-8.0.0/Script_Extensions/Tai_Tham/symbols');
+require('unicode-8.0.0/Script_Extensions/Tai_Tham/regex');
 
-require('unicode-8.0.0/script-extensions/Tai_Viet/code-points');
-require('unicode-8.0.0/script-extensions/Tai_Viet/symbols');
-require('unicode-8.0.0/script-extensions/Tai_Viet/regex');
+require('unicode-8.0.0/Script_Extensions/Tai_Viet/code-points');
+require('unicode-8.0.0/Script_Extensions/Tai_Viet/symbols');
+require('unicode-8.0.0/Script_Extensions/Tai_Viet/regex');
 
-require('unicode-8.0.0/script-extensions/Takri/code-points');
-require('unicode-8.0.0/script-extensions/Takri/symbols');
-require('unicode-8.0.0/script-extensions/Takri/regex');
+require('unicode-8.0.0/Script_Extensions/Takri/code-points');
+require('unicode-8.0.0/Script_Extensions/Takri/symbols');
+require('unicode-8.0.0/Script_Extensions/Takri/regex');
 
-require('unicode-8.0.0/script-extensions/Tamil/code-points');
-require('unicode-8.0.0/script-extensions/Tamil/symbols');
-require('unicode-8.0.0/script-extensions/Tamil/regex');
+require('unicode-8.0.0/Script_Extensions/Tamil/code-points');
+require('unicode-8.0.0/Script_Extensions/Tamil/symbols');
+require('unicode-8.0.0/Script_Extensions/Tamil/regex');
 
-require('unicode-8.0.0/script-extensions/Telugu/code-points');
-require('unicode-8.0.0/script-extensions/Telugu/symbols');
-require('unicode-8.0.0/script-extensions/Telugu/regex');
+require('unicode-8.0.0/Script_Extensions/Telugu/code-points');
+require('unicode-8.0.0/Script_Extensions/Telugu/symbols');
+require('unicode-8.0.0/Script_Extensions/Telugu/regex');
 
-require('unicode-8.0.0/script-extensions/Thaana/code-points');
-require('unicode-8.0.0/script-extensions/Thaana/symbols');
-require('unicode-8.0.0/script-extensions/Thaana/regex');
+require('unicode-8.0.0/Script_Extensions/Thaana/code-points');
+require('unicode-8.0.0/Script_Extensions/Thaana/symbols');
+require('unicode-8.0.0/Script_Extensions/Thaana/regex');
 
-require('unicode-8.0.0/script-extensions/Thai/code-points');
-require('unicode-8.0.0/script-extensions/Thai/symbols');
-require('unicode-8.0.0/script-extensions/Thai/regex');
+require('unicode-8.0.0/Script_Extensions/Thai/code-points');
+require('unicode-8.0.0/Script_Extensions/Thai/symbols');
+require('unicode-8.0.0/Script_Extensions/Thai/regex');
 
-require('unicode-8.0.0/script-extensions/Tibetan/code-points');
-require('unicode-8.0.0/script-extensions/Tibetan/symbols');
-require('unicode-8.0.0/script-extensions/Tibetan/regex');
+require('unicode-8.0.0/Script_Extensions/Tibetan/code-points');
+require('unicode-8.0.0/Script_Extensions/Tibetan/symbols');
+require('unicode-8.0.0/Script_Extensions/Tibetan/regex');
 
-require('unicode-8.0.0/script-extensions/Tifinagh/code-points');
-require('unicode-8.0.0/script-extensions/Tifinagh/symbols');
-require('unicode-8.0.0/script-extensions/Tifinagh/regex');
+require('unicode-8.0.0/Script_Extensions/Tifinagh/code-points');
+require('unicode-8.0.0/Script_Extensions/Tifinagh/symbols');
+require('unicode-8.0.0/Script_Extensions/Tifinagh/regex');
 
-require('unicode-8.0.0/script-extensions/Tirhuta/code-points');
-require('unicode-8.0.0/script-extensions/Tirhuta/symbols');
-require('unicode-8.0.0/script-extensions/Tirhuta/regex');
+require('unicode-8.0.0/Script_Extensions/Tirhuta/code-points');
+require('unicode-8.0.0/Script_Extensions/Tirhuta/symbols');
+require('unicode-8.0.0/Script_Extensions/Tirhuta/regex');
 
-require('unicode-8.0.0/script-extensions/Ugaritic/code-points');
-require('unicode-8.0.0/script-extensions/Ugaritic/symbols');
-require('unicode-8.0.0/script-extensions/Ugaritic/regex');
+require('unicode-8.0.0/Script_Extensions/Ugaritic/code-points');
+require('unicode-8.0.0/Script_Extensions/Ugaritic/symbols');
+require('unicode-8.0.0/Script_Extensions/Ugaritic/regex');
 
-require('unicode-8.0.0/script-extensions/Vai/code-points');
-require('unicode-8.0.0/script-extensions/Vai/symbols');
-require('unicode-8.0.0/script-extensions/Vai/regex');
+require('unicode-8.0.0/Script_Extensions/Vai/code-points');
+require('unicode-8.0.0/Script_Extensions/Vai/symbols');
+require('unicode-8.0.0/Script_Extensions/Vai/regex');
 
-require('unicode-8.0.0/script-extensions/Warang_Citi/code-points');
-require('unicode-8.0.0/script-extensions/Warang_Citi/symbols');
-require('unicode-8.0.0/script-extensions/Warang_Citi/regex');
+require('unicode-8.0.0/Script_Extensions/Warang_Citi/code-points');
+require('unicode-8.0.0/Script_Extensions/Warang_Citi/symbols');
+require('unicode-8.0.0/Script_Extensions/Warang_Citi/regex');
 
-require('unicode-8.0.0/script-extensions/Yi/code-points');
-require('unicode-8.0.0/script-extensions/Yi/symbols');
-require('unicode-8.0.0/script-extensions/Yi/regex');
+require('unicode-8.0.0/Script_Extensions/Yi/code-points');
+require('unicode-8.0.0/Script_Extensions/Yi/symbols');
+require('unicode-8.0.0/Script_Extensions/Yi/regex');
 
-// case folding:
+// `Case_Folding`:
 
-require('unicode-8.0.0/case-folding/C/code-points'); // lookup map from code point to code point
-require('unicode-8.0.0/case-folding/C/code-points').get(codePoint);
-require('unicode-8.0.0/case-folding/C/symbols'); // lookup map from symbol to symbol
-require('unicode-8.0.0/case-folding/C/symbols').get(symbol);
+require('unicode-8.0.0/Case_Folding/C/code-points'); // lookup map from code point to code point
+require('unicode-8.0.0/Case_Folding/C/code-points').get(codePoint);
+require('unicode-8.0.0/Case_Folding/C/symbols'); // lookup map from symbol to symbol
+require('unicode-8.0.0/Case_Folding/C/symbols').get(symbol);
 
-require('unicode-8.0.0/case-folding/F/code-points'); // lookup map from code point to code point
-require('unicode-8.0.0/case-folding/F/code-points').get(codePoint);
-require('unicode-8.0.0/case-folding/F/symbols'); // lookup map from symbol to symbol
-require('unicode-8.0.0/case-folding/F/symbols').get(symbol);
+require('unicode-8.0.0/Case_Folding/F/code-points'); // lookup map from code point to code point
+require('unicode-8.0.0/Case_Folding/F/code-points').get(codePoint);
+require('unicode-8.0.0/Case_Folding/F/symbols'); // lookup map from symbol to symbol
+require('unicode-8.0.0/Case_Folding/F/symbols').get(symbol);
 
-require('unicode-8.0.0/case-folding/S/code-points'); // lookup map from code point to code point
-require('unicode-8.0.0/case-folding/S/code-points').get(codePoint);
-require('unicode-8.0.0/case-folding/S/symbols'); // lookup map from symbol to symbol
-require('unicode-8.0.0/case-folding/S/symbols').get(symbol);
+require('unicode-8.0.0/Case_Folding/S/code-points'); // lookup map from code point to code point
+require('unicode-8.0.0/Case_Folding/S/code-points').get(codePoint);
+require('unicode-8.0.0/Case_Folding/S/symbols'); // lookup map from symbol to symbol
+require('unicode-8.0.0/Case_Folding/S/symbols').get(symbol);
 
-require('unicode-8.0.0/case-folding/T/code-points'); // lookup map from code point to code point
-require('unicode-8.0.0/case-folding/T/code-points').get(codePoint);
-require('unicode-8.0.0/case-folding/T/symbols'); // lookup map from symbol to symbol
-require('unicode-8.0.0/case-folding/T/symbols').get(symbol);
+require('unicode-8.0.0/Case_Folding/T/code-points'); // lookup map from code point to code point
+require('unicode-8.0.0/Case_Folding/T/code-points').get(codePoint);
+require('unicode-8.0.0/Case_Folding/T/symbols'); // lookup map from symbol to symbol
+require('unicode-8.0.0/Case_Folding/T/symbols').get(symbol);
 
-// blocks:
+// `Block`:
 
-require('unicode-8.0.0/blocks/Aegean_Numbers/code-points');
-require('unicode-8.0.0/blocks/Aegean_Numbers/symbols');
-require('unicode-8.0.0/blocks/Aegean_Numbers/regex');
+require('unicode-8.0.0/Block/Aegean_Numbers/code-points');
+require('unicode-8.0.0/Block/Aegean_Numbers/symbols');
+require('unicode-8.0.0/Block/Aegean_Numbers/regex');
 
-require('unicode-8.0.0/blocks/Ahom/code-points');
-require('unicode-8.0.0/blocks/Ahom/symbols');
-require('unicode-8.0.0/blocks/Ahom/regex');
+require('unicode-8.0.0/Block/Ahom/code-points');
+require('unicode-8.0.0/Block/Ahom/symbols');
+require('unicode-8.0.0/Block/Ahom/regex');
 
-require('unicode-8.0.0/blocks/Alchemical_Symbols/code-points');
-require('unicode-8.0.0/blocks/Alchemical_Symbols/symbols');
-require('unicode-8.0.0/blocks/Alchemical_Symbols/regex');
+require('unicode-8.0.0/Block/Alchemical_Symbols/code-points');
+require('unicode-8.0.0/Block/Alchemical_Symbols/symbols');
+require('unicode-8.0.0/Block/Alchemical_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Alphabetic_Presentation_Forms/code-points');
-require('unicode-8.0.0/blocks/Alphabetic_Presentation_Forms/symbols');
-require('unicode-8.0.0/blocks/Alphabetic_Presentation_Forms/regex');
+require('unicode-8.0.0/Block/Alphabetic_Presentation_Forms/code-points');
+require('unicode-8.0.0/Block/Alphabetic_Presentation_Forms/symbols');
+require('unicode-8.0.0/Block/Alphabetic_Presentation_Forms/regex');
 
-require('unicode-8.0.0/blocks/Anatolian_Hieroglyphs/code-points');
-require('unicode-8.0.0/blocks/Anatolian_Hieroglyphs/symbols');
-require('unicode-8.0.0/blocks/Anatolian_Hieroglyphs/regex');
+require('unicode-8.0.0/Block/Anatolian_Hieroglyphs/code-points');
+require('unicode-8.0.0/Block/Anatolian_Hieroglyphs/symbols');
+require('unicode-8.0.0/Block/Anatolian_Hieroglyphs/regex');
 
-require('unicode-8.0.0/blocks/Ancient_Greek_Musical_Notation/code-points');
-require('unicode-8.0.0/blocks/Ancient_Greek_Musical_Notation/symbols');
-require('unicode-8.0.0/blocks/Ancient_Greek_Musical_Notation/regex');
+require('unicode-8.0.0/Block/Ancient_Greek_Musical_Notation/code-points');
+require('unicode-8.0.0/Block/Ancient_Greek_Musical_Notation/symbols');
+require('unicode-8.0.0/Block/Ancient_Greek_Musical_Notation/regex');
 
-require('unicode-8.0.0/blocks/Ancient_Greek_Numbers/code-points');
-require('unicode-8.0.0/blocks/Ancient_Greek_Numbers/symbols');
-require('unicode-8.0.0/blocks/Ancient_Greek_Numbers/regex');
+require('unicode-8.0.0/Block/Ancient_Greek_Numbers/code-points');
+require('unicode-8.0.0/Block/Ancient_Greek_Numbers/symbols');
+require('unicode-8.0.0/Block/Ancient_Greek_Numbers/regex');
 
-require('unicode-8.0.0/blocks/Ancient_Symbols/code-points');
-require('unicode-8.0.0/blocks/Ancient_Symbols/symbols');
-require('unicode-8.0.0/blocks/Ancient_Symbols/regex');
+require('unicode-8.0.0/Block/Ancient_Symbols/code-points');
+require('unicode-8.0.0/Block/Ancient_Symbols/symbols');
+require('unicode-8.0.0/Block/Ancient_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Arabic/code-points');
-require('unicode-8.0.0/blocks/Arabic/symbols');
-require('unicode-8.0.0/blocks/Arabic/regex');
+require('unicode-8.0.0/Block/Arabic/code-points');
+require('unicode-8.0.0/Block/Arabic/symbols');
+require('unicode-8.0.0/Block/Arabic/regex');
 
-require('unicode-8.0.0/blocks/Arabic_Extended_A/code-points');
-require('unicode-8.0.0/blocks/Arabic_Extended_A/symbols');
-require('unicode-8.0.0/blocks/Arabic_Extended_A/regex');
+require('unicode-8.0.0/Block/Arabic_Extended_A/code-points');
+require('unicode-8.0.0/Block/Arabic_Extended_A/symbols');
+require('unicode-8.0.0/Block/Arabic_Extended_A/regex');
 
-require('unicode-8.0.0/blocks/Arabic_Mathematical_Alphabetic_Symbols/code-points');
-require('unicode-8.0.0/blocks/Arabic_Mathematical_Alphabetic_Symbols/symbols');
-require('unicode-8.0.0/blocks/Arabic_Mathematical_Alphabetic_Symbols/regex');
+require('unicode-8.0.0/Block/Arabic_Mathematical_Alphabetic_Symbols/code-points');
+require('unicode-8.0.0/Block/Arabic_Mathematical_Alphabetic_Symbols/symbols');
+require('unicode-8.0.0/Block/Arabic_Mathematical_Alphabetic_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Arabic_Presentation_Forms_A/code-points');
-require('unicode-8.0.0/blocks/Arabic_Presentation_Forms_A/symbols');
-require('unicode-8.0.0/blocks/Arabic_Presentation_Forms_A/regex');
+require('unicode-8.0.0/Block/Arabic_Presentation_Forms_A/code-points');
+require('unicode-8.0.0/Block/Arabic_Presentation_Forms_A/symbols');
+require('unicode-8.0.0/Block/Arabic_Presentation_Forms_A/regex');
 
-require('unicode-8.0.0/blocks/Arabic_Presentation_Forms_B/code-points');
-require('unicode-8.0.0/blocks/Arabic_Presentation_Forms_B/symbols');
-require('unicode-8.0.0/blocks/Arabic_Presentation_Forms_B/regex');
+require('unicode-8.0.0/Block/Arabic_Presentation_Forms_B/code-points');
+require('unicode-8.0.0/Block/Arabic_Presentation_Forms_B/symbols');
+require('unicode-8.0.0/Block/Arabic_Presentation_Forms_B/regex');
 
-require('unicode-8.0.0/blocks/Arabic_Supplement/code-points');
-require('unicode-8.0.0/blocks/Arabic_Supplement/symbols');
-require('unicode-8.0.0/blocks/Arabic_Supplement/regex');
+require('unicode-8.0.0/Block/Arabic_Supplement/code-points');
+require('unicode-8.0.0/Block/Arabic_Supplement/symbols');
+require('unicode-8.0.0/Block/Arabic_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Armenian/code-points');
-require('unicode-8.0.0/blocks/Armenian/symbols');
-require('unicode-8.0.0/blocks/Armenian/regex');
+require('unicode-8.0.0/Block/Armenian/code-points');
+require('unicode-8.0.0/Block/Armenian/symbols');
+require('unicode-8.0.0/Block/Armenian/regex');
 
-require('unicode-8.0.0/blocks/Arrows/code-points');
-require('unicode-8.0.0/blocks/Arrows/symbols');
-require('unicode-8.0.0/blocks/Arrows/regex');
+require('unicode-8.0.0/Block/Arrows/code-points');
+require('unicode-8.0.0/Block/Arrows/symbols');
+require('unicode-8.0.0/Block/Arrows/regex');
 
-require('unicode-8.0.0/blocks/Avestan/code-points');
-require('unicode-8.0.0/blocks/Avestan/symbols');
-require('unicode-8.0.0/blocks/Avestan/regex');
+require('unicode-8.0.0/Block/Avestan/code-points');
+require('unicode-8.0.0/Block/Avestan/symbols');
+require('unicode-8.0.0/Block/Avestan/regex');
 
-require('unicode-8.0.0/blocks/Balinese/code-points');
-require('unicode-8.0.0/blocks/Balinese/symbols');
-require('unicode-8.0.0/blocks/Balinese/regex');
+require('unicode-8.0.0/Block/Balinese/code-points');
+require('unicode-8.0.0/Block/Balinese/symbols');
+require('unicode-8.0.0/Block/Balinese/regex');
 
-require('unicode-8.0.0/blocks/Bamum/code-points');
-require('unicode-8.0.0/blocks/Bamum/symbols');
-require('unicode-8.0.0/blocks/Bamum/regex');
+require('unicode-8.0.0/Block/Bamum/code-points');
+require('unicode-8.0.0/Block/Bamum/symbols');
+require('unicode-8.0.0/Block/Bamum/regex');
 
-require('unicode-8.0.0/blocks/Bamum_Supplement/code-points');
-require('unicode-8.0.0/blocks/Bamum_Supplement/symbols');
-require('unicode-8.0.0/blocks/Bamum_Supplement/regex');
+require('unicode-8.0.0/Block/Bamum_Supplement/code-points');
+require('unicode-8.0.0/Block/Bamum_Supplement/symbols');
+require('unicode-8.0.0/Block/Bamum_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Basic_Latin/code-points');
-require('unicode-8.0.0/blocks/Basic_Latin/symbols');
-require('unicode-8.0.0/blocks/Basic_Latin/regex');
+require('unicode-8.0.0/Block/Basic_Latin/code-points');
+require('unicode-8.0.0/Block/Basic_Latin/symbols');
+require('unicode-8.0.0/Block/Basic_Latin/regex');
 
-require('unicode-8.0.0/blocks/Bassa_Vah/code-points');
-require('unicode-8.0.0/blocks/Bassa_Vah/symbols');
-require('unicode-8.0.0/blocks/Bassa_Vah/regex');
+require('unicode-8.0.0/Block/Bassa_Vah/code-points');
+require('unicode-8.0.0/Block/Bassa_Vah/symbols');
+require('unicode-8.0.0/Block/Bassa_Vah/regex');
 
-require('unicode-8.0.0/blocks/Batak/code-points');
-require('unicode-8.0.0/blocks/Batak/symbols');
-require('unicode-8.0.0/blocks/Batak/regex');
+require('unicode-8.0.0/Block/Batak/code-points');
+require('unicode-8.0.0/Block/Batak/symbols');
+require('unicode-8.0.0/Block/Batak/regex');
 
-require('unicode-8.0.0/blocks/Bengali/code-points');
-require('unicode-8.0.0/blocks/Bengali/symbols');
-require('unicode-8.0.0/blocks/Bengali/regex');
+require('unicode-8.0.0/Block/Bengali/code-points');
+require('unicode-8.0.0/Block/Bengali/symbols');
+require('unicode-8.0.0/Block/Bengali/regex');
 
-require('unicode-8.0.0/blocks/Block_Elements/code-points');
-require('unicode-8.0.0/blocks/Block_Elements/symbols');
-require('unicode-8.0.0/blocks/Block_Elements/regex');
+require('unicode-8.0.0/Block/Block_Elements/code-points');
+require('unicode-8.0.0/Block/Block_Elements/symbols');
+require('unicode-8.0.0/Block/Block_Elements/regex');
 
-require('unicode-8.0.0/blocks/Bopomofo/code-points');
-require('unicode-8.0.0/blocks/Bopomofo/symbols');
-require('unicode-8.0.0/blocks/Bopomofo/regex');
+require('unicode-8.0.0/Block/Bopomofo/code-points');
+require('unicode-8.0.0/Block/Bopomofo/symbols');
+require('unicode-8.0.0/Block/Bopomofo/regex');
 
-require('unicode-8.0.0/blocks/Bopomofo_Extended/code-points');
-require('unicode-8.0.0/blocks/Bopomofo_Extended/symbols');
-require('unicode-8.0.0/blocks/Bopomofo_Extended/regex');
+require('unicode-8.0.0/Block/Bopomofo_Extended/code-points');
+require('unicode-8.0.0/Block/Bopomofo_Extended/symbols');
+require('unicode-8.0.0/Block/Bopomofo_Extended/regex');
 
-require('unicode-8.0.0/blocks/Box_Drawing/code-points');
-require('unicode-8.0.0/blocks/Box_Drawing/symbols');
-require('unicode-8.0.0/blocks/Box_Drawing/regex');
+require('unicode-8.0.0/Block/Box_Drawing/code-points');
+require('unicode-8.0.0/Block/Box_Drawing/symbols');
+require('unicode-8.0.0/Block/Box_Drawing/regex');
 
-require('unicode-8.0.0/blocks/Brahmi/code-points');
-require('unicode-8.0.0/blocks/Brahmi/symbols');
-require('unicode-8.0.0/blocks/Brahmi/regex');
+require('unicode-8.0.0/Block/Brahmi/code-points');
+require('unicode-8.0.0/Block/Brahmi/symbols');
+require('unicode-8.0.0/Block/Brahmi/regex');
 
-require('unicode-8.0.0/blocks/Braille_Patterns/code-points');
-require('unicode-8.0.0/blocks/Braille_Patterns/symbols');
-require('unicode-8.0.0/blocks/Braille_Patterns/regex');
+require('unicode-8.0.0/Block/Braille_Patterns/code-points');
+require('unicode-8.0.0/Block/Braille_Patterns/symbols');
+require('unicode-8.0.0/Block/Braille_Patterns/regex');
 
-require('unicode-8.0.0/blocks/Buginese/code-points');
-require('unicode-8.0.0/blocks/Buginese/symbols');
-require('unicode-8.0.0/blocks/Buginese/regex');
+require('unicode-8.0.0/Block/Buginese/code-points');
+require('unicode-8.0.0/Block/Buginese/symbols');
+require('unicode-8.0.0/Block/Buginese/regex');
 
-require('unicode-8.0.0/blocks/Buhid/code-points');
-require('unicode-8.0.0/blocks/Buhid/symbols');
-require('unicode-8.0.0/blocks/Buhid/regex');
+require('unicode-8.0.0/Block/Buhid/code-points');
+require('unicode-8.0.0/Block/Buhid/symbols');
+require('unicode-8.0.0/Block/Buhid/regex');
 
-require('unicode-8.0.0/blocks/Byzantine_Musical_Symbols/code-points');
-require('unicode-8.0.0/blocks/Byzantine_Musical_Symbols/symbols');
-require('unicode-8.0.0/blocks/Byzantine_Musical_Symbols/regex');
+require('unicode-8.0.0/Block/Byzantine_Musical_Symbols/code-points');
+require('unicode-8.0.0/Block/Byzantine_Musical_Symbols/symbols');
+require('unicode-8.0.0/Block/Byzantine_Musical_Symbols/regex');
 
-require('unicode-8.0.0/blocks/CJK_Compatibility/code-points');
-require('unicode-8.0.0/blocks/CJK_Compatibility/symbols');
-require('unicode-8.0.0/blocks/CJK_Compatibility/regex');
+require('unicode-8.0.0/Block/CJK_Compatibility/code-points');
+require('unicode-8.0.0/Block/CJK_Compatibility/symbols');
+require('unicode-8.0.0/Block/CJK_Compatibility/regex');
 
-require('unicode-8.0.0/blocks/CJK_Compatibility_Forms/code-points');
-require('unicode-8.0.0/blocks/CJK_Compatibility_Forms/symbols');
-require('unicode-8.0.0/blocks/CJK_Compatibility_Forms/regex');
+require('unicode-8.0.0/Block/CJK_Compatibility_Forms/code-points');
+require('unicode-8.0.0/Block/CJK_Compatibility_Forms/symbols');
+require('unicode-8.0.0/Block/CJK_Compatibility_Forms/regex');
 
-require('unicode-8.0.0/blocks/CJK_Compatibility_Ideographs/code-points');
-require('unicode-8.0.0/blocks/CJK_Compatibility_Ideographs/symbols');
-require('unicode-8.0.0/blocks/CJK_Compatibility_Ideographs/regex');
+require('unicode-8.0.0/Block/CJK_Compatibility_Ideographs/code-points');
+require('unicode-8.0.0/Block/CJK_Compatibility_Ideographs/symbols');
+require('unicode-8.0.0/Block/CJK_Compatibility_Ideographs/regex');
 
-require('unicode-8.0.0/blocks/CJK_Compatibility_Ideographs_Supplement/code-points');
-require('unicode-8.0.0/blocks/CJK_Compatibility_Ideographs_Supplement/symbols');
-require('unicode-8.0.0/blocks/CJK_Compatibility_Ideographs_Supplement/regex');
+require('unicode-8.0.0/Block/CJK_Compatibility_Ideographs_Supplement/code-points');
+require('unicode-8.0.0/Block/CJK_Compatibility_Ideographs_Supplement/symbols');
+require('unicode-8.0.0/Block/CJK_Compatibility_Ideographs_Supplement/regex');
 
-require('unicode-8.0.0/blocks/CJK_Radicals_Supplement/code-points');
-require('unicode-8.0.0/blocks/CJK_Radicals_Supplement/symbols');
-require('unicode-8.0.0/blocks/CJK_Radicals_Supplement/regex');
+require('unicode-8.0.0/Block/CJK_Radicals_Supplement/code-points');
+require('unicode-8.0.0/Block/CJK_Radicals_Supplement/symbols');
+require('unicode-8.0.0/Block/CJK_Radicals_Supplement/regex');
 
-require('unicode-8.0.0/blocks/CJK_Strokes/code-points');
-require('unicode-8.0.0/blocks/CJK_Strokes/symbols');
-require('unicode-8.0.0/blocks/CJK_Strokes/regex');
+require('unicode-8.0.0/Block/CJK_Strokes/code-points');
+require('unicode-8.0.0/Block/CJK_Strokes/symbols');
+require('unicode-8.0.0/Block/CJK_Strokes/regex');
 
-require('unicode-8.0.0/blocks/CJK_Symbols_And_Punctuation/code-points');
-require('unicode-8.0.0/blocks/CJK_Symbols_And_Punctuation/symbols');
-require('unicode-8.0.0/blocks/CJK_Symbols_And_Punctuation/regex');
+require('unicode-8.0.0/Block/CJK_Symbols_And_Punctuation/code-points');
+require('unicode-8.0.0/Block/CJK_Symbols_And_Punctuation/symbols');
+require('unicode-8.0.0/Block/CJK_Symbols_And_Punctuation/regex');
 
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs/code-points');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs/symbols');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs/regex');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs/code-points');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs/symbols');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs/regex');
 
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_A/code-points');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_A/symbols');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_A/regex');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_A/code-points');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_A/symbols');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_A/regex');
 
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_B/code-points');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_B/symbols');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_B/regex');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_B/code-points');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_B/symbols');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_B/regex');
 
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_C/code-points');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_C/symbols');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_C/regex');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_C/code-points');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_C/symbols');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_C/regex');
 
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_D/code-points');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_D/symbols');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_D/regex');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_D/code-points');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_D/symbols');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_D/regex');
 
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_E/code-points');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_E/symbols');
-require('unicode-8.0.0/blocks/CJK_Unified_Ideographs_Extension_E/regex');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_E/code-points');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_E/symbols');
+require('unicode-8.0.0/Block/CJK_Unified_Ideographs_Extension_E/regex');
 
-require('unicode-8.0.0/blocks/Carian/code-points');
-require('unicode-8.0.0/blocks/Carian/symbols');
-require('unicode-8.0.0/blocks/Carian/regex');
+require('unicode-8.0.0/Block/Carian/code-points');
+require('unicode-8.0.0/Block/Carian/symbols');
+require('unicode-8.0.0/Block/Carian/regex');
 
-require('unicode-8.0.0/blocks/Caucasian_Albanian/code-points');
-require('unicode-8.0.0/blocks/Caucasian_Albanian/symbols');
-require('unicode-8.0.0/blocks/Caucasian_Albanian/regex');
+require('unicode-8.0.0/Block/Caucasian_Albanian/code-points');
+require('unicode-8.0.0/Block/Caucasian_Albanian/symbols');
+require('unicode-8.0.0/Block/Caucasian_Albanian/regex');
 
-require('unicode-8.0.0/blocks/Chakma/code-points');
-require('unicode-8.0.0/blocks/Chakma/symbols');
-require('unicode-8.0.0/blocks/Chakma/regex');
+require('unicode-8.0.0/Block/Chakma/code-points');
+require('unicode-8.0.0/Block/Chakma/symbols');
+require('unicode-8.0.0/Block/Chakma/regex');
 
-require('unicode-8.0.0/blocks/Cham/code-points');
-require('unicode-8.0.0/blocks/Cham/symbols');
-require('unicode-8.0.0/blocks/Cham/regex');
+require('unicode-8.0.0/Block/Cham/code-points');
+require('unicode-8.0.0/Block/Cham/symbols');
+require('unicode-8.0.0/Block/Cham/regex');
 
-require('unicode-8.0.0/blocks/Cherokee/code-points');
-require('unicode-8.0.0/blocks/Cherokee/symbols');
-require('unicode-8.0.0/blocks/Cherokee/regex');
+require('unicode-8.0.0/Block/Cherokee/code-points');
+require('unicode-8.0.0/Block/Cherokee/symbols');
+require('unicode-8.0.0/Block/Cherokee/regex');
 
-require('unicode-8.0.0/blocks/Cherokee_Supplement/code-points');
-require('unicode-8.0.0/blocks/Cherokee_Supplement/symbols');
-require('unicode-8.0.0/blocks/Cherokee_Supplement/regex');
+require('unicode-8.0.0/Block/Cherokee_Supplement/code-points');
+require('unicode-8.0.0/Block/Cherokee_Supplement/symbols');
+require('unicode-8.0.0/Block/Cherokee_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks/code-points');
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks/symbols');
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks/regex');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks/code-points');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks/symbols');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks/regex');
 
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_Extended/code-points');
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_Extended/symbols');
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_Extended/regex');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_Extended/code-points');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_Extended/symbols');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_Extended/regex');
 
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_For_Symbols/code-points');
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_For_Symbols/symbols');
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_For_Symbols/regex');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_For_Symbols/code-points');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_For_Symbols/symbols');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_For_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_Supplement/code-points');
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_Supplement/symbols');
-require('unicode-8.0.0/blocks/Combining_Diacritical_Marks_Supplement/regex');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_Supplement/code-points');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_Supplement/symbols');
+require('unicode-8.0.0/Block/Combining_Diacritical_Marks_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Combining_Half_Marks/code-points');
-require('unicode-8.0.0/blocks/Combining_Half_Marks/symbols');
-require('unicode-8.0.0/blocks/Combining_Half_Marks/regex');
+require('unicode-8.0.0/Block/Combining_Half_Marks/code-points');
+require('unicode-8.0.0/Block/Combining_Half_Marks/symbols');
+require('unicode-8.0.0/Block/Combining_Half_Marks/regex');
 
-require('unicode-8.0.0/blocks/Common_Indic_Number_Forms/code-points');
-require('unicode-8.0.0/blocks/Common_Indic_Number_Forms/symbols');
-require('unicode-8.0.0/blocks/Common_Indic_Number_Forms/regex');
+require('unicode-8.0.0/Block/Common_Indic_Number_Forms/code-points');
+require('unicode-8.0.0/Block/Common_Indic_Number_Forms/symbols');
+require('unicode-8.0.0/Block/Common_Indic_Number_Forms/regex');
 
-require('unicode-8.0.0/blocks/Control_Pictures/code-points');
-require('unicode-8.0.0/blocks/Control_Pictures/symbols');
-require('unicode-8.0.0/blocks/Control_Pictures/regex');
+require('unicode-8.0.0/Block/Control_Pictures/code-points');
+require('unicode-8.0.0/Block/Control_Pictures/symbols');
+require('unicode-8.0.0/Block/Control_Pictures/regex');
 
-require('unicode-8.0.0/blocks/Coptic/code-points');
-require('unicode-8.0.0/blocks/Coptic/symbols');
-require('unicode-8.0.0/blocks/Coptic/regex');
+require('unicode-8.0.0/Block/Coptic/code-points');
+require('unicode-8.0.0/Block/Coptic/symbols');
+require('unicode-8.0.0/Block/Coptic/regex');
 
-require('unicode-8.0.0/blocks/Coptic_Epact_Numbers/code-points');
-require('unicode-8.0.0/blocks/Coptic_Epact_Numbers/symbols');
-require('unicode-8.0.0/blocks/Coptic_Epact_Numbers/regex');
+require('unicode-8.0.0/Block/Coptic_Epact_Numbers/code-points');
+require('unicode-8.0.0/Block/Coptic_Epact_Numbers/symbols');
+require('unicode-8.0.0/Block/Coptic_Epact_Numbers/regex');
 
-require('unicode-8.0.0/blocks/Counting_Rod_Numerals/code-points');
-require('unicode-8.0.0/blocks/Counting_Rod_Numerals/symbols');
-require('unicode-8.0.0/blocks/Counting_Rod_Numerals/regex');
+require('unicode-8.0.0/Block/Counting_Rod_Numerals/code-points');
+require('unicode-8.0.0/Block/Counting_Rod_Numerals/symbols');
+require('unicode-8.0.0/Block/Counting_Rod_Numerals/regex');
 
-require('unicode-8.0.0/blocks/Cuneiform/code-points');
-require('unicode-8.0.0/blocks/Cuneiform/symbols');
-require('unicode-8.0.0/blocks/Cuneiform/regex');
+require('unicode-8.0.0/Block/Cuneiform/code-points');
+require('unicode-8.0.0/Block/Cuneiform/symbols');
+require('unicode-8.0.0/Block/Cuneiform/regex');
 
-require('unicode-8.0.0/blocks/Cuneiform_Numbers_And_Punctuation/code-points');
-require('unicode-8.0.0/blocks/Cuneiform_Numbers_And_Punctuation/symbols');
-require('unicode-8.0.0/blocks/Cuneiform_Numbers_And_Punctuation/regex');
+require('unicode-8.0.0/Block/Cuneiform_Numbers_And_Punctuation/code-points');
+require('unicode-8.0.0/Block/Cuneiform_Numbers_And_Punctuation/symbols');
+require('unicode-8.0.0/Block/Cuneiform_Numbers_And_Punctuation/regex');
 
-require('unicode-8.0.0/blocks/Currency_Symbols/code-points');
-require('unicode-8.0.0/blocks/Currency_Symbols/symbols');
-require('unicode-8.0.0/blocks/Currency_Symbols/regex');
+require('unicode-8.0.0/Block/Currency_Symbols/code-points');
+require('unicode-8.0.0/Block/Currency_Symbols/symbols');
+require('unicode-8.0.0/Block/Currency_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Cypriot_Syllabary/code-points');
-require('unicode-8.0.0/blocks/Cypriot_Syllabary/symbols');
-require('unicode-8.0.0/blocks/Cypriot_Syllabary/regex');
+require('unicode-8.0.0/Block/Cypriot_Syllabary/code-points');
+require('unicode-8.0.0/Block/Cypriot_Syllabary/symbols');
+require('unicode-8.0.0/Block/Cypriot_Syllabary/regex');
 
-require('unicode-8.0.0/blocks/Cyrillic/code-points');
-require('unicode-8.0.0/blocks/Cyrillic/symbols');
-require('unicode-8.0.0/blocks/Cyrillic/regex');
+require('unicode-8.0.0/Block/Cyrillic/code-points');
+require('unicode-8.0.0/Block/Cyrillic/symbols');
+require('unicode-8.0.0/Block/Cyrillic/regex');
 
-require('unicode-8.0.0/blocks/Cyrillic_Extended_A/code-points');
-require('unicode-8.0.0/blocks/Cyrillic_Extended_A/symbols');
-require('unicode-8.0.0/blocks/Cyrillic_Extended_A/regex');
+require('unicode-8.0.0/Block/Cyrillic_Extended_A/code-points');
+require('unicode-8.0.0/Block/Cyrillic_Extended_A/symbols');
+require('unicode-8.0.0/Block/Cyrillic_Extended_A/regex');
 
-require('unicode-8.0.0/blocks/Cyrillic_Extended_B/code-points');
-require('unicode-8.0.0/blocks/Cyrillic_Extended_B/symbols');
-require('unicode-8.0.0/blocks/Cyrillic_Extended_B/regex');
+require('unicode-8.0.0/Block/Cyrillic_Extended_B/code-points');
+require('unicode-8.0.0/Block/Cyrillic_Extended_B/symbols');
+require('unicode-8.0.0/Block/Cyrillic_Extended_B/regex');
 
-require('unicode-8.0.0/blocks/Cyrillic_Supplement/code-points');
-require('unicode-8.0.0/blocks/Cyrillic_Supplement/symbols');
-require('unicode-8.0.0/blocks/Cyrillic_Supplement/regex');
+require('unicode-8.0.0/Block/Cyrillic_Supplement/code-points');
+require('unicode-8.0.0/Block/Cyrillic_Supplement/symbols');
+require('unicode-8.0.0/Block/Cyrillic_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Deseret/code-points');
-require('unicode-8.0.0/blocks/Deseret/symbols');
-require('unicode-8.0.0/blocks/Deseret/regex');
+require('unicode-8.0.0/Block/Deseret/code-points');
+require('unicode-8.0.0/Block/Deseret/symbols');
+require('unicode-8.0.0/Block/Deseret/regex');
 
-require('unicode-8.0.0/blocks/Devanagari/code-points');
-require('unicode-8.0.0/blocks/Devanagari/symbols');
-require('unicode-8.0.0/blocks/Devanagari/regex');
+require('unicode-8.0.0/Block/Devanagari/code-points');
+require('unicode-8.0.0/Block/Devanagari/symbols');
+require('unicode-8.0.0/Block/Devanagari/regex');
 
-require('unicode-8.0.0/blocks/Devanagari_Extended/code-points');
-require('unicode-8.0.0/blocks/Devanagari_Extended/symbols');
-require('unicode-8.0.0/blocks/Devanagari_Extended/regex');
+require('unicode-8.0.0/Block/Devanagari_Extended/code-points');
+require('unicode-8.0.0/Block/Devanagari_Extended/symbols');
+require('unicode-8.0.0/Block/Devanagari_Extended/regex');
 
-require('unicode-8.0.0/blocks/Dingbats/code-points');
-require('unicode-8.0.0/blocks/Dingbats/symbols');
-require('unicode-8.0.0/blocks/Dingbats/regex');
+require('unicode-8.0.0/Block/Dingbats/code-points');
+require('unicode-8.0.0/Block/Dingbats/symbols');
+require('unicode-8.0.0/Block/Dingbats/regex');
 
-require('unicode-8.0.0/blocks/Domino_Tiles/code-points');
-require('unicode-8.0.0/blocks/Domino_Tiles/symbols');
-require('unicode-8.0.0/blocks/Domino_Tiles/regex');
+require('unicode-8.0.0/Block/Domino_Tiles/code-points');
+require('unicode-8.0.0/Block/Domino_Tiles/symbols');
+require('unicode-8.0.0/Block/Domino_Tiles/regex');
 
-require('unicode-8.0.0/blocks/Duployan/code-points');
-require('unicode-8.0.0/blocks/Duployan/symbols');
-require('unicode-8.0.0/blocks/Duployan/regex');
+require('unicode-8.0.0/Block/Duployan/code-points');
+require('unicode-8.0.0/Block/Duployan/symbols');
+require('unicode-8.0.0/Block/Duployan/regex');
 
-require('unicode-8.0.0/blocks/Early_Dynastic_Cuneiform/code-points');
-require('unicode-8.0.0/blocks/Early_Dynastic_Cuneiform/symbols');
-require('unicode-8.0.0/blocks/Early_Dynastic_Cuneiform/regex');
+require('unicode-8.0.0/Block/Early_Dynastic_Cuneiform/code-points');
+require('unicode-8.0.0/Block/Early_Dynastic_Cuneiform/symbols');
+require('unicode-8.0.0/Block/Early_Dynastic_Cuneiform/regex');
 
-require('unicode-8.0.0/blocks/Egyptian_Hieroglyphs/code-points');
-require('unicode-8.0.0/blocks/Egyptian_Hieroglyphs/symbols');
-require('unicode-8.0.0/blocks/Egyptian_Hieroglyphs/regex');
+require('unicode-8.0.0/Block/Egyptian_Hieroglyphs/code-points');
+require('unicode-8.0.0/Block/Egyptian_Hieroglyphs/symbols');
+require('unicode-8.0.0/Block/Egyptian_Hieroglyphs/regex');
 
-require('unicode-8.0.0/blocks/Elbasan/code-points');
-require('unicode-8.0.0/blocks/Elbasan/symbols');
-require('unicode-8.0.0/blocks/Elbasan/regex');
+require('unicode-8.0.0/Block/Elbasan/code-points');
+require('unicode-8.0.0/Block/Elbasan/symbols');
+require('unicode-8.0.0/Block/Elbasan/regex');
 
-require('unicode-8.0.0/blocks/Emoticons/code-points');
-require('unicode-8.0.0/blocks/Emoticons/symbols');
-require('unicode-8.0.0/blocks/Emoticons/regex');
+require('unicode-8.0.0/Block/Emoticons/code-points');
+require('unicode-8.0.0/Block/Emoticons/symbols');
+require('unicode-8.0.0/Block/Emoticons/regex');
 
-require('unicode-8.0.0/blocks/Enclosed_Alphanumeric_Supplement/code-points');
-require('unicode-8.0.0/blocks/Enclosed_Alphanumeric_Supplement/symbols');
-require('unicode-8.0.0/blocks/Enclosed_Alphanumeric_Supplement/regex');
+require('unicode-8.0.0/Block/Enclosed_Alphanumeric_Supplement/code-points');
+require('unicode-8.0.0/Block/Enclosed_Alphanumeric_Supplement/symbols');
+require('unicode-8.0.0/Block/Enclosed_Alphanumeric_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Enclosed_Alphanumerics/code-points');
-require('unicode-8.0.0/blocks/Enclosed_Alphanumerics/symbols');
-require('unicode-8.0.0/blocks/Enclosed_Alphanumerics/regex');
+require('unicode-8.0.0/Block/Enclosed_Alphanumerics/code-points');
+require('unicode-8.0.0/Block/Enclosed_Alphanumerics/symbols');
+require('unicode-8.0.0/Block/Enclosed_Alphanumerics/regex');
 
-require('unicode-8.0.0/blocks/Enclosed_CJK_Letters_And_Months/code-points');
-require('unicode-8.0.0/blocks/Enclosed_CJK_Letters_And_Months/symbols');
-require('unicode-8.0.0/blocks/Enclosed_CJK_Letters_And_Months/regex');
+require('unicode-8.0.0/Block/Enclosed_CJK_Letters_And_Months/code-points');
+require('unicode-8.0.0/Block/Enclosed_CJK_Letters_And_Months/symbols');
+require('unicode-8.0.0/Block/Enclosed_CJK_Letters_And_Months/regex');
 
-require('unicode-8.0.0/blocks/Enclosed_Ideographic_Supplement/code-points');
-require('unicode-8.0.0/blocks/Enclosed_Ideographic_Supplement/symbols');
-require('unicode-8.0.0/blocks/Enclosed_Ideographic_Supplement/regex');
+require('unicode-8.0.0/Block/Enclosed_Ideographic_Supplement/code-points');
+require('unicode-8.0.0/Block/Enclosed_Ideographic_Supplement/symbols');
+require('unicode-8.0.0/Block/Enclosed_Ideographic_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Ethiopic/code-points');
-require('unicode-8.0.0/blocks/Ethiopic/symbols');
-require('unicode-8.0.0/blocks/Ethiopic/regex');
+require('unicode-8.0.0/Block/Ethiopic/code-points');
+require('unicode-8.0.0/Block/Ethiopic/symbols');
+require('unicode-8.0.0/Block/Ethiopic/regex');
 
-require('unicode-8.0.0/blocks/Ethiopic_Extended/code-points');
-require('unicode-8.0.0/blocks/Ethiopic_Extended/symbols');
-require('unicode-8.0.0/blocks/Ethiopic_Extended/regex');
+require('unicode-8.0.0/Block/Ethiopic_Extended/code-points');
+require('unicode-8.0.0/Block/Ethiopic_Extended/symbols');
+require('unicode-8.0.0/Block/Ethiopic_Extended/regex');
 
-require('unicode-8.0.0/blocks/Ethiopic_Extended_A/code-points');
-require('unicode-8.0.0/blocks/Ethiopic_Extended_A/symbols');
-require('unicode-8.0.0/blocks/Ethiopic_Extended_A/regex');
+require('unicode-8.0.0/Block/Ethiopic_Extended_A/code-points');
+require('unicode-8.0.0/Block/Ethiopic_Extended_A/symbols');
+require('unicode-8.0.0/Block/Ethiopic_Extended_A/regex');
 
-require('unicode-8.0.0/blocks/Ethiopic_Supplement/code-points');
-require('unicode-8.0.0/blocks/Ethiopic_Supplement/symbols');
-require('unicode-8.0.0/blocks/Ethiopic_Supplement/regex');
+require('unicode-8.0.0/Block/Ethiopic_Supplement/code-points');
+require('unicode-8.0.0/Block/Ethiopic_Supplement/symbols');
+require('unicode-8.0.0/Block/Ethiopic_Supplement/regex');
 
-require('unicode-8.0.0/blocks/General_Punctuation/code-points');
-require('unicode-8.0.0/blocks/General_Punctuation/symbols');
-require('unicode-8.0.0/blocks/General_Punctuation/regex');
+require('unicode-8.0.0/Block/General_Punctuation/code-points');
+require('unicode-8.0.0/Block/General_Punctuation/symbols');
+require('unicode-8.0.0/Block/General_Punctuation/regex');
 
-require('unicode-8.0.0/blocks/Geometric_Shapes/code-points');
-require('unicode-8.0.0/blocks/Geometric_Shapes/symbols');
-require('unicode-8.0.0/blocks/Geometric_Shapes/regex');
+require('unicode-8.0.0/Block/Geometric_Shapes/code-points');
+require('unicode-8.0.0/Block/Geometric_Shapes/symbols');
+require('unicode-8.0.0/Block/Geometric_Shapes/regex');
 
-require('unicode-8.0.0/blocks/Geometric_Shapes_Extended/code-points');
-require('unicode-8.0.0/blocks/Geometric_Shapes_Extended/symbols');
-require('unicode-8.0.0/blocks/Geometric_Shapes_Extended/regex');
+require('unicode-8.0.0/Block/Geometric_Shapes_Extended/code-points');
+require('unicode-8.0.0/Block/Geometric_Shapes_Extended/symbols');
+require('unicode-8.0.0/Block/Geometric_Shapes_Extended/regex');
 
-require('unicode-8.0.0/blocks/Georgian/code-points');
-require('unicode-8.0.0/blocks/Georgian/symbols');
-require('unicode-8.0.0/blocks/Georgian/regex');
+require('unicode-8.0.0/Block/Georgian/code-points');
+require('unicode-8.0.0/Block/Georgian/symbols');
+require('unicode-8.0.0/Block/Georgian/regex');
 
-require('unicode-8.0.0/blocks/Georgian_Supplement/code-points');
-require('unicode-8.0.0/blocks/Georgian_Supplement/symbols');
-require('unicode-8.0.0/blocks/Georgian_Supplement/regex');
+require('unicode-8.0.0/Block/Georgian_Supplement/code-points');
+require('unicode-8.0.0/Block/Georgian_Supplement/symbols');
+require('unicode-8.0.0/Block/Georgian_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Glagolitic/code-points');
-require('unicode-8.0.0/blocks/Glagolitic/symbols');
-require('unicode-8.0.0/blocks/Glagolitic/regex');
+require('unicode-8.0.0/Block/Glagolitic/code-points');
+require('unicode-8.0.0/Block/Glagolitic/symbols');
+require('unicode-8.0.0/Block/Glagolitic/regex');
 
-require('unicode-8.0.0/blocks/Gothic/code-points');
-require('unicode-8.0.0/blocks/Gothic/symbols');
-require('unicode-8.0.0/blocks/Gothic/regex');
+require('unicode-8.0.0/Block/Gothic/code-points');
+require('unicode-8.0.0/Block/Gothic/symbols');
+require('unicode-8.0.0/Block/Gothic/regex');
 
-require('unicode-8.0.0/blocks/Grantha/code-points');
-require('unicode-8.0.0/blocks/Grantha/symbols');
-require('unicode-8.0.0/blocks/Grantha/regex');
+require('unicode-8.0.0/Block/Grantha/code-points');
+require('unicode-8.0.0/Block/Grantha/symbols');
+require('unicode-8.0.0/Block/Grantha/regex');
 
-require('unicode-8.0.0/blocks/Greek_And_Coptic/code-points');
-require('unicode-8.0.0/blocks/Greek_And_Coptic/symbols');
-require('unicode-8.0.0/blocks/Greek_And_Coptic/regex');
+require('unicode-8.0.0/Block/Greek_And_Coptic/code-points');
+require('unicode-8.0.0/Block/Greek_And_Coptic/symbols');
+require('unicode-8.0.0/Block/Greek_And_Coptic/regex');
 
-require('unicode-8.0.0/blocks/Greek_Extended/code-points');
-require('unicode-8.0.0/blocks/Greek_Extended/symbols');
-require('unicode-8.0.0/blocks/Greek_Extended/regex');
+require('unicode-8.0.0/Block/Greek_Extended/code-points');
+require('unicode-8.0.0/Block/Greek_Extended/symbols');
+require('unicode-8.0.0/Block/Greek_Extended/regex');
 
-require('unicode-8.0.0/blocks/Gujarati/code-points');
-require('unicode-8.0.0/blocks/Gujarati/symbols');
-require('unicode-8.0.0/blocks/Gujarati/regex');
+require('unicode-8.0.0/Block/Gujarati/code-points');
+require('unicode-8.0.0/Block/Gujarati/symbols');
+require('unicode-8.0.0/Block/Gujarati/regex');
 
-require('unicode-8.0.0/blocks/Gurmukhi/code-points');
-require('unicode-8.0.0/blocks/Gurmukhi/symbols');
-require('unicode-8.0.0/blocks/Gurmukhi/regex');
+require('unicode-8.0.0/Block/Gurmukhi/code-points');
+require('unicode-8.0.0/Block/Gurmukhi/symbols');
+require('unicode-8.0.0/Block/Gurmukhi/regex');
 
-require('unicode-8.0.0/blocks/Halfwidth_And_Fullwidth_Forms/code-points');
-require('unicode-8.0.0/blocks/Halfwidth_And_Fullwidth_Forms/symbols');
-require('unicode-8.0.0/blocks/Halfwidth_And_Fullwidth_Forms/regex');
+require('unicode-8.0.0/Block/Halfwidth_And_Fullwidth_Forms/code-points');
+require('unicode-8.0.0/Block/Halfwidth_And_Fullwidth_Forms/symbols');
+require('unicode-8.0.0/Block/Halfwidth_And_Fullwidth_Forms/regex');
 
-require('unicode-8.0.0/blocks/Hangul_Compatibility_Jamo/code-points');
-require('unicode-8.0.0/blocks/Hangul_Compatibility_Jamo/symbols');
-require('unicode-8.0.0/blocks/Hangul_Compatibility_Jamo/regex');
+require('unicode-8.0.0/Block/Hangul_Compatibility_Jamo/code-points');
+require('unicode-8.0.0/Block/Hangul_Compatibility_Jamo/symbols');
+require('unicode-8.0.0/Block/Hangul_Compatibility_Jamo/regex');
 
-require('unicode-8.0.0/blocks/Hangul_Jamo/code-points');
-require('unicode-8.0.0/blocks/Hangul_Jamo/symbols');
-require('unicode-8.0.0/blocks/Hangul_Jamo/regex');
+require('unicode-8.0.0/Block/Hangul_Jamo/code-points');
+require('unicode-8.0.0/Block/Hangul_Jamo/symbols');
+require('unicode-8.0.0/Block/Hangul_Jamo/regex');
 
-require('unicode-8.0.0/blocks/Hangul_Jamo_Extended_A/code-points');
-require('unicode-8.0.0/blocks/Hangul_Jamo_Extended_A/symbols');
-require('unicode-8.0.0/blocks/Hangul_Jamo_Extended_A/regex');
+require('unicode-8.0.0/Block/Hangul_Jamo_Extended_A/code-points');
+require('unicode-8.0.0/Block/Hangul_Jamo_Extended_A/symbols');
+require('unicode-8.0.0/Block/Hangul_Jamo_Extended_A/regex');
 
-require('unicode-8.0.0/blocks/Hangul_Jamo_Extended_B/code-points');
-require('unicode-8.0.0/blocks/Hangul_Jamo_Extended_B/symbols');
-require('unicode-8.0.0/blocks/Hangul_Jamo_Extended_B/regex');
+require('unicode-8.0.0/Block/Hangul_Jamo_Extended_B/code-points');
+require('unicode-8.0.0/Block/Hangul_Jamo_Extended_B/symbols');
+require('unicode-8.0.0/Block/Hangul_Jamo_Extended_B/regex');
 
-require('unicode-8.0.0/blocks/Hangul_Syllables/code-points');
-require('unicode-8.0.0/blocks/Hangul_Syllables/symbols');
-require('unicode-8.0.0/blocks/Hangul_Syllables/regex');
+require('unicode-8.0.0/Block/Hangul_Syllables/code-points');
+require('unicode-8.0.0/Block/Hangul_Syllables/symbols');
+require('unicode-8.0.0/Block/Hangul_Syllables/regex');
 
-require('unicode-8.0.0/blocks/Hanunoo/code-points');
-require('unicode-8.0.0/blocks/Hanunoo/symbols');
-require('unicode-8.0.0/blocks/Hanunoo/regex');
+require('unicode-8.0.0/Block/Hanunoo/code-points');
+require('unicode-8.0.0/Block/Hanunoo/symbols');
+require('unicode-8.0.0/Block/Hanunoo/regex');
 
-require('unicode-8.0.0/blocks/Hatran/code-points');
-require('unicode-8.0.0/blocks/Hatran/symbols');
-require('unicode-8.0.0/blocks/Hatran/regex');
+require('unicode-8.0.0/Block/Hatran/code-points');
+require('unicode-8.0.0/Block/Hatran/symbols');
+require('unicode-8.0.0/Block/Hatran/regex');
 
-require('unicode-8.0.0/blocks/Hebrew/code-points');
-require('unicode-8.0.0/blocks/Hebrew/symbols');
-require('unicode-8.0.0/blocks/Hebrew/regex');
+require('unicode-8.0.0/Block/Hebrew/code-points');
+require('unicode-8.0.0/Block/Hebrew/symbols');
+require('unicode-8.0.0/Block/Hebrew/regex');
 
-require('unicode-8.0.0/blocks/High_Private_Use_Surrogates/code-points');
-require('unicode-8.0.0/blocks/High_Private_Use_Surrogates/symbols');
-require('unicode-8.0.0/blocks/High_Private_Use_Surrogates/regex');
+require('unicode-8.0.0/Block/High_Private_Use_Surrogates/code-points');
+require('unicode-8.0.0/Block/High_Private_Use_Surrogates/symbols');
+require('unicode-8.0.0/Block/High_Private_Use_Surrogates/regex');
 
-require('unicode-8.0.0/blocks/High_Surrogates/code-points');
-require('unicode-8.0.0/blocks/High_Surrogates/symbols');
-require('unicode-8.0.0/blocks/High_Surrogates/regex');
+require('unicode-8.0.0/Block/High_Surrogates/code-points');
+require('unicode-8.0.0/Block/High_Surrogates/symbols');
+require('unicode-8.0.0/Block/High_Surrogates/regex');
 
-require('unicode-8.0.0/blocks/Hiragana/code-points');
-require('unicode-8.0.0/blocks/Hiragana/symbols');
-require('unicode-8.0.0/blocks/Hiragana/regex');
+require('unicode-8.0.0/Block/Hiragana/code-points');
+require('unicode-8.0.0/Block/Hiragana/symbols');
+require('unicode-8.0.0/Block/Hiragana/regex');
 
-require('unicode-8.0.0/blocks/IPA_Extensions/code-points');
-require('unicode-8.0.0/blocks/IPA_Extensions/symbols');
-require('unicode-8.0.0/blocks/IPA_Extensions/regex');
+require('unicode-8.0.0/Block/IPA_Extensions/code-points');
+require('unicode-8.0.0/Block/IPA_Extensions/symbols');
+require('unicode-8.0.0/Block/IPA_Extensions/regex');
 
-require('unicode-8.0.0/blocks/Ideographic_Description_Characters/code-points');
-require('unicode-8.0.0/blocks/Ideographic_Description_Characters/symbols');
-require('unicode-8.0.0/blocks/Ideographic_Description_Characters/regex');
+require('unicode-8.0.0/Block/Ideographic_Description_Characters/code-points');
+require('unicode-8.0.0/Block/Ideographic_Description_Characters/symbols');
+require('unicode-8.0.0/Block/Ideographic_Description_Characters/regex');
 
-require('unicode-8.0.0/blocks/Imperial_Aramaic/code-points');
-require('unicode-8.0.0/blocks/Imperial_Aramaic/symbols');
-require('unicode-8.0.0/blocks/Imperial_Aramaic/regex');
+require('unicode-8.0.0/Block/Imperial_Aramaic/code-points');
+require('unicode-8.0.0/Block/Imperial_Aramaic/symbols');
+require('unicode-8.0.0/Block/Imperial_Aramaic/regex');
 
-require('unicode-8.0.0/blocks/Inscriptional_Pahlavi/code-points');
-require('unicode-8.0.0/blocks/Inscriptional_Pahlavi/symbols');
-require('unicode-8.0.0/blocks/Inscriptional_Pahlavi/regex');
+require('unicode-8.0.0/Block/Inscriptional_Pahlavi/code-points');
+require('unicode-8.0.0/Block/Inscriptional_Pahlavi/symbols');
+require('unicode-8.0.0/Block/Inscriptional_Pahlavi/regex');
 
-require('unicode-8.0.0/blocks/Inscriptional_Parthian/code-points');
-require('unicode-8.0.0/blocks/Inscriptional_Parthian/symbols');
-require('unicode-8.0.0/blocks/Inscriptional_Parthian/regex');
+require('unicode-8.0.0/Block/Inscriptional_Parthian/code-points');
+require('unicode-8.0.0/Block/Inscriptional_Parthian/symbols');
+require('unicode-8.0.0/Block/Inscriptional_Parthian/regex');
 
-require('unicode-8.0.0/blocks/Javanese/code-points');
-require('unicode-8.0.0/blocks/Javanese/symbols');
-require('unicode-8.0.0/blocks/Javanese/regex');
+require('unicode-8.0.0/Block/Javanese/code-points');
+require('unicode-8.0.0/Block/Javanese/symbols');
+require('unicode-8.0.0/Block/Javanese/regex');
 
-require('unicode-8.0.0/blocks/Kaithi/code-points');
-require('unicode-8.0.0/blocks/Kaithi/symbols');
-require('unicode-8.0.0/blocks/Kaithi/regex');
+require('unicode-8.0.0/Block/Kaithi/code-points');
+require('unicode-8.0.0/Block/Kaithi/symbols');
+require('unicode-8.0.0/Block/Kaithi/regex');
 
-require('unicode-8.0.0/blocks/Kana_Supplement/code-points');
-require('unicode-8.0.0/blocks/Kana_Supplement/symbols');
-require('unicode-8.0.0/blocks/Kana_Supplement/regex');
+require('unicode-8.0.0/Block/Kana_Supplement/code-points');
+require('unicode-8.0.0/Block/Kana_Supplement/symbols');
+require('unicode-8.0.0/Block/Kana_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Kanbun/code-points');
-require('unicode-8.0.0/blocks/Kanbun/symbols');
-require('unicode-8.0.0/blocks/Kanbun/regex');
+require('unicode-8.0.0/Block/Kanbun/code-points');
+require('unicode-8.0.0/Block/Kanbun/symbols');
+require('unicode-8.0.0/Block/Kanbun/regex');
 
-require('unicode-8.0.0/blocks/Kangxi_Radicals/code-points');
-require('unicode-8.0.0/blocks/Kangxi_Radicals/symbols');
-require('unicode-8.0.0/blocks/Kangxi_Radicals/regex');
+require('unicode-8.0.0/Block/Kangxi_Radicals/code-points');
+require('unicode-8.0.0/Block/Kangxi_Radicals/symbols');
+require('unicode-8.0.0/Block/Kangxi_Radicals/regex');
 
-require('unicode-8.0.0/blocks/Kannada/code-points');
-require('unicode-8.0.0/blocks/Kannada/symbols');
-require('unicode-8.0.0/blocks/Kannada/regex');
+require('unicode-8.0.0/Block/Kannada/code-points');
+require('unicode-8.0.0/Block/Kannada/symbols');
+require('unicode-8.0.0/Block/Kannada/regex');
 
-require('unicode-8.0.0/blocks/Katakana/code-points');
-require('unicode-8.0.0/blocks/Katakana/symbols');
-require('unicode-8.0.0/blocks/Katakana/regex');
+require('unicode-8.0.0/Block/Katakana/code-points');
+require('unicode-8.0.0/Block/Katakana/symbols');
+require('unicode-8.0.0/Block/Katakana/regex');
 
-require('unicode-8.0.0/blocks/Katakana_Phonetic_Extensions/code-points');
-require('unicode-8.0.0/blocks/Katakana_Phonetic_Extensions/symbols');
-require('unicode-8.0.0/blocks/Katakana_Phonetic_Extensions/regex');
+require('unicode-8.0.0/Block/Katakana_Phonetic_Extensions/code-points');
+require('unicode-8.0.0/Block/Katakana_Phonetic_Extensions/symbols');
+require('unicode-8.0.0/Block/Katakana_Phonetic_Extensions/regex');
 
-require('unicode-8.0.0/blocks/Kayah_Li/code-points');
-require('unicode-8.0.0/blocks/Kayah_Li/symbols');
-require('unicode-8.0.0/blocks/Kayah_Li/regex');
+require('unicode-8.0.0/Block/Kayah_Li/code-points');
+require('unicode-8.0.0/Block/Kayah_Li/symbols');
+require('unicode-8.0.0/Block/Kayah_Li/regex');
 
-require('unicode-8.0.0/blocks/Kharoshthi/code-points');
-require('unicode-8.0.0/blocks/Kharoshthi/symbols');
-require('unicode-8.0.0/blocks/Kharoshthi/regex');
+require('unicode-8.0.0/Block/Kharoshthi/code-points');
+require('unicode-8.0.0/Block/Kharoshthi/symbols');
+require('unicode-8.0.0/Block/Kharoshthi/regex');
 
-require('unicode-8.0.0/blocks/Khmer/code-points');
-require('unicode-8.0.0/blocks/Khmer/symbols');
-require('unicode-8.0.0/blocks/Khmer/regex');
+require('unicode-8.0.0/Block/Khmer/code-points');
+require('unicode-8.0.0/Block/Khmer/symbols');
+require('unicode-8.0.0/Block/Khmer/regex');
 
-require('unicode-8.0.0/blocks/Khmer_Symbols/code-points');
-require('unicode-8.0.0/blocks/Khmer_Symbols/symbols');
-require('unicode-8.0.0/blocks/Khmer_Symbols/regex');
+require('unicode-8.0.0/Block/Khmer_Symbols/code-points');
+require('unicode-8.0.0/Block/Khmer_Symbols/symbols');
+require('unicode-8.0.0/Block/Khmer_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Khojki/code-points');
-require('unicode-8.0.0/blocks/Khojki/symbols');
-require('unicode-8.0.0/blocks/Khojki/regex');
+require('unicode-8.0.0/Block/Khojki/code-points');
+require('unicode-8.0.0/Block/Khojki/symbols');
+require('unicode-8.0.0/Block/Khojki/regex');
 
-require('unicode-8.0.0/blocks/Khudawadi/code-points');
-require('unicode-8.0.0/blocks/Khudawadi/symbols');
-require('unicode-8.0.0/blocks/Khudawadi/regex');
+require('unicode-8.0.0/Block/Khudawadi/code-points');
+require('unicode-8.0.0/Block/Khudawadi/symbols');
+require('unicode-8.0.0/Block/Khudawadi/regex');
 
-require('unicode-8.0.0/blocks/Lao/code-points');
-require('unicode-8.0.0/blocks/Lao/symbols');
-require('unicode-8.0.0/blocks/Lao/regex');
+require('unicode-8.0.0/Block/Lao/code-points');
+require('unicode-8.0.0/Block/Lao/symbols');
+require('unicode-8.0.0/Block/Lao/regex');
 
-require('unicode-8.0.0/blocks/Latin_1_Supplement/code-points');
-require('unicode-8.0.0/blocks/Latin_1_Supplement/symbols');
-require('unicode-8.0.0/blocks/Latin_1_Supplement/regex');
+require('unicode-8.0.0/Block/Latin_1_Supplement/code-points');
+require('unicode-8.0.0/Block/Latin_1_Supplement/symbols');
+require('unicode-8.0.0/Block/Latin_1_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Latin_Extended_A/code-points');
-require('unicode-8.0.0/blocks/Latin_Extended_A/symbols');
-require('unicode-8.0.0/blocks/Latin_Extended_A/regex');
+require('unicode-8.0.0/Block/Latin_Extended_A/code-points');
+require('unicode-8.0.0/Block/Latin_Extended_A/symbols');
+require('unicode-8.0.0/Block/Latin_Extended_A/regex');
 
-require('unicode-8.0.0/blocks/Latin_Extended_Additional/code-points');
-require('unicode-8.0.0/blocks/Latin_Extended_Additional/symbols');
-require('unicode-8.0.0/blocks/Latin_Extended_Additional/regex');
+require('unicode-8.0.0/Block/Latin_Extended_Additional/code-points');
+require('unicode-8.0.0/Block/Latin_Extended_Additional/symbols');
+require('unicode-8.0.0/Block/Latin_Extended_Additional/regex');
 
-require('unicode-8.0.0/blocks/Latin_Extended_B/code-points');
-require('unicode-8.0.0/blocks/Latin_Extended_B/symbols');
-require('unicode-8.0.0/blocks/Latin_Extended_B/regex');
+require('unicode-8.0.0/Block/Latin_Extended_B/code-points');
+require('unicode-8.0.0/Block/Latin_Extended_B/symbols');
+require('unicode-8.0.0/Block/Latin_Extended_B/regex');
 
-require('unicode-8.0.0/blocks/Latin_Extended_C/code-points');
-require('unicode-8.0.0/blocks/Latin_Extended_C/symbols');
-require('unicode-8.0.0/blocks/Latin_Extended_C/regex');
+require('unicode-8.0.0/Block/Latin_Extended_C/code-points');
+require('unicode-8.0.0/Block/Latin_Extended_C/symbols');
+require('unicode-8.0.0/Block/Latin_Extended_C/regex');
 
-require('unicode-8.0.0/blocks/Latin_Extended_D/code-points');
-require('unicode-8.0.0/blocks/Latin_Extended_D/symbols');
-require('unicode-8.0.0/blocks/Latin_Extended_D/regex');
+require('unicode-8.0.0/Block/Latin_Extended_D/code-points');
+require('unicode-8.0.0/Block/Latin_Extended_D/symbols');
+require('unicode-8.0.0/Block/Latin_Extended_D/regex');
 
-require('unicode-8.0.0/blocks/Latin_Extended_E/code-points');
-require('unicode-8.0.0/blocks/Latin_Extended_E/symbols');
-require('unicode-8.0.0/blocks/Latin_Extended_E/regex');
+require('unicode-8.0.0/Block/Latin_Extended_E/code-points');
+require('unicode-8.0.0/Block/Latin_Extended_E/symbols');
+require('unicode-8.0.0/Block/Latin_Extended_E/regex');
 
-require('unicode-8.0.0/blocks/Lepcha/code-points');
-require('unicode-8.0.0/blocks/Lepcha/symbols');
-require('unicode-8.0.0/blocks/Lepcha/regex');
+require('unicode-8.0.0/Block/Lepcha/code-points');
+require('unicode-8.0.0/Block/Lepcha/symbols');
+require('unicode-8.0.0/Block/Lepcha/regex');
 
-require('unicode-8.0.0/blocks/Letterlike_Symbols/code-points');
-require('unicode-8.0.0/blocks/Letterlike_Symbols/symbols');
-require('unicode-8.0.0/blocks/Letterlike_Symbols/regex');
+require('unicode-8.0.0/Block/Letterlike_Symbols/code-points');
+require('unicode-8.0.0/Block/Letterlike_Symbols/symbols');
+require('unicode-8.0.0/Block/Letterlike_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Limbu/code-points');
-require('unicode-8.0.0/blocks/Limbu/symbols');
-require('unicode-8.0.0/blocks/Limbu/regex');
+require('unicode-8.0.0/Block/Limbu/code-points');
+require('unicode-8.0.0/Block/Limbu/symbols');
+require('unicode-8.0.0/Block/Limbu/regex');
 
-require('unicode-8.0.0/blocks/Linear_A/code-points');
-require('unicode-8.0.0/blocks/Linear_A/symbols');
-require('unicode-8.0.0/blocks/Linear_A/regex');
+require('unicode-8.0.0/Block/Linear_A/code-points');
+require('unicode-8.0.0/Block/Linear_A/symbols');
+require('unicode-8.0.0/Block/Linear_A/regex');
 
-require('unicode-8.0.0/blocks/Linear_B_Ideograms/code-points');
-require('unicode-8.0.0/blocks/Linear_B_Ideograms/symbols');
-require('unicode-8.0.0/blocks/Linear_B_Ideograms/regex');
+require('unicode-8.0.0/Block/Linear_B_Ideograms/code-points');
+require('unicode-8.0.0/Block/Linear_B_Ideograms/symbols');
+require('unicode-8.0.0/Block/Linear_B_Ideograms/regex');
 
-require('unicode-8.0.0/blocks/Linear_B_Syllabary/code-points');
-require('unicode-8.0.0/blocks/Linear_B_Syllabary/symbols');
-require('unicode-8.0.0/blocks/Linear_B_Syllabary/regex');
+require('unicode-8.0.0/Block/Linear_B_Syllabary/code-points');
+require('unicode-8.0.0/Block/Linear_B_Syllabary/symbols');
+require('unicode-8.0.0/Block/Linear_B_Syllabary/regex');
 
-require('unicode-8.0.0/blocks/Lisu/code-points');
-require('unicode-8.0.0/blocks/Lisu/symbols');
-require('unicode-8.0.0/blocks/Lisu/regex');
+require('unicode-8.0.0/Block/Lisu/code-points');
+require('unicode-8.0.0/Block/Lisu/symbols');
+require('unicode-8.0.0/Block/Lisu/regex');
 
-require('unicode-8.0.0/blocks/Low_Surrogates/code-points');
-require('unicode-8.0.0/blocks/Low_Surrogates/symbols');
-require('unicode-8.0.0/blocks/Low_Surrogates/regex');
+require('unicode-8.0.0/Block/Low_Surrogates/code-points');
+require('unicode-8.0.0/Block/Low_Surrogates/symbols');
+require('unicode-8.0.0/Block/Low_Surrogates/regex');
 
-require('unicode-8.0.0/blocks/Lycian/code-points');
-require('unicode-8.0.0/blocks/Lycian/symbols');
-require('unicode-8.0.0/blocks/Lycian/regex');
+require('unicode-8.0.0/Block/Lycian/code-points');
+require('unicode-8.0.0/Block/Lycian/symbols');
+require('unicode-8.0.0/Block/Lycian/regex');
 
-require('unicode-8.0.0/blocks/Lydian/code-points');
-require('unicode-8.0.0/blocks/Lydian/symbols');
-require('unicode-8.0.0/blocks/Lydian/regex');
+require('unicode-8.0.0/Block/Lydian/code-points');
+require('unicode-8.0.0/Block/Lydian/symbols');
+require('unicode-8.0.0/Block/Lydian/regex');
 
-require('unicode-8.0.0/blocks/Mahajani/code-points');
-require('unicode-8.0.0/blocks/Mahajani/symbols');
-require('unicode-8.0.0/blocks/Mahajani/regex');
+require('unicode-8.0.0/Block/Mahajani/code-points');
+require('unicode-8.0.0/Block/Mahajani/symbols');
+require('unicode-8.0.0/Block/Mahajani/regex');
 
-require('unicode-8.0.0/blocks/Mahjong_Tiles/code-points');
-require('unicode-8.0.0/blocks/Mahjong_Tiles/symbols');
-require('unicode-8.0.0/blocks/Mahjong_Tiles/regex');
+require('unicode-8.0.0/Block/Mahjong_Tiles/code-points');
+require('unicode-8.0.0/Block/Mahjong_Tiles/symbols');
+require('unicode-8.0.0/Block/Mahjong_Tiles/regex');
 
-require('unicode-8.0.0/blocks/Malayalam/code-points');
-require('unicode-8.0.0/blocks/Malayalam/symbols');
-require('unicode-8.0.0/blocks/Malayalam/regex');
+require('unicode-8.0.0/Block/Malayalam/code-points');
+require('unicode-8.0.0/Block/Malayalam/symbols');
+require('unicode-8.0.0/Block/Malayalam/regex');
 
-require('unicode-8.0.0/blocks/Mandaic/code-points');
-require('unicode-8.0.0/blocks/Mandaic/symbols');
-require('unicode-8.0.0/blocks/Mandaic/regex');
+require('unicode-8.0.0/Block/Mandaic/code-points');
+require('unicode-8.0.0/Block/Mandaic/symbols');
+require('unicode-8.0.0/Block/Mandaic/regex');
 
-require('unicode-8.0.0/blocks/Manichaean/code-points');
-require('unicode-8.0.0/blocks/Manichaean/symbols');
-require('unicode-8.0.0/blocks/Manichaean/regex');
+require('unicode-8.0.0/Block/Manichaean/code-points');
+require('unicode-8.0.0/Block/Manichaean/symbols');
+require('unicode-8.0.0/Block/Manichaean/regex');
 
-require('unicode-8.0.0/blocks/Mathematical_Alphanumeric_Symbols/code-points');
-require('unicode-8.0.0/blocks/Mathematical_Alphanumeric_Symbols/symbols');
-require('unicode-8.0.0/blocks/Mathematical_Alphanumeric_Symbols/regex');
+require('unicode-8.0.0/Block/Mathematical_Alphanumeric_Symbols/code-points');
+require('unicode-8.0.0/Block/Mathematical_Alphanumeric_Symbols/symbols');
+require('unicode-8.0.0/Block/Mathematical_Alphanumeric_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Mathematical_Operators/code-points');
-require('unicode-8.0.0/blocks/Mathematical_Operators/symbols');
-require('unicode-8.0.0/blocks/Mathematical_Operators/regex');
+require('unicode-8.0.0/Block/Mathematical_Operators/code-points');
+require('unicode-8.0.0/Block/Mathematical_Operators/symbols');
+require('unicode-8.0.0/Block/Mathematical_Operators/regex');
 
-require('unicode-8.0.0/blocks/Meetei_Mayek/code-points');
-require('unicode-8.0.0/blocks/Meetei_Mayek/symbols');
-require('unicode-8.0.0/blocks/Meetei_Mayek/regex');
+require('unicode-8.0.0/Block/Meetei_Mayek/code-points');
+require('unicode-8.0.0/Block/Meetei_Mayek/symbols');
+require('unicode-8.0.0/Block/Meetei_Mayek/regex');
 
-require('unicode-8.0.0/blocks/Meetei_Mayek_Extensions/code-points');
-require('unicode-8.0.0/blocks/Meetei_Mayek_Extensions/symbols');
-require('unicode-8.0.0/blocks/Meetei_Mayek_Extensions/regex');
+require('unicode-8.0.0/Block/Meetei_Mayek_Extensions/code-points');
+require('unicode-8.0.0/Block/Meetei_Mayek_Extensions/symbols');
+require('unicode-8.0.0/Block/Meetei_Mayek_Extensions/regex');
 
-require('unicode-8.0.0/blocks/Mende_Kikakui/code-points');
-require('unicode-8.0.0/blocks/Mende_Kikakui/symbols');
-require('unicode-8.0.0/blocks/Mende_Kikakui/regex');
+require('unicode-8.0.0/Block/Mende_Kikakui/code-points');
+require('unicode-8.0.0/Block/Mende_Kikakui/symbols');
+require('unicode-8.0.0/Block/Mende_Kikakui/regex');
 
-require('unicode-8.0.0/blocks/Meroitic_Cursive/code-points');
-require('unicode-8.0.0/blocks/Meroitic_Cursive/symbols');
-require('unicode-8.0.0/blocks/Meroitic_Cursive/regex');
+require('unicode-8.0.0/Block/Meroitic_Cursive/code-points');
+require('unicode-8.0.0/Block/Meroitic_Cursive/symbols');
+require('unicode-8.0.0/Block/Meroitic_Cursive/regex');
 
-require('unicode-8.0.0/blocks/Meroitic_Hieroglyphs/code-points');
-require('unicode-8.0.0/blocks/Meroitic_Hieroglyphs/symbols');
-require('unicode-8.0.0/blocks/Meroitic_Hieroglyphs/regex');
+require('unicode-8.0.0/Block/Meroitic_Hieroglyphs/code-points');
+require('unicode-8.0.0/Block/Meroitic_Hieroglyphs/symbols');
+require('unicode-8.0.0/Block/Meroitic_Hieroglyphs/regex');
 
-require('unicode-8.0.0/blocks/Miao/code-points');
-require('unicode-8.0.0/blocks/Miao/symbols');
-require('unicode-8.0.0/blocks/Miao/regex');
+require('unicode-8.0.0/Block/Miao/code-points');
+require('unicode-8.0.0/Block/Miao/symbols');
+require('unicode-8.0.0/Block/Miao/regex');
 
-require('unicode-8.0.0/blocks/Miscellaneous_Mathematical_Symbols_A/code-points');
-require('unicode-8.0.0/blocks/Miscellaneous_Mathematical_Symbols_A/symbols');
-require('unicode-8.0.0/blocks/Miscellaneous_Mathematical_Symbols_A/regex');
+require('unicode-8.0.0/Block/Miscellaneous_Mathematical_Symbols_A/code-points');
+require('unicode-8.0.0/Block/Miscellaneous_Mathematical_Symbols_A/symbols');
+require('unicode-8.0.0/Block/Miscellaneous_Mathematical_Symbols_A/regex');
 
-require('unicode-8.0.0/blocks/Miscellaneous_Mathematical_Symbols_B/code-points');
-require('unicode-8.0.0/blocks/Miscellaneous_Mathematical_Symbols_B/symbols');
-require('unicode-8.0.0/blocks/Miscellaneous_Mathematical_Symbols_B/regex');
+require('unicode-8.0.0/Block/Miscellaneous_Mathematical_Symbols_B/code-points');
+require('unicode-8.0.0/Block/Miscellaneous_Mathematical_Symbols_B/symbols');
+require('unicode-8.0.0/Block/Miscellaneous_Mathematical_Symbols_B/regex');
 
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols/code-points');
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols/symbols');
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols/regex');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols/code-points');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols/symbols');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols_And_Arrows/code-points');
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols_And_Arrows/symbols');
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols_And_Arrows/regex');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols_And_Arrows/code-points');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols_And_Arrows/symbols');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols_And_Arrows/regex');
 
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols_And_Pictographs/code-points');
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols_And_Pictographs/symbols');
-require('unicode-8.0.0/blocks/Miscellaneous_Symbols_And_Pictographs/regex');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols_And_Pictographs/code-points');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols_And_Pictographs/symbols');
+require('unicode-8.0.0/Block/Miscellaneous_Symbols_And_Pictographs/regex');
 
-require('unicode-8.0.0/blocks/Miscellaneous_Technical/code-points');
-require('unicode-8.0.0/blocks/Miscellaneous_Technical/symbols');
-require('unicode-8.0.0/blocks/Miscellaneous_Technical/regex');
+require('unicode-8.0.0/Block/Miscellaneous_Technical/code-points');
+require('unicode-8.0.0/Block/Miscellaneous_Technical/symbols');
+require('unicode-8.0.0/Block/Miscellaneous_Technical/regex');
 
-require('unicode-8.0.0/blocks/Modi/code-points');
-require('unicode-8.0.0/blocks/Modi/symbols');
-require('unicode-8.0.0/blocks/Modi/regex');
+require('unicode-8.0.0/Block/Modi/code-points');
+require('unicode-8.0.0/Block/Modi/symbols');
+require('unicode-8.0.0/Block/Modi/regex');
 
-require('unicode-8.0.0/blocks/Modifier_Tone_Letters/code-points');
-require('unicode-8.0.0/blocks/Modifier_Tone_Letters/symbols');
-require('unicode-8.0.0/blocks/Modifier_Tone_Letters/regex');
+require('unicode-8.0.0/Block/Modifier_Tone_Letters/code-points');
+require('unicode-8.0.0/Block/Modifier_Tone_Letters/symbols');
+require('unicode-8.0.0/Block/Modifier_Tone_Letters/regex');
 
-require('unicode-8.0.0/blocks/Mongolian/code-points');
-require('unicode-8.0.0/blocks/Mongolian/symbols');
-require('unicode-8.0.0/blocks/Mongolian/regex');
+require('unicode-8.0.0/Block/Mongolian/code-points');
+require('unicode-8.0.0/Block/Mongolian/symbols');
+require('unicode-8.0.0/Block/Mongolian/regex');
 
-require('unicode-8.0.0/blocks/Mro/code-points');
-require('unicode-8.0.0/blocks/Mro/symbols');
-require('unicode-8.0.0/blocks/Mro/regex');
+require('unicode-8.0.0/Block/Mro/code-points');
+require('unicode-8.0.0/Block/Mro/symbols');
+require('unicode-8.0.0/Block/Mro/regex');
 
-require('unicode-8.0.0/blocks/Multani/code-points');
-require('unicode-8.0.0/blocks/Multani/symbols');
-require('unicode-8.0.0/blocks/Multani/regex');
+require('unicode-8.0.0/Block/Multani/code-points');
+require('unicode-8.0.0/Block/Multani/symbols');
+require('unicode-8.0.0/Block/Multani/regex');
 
-require('unicode-8.0.0/blocks/Musical_Symbols/code-points');
-require('unicode-8.0.0/blocks/Musical_Symbols/symbols');
-require('unicode-8.0.0/blocks/Musical_Symbols/regex');
+require('unicode-8.0.0/Block/Musical_Symbols/code-points');
+require('unicode-8.0.0/Block/Musical_Symbols/symbols');
+require('unicode-8.0.0/Block/Musical_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Myanmar/code-points');
-require('unicode-8.0.0/blocks/Myanmar/symbols');
-require('unicode-8.0.0/blocks/Myanmar/regex');
+require('unicode-8.0.0/Block/Myanmar/code-points');
+require('unicode-8.0.0/Block/Myanmar/symbols');
+require('unicode-8.0.0/Block/Myanmar/regex');
 
-require('unicode-8.0.0/blocks/Myanmar_Extended_A/code-points');
-require('unicode-8.0.0/blocks/Myanmar_Extended_A/symbols');
-require('unicode-8.0.0/blocks/Myanmar_Extended_A/regex');
+require('unicode-8.0.0/Block/Myanmar_Extended_A/code-points');
+require('unicode-8.0.0/Block/Myanmar_Extended_A/symbols');
+require('unicode-8.0.0/Block/Myanmar_Extended_A/regex');
 
-require('unicode-8.0.0/blocks/Myanmar_Extended_B/code-points');
-require('unicode-8.0.0/blocks/Myanmar_Extended_B/symbols');
-require('unicode-8.0.0/blocks/Myanmar_Extended_B/regex');
+require('unicode-8.0.0/Block/Myanmar_Extended_B/code-points');
+require('unicode-8.0.0/Block/Myanmar_Extended_B/symbols');
+require('unicode-8.0.0/Block/Myanmar_Extended_B/regex');
 
-require('unicode-8.0.0/blocks/NKo/code-points');
-require('unicode-8.0.0/blocks/NKo/symbols');
-require('unicode-8.0.0/blocks/NKo/regex');
+require('unicode-8.0.0/Block/NKo/code-points');
+require('unicode-8.0.0/Block/NKo/symbols');
+require('unicode-8.0.0/Block/NKo/regex');
 
-require('unicode-8.0.0/blocks/Nabataean/code-points');
-require('unicode-8.0.0/blocks/Nabataean/symbols');
-require('unicode-8.0.0/blocks/Nabataean/regex');
+require('unicode-8.0.0/Block/Nabataean/code-points');
+require('unicode-8.0.0/Block/Nabataean/symbols');
+require('unicode-8.0.0/Block/Nabataean/regex');
 
-require('unicode-8.0.0/blocks/New_Tai_Lue/code-points');
-require('unicode-8.0.0/blocks/New_Tai_Lue/symbols');
-require('unicode-8.0.0/blocks/New_Tai_Lue/regex');
+require('unicode-8.0.0/Block/New_Tai_Lue/code-points');
+require('unicode-8.0.0/Block/New_Tai_Lue/symbols');
+require('unicode-8.0.0/Block/New_Tai_Lue/regex');
 
-require('unicode-8.0.0/blocks/Number_Forms/code-points');
-require('unicode-8.0.0/blocks/Number_Forms/symbols');
-require('unicode-8.0.0/blocks/Number_Forms/regex');
+require('unicode-8.0.0/Block/Number_Forms/code-points');
+require('unicode-8.0.0/Block/Number_Forms/symbols');
+require('unicode-8.0.0/Block/Number_Forms/regex');
 
-require('unicode-8.0.0/blocks/Ogham/code-points');
-require('unicode-8.0.0/blocks/Ogham/symbols');
-require('unicode-8.0.0/blocks/Ogham/regex');
+require('unicode-8.0.0/Block/Ogham/code-points');
+require('unicode-8.0.0/Block/Ogham/symbols');
+require('unicode-8.0.0/Block/Ogham/regex');
 
-require('unicode-8.0.0/blocks/Ol_Chiki/code-points');
-require('unicode-8.0.0/blocks/Ol_Chiki/symbols');
-require('unicode-8.0.0/blocks/Ol_Chiki/regex');
+require('unicode-8.0.0/Block/Ol_Chiki/code-points');
+require('unicode-8.0.0/Block/Ol_Chiki/symbols');
+require('unicode-8.0.0/Block/Ol_Chiki/regex');
 
-require('unicode-8.0.0/blocks/Old_Hungarian/code-points');
-require('unicode-8.0.0/blocks/Old_Hungarian/symbols');
-require('unicode-8.0.0/blocks/Old_Hungarian/regex');
+require('unicode-8.0.0/Block/Old_Hungarian/code-points');
+require('unicode-8.0.0/Block/Old_Hungarian/symbols');
+require('unicode-8.0.0/Block/Old_Hungarian/regex');
 
-require('unicode-8.0.0/blocks/Old_Italic/code-points');
-require('unicode-8.0.0/blocks/Old_Italic/symbols');
-require('unicode-8.0.0/blocks/Old_Italic/regex');
+require('unicode-8.0.0/Block/Old_Italic/code-points');
+require('unicode-8.0.0/Block/Old_Italic/symbols');
+require('unicode-8.0.0/Block/Old_Italic/regex');
 
-require('unicode-8.0.0/blocks/Old_North_Arabian/code-points');
-require('unicode-8.0.0/blocks/Old_North_Arabian/symbols');
-require('unicode-8.0.0/blocks/Old_North_Arabian/regex');
+require('unicode-8.0.0/Block/Old_North_Arabian/code-points');
+require('unicode-8.0.0/Block/Old_North_Arabian/symbols');
+require('unicode-8.0.0/Block/Old_North_Arabian/regex');
 
-require('unicode-8.0.0/blocks/Old_Permic/code-points');
-require('unicode-8.0.0/blocks/Old_Permic/symbols');
-require('unicode-8.0.0/blocks/Old_Permic/regex');
+require('unicode-8.0.0/Block/Old_Permic/code-points');
+require('unicode-8.0.0/Block/Old_Permic/symbols');
+require('unicode-8.0.0/Block/Old_Permic/regex');
 
-require('unicode-8.0.0/blocks/Old_Persian/code-points');
-require('unicode-8.0.0/blocks/Old_Persian/symbols');
-require('unicode-8.0.0/blocks/Old_Persian/regex');
+require('unicode-8.0.0/Block/Old_Persian/code-points');
+require('unicode-8.0.0/Block/Old_Persian/symbols');
+require('unicode-8.0.0/Block/Old_Persian/regex');
 
-require('unicode-8.0.0/blocks/Old_South_Arabian/code-points');
-require('unicode-8.0.0/blocks/Old_South_Arabian/symbols');
-require('unicode-8.0.0/blocks/Old_South_Arabian/regex');
+require('unicode-8.0.0/Block/Old_South_Arabian/code-points');
+require('unicode-8.0.0/Block/Old_South_Arabian/symbols');
+require('unicode-8.0.0/Block/Old_South_Arabian/regex');
 
-require('unicode-8.0.0/blocks/Old_Turkic/code-points');
-require('unicode-8.0.0/blocks/Old_Turkic/symbols');
-require('unicode-8.0.0/blocks/Old_Turkic/regex');
+require('unicode-8.0.0/Block/Old_Turkic/code-points');
+require('unicode-8.0.0/Block/Old_Turkic/symbols');
+require('unicode-8.0.0/Block/Old_Turkic/regex');
 
-require('unicode-8.0.0/blocks/Optical_Character_Recognition/code-points');
-require('unicode-8.0.0/blocks/Optical_Character_Recognition/symbols');
-require('unicode-8.0.0/blocks/Optical_Character_Recognition/regex');
+require('unicode-8.0.0/Block/Optical_Character_Recognition/code-points');
+require('unicode-8.0.0/Block/Optical_Character_Recognition/symbols');
+require('unicode-8.0.0/Block/Optical_Character_Recognition/regex');
 
-require('unicode-8.0.0/blocks/Oriya/code-points');
-require('unicode-8.0.0/blocks/Oriya/symbols');
-require('unicode-8.0.0/blocks/Oriya/regex');
+require('unicode-8.0.0/Block/Oriya/code-points');
+require('unicode-8.0.0/Block/Oriya/symbols');
+require('unicode-8.0.0/Block/Oriya/regex');
 
-require('unicode-8.0.0/blocks/Ornamental_Dingbats/code-points');
-require('unicode-8.0.0/blocks/Ornamental_Dingbats/symbols');
-require('unicode-8.0.0/blocks/Ornamental_Dingbats/regex');
+require('unicode-8.0.0/Block/Ornamental_Dingbats/code-points');
+require('unicode-8.0.0/Block/Ornamental_Dingbats/symbols');
+require('unicode-8.0.0/Block/Ornamental_Dingbats/regex');
 
-require('unicode-8.0.0/blocks/Osmanya/code-points');
-require('unicode-8.0.0/blocks/Osmanya/symbols');
-require('unicode-8.0.0/blocks/Osmanya/regex');
+require('unicode-8.0.0/Block/Osmanya/code-points');
+require('unicode-8.0.0/Block/Osmanya/symbols');
+require('unicode-8.0.0/Block/Osmanya/regex');
 
-require('unicode-8.0.0/blocks/Pahawh_Hmong/code-points');
-require('unicode-8.0.0/blocks/Pahawh_Hmong/symbols');
-require('unicode-8.0.0/blocks/Pahawh_Hmong/regex');
+require('unicode-8.0.0/Block/Pahawh_Hmong/code-points');
+require('unicode-8.0.0/Block/Pahawh_Hmong/symbols');
+require('unicode-8.0.0/Block/Pahawh_Hmong/regex');
 
-require('unicode-8.0.0/blocks/Palmyrene/code-points');
-require('unicode-8.0.0/blocks/Palmyrene/symbols');
-require('unicode-8.0.0/blocks/Palmyrene/regex');
+require('unicode-8.0.0/Block/Palmyrene/code-points');
+require('unicode-8.0.0/Block/Palmyrene/symbols');
+require('unicode-8.0.0/Block/Palmyrene/regex');
 
-require('unicode-8.0.0/blocks/Pau_Cin_Hau/code-points');
-require('unicode-8.0.0/blocks/Pau_Cin_Hau/symbols');
-require('unicode-8.0.0/blocks/Pau_Cin_Hau/regex');
+require('unicode-8.0.0/Block/Pau_Cin_Hau/code-points');
+require('unicode-8.0.0/Block/Pau_Cin_Hau/symbols');
+require('unicode-8.0.0/Block/Pau_Cin_Hau/regex');
 
-require('unicode-8.0.0/blocks/Phags_Pa/code-points');
-require('unicode-8.0.0/blocks/Phags_Pa/symbols');
-require('unicode-8.0.0/blocks/Phags_Pa/regex');
+require('unicode-8.0.0/Block/Phags_Pa/code-points');
+require('unicode-8.0.0/Block/Phags_Pa/symbols');
+require('unicode-8.0.0/Block/Phags_Pa/regex');
 
-require('unicode-8.0.0/blocks/Phaistos_Disc/code-points');
-require('unicode-8.0.0/blocks/Phaistos_Disc/symbols');
-require('unicode-8.0.0/blocks/Phaistos_Disc/regex');
+require('unicode-8.0.0/Block/Phaistos_Disc/code-points');
+require('unicode-8.0.0/Block/Phaistos_Disc/symbols');
+require('unicode-8.0.0/Block/Phaistos_Disc/regex');
 
-require('unicode-8.0.0/blocks/Phoenician/code-points');
-require('unicode-8.0.0/blocks/Phoenician/symbols');
-require('unicode-8.0.0/blocks/Phoenician/regex');
+require('unicode-8.0.0/Block/Phoenician/code-points');
+require('unicode-8.0.0/Block/Phoenician/symbols');
+require('unicode-8.0.0/Block/Phoenician/regex');
 
-require('unicode-8.0.0/blocks/Phonetic_Extensions/code-points');
-require('unicode-8.0.0/blocks/Phonetic_Extensions/symbols');
-require('unicode-8.0.0/blocks/Phonetic_Extensions/regex');
+require('unicode-8.0.0/Block/Phonetic_Extensions/code-points');
+require('unicode-8.0.0/Block/Phonetic_Extensions/symbols');
+require('unicode-8.0.0/Block/Phonetic_Extensions/regex');
 
-require('unicode-8.0.0/blocks/Phonetic_Extensions_Supplement/code-points');
-require('unicode-8.0.0/blocks/Phonetic_Extensions_Supplement/symbols');
-require('unicode-8.0.0/blocks/Phonetic_Extensions_Supplement/regex');
+require('unicode-8.0.0/Block/Phonetic_Extensions_Supplement/code-points');
+require('unicode-8.0.0/Block/Phonetic_Extensions_Supplement/symbols');
+require('unicode-8.0.0/Block/Phonetic_Extensions_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Playing_Cards/code-points');
-require('unicode-8.0.0/blocks/Playing_Cards/symbols');
-require('unicode-8.0.0/blocks/Playing_Cards/regex');
+require('unicode-8.0.0/Block/Playing_Cards/code-points');
+require('unicode-8.0.0/Block/Playing_Cards/symbols');
+require('unicode-8.0.0/Block/Playing_Cards/regex');
 
-require('unicode-8.0.0/blocks/Private_Use_Area/code-points');
-require('unicode-8.0.0/blocks/Private_Use_Area/symbols');
-require('unicode-8.0.0/blocks/Private_Use_Area/regex');
+require('unicode-8.0.0/Block/Private_Use_Area/code-points');
+require('unicode-8.0.0/Block/Private_Use_Area/symbols');
+require('unicode-8.0.0/Block/Private_Use_Area/regex');
 
-require('unicode-8.0.0/blocks/Psalter_Pahlavi/code-points');
-require('unicode-8.0.0/blocks/Psalter_Pahlavi/symbols');
-require('unicode-8.0.0/blocks/Psalter_Pahlavi/regex');
+require('unicode-8.0.0/Block/Psalter_Pahlavi/code-points');
+require('unicode-8.0.0/Block/Psalter_Pahlavi/symbols');
+require('unicode-8.0.0/Block/Psalter_Pahlavi/regex');
 
-require('unicode-8.0.0/blocks/Rejang/code-points');
-require('unicode-8.0.0/blocks/Rejang/symbols');
-require('unicode-8.0.0/blocks/Rejang/regex');
+require('unicode-8.0.0/Block/Rejang/code-points');
+require('unicode-8.0.0/Block/Rejang/symbols');
+require('unicode-8.0.0/Block/Rejang/regex');
 
-require('unicode-8.0.0/blocks/Rumi_Numeral_Symbols/code-points');
-require('unicode-8.0.0/blocks/Rumi_Numeral_Symbols/symbols');
-require('unicode-8.0.0/blocks/Rumi_Numeral_Symbols/regex');
+require('unicode-8.0.0/Block/Rumi_Numeral_Symbols/code-points');
+require('unicode-8.0.0/Block/Rumi_Numeral_Symbols/symbols');
+require('unicode-8.0.0/Block/Rumi_Numeral_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Runic/code-points');
-require('unicode-8.0.0/blocks/Runic/symbols');
-require('unicode-8.0.0/blocks/Runic/regex');
+require('unicode-8.0.0/Block/Runic/code-points');
+require('unicode-8.0.0/Block/Runic/symbols');
+require('unicode-8.0.0/Block/Runic/regex');
 
-require('unicode-8.0.0/blocks/Samaritan/code-points');
-require('unicode-8.0.0/blocks/Samaritan/symbols');
-require('unicode-8.0.0/blocks/Samaritan/regex');
+require('unicode-8.0.0/Block/Samaritan/code-points');
+require('unicode-8.0.0/Block/Samaritan/symbols');
+require('unicode-8.0.0/Block/Samaritan/regex');
 
-require('unicode-8.0.0/blocks/Saurashtra/code-points');
-require('unicode-8.0.0/blocks/Saurashtra/symbols');
-require('unicode-8.0.0/blocks/Saurashtra/regex');
+require('unicode-8.0.0/Block/Saurashtra/code-points');
+require('unicode-8.0.0/Block/Saurashtra/symbols');
+require('unicode-8.0.0/Block/Saurashtra/regex');
 
-require('unicode-8.0.0/blocks/Sharada/code-points');
-require('unicode-8.0.0/blocks/Sharada/symbols');
-require('unicode-8.0.0/blocks/Sharada/regex');
+require('unicode-8.0.0/Block/Sharada/code-points');
+require('unicode-8.0.0/Block/Sharada/symbols');
+require('unicode-8.0.0/Block/Sharada/regex');
 
-require('unicode-8.0.0/blocks/Shavian/code-points');
-require('unicode-8.0.0/blocks/Shavian/symbols');
-require('unicode-8.0.0/blocks/Shavian/regex');
+require('unicode-8.0.0/Block/Shavian/code-points');
+require('unicode-8.0.0/Block/Shavian/symbols');
+require('unicode-8.0.0/Block/Shavian/regex');
 
-require('unicode-8.0.0/blocks/Shorthand_Format_Controls/code-points');
-require('unicode-8.0.0/blocks/Shorthand_Format_Controls/symbols');
-require('unicode-8.0.0/blocks/Shorthand_Format_Controls/regex');
+require('unicode-8.0.0/Block/Shorthand_Format_Controls/code-points');
+require('unicode-8.0.0/Block/Shorthand_Format_Controls/symbols');
+require('unicode-8.0.0/Block/Shorthand_Format_Controls/regex');
 
-require('unicode-8.0.0/blocks/Siddham/code-points');
-require('unicode-8.0.0/blocks/Siddham/symbols');
-require('unicode-8.0.0/blocks/Siddham/regex');
+require('unicode-8.0.0/Block/Siddham/code-points');
+require('unicode-8.0.0/Block/Siddham/symbols');
+require('unicode-8.0.0/Block/Siddham/regex');
 
-require('unicode-8.0.0/blocks/Sinhala/code-points');
-require('unicode-8.0.0/blocks/Sinhala/symbols');
-require('unicode-8.0.0/blocks/Sinhala/regex');
+require('unicode-8.0.0/Block/Sinhala/code-points');
+require('unicode-8.0.0/Block/Sinhala/symbols');
+require('unicode-8.0.0/Block/Sinhala/regex');
 
-require('unicode-8.0.0/blocks/Sinhala_Archaic_Numbers/code-points');
-require('unicode-8.0.0/blocks/Sinhala_Archaic_Numbers/symbols');
-require('unicode-8.0.0/blocks/Sinhala_Archaic_Numbers/regex');
+require('unicode-8.0.0/Block/Sinhala_Archaic_Numbers/code-points');
+require('unicode-8.0.0/Block/Sinhala_Archaic_Numbers/symbols');
+require('unicode-8.0.0/Block/Sinhala_Archaic_Numbers/regex');
 
-require('unicode-8.0.0/blocks/Small_Form_Variants/code-points');
-require('unicode-8.0.0/blocks/Small_Form_Variants/symbols');
-require('unicode-8.0.0/blocks/Small_Form_Variants/regex');
+require('unicode-8.0.0/Block/Small_Form_Variants/code-points');
+require('unicode-8.0.0/Block/Small_Form_Variants/symbols');
+require('unicode-8.0.0/Block/Small_Form_Variants/regex');
 
-require('unicode-8.0.0/blocks/Sora_Sompeng/code-points');
-require('unicode-8.0.0/blocks/Sora_Sompeng/symbols');
-require('unicode-8.0.0/blocks/Sora_Sompeng/regex');
+require('unicode-8.0.0/Block/Sora_Sompeng/code-points');
+require('unicode-8.0.0/Block/Sora_Sompeng/symbols');
+require('unicode-8.0.0/Block/Sora_Sompeng/regex');
 
-require('unicode-8.0.0/blocks/Spacing_Modifier_Letters/code-points');
-require('unicode-8.0.0/blocks/Spacing_Modifier_Letters/symbols');
-require('unicode-8.0.0/blocks/Spacing_Modifier_Letters/regex');
+require('unicode-8.0.0/Block/Spacing_Modifier_Letters/code-points');
+require('unicode-8.0.0/Block/Spacing_Modifier_Letters/symbols');
+require('unicode-8.0.0/Block/Spacing_Modifier_Letters/regex');
 
-require('unicode-8.0.0/blocks/Specials/code-points');
-require('unicode-8.0.0/blocks/Specials/symbols');
-require('unicode-8.0.0/blocks/Specials/regex');
+require('unicode-8.0.0/Block/Specials/code-points');
+require('unicode-8.0.0/Block/Specials/symbols');
+require('unicode-8.0.0/Block/Specials/regex');
 
-require('unicode-8.0.0/blocks/Sundanese/code-points');
-require('unicode-8.0.0/blocks/Sundanese/symbols');
-require('unicode-8.0.0/blocks/Sundanese/regex');
+require('unicode-8.0.0/Block/Sundanese/code-points');
+require('unicode-8.0.0/Block/Sundanese/symbols');
+require('unicode-8.0.0/Block/Sundanese/regex');
 
-require('unicode-8.0.0/blocks/Sundanese_Supplement/code-points');
-require('unicode-8.0.0/blocks/Sundanese_Supplement/symbols');
-require('unicode-8.0.0/blocks/Sundanese_Supplement/regex');
+require('unicode-8.0.0/Block/Sundanese_Supplement/code-points');
+require('unicode-8.0.0/Block/Sundanese_Supplement/symbols');
+require('unicode-8.0.0/Block/Sundanese_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Superscripts_And_Subscripts/code-points');
-require('unicode-8.0.0/blocks/Superscripts_And_Subscripts/symbols');
-require('unicode-8.0.0/blocks/Superscripts_And_Subscripts/regex');
+require('unicode-8.0.0/Block/Superscripts_And_Subscripts/code-points');
+require('unicode-8.0.0/Block/Superscripts_And_Subscripts/symbols');
+require('unicode-8.0.0/Block/Superscripts_And_Subscripts/regex');
 
-require('unicode-8.0.0/blocks/Supplemental_Arrows_A/code-points');
-require('unicode-8.0.0/blocks/Supplemental_Arrows_A/symbols');
-require('unicode-8.0.0/blocks/Supplemental_Arrows_A/regex');
+require('unicode-8.0.0/Block/Supplemental_Arrows_A/code-points');
+require('unicode-8.0.0/Block/Supplemental_Arrows_A/symbols');
+require('unicode-8.0.0/Block/Supplemental_Arrows_A/regex');
 
-require('unicode-8.0.0/blocks/Supplemental_Arrows_B/code-points');
-require('unicode-8.0.0/blocks/Supplemental_Arrows_B/symbols');
-require('unicode-8.0.0/blocks/Supplemental_Arrows_B/regex');
+require('unicode-8.0.0/Block/Supplemental_Arrows_B/code-points');
+require('unicode-8.0.0/Block/Supplemental_Arrows_B/symbols');
+require('unicode-8.0.0/Block/Supplemental_Arrows_B/regex');
 
-require('unicode-8.0.0/blocks/Supplemental_Arrows_C/code-points');
-require('unicode-8.0.0/blocks/Supplemental_Arrows_C/symbols');
-require('unicode-8.0.0/blocks/Supplemental_Arrows_C/regex');
+require('unicode-8.0.0/Block/Supplemental_Arrows_C/code-points');
+require('unicode-8.0.0/Block/Supplemental_Arrows_C/symbols');
+require('unicode-8.0.0/Block/Supplemental_Arrows_C/regex');
 
-require('unicode-8.0.0/blocks/Supplemental_Mathematical_Operators/code-points');
-require('unicode-8.0.0/blocks/Supplemental_Mathematical_Operators/symbols');
-require('unicode-8.0.0/blocks/Supplemental_Mathematical_Operators/regex');
+require('unicode-8.0.0/Block/Supplemental_Mathematical_Operators/code-points');
+require('unicode-8.0.0/Block/Supplemental_Mathematical_Operators/symbols');
+require('unicode-8.0.0/Block/Supplemental_Mathematical_Operators/regex');
 
-require('unicode-8.0.0/blocks/Supplemental_Punctuation/code-points');
-require('unicode-8.0.0/blocks/Supplemental_Punctuation/symbols');
-require('unicode-8.0.0/blocks/Supplemental_Punctuation/regex');
+require('unicode-8.0.0/Block/Supplemental_Punctuation/code-points');
+require('unicode-8.0.0/Block/Supplemental_Punctuation/symbols');
+require('unicode-8.0.0/Block/Supplemental_Punctuation/regex');
 
-require('unicode-8.0.0/blocks/Supplemental_Symbols_And_Pictographs/code-points');
-require('unicode-8.0.0/blocks/Supplemental_Symbols_And_Pictographs/symbols');
-require('unicode-8.0.0/blocks/Supplemental_Symbols_And_Pictographs/regex');
+require('unicode-8.0.0/Block/Supplemental_Symbols_And_Pictographs/code-points');
+require('unicode-8.0.0/Block/Supplemental_Symbols_And_Pictographs/symbols');
+require('unicode-8.0.0/Block/Supplemental_Symbols_And_Pictographs/regex');
 
-require('unicode-8.0.0/blocks/Supplementary_Private_Use_Area_A/code-points');
-require('unicode-8.0.0/blocks/Supplementary_Private_Use_Area_A/symbols');
-require('unicode-8.0.0/blocks/Supplementary_Private_Use_Area_A/regex');
+require('unicode-8.0.0/Block/Supplementary_Private_Use_Area_A/code-points');
+require('unicode-8.0.0/Block/Supplementary_Private_Use_Area_A/symbols');
+require('unicode-8.0.0/Block/Supplementary_Private_Use_Area_A/regex');
 
-require('unicode-8.0.0/blocks/Supplementary_Private_Use_Area_B/code-points');
-require('unicode-8.0.0/blocks/Supplementary_Private_Use_Area_B/symbols');
-require('unicode-8.0.0/blocks/Supplementary_Private_Use_Area_B/regex');
+require('unicode-8.0.0/Block/Supplementary_Private_Use_Area_B/code-points');
+require('unicode-8.0.0/Block/Supplementary_Private_Use_Area_B/symbols');
+require('unicode-8.0.0/Block/Supplementary_Private_Use_Area_B/regex');
 
-require('unicode-8.0.0/blocks/Sutton_SignWriting/code-points');
-require('unicode-8.0.0/blocks/Sutton_SignWriting/symbols');
-require('unicode-8.0.0/blocks/Sutton_SignWriting/regex');
+require('unicode-8.0.0/Block/Sutton_SignWriting/code-points');
+require('unicode-8.0.0/Block/Sutton_SignWriting/symbols');
+require('unicode-8.0.0/Block/Sutton_SignWriting/regex');
 
-require('unicode-8.0.0/blocks/Syloti_Nagri/code-points');
-require('unicode-8.0.0/blocks/Syloti_Nagri/symbols');
-require('unicode-8.0.0/blocks/Syloti_Nagri/regex');
+require('unicode-8.0.0/Block/Syloti_Nagri/code-points');
+require('unicode-8.0.0/Block/Syloti_Nagri/symbols');
+require('unicode-8.0.0/Block/Syloti_Nagri/regex');
 
-require('unicode-8.0.0/blocks/Syriac/code-points');
-require('unicode-8.0.0/blocks/Syriac/symbols');
-require('unicode-8.0.0/blocks/Syriac/regex');
+require('unicode-8.0.0/Block/Syriac/code-points');
+require('unicode-8.0.0/Block/Syriac/symbols');
+require('unicode-8.0.0/Block/Syriac/regex');
 
-require('unicode-8.0.0/blocks/Tagalog/code-points');
-require('unicode-8.0.0/blocks/Tagalog/symbols');
-require('unicode-8.0.0/blocks/Tagalog/regex');
+require('unicode-8.0.0/Block/Tagalog/code-points');
+require('unicode-8.0.0/Block/Tagalog/symbols');
+require('unicode-8.0.0/Block/Tagalog/regex');
 
-require('unicode-8.0.0/blocks/Tagbanwa/code-points');
-require('unicode-8.0.0/blocks/Tagbanwa/symbols');
-require('unicode-8.0.0/blocks/Tagbanwa/regex');
+require('unicode-8.0.0/Block/Tagbanwa/code-points');
+require('unicode-8.0.0/Block/Tagbanwa/symbols');
+require('unicode-8.0.0/Block/Tagbanwa/regex');
 
-require('unicode-8.0.0/blocks/Tags/code-points');
-require('unicode-8.0.0/blocks/Tags/symbols');
-require('unicode-8.0.0/blocks/Tags/regex');
+require('unicode-8.0.0/Block/Tags/code-points');
+require('unicode-8.0.0/Block/Tags/symbols');
+require('unicode-8.0.0/Block/Tags/regex');
 
-require('unicode-8.0.0/blocks/Tai_Le/code-points');
-require('unicode-8.0.0/blocks/Tai_Le/symbols');
-require('unicode-8.0.0/blocks/Tai_Le/regex');
+require('unicode-8.0.0/Block/Tai_Le/code-points');
+require('unicode-8.0.0/Block/Tai_Le/symbols');
+require('unicode-8.0.0/Block/Tai_Le/regex');
 
-require('unicode-8.0.0/blocks/Tai_Tham/code-points');
-require('unicode-8.0.0/blocks/Tai_Tham/symbols');
-require('unicode-8.0.0/blocks/Tai_Tham/regex');
+require('unicode-8.0.0/Block/Tai_Tham/code-points');
+require('unicode-8.0.0/Block/Tai_Tham/symbols');
+require('unicode-8.0.0/Block/Tai_Tham/regex');
 
-require('unicode-8.0.0/blocks/Tai_Viet/code-points');
-require('unicode-8.0.0/blocks/Tai_Viet/symbols');
-require('unicode-8.0.0/blocks/Tai_Viet/regex');
+require('unicode-8.0.0/Block/Tai_Viet/code-points');
+require('unicode-8.0.0/Block/Tai_Viet/symbols');
+require('unicode-8.0.0/Block/Tai_Viet/regex');
 
-require('unicode-8.0.0/blocks/Tai_Xuan_Jing_Symbols/code-points');
-require('unicode-8.0.0/blocks/Tai_Xuan_Jing_Symbols/symbols');
-require('unicode-8.0.0/blocks/Tai_Xuan_Jing_Symbols/regex');
+require('unicode-8.0.0/Block/Tai_Xuan_Jing_Symbols/code-points');
+require('unicode-8.0.0/Block/Tai_Xuan_Jing_Symbols/symbols');
+require('unicode-8.0.0/Block/Tai_Xuan_Jing_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Takri/code-points');
-require('unicode-8.0.0/blocks/Takri/symbols');
-require('unicode-8.0.0/blocks/Takri/regex');
+require('unicode-8.0.0/Block/Takri/code-points');
+require('unicode-8.0.0/Block/Takri/symbols');
+require('unicode-8.0.0/Block/Takri/regex');
 
-require('unicode-8.0.0/blocks/Tamil/code-points');
-require('unicode-8.0.0/blocks/Tamil/symbols');
-require('unicode-8.0.0/blocks/Tamil/regex');
+require('unicode-8.0.0/Block/Tamil/code-points');
+require('unicode-8.0.0/Block/Tamil/symbols');
+require('unicode-8.0.0/Block/Tamil/regex');
 
-require('unicode-8.0.0/blocks/Telugu/code-points');
-require('unicode-8.0.0/blocks/Telugu/symbols');
-require('unicode-8.0.0/blocks/Telugu/regex');
+require('unicode-8.0.0/Block/Telugu/code-points');
+require('unicode-8.0.0/Block/Telugu/symbols');
+require('unicode-8.0.0/Block/Telugu/regex');
 
-require('unicode-8.0.0/blocks/Thaana/code-points');
-require('unicode-8.0.0/blocks/Thaana/symbols');
-require('unicode-8.0.0/blocks/Thaana/regex');
+require('unicode-8.0.0/Block/Thaana/code-points');
+require('unicode-8.0.0/Block/Thaana/symbols');
+require('unicode-8.0.0/Block/Thaana/regex');
 
-require('unicode-8.0.0/blocks/Thai/code-points');
-require('unicode-8.0.0/blocks/Thai/symbols');
-require('unicode-8.0.0/blocks/Thai/regex');
+require('unicode-8.0.0/Block/Thai/code-points');
+require('unicode-8.0.0/Block/Thai/symbols');
+require('unicode-8.0.0/Block/Thai/regex');
 
-require('unicode-8.0.0/blocks/Tibetan/code-points');
-require('unicode-8.0.0/blocks/Tibetan/symbols');
-require('unicode-8.0.0/blocks/Tibetan/regex');
+require('unicode-8.0.0/Block/Tibetan/code-points');
+require('unicode-8.0.0/Block/Tibetan/symbols');
+require('unicode-8.0.0/Block/Tibetan/regex');
 
-require('unicode-8.0.0/blocks/Tifinagh/code-points');
-require('unicode-8.0.0/blocks/Tifinagh/symbols');
-require('unicode-8.0.0/blocks/Tifinagh/regex');
+require('unicode-8.0.0/Block/Tifinagh/code-points');
+require('unicode-8.0.0/Block/Tifinagh/symbols');
+require('unicode-8.0.0/Block/Tifinagh/regex');
 
-require('unicode-8.0.0/blocks/Tirhuta/code-points');
-require('unicode-8.0.0/blocks/Tirhuta/symbols');
-require('unicode-8.0.0/blocks/Tirhuta/regex');
+require('unicode-8.0.0/Block/Tirhuta/code-points');
+require('unicode-8.0.0/Block/Tirhuta/symbols');
+require('unicode-8.0.0/Block/Tirhuta/regex');
 
-require('unicode-8.0.0/blocks/Transport_And_Map_Symbols/code-points');
-require('unicode-8.0.0/blocks/Transport_And_Map_Symbols/symbols');
-require('unicode-8.0.0/blocks/Transport_And_Map_Symbols/regex');
+require('unicode-8.0.0/Block/Transport_And_Map_Symbols/code-points');
+require('unicode-8.0.0/Block/Transport_And_Map_Symbols/symbols');
+require('unicode-8.0.0/Block/Transport_And_Map_Symbols/regex');
 
-require('unicode-8.0.0/blocks/Ugaritic/code-points');
-require('unicode-8.0.0/blocks/Ugaritic/symbols');
-require('unicode-8.0.0/blocks/Ugaritic/regex');
+require('unicode-8.0.0/Block/Ugaritic/code-points');
+require('unicode-8.0.0/Block/Ugaritic/symbols');
+require('unicode-8.0.0/Block/Ugaritic/regex');
 
-require('unicode-8.0.0/blocks/Unified_Canadian_Aboriginal_Syllabics/code-points');
-require('unicode-8.0.0/blocks/Unified_Canadian_Aboriginal_Syllabics/symbols');
-require('unicode-8.0.0/blocks/Unified_Canadian_Aboriginal_Syllabics/regex');
+require('unicode-8.0.0/Block/Unified_Canadian_Aboriginal_Syllabics/code-points');
+require('unicode-8.0.0/Block/Unified_Canadian_Aboriginal_Syllabics/symbols');
+require('unicode-8.0.0/Block/Unified_Canadian_Aboriginal_Syllabics/regex');
 
-require('unicode-8.0.0/blocks/Unified_Canadian_Aboriginal_Syllabics_Extended/code-points');
-require('unicode-8.0.0/blocks/Unified_Canadian_Aboriginal_Syllabics_Extended/symbols');
-require('unicode-8.0.0/blocks/Unified_Canadian_Aboriginal_Syllabics_Extended/regex');
+require('unicode-8.0.0/Block/Unified_Canadian_Aboriginal_Syllabics_Extended/code-points');
+require('unicode-8.0.0/Block/Unified_Canadian_Aboriginal_Syllabics_Extended/symbols');
+require('unicode-8.0.0/Block/Unified_Canadian_Aboriginal_Syllabics_Extended/regex');
 
-require('unicode-8.0.0/blocks/Vai/code-points');
-require('unicode-8.0.0/blocks/Vai/symbols');
-require('unicode-8.0.0/blocks/Vai/regex');
+require('unicode-8.0.0/Block/Vai/code-points');
+require('unicode-8.0.0/Block/Vai/symbols');
+require('unicode-8.0.0/Block/Vai/regex');
 
-require('unicode-8.0.0/blocks/Variation_Selectors/code-points');
-require('unicode-8.0.0/blocks/Variation_Selectors/symbols');
-require('unicode-8.0.0/blocks/Variation_Selectors/regex');
+require('unicode-8.0.0/Block/Variation_Selectors/code-points');
+require('unicode-8.0.0/Block/Variation_Selectors/symbols');
+require('unicode-8.0.0/Block/Variation_Selectors/regex');
 
-require('unicode-8.0.0/blocks/Variation_Selectors_Supplement/code-points');
-require('unicode-8.0.0/blocks/Variation_Selectors_Supplement/symbols');
-require('unicode-8.0.0/blocks/Variation_Selectors_Supplement/regex');
+require('unicode-8.0.0/Block/Variation_Selectors_Supplement/code-points');
+require('unicode-8.0.0/Block/Variation_Selectors_Supplement/symbols');
+require('unicode-8.0.0/Block/Variation_Selectors_Supplement/regex');
 
-require('unicode-8.0.0/blocks/Vedic_Extensions/code-points');
-require('unicode-8.0.0/blocks/Vedic_Extensions/symbols');
-require('unicode-8.0.0/blocks/Vedic_Extensions/regex');
+require('unicode-8.0.0/Block/Vedic_Extensions/code-points');
+require('unicode-8.0.0/Block/Vedic_Extensions/symbols');
+require('unicode-8.0.0/Block/Vedic_Extensions/regex');
 
-require('unicode-8.0.0/blocks/Vertical_Forms/code-points');
-require('unicode-8.0.0/blocks/Vertical_Forms/symbols');
-require('unicode-8.0.0/blocks/Vertical_Forms/regex');
+require('unicode-8.0.0/Block/Vertical_Forms/code-points');
+require('unicode-8.0.0/Block/Vertical_Forms/symbols');
+require('unicode-8.0.0/Block/Vertical_Forms/regex');
 
-require('unicode-8.0.0/blocks/Warang_Citi/code-points');
-require('unicode-8.0.0/blocks/Warang_Citi/symbols');
-require('unicode-8.0.0/blocks/Warang_Citi/regex');
+require('unicode-8.0.0/Block/Warang_Citi/code-points');
+require('unicode-8.0.0/Block/Warang_Citi/symbols');
+require('unicode-8.0.0/Block/Warang_Citi/regex');
 
-require('unicode-8.0.0/blocks/Yi_Radicals/code-points');
-require('unicode-8.0.0/blocks/Yi_Radicals/symbols');
-require('unicode-8.0.0/blocks/Yi_Radicals/regex');
+require('unicode-8.0.0/Block/Yi_Radicals/code-points');
+require('unicode-8.0.0/Block/Yi_Radicals/symbols');
+require('unicode-8.0.0/Block/Yi_Radicals/regex');
 
-require('unicode-8.0.0/blocks/Yi_Syllables/code-points');
-require('unicode-8.0.0/blocks/Yi_Syllables/symbols');
-require('unicode-8.0.0/blocks/Yi_Syllables/regex');
+require('unicode-8.0.0/Block/Yi_Syllables/code-points');
+require('unicode-8.0.0/Block/Yi_Syllables/symbols');
+require('unicode-8.0.0/Block/Yi_Syllables/regex');
 
-require('unicode-8.0.0/blocks/Yijing_Hexagram_Symbols/code-points');
-require('unicode-8.0.0/blocks/Yijing_Hexagram_Symbols/symbols');
-require('unicode-8.0.0/blocks/Yijing_Hexagram_Symbols/regex');
+require('unicode-8.0.0/Block/Yijing_Hexagram_Symbols/code-points');
+require('unicode-8.0.0/Block/Yijing_Hexagram_Symbols/symbols');
+require('unicode-8.0.0/Block/Yijing_Hexagram_Symbols/regex');
 
-// bidi mirroring:
+// `Bidi_Mirroring_Glyph`:
 
-require('unicode-8.0.0/bidi-mirroring').get(codePoint); // lookup map
+require('unicode-8.0.0/Bidi_Mirroring_Glyph').get(codePoint); // lookup map
 
-// bidi brackets:
+// `Bidi_Paired_Bracket_Type`:
 
-require('unicode-8.0.0/bidi-brackets').get(codePoint); // lookup map
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type').get(codePoint); // lookup map
 
-require('unicode-8.0.0/bidi-brackets/Close/code-points');
-require('unicode-8.0.0/bidi-brackets/Close/symbols');
-require('unicode-8.0.0/bidi-brackets/Close/regex');
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/Close/code-points');
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/Close/symbols');
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/Close/regex');
 
-require('unicode-8.0.0/bidi-brackets/Open/code-points');
-require('unicode-8.0.0/bidi-brackets/Open/symbols');
-require('unicode-8.0.0/bidi-brackets/Open/regex');
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/None/code-points');
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/None/symbols');
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/None/regex');
+
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/Open/code-points');
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/Open/symbols');
+require('unicode-8.0.0/Bidi_Paired_Bracket_Type/Open/regex');
 ```
 
 ## Author

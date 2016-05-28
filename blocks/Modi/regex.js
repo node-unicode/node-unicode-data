@@ -1,1 +1,0 @@
-module.exports=/\uD805[\uDE00-\uDE5F]/

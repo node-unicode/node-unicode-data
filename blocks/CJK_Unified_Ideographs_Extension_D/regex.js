@@ -1,1 +1,0 @@
-module.exports=/\uD86D[\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1F]/
