@@ -6,24 +6,18 @@ const utils = require('./utils.js');
 
 const parseBlocksScriptsProperties = function(type, version) {
 	// `type` is 'properties', 'derived-core-properties', 'scripts', 'blocks',
-	// 'bidi-brackets', or 'bidi-mirroring'.
+	// or 'bidi-mirroring'.
 	const map = {};
 	const source = utils.readDataFile(version, type);
 	if (!source) {
 		return;
 	}
-	const isBidiBrackets = type == 'bidi-brackets';
-	const bidiBracketMap = new Map([
-		['o', 'Open'],
-		['c', 'Close'],
-		['n', 'None']
-	]);
 	const lines = source.split('\n');
 	lines.forEach(function(line) {
 		if (
 			/^#/.test(line) ||
 			!(
-				/^(?:blocks|bidi-mirroring|bidi-brackets)$/.test(type)
+				/^(?:blocks|bidi-mirroring)$/.test(type)
 					? /;\x20/.test(line)
 					: /\x20;\x20/.test(line)
 			)
@@ -32,7 +26,7 @@ const parseBlocksScriptsProperties = function(type, version) {
 		}
 		const data = line.trim().split(';');
 		const charRange = data[0].replace('..', '-').trim();
-		let item = data[ isBidiBrackets ? 2 : 1 ].split(
+		let item = data[1].split(
 			type == 'blocks' ? ';' : '#'
 		)[0].trim().replace(/\x20/g, '_');
 		if (type == 'derived-normalization-properties') {
@@ -52,9 +46,7 @@ const parseBlocksScriptsProperties = function(type, version) {
 				}
 			}
 		}
-		if (isBidiBrackets) {
-			item = bidiBracketMap.get(item);
-		} else if (type == 'blocks') {
+		if (type == 'blocks') {
 			// Use canonical block names. See #34
 			item = looseMatch('Block', item).value;
 		} else if (type == 'bidi-mirroring') {
@@ -81,6 +73,5 @@ module.exports = {
 	'parseDerivedCoreProperties': parseBlocksScriptsProperties.bind(null, 'derived-core-properties'),
 	'parseDerivedNormalizationProperties': parseBlocksScriptsProperties.bind(null, 'derived-normalization-properties'),
 	'parseBlocks': parseBlocksScriptsProperties.bind(null, 'blocks'),
-	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring'),
-	'parseBrackets': parseBlocksScriptsProperties.bind(null, 'bidi-brackets')
+	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring')
 };

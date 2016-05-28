@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const utils = require('./scripts/utils.js');
 const parsers = require('./scripts/parse-blocks-scripts-properties.js');
+parsers.parseBidiBrackets = require('./scripts/parse-bidi-brackets.js');
 parsers.parseCaseFolding = require('./scripts/parse-case-folding.js');
 parsers.parseCategories = require('./scripts/parse-categories.js');
 parsers.parseCompositionExclusions = require('./scripts/parse-composition-exclusions.js');
@@ -100,8 +101,8 @@ const generateData = function(version) {
 	console.log('Parsing Unicode v%s bidi brackets…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
-		'map': parsers.parseBrackets(version),
-		'type': 'bidi-brackets' // TODO
+		'map': parsers.parseBidiBrackets(version),
+		'type': 'Bidi_Paired_Bracket_Type'
 	}));
 	// Sort array values.
 	Object.keys(dirMap).forEach(function(property) {

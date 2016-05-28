@@ -47,9 +47,9 @@ const directionality = require('unicode-<%= version %>/Bidi_Class').get(0x41);
 <% if (dirs.hasOwnProperty('Bidi_Mirroring_Glyph')) { %>
 // What glyph is the mirror image of `«` (U+00AB)?
 const mirrored = require('unicode-<%= version %>/Bidi_Mirroring_Glyph').get(0xAB);
-<% } if (dirs.hasOwnProperty('bidi-brackets')) { %>
+<% } if (dirs.hasOwnProperty('Bidi_Paired_Bracket_Type')) { %>
 // Get a regular expression that matches all opening brackets:
-const openingBrackets = require('unicode-<%= version %>/bidi-bracketsTODO/Open/regex');
+const openingBrackets = require('unicode-<%= version %>/Bidi_Paired_Bracket_Type/Open/regex');
 <% } %>
 // …you get the idea.
 ```
@@ -59,7 +59,7 @@ Other than categories, data on Unicode properties, blocks, scripts, and script e
 ```js<% Object.keys(dirs).forEach(function(type) { %>
 // `<%= type %>`:
 <%
-	if (/^(?:Bidi_Class|Bidi_Brackets_TODO|Bidi_Mirroring_Glyph|General_Category)$/.test(type)) {
+	if (/^(?:Bidi_Class|Bidi_Paired_Bracket_Type|Bidi_Mirroring_Glyph|General_Category)$/.test(type)) {
 %>
 require('unicode-<%= version %>/<%= type %>').get(codePoint); // lookup map
 <%

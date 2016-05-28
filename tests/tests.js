@@ -54,7 +54,7 @@ assert.deepEqual(
 );
 assert.deepEqual(
 	require('./expected/' + newest + '-bidi-brackets-Open.js'),
-	require('../output/unicode-' + newest + '/bidi-brackets/Open/code-points.js')
+	require('../output/unicode-' + newest + '/Bidi_Paired_Bracket_Type/Open/code-points.js')
 );
 assert.deepEqual(
 	require('./expected/' + newest + '-case-folding-S.js'),
