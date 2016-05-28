@@ -34,12 +34,12 @@ const generateData = function(version) {
 		'map': parsers.parseCategories(version),
 		'type': function(category) {
 			if (/^(?:Any|ASCII|Assigned|Bidi_Mirrored)$/.test(category)) {
-				return 'properties';
+				return 'Binary_Property';
 			}
 			if (/^Bidi_/.test(category)) {
-				return 'bidi-classes';
+				return 'Bidi_Class';
 			}
-			return 'categories';
+			return 'General_Category';
 		}
 	}));
 	console.log('Parsing Unicode v%s scripts…', version);
@@ -47,61 +47,61 @@ const generateData = function(version) {
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': scriptsMap,
-		'type': 'scripts'
+		'type': 'Script'
 	}));
 	console.log('Parsing Unicode v%s scripts extensions…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseScriptExtensions(version, scriptsMap),
-		'type': 'script-extensions'
+		'type': 'Script_Extensions'
 	}));
 	console.log('Parsing Unicode v%s properties…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseProperties(version),
-		'type': 'properties'
+		'type': 'Binary_Property'
 	}));
 	console.log('Parsing Unicode v%s derived core properties…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseDerivedCoreProperties(version),
-		'type': 'properties'
+		'type': 'Binary_Property'
 	}));
 	console.log('Parsing Unicode v%s derived normalization properties…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseDerivedNormalizationProperties(version),
-		'type': 'properties'
+		'type': 'Binary_Property'
 	}));
 	console.log('Parsing Unicode v%s composition exclusions…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseCompositionExclusions(version),
-		'type': 'properties'
+		'type': 'Binary_Property'
 	}));
 	console.log('Parsing Unicode v%s case folding…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseCaseFolding(version),
-		'type': 'case-folding'
+		'type': 'Case_Folding'
 	}));
 	console.log('Parsing Unicode v%s blocks…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseBlocks(version),
-		'type': 'blocks'
+		'type': 'Block'
 	}));
 	console.log('Parsing Unicode v%s bidi mirroring…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseMirroring(version),
-		'type': 'bidi-mirroring'
+		'type': 'Bidi_Mirroring_Glyph'
 	}));
 	console.log('Parsing Unicode v%s bidi brackets…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseBrackets(version),
-		'type': 'bidi-brackets'
+		'type': 'bidi-brackets' // TODO
 	}));
 	// Sort array values.
 	Object.keys(dirMap).forEach(function(property) {
