@@ -2,23 +2,19 @@
 
 const fs = require('fs');
 const path = require('path');
-const babel = require('babel-core');
+const zlib = require('zlib');
 const jsesc = require('jsesc');
+const looseMatch = require('unicode-loose-match');
 const mkdirp = require('mkdirp');
 const regenerate = require('regenerate');
-const minify = require('uglify-js').minify;
 
-const dedupeStrings = function(code) {
-	const deduped = babel.transform(code, {
-		'plugins': [
-			'dedupe-string-literals'
-		]
-	}).code;
-	// TODO: https://github.com/RReverser/babel-plugin-uglify/issues/3
-	const minified = minify(deduped, {
-		'fromString': true
-	});
-	return deduped;
+const gzipInline = function(data) {
+	if (data instanceof Map) {
+		return `new Map(${ gzipInline([...data]) })`;
+	}
+	const json = jsesc(data, { 'json': true });
+	const gzip = JSON.stringify(zlib.gzipSync(json));
+	return `JSON.parse(require('zlib').gunzipSync(Buffer.from((${ gzip }).data)))`;
 };
 
 const range = function(start, stop) {
@@ -67,7 +63,12 @@ const writeFiles = function(options) {
 			type == 'bidi-classes' ||
 			type == 'bidi-mirroring' ||
 			type == 'bidi-brackets' ||
-			(type == 'categories' && /^[A-Z][a-z]$/.test(item))
+			(
+				type == 'categories' &&
+				// Use the most specific category names, i.e. those whose aliases match
+				// `^[A-Z][a-z]$`. Ignore the others.
+				!/^(?:Other|Letter|Cased_Letter|Mark|Number|Punctuation|Symbol|Separator)$/.test(item)
+			)
 		) {
 			if (!auxMap[type]) {
 				auxMap[type] = [];
@@ -123,23 +124,22 @@ const writeFiles = function(options) {
 		}
 		mkdirp.sync(dir);
 		let output = '';
-		if (/^(bidi-classes|bidi-mirroring|bidi-brackets)$/.test(type)) {
+		if (/^(?:bidi-classes|bidi-mirroring|bidi-brackets)$/.test(type)) {
 			const map = new Map();
 			Object.keys(auxMap[type]).forEach(function(key) {
 				const codePoint = Number(key);
 				const value = auxMap[type][key];
 				map.set(codePoint, value);
 			});
-			output = `module.exports=${ jsesc(map) }`;
-			if ('bidi-brackets' == type) {
-				// `bidi-classes/index.js` is too large (i.e. too slow to optimize),
-				// and `bidi-mirroring` doesn’t have repeated strings.
-				output = dedupeStrings(output);
+			if ('bidi-mirroring' == type) { // `bidi-mirroring/index.js`
+				// Note: `bidi-mirroring` doesn’t have repeated strings; don’t gzip.
+				output = `module.exports=${ jsesc(map) }`;
+			} else { // `bidi-classes/index.js` or `bidi-brackets/index.js`
+				output = `module.exports=${ gzipInline(map) }`;
 			}
 		} else { // `categories/index.js`
 			const array = auxMap[type];
-			// Note: `dedupeStrings` is way too slow here :(
-			output = `var x=${ jsesc(array) };module.exports=new Map(x.entries())`;
+			output = `var x=${ gzipInline(array) };module.exports=new Map(x.entries())`;
 		}
 		fs.writeFileSync(
 			path.resolve(dir, 'index.js'),
@@ -175,7 +175,6 @@ const readDataFile = function(version, type) {
 };
 
 module.exports = {
-	'dedupeStrings': dedupeStrings,
 	'range': range,
 	'append': append,
 	'extend': extend,
