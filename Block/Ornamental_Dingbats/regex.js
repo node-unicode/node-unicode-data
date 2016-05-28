@@ -1,0 +1,1 @@
+module.exports=/\uD83D[\uDE50-\uDE7F]/

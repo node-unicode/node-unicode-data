@@ -1,1 +1,0 @@
-module.exports={'I':'\u0131','\u0130':'i'}
