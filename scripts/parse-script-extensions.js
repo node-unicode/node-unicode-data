@@ -40,6 +40,11 @@ const parseScriptExtensions = function(version, scriptsMap) {
 				scripts.forEach(function(script) {
 					const canonicalName = findCanonicalName(script);
 					scriptsMap.Common.delete(codePoint);
+					console.assert(
+						scriptsMap[canonicalName],
+						`canonical name for ${ script } = ${
+						canonicalName } not present in \`scriptsMap\``
+					);
 					scriptsMap[canonicalName].add(codePoint);
 				});
 			});
@@ -48,6 +53,11 @@ const parseScriptExtensions = function(version, scriptsMap) {
 				const canonicalName = findCanonicalName(script);
 				const codePoint = parseInt(charRange, 16);
 				scriptsMap.Common.delete(codePoint);
+				console.assert(
+					scriptsMap[canonicalName],
+					`canonical name for ${ script } = ${
+					canonicalName } not present in \`scriptsMap\``
+				);
 				scriptsMap[canonicalName].add(codePoint);
 			});
 		}

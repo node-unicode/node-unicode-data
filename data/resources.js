@@ -202,6 +202,20 @@ var resources = [
 		'case-folding': 'http://unicode.org/Public/8.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/8.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'http://unicode.org/Public/8.0.0/ucd/BidiBrackets.txt'
+	},
+	{
+		'version': '9.0.0',
+		'main': 'http://unicode.org/Public/9.0.0/ucd/UnicodeData.txt',
+		'scripts': 'http://unicode.org/Public/9.0.0/ucd/Scripts.txt',
+		'script-extensions': 'http://unicode.org/Public/9.0.0/ucd/ScriptExtensions.txt',
+		'blocks': 'http://unicode.org/Public/9.0.0/ucd/Blocks.txt',
+		'properties': 'http://unicode.org/Public/9.0.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/9.0.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/9.0.0/ucd/DerivedNormalizationProps.txt',
+		'composition-exclusions': 'http://unicode.org/Public/9.0.0/ucd/CompositionExclusions.txt',
+		'case-folding': 'http://unicode.org/Public/9.0.0/ucd/CaseFolding.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/9.0.0/ucd/BidiMirroring.txt',
+		'bidi-brackets': 'http://unicode.org/Public/9.0.0/ucd/BidiBrackets.txt'
 	}
 ];
 
