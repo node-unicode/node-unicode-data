@@ -1,0 +1,1 @@
+module.exports=['\uA9E0','\uA9E1','\uA9E2','\uA9E3','\uA9E4','\uA9E5','\uA9E6','\uA9E7','\uA9E8','\uA9E9','\uA9EA','\uA9EB','\uA9EC','\uA9ED','\uA9EE','\uA9EF','\uA9F0','\uA9F1','\uA9F2','\uA9F3','\uA9F4','\uA9F5','\uA9F6','\uA9F7','\uA9F8','\uA9F9','\uA9FA','\uA9FB','\uA9FC','\uA9FD','\uA9FE','\uA9FF']
