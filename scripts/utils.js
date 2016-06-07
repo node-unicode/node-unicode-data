@@ -12,8 +12,8 @@ const gzipInline = function(data) {
 		return `new Map(${ gzipInline([...data]) })`;
 	}
 	const json = jsesc(data, { 'json': true });
-	const gzip = JSON.stringify(zlib.gzipSync(json));
-	return `JSON.parse(require('zlib').gunzipSync(Buffer.from((${ gzip }).data)))`;
+	const gzipBuffer = zlib.gzipSync(json);
+	return `JSON.parse(require('zlib').gunzipSync(${ jsesc(gzipBuffer) }))`;
 };
 
 const range = function(start, stop) {
