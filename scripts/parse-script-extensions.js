@@ -4,7 +4,6 @@ const scriptAliases = require('unicode-property-value-aliases').get('Script');
 const utils = require('./utils.js');
 
 const findCanonicalName = function(shortName) {
-	// Expand `script` to its canonical name.
 	return scriptAliases.get(shortName);
 };
 

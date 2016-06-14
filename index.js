@@ -8,6 +8,7 @@ parsers.parseBidiBrackets = require('./scripts/parse-bidi-brackets.js');
 parsers.parseCaseFolding = require('./scripts/parse-case-folding.js');
 parsers.parseCategories = require('./scripts/parse-categories.js');
 parsers.parseCompositionExclusions = require('./scripts/parse-composition-exclusions.js');
+parsers.parseLineBreak = require('./scripts/parse-line-break.js');
 parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
 const extend = utils.extend;
 const cp = require('cp');
@@ -103,6 +104,12 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseBidiBrackets(version),
 		'type': 'Bidi_Paired_Bracket_Type'
+	}));
+	console.log('Parsing Unicode v%s `Line_Break`…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseLineBreak(version),
+		'type': 'Line_Break'
 	}));
 	// Sort array values.
 	Object.keys(dirMap).forEach(function(property) {

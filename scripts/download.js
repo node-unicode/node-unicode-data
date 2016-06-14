@@ -41,7 +41,8 @@ resources.forEach(function(resource) {
 		'composition-exclusions',
 		'case-folding',
 		'bidi-mirroring',
-		'bidi-brackets'
+		'bidi-brackets',
+		'line-break'
 	].forEach(function(type) {
 		if (resource[type]) {
 			guardedDownload(resource[type], version, type);
