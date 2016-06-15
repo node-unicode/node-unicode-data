@@ -61,7 +61,7 @@ const writeFiles = function(options) {
 		if (
 			type == 'Bidi_Class' ||
 			type == 'Bidi_Mirroring_Glyph' ||
-			type == 'bidi-brackets' || // TODO
+			type == 'Bidi_Paired_Bracket_Type' ||
 			(
 				type == 'General_Category' &&
 				// Use the most specific category names, i.e. those whose aliases match
@@ -86,7 +86,9 @@ const writeFiles = function(options) {
 		// Save the data to a file
 		fs.writeFileSync(
 			path.resolve(dir, 'code-points.js'),
-			'module.exports=' + jsesc(codePoints)
+			'module.exports=' + (
+				codePoints.length > 999 ? gzipInline : jsesc
+			)(codePoints)
 		);
 		if (!isCaseFolding) {
 			fs.writeFileSync(
@@ -94,23 +96,26 @@ const writeFiles = function(options) {
 				'module.exports=/' + regenerate(codePoints).toString() + '/'
 			);
 		}
+
+		const symbols = isCaseFolding ?
+			Object.keys(codePoints).reduce(function(result, current) {
+				let mappings = codePoints[current];
+				if (Array.isArray(mappings)) {
+					mappings = String.fromCodePoint.apply(null, mappings);
+				} else {
+					mappings = String.fromCodePoint(mappings);
+				}
+				result[String.fromCodePoint(current)] = mappings;
+				return result;
+			}, {}) :
+			codePoints.map(function(codePoint) {
+				return String.fromCodePoint(codePoint);
+			});
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.js'),
-			'module.exports=' + jsesc(
-				isCaseFolding ?
-					Object.keys(codePoints).reduce(function(result, current) {
-						let mappings = codePoints[current];
-						if (Array.isArray(mappings)) {
-							mappings = String.fromCodePoint.apply(null, mappings);
-						} else {
-							mappings = String.fromCodePoint(mappings);
-						}
-						result[String.fromCodePoint(current)] = mappings;
-						return result;
-					}, {}) :
-					codePoints.map(function(codePoint) {
-						return String.fromCodePoint(codePoint);
-					}))
+			'module.exports=' + (
+				!isCaseFolding && symbols.length > 999 ? gzipInline : jsesc
+			)(symbols)
 		);
 	});
 	Object.keys(auxMap).forEach(function(type) {
