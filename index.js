@@ -10,6 +10,7 @@ parsers.parseCategories = require('./scripts/parse-categories.js');
 parsers.parseCompositionExclusions = require('./scripts/parse-composition-exclusions.js');
 parsers.parseLineBreak = require('./scripts/parse-line-break.js');
 parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
+parsers.parseWordBreak = require('./scripts/parse-word-break.js');
 const extend = utils.extend;
 const cp = require('cp');
 const jsesc = require('jsesc');
@@ -44,14 +45,14 @@ const generateData = function(version) {
 			return 'General_Category';
 		}
 	}));
-	console.log('Parsing Unicode v%s scripts…', version);
+	console.log('Parsing Unicode v%s `Script`…', version);
 	const scriptsMap = parsers.parseScripts(version)
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': scriptsMap,
 		'type': 'Script'
 	}));
-	console.log('Parsing Unicode v%s scripts extensions…', version);
+	console.log('Parsing Unicode v%s `Script_Extensions`…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseScriptExtensions(version, scriptsMap),
@@ -81,19 +82,19 @@ const generateData = function(version) {
 		'map': parsers.parseCompositionExclusions(version),
 		'type': 'Binary_Property'
 	}));
-	console.log('Parsing Unicode v%s case folding…', version);
+	console.log('Parsing Unicode v%s `Case_Folding`…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseCaseFolding(version),
 		'type': 'Case_Folding'
 	}));
-	console.log('Parsing Unicode v%s blocks…', version);
+	console.log('Parsing Unicode v%s `Block`…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseBlocks(version),
 		'type': 'Block'
 	}));
-	console.log('Parsing Unicode v%s bidi mirroring…', version);
+	console.log('Parsing Unicode v%s `Bidi_Mirroring_Glyph`', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseMirroring(version),
@@ -110,6 +111,12 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseLineBreak(version),
 		'type': 'Line_Break'
+	}));
+	console.log('Parsing Unicode v%s `Word_Break`…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseWordBreak(version),
+		'type': 'Word_Break'
 	}));
 	// Sort array values.
 	Object.keys(dirMap).forEach(function(property) {

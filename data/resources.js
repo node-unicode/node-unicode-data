@@ -89,7 +89,8 @@ var resources = [
 		'composition-exclusions': 'http://unicode.org/Public/4.1.0/ucd/CompositionExclusions.txt',
 		'case-folding': 'http://unicode.org/Public/4.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/4.1.0/ucd/BidiMirroring.txt',
-		'line-break': 'http://unicode.org/Public/4.1.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/4.1.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/4.1.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '5.0.0',
@@ -102,7 +103,8 @@ var resources = [
 		'composition-exclusions': 'http://unicode.org/Public/5.0.0/ucd/CompositionExclusions.txt',
 		'case-folding': 'http://unicode.org/Public/5.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.0.0/ucd/BidiMirroring.txt',
-		'line-break': 'http://unicode.org/Public/5.0.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/5.0.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/5.0.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '5.1.0',
@@ -115,7 +117,8 @@ var resources = [
 		'composition-exclusions': 'http://unicode.org/Public/5.1.0/ucd/CompositionExclusions.txt',
 		'case-folding': 'http://unicode.org/Public/5.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.1.0/ucd/BidiMirroring.txt',
-		'line-break': 'http://unicode.org/Public/5.1.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/5.1.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/5.1.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '5.2.0',
@@ -128,7 +131,8 @@ var resources = [
 		'composition-exclusions': 'http://unicode.org/Public/5.2.0/ucd/CompositionExclusions.txt',
 		'case-folding': 'http://unicode.org/Public/5.2.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/5.2.0/ucd/BidiMirroring.txt',
-		'line-break': 'http://unicode.org/Public/5.2.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/5.2.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/5.2.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '6.0.0',
@@ -142,7 +146,8 @@ var resources = [
 		'composition-exclusions': 'http://unicode.org/Public/6.0.0/ucd/CompositionExclusions.txt',
 		'case-folding': 'http://unicode.org/Public/6.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.0.0/ucd/BidiMirroring.txt',
-		'line-break': 'http://unicode.org/Public/6.0.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/6.0.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/6.0.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '6.1.0',
@@ -156,7 +161,8 @@ var resources = [
 		'composition-exclusions': 'http://unicode.org/Public/6.1.0/ucd/CompositionExclusions.txt',
 		'case-folding': 'http://unicode.org/Public/6.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.1.0/ucd/BidiMirroring.txt',
-		'line-break': 'http://unicode.org/Public/6.1.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/6.1.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/6.1.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '6.2.0',
@@ -170,7 +176,8 @@ var resources = [
 		'composition-exclusions': 'http://unicode.org/Public/6.2.0/ucd/CompositionExclusions.txt',
 		'case-folding': 'http://unicode.org/Public/6.2.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.2.0/ucd/BidiMirroring.txt',
-		'line-break': 'http://unicode.org/Public/6.2.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/6.2.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/6.2.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '6.3.0',
@@ -185,7 +192,8 @@ var resources = [
 		'case-folding': 'http://unicode.org/Public/6.3.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/6.3.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'http://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt',
-		'line-break': 'http://unicode.org/Public/6.3.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/6.3.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/6.3.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '7.0.0',
@@ -200,7 +208,8 @@ var resources = [
 		'case-folding': 'http://unicode.org/Public/7.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/7.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'http://unicode.org/Public/7.0.0/ucd/BidiBrackets.txt',
-		'line-break': 'http://unicode.org/Public/7.0.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/7.0.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/7.0.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '8.0.0',
@@ -215,7 +224,8 @@ var resources = [
 		'case-folding': 'http://unicode.org/Public/8.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/8.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'http://unicode.org/Public/8.0.0/ucd/BidiBrackets.txt',
-		'line-break': 'http://unicode.org/Public/8.0.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/8.0.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/8.0.0/ucd/auxiliary/WordBreakProperty.txt'
 	},
 	{
 		'version': '9.0.0',
@@ -230,7 +240,8 @@ var resources = [
 		'case-folding': 'http://unicode.org/Public/9.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'http://unicode.org/Public/9.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'http://unicode.org/Public/9.0.0/ucd/BidiBrackets.txt',
-		'line-break': 'http://unicode.org/Public/9.0.0/ucd/LineBreak.txt'
+		'line-break': 'http://unicode.org/Public/9.0.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/9.0.0/ucd/auxiliary/WordBreakProperty.txt'
 	}
 ];
 
