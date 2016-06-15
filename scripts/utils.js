@@ -18,7 +18,8 @@ const gzipInline = function(data) {
 
 const range = function(start, stop) {
 	// inclusive, e.g. `range(1, 3)` → `[1, 2, 3]`
-	for (var result = []; start <= stop; result.push(start++));
+	const result = [];
+	for (; start <= stop; result.push(start++));
 	return result;
 };
 
