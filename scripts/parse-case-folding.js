@@ -20,9 +20,12 @@ const parseCaseFolding = function(version) {
 			return parseInt(codePoint, 16);
 		}); // Note: this could be two characters!
 		if (!caseFoldingMap[status]) {
-			caseFoldingMap[status] = {};
+			caseFoldingMap[status] = new Map();
 		}
-		caseFoldingMap[status][codePoint] = mappings.length == 1 ? mappings[0] : mappings;
+		caseFoldingMap[status].set(
+			codePoint,
+			mappings.length == 1 ? mappings[0] : mappings
+		);
 	});
 	return caseFoldingMap;
 };

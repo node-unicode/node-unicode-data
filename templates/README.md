@@ -67,9 +67,9 @@ require('unicode-<%= version %>/<%= type %>').get(codePoint); // lookup map
 	dirs[type].forEach(function(dir) {
 		if ('Case_Folding' == type) {
 %>
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points'); // lookup map from code point to code point
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points'); // lookup map from code point to code point or array of code points
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points').get(codePoint);
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols'); // lookup map from symbol to symbol
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols'); // lookup map from symbol to symbol(s)
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols').get(symbol);
 <%
 		} else {
