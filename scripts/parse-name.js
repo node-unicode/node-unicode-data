@@ -21,11 +21,6 @@ const parseName = function(version) {
 			if (flag) {
 				if (/<.+, Last>/.test(name)) {
 					flag = false;
-					const rangeName = /<(.+), Last>/.exec(name)[1];
-
-					utils.range(first, codePoint).forEach(function (value) {
-						utils.append(map, rangeName, value);
-					});
 				} else {
 					throw Error('Database exception');
 				}
@@ -36,8 +31,10 @@ const parseName = function(version) {
 				} else {
 					const oldName = data[10];
 
-					if (/<control>/.test(name) && oldName !== "") {
-						utils.append(map, oldName, codePoint);
+					if (/<control>/.test(name)) {
+						if (oldName !== "") {
+							utils.append(map, oldName, codePoint);
+						}
 					} else {
 						utils.append(map, name, codePoint);
 					}
