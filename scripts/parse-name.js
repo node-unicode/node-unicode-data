@@ -34,7 +34,13 @@ const parseName = function(version) {
 					flag = true;
 					first = codePoint;
 				} else {
-					utils.append(map, name, codePoint);
+					const oldName = data[10];
+
+					if (/<control>/.test(name) && oldName !== "") {
+						utils.append(map, oldName, codePoint);
+					} else {
+						utils.append(map, name, codePoint);
+					}
 				}
 			}
 		}
