@@ -11,6 +11,7 @@ parsers.parseCompositionExclusions = require('./scripts/parse-composition-exclus
 parsers.parseLineBreak = require('./scripts/parse-line-break.js');
 parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
 parsers.parseWordBreak = require('./scripts/parse-word-break.js');
+parsers.parseNames = require('./scripts/parse-names.js');
 const extend = utils.extend;
 const cp = require('cp');
 const jsesc = require('jsesc');
@@ -117,6 +118,12 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseWordBreak(version),
 		'type': 'Word_Break'
+	}));
+	console.log('Parsing Unicode v%s `Names`…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseNames(version),
+		'type': 'Names'
 	}));
 	// Sort array values.
 	Object.keys(dirMap).forEach(function(property) {
