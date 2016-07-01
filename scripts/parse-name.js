@@ -2,7 +2,7 @@
 
 const utils = require('./utils.js');
 
-const parseNames = function(version) {
+const parseName = function(version) {
 	const map = {};
 	const source = utils.readDataFile(version, 'database');
 	if (!source) {
@@ -43,4 +43,4 @@ const parseNames = function(version) {
 	return map;
 };
 
-module.exports = parseNames;
+module.exports = parseName;
