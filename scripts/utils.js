@@ -63,6 +63,7 @@ const writeFiles = function(options) {
 			type == 'Bidi_Class' ||
 			type == 'Bidi_Mirroring_Glyph' ||
 			type == 'Bidi_Paired_Bracket_Type' ||
+			type == 'Name' ||
 			(
 				type == 'General_Category' &&
 				// Use the most specific category names, i.e. those whose aliases match
@@ -78,7 +79,7 @@ const writeFiles = function(options) {
 				auxMap[type][codePoint] = item;
 			});
 		}
-		if (type == 'Bidi_Mirroring_Glyph') {
+		if (type == 'Bidi_Mirroring_Glyph' || type == 'Name') {
 			return;
 		}
 		append(dirMap, type, item);
@@ -129,7 +130,7 @@ const writeFiles = function(options) {
 		}
 		mkdirp.sync(dir);
 		let output = '';
-		if (/^(?:Bidi_Class|Bidi_Mirroring_Glyph|bidi-brackets)$/.test(type)) {
+		if (/^(?:Bidi_Class|Bidi_Mirroring_Glyph|bidi-brackets|Name)$/.test(type)) {
 			const map = new Map();
 			Object.keys(auxMap[type]).forEach(function(key) {
 				const codePoint = Number(key);
@@ -139,7 +140,7 @@ const writeFiles = function(options) {
 			if ('Bidi_Mirroring_Glyph' == type) { // `Bidi_Mirroring_Glyph/index.js`
 				// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
 				output = `module.exports=${ jsesc(map) }`;
-			} else { // `Bidi_Class/index.js` or `bidi-brackets/index.js`
+			} else { // `Bidi_Class/index.js` or `bidi-brackets/index.js` or `Name/index.js`
 				output = `module.exports=${ gzipInline(map) }`;
 			}
 		} else { // `categories/index.js`
@@ -179,10 +180,17 @@ const readDataFile = function(version, type) {
 	return source;
 };
 
+const codePointToHex = function (codePoint) {
+	var hexString = codePoint.toString(16).toUpperCase();
+
+	return ('0000' + hexString).slice(-Math.max(4, hexString.length));
+};
+
 module.exports = {
 	'range': range,
 	'append': append,
 	'extend': extend,
 	'readDataFile': readDataFile,
-	'writeFiles': writeFiles
+	'writeFiles': writeFiles,
+	'codePointToHex': codePointToHex
 };
