@@ -18,27 +18,29 @@ const parseName = function(version) {
 		const name = data[1];
 
 		if (!isNaN(codePoint)) {
-			if (flag) {
-				if (/<.+, Last>/.test(name)) {
-					flag = false;
+			var match = /<([^>]+)>/.exec(name);
+
+			if (match) {
+				const rangeName = /(.+), (First|Last)/.exec(match[1]);
+
+				if (rangeName) {
+					if (flag && rangeName[2] === 'Last') {
+						flag = false;
+
+						utils.range(first, codePoint).forEach(function (value) {
+							utils.append(map, rangeName[1] + ' ' + utils.codePointToHex(value), value);
+						});
+					} else if (!flag && rangeName[2] === 'First') {
+						flag = true;
+						first = codePoint;
+					} else {
+						throw Error('Database exception');
+					}
 				} else {
-					throw Error('Database exception');
+					utils.append(map, match[1] + ' ' + utils.codePointToHex(codePoint), codePoint);
 				}
 			} else {
-				if (/<.+, First>/.test(name)) {
-					flag = true;
-					first = codePoint;
-				} else {
-					const oldName = data[10];
-
-					if (/<control>/.test(name)) {
-						if (oldName !== "") {
-							utils.append(map, oldName, codePoint);
-						}
-					} else {
-						utils.append(map, name, codePoint);
-					}
-				}
+				utils.append(map, name, codePoint);
 			}
 		}
 	});

@@ -180,10 +180,17 @@ const readDataFile = function(version, type) {
 	return source;
 };
 
+const codePointToHex = function (codePoint) {
+	var hexString = codePoint.toString(16).toUpperCase();
+
+	return ('0000' + hexString).slice(-Math.max(4, hexString.length));
+};
+
 module.exports = {
 	'range': range,
 	'append': append,
 	'extend': extend,
 	'readDataFile': readDataFile,
-	'writeFiles': writeFiles
+	'writeFiles': writeFiles,
+	'codePointToHex': codePointToHex
 };
