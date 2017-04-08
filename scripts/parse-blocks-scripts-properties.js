@@ -32,12 +32,12 @@ const parseBlocksScriptsProperties = function(type, version) {
 		if (type == 'derived-normalization-properties') {
 			if (item == 'FNC') {
 				// Old Unicode versions up to v4.0.0 use the `FNC` alias instead of
-				// `FC_NFKC`.
-				item = 'FC_NFKC_Closure';
+				// `FC_NFKC` (for `FC_NFKC_Closure`). This is not a binary property.
+				return;
 			} else {
 				const canonical = propertyAliases.get(item);
 				if (canonical) {
-					if (/NFKC_Casefold|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(canonical)) {
+					if (/FC_NFKC_Closure|NFKC_Casefold|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(canonical)) {
 						// These are not binary properties, or their default value (in the
 						// file) is not `True`.
 						return;
