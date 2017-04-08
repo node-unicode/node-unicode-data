@@ -19,8 +19,8 @@ The Unicode data modules ship with pre-compiled regular expressions for categori
 ```js
 const regenerate = require('regenerate');
 const set = regenerate()
-  .add(require('unicode-6.3.0/Script_Extensions/Arabic/code-points')) // or `…/symbols`, doesn’t matter
-  .add(require('unicode-6.3.0/Script_Extensions/Greek/code-points')); // or `…/symbols`, doesn’t matter
+  .add(require('unicode-6.3.0/Script_Extensions/Arabic/code-points.js')) // or `…/symbols`, doesn’t matter
+  .add(require('unicode-6.3.0/Script_Extensions/Greek/code-points.js')); // or `…/symbols`, doesn’t matter
 console.log(set.toString());
 // Then you might want to use a template like this to write the result to a file, along with any regex flags you might need:
 // const regex = /<%= regenerateExample %>/gim;
@@ -30,16 +30,16 @@ console.log(set.toString());
 
 ```js
 // Get an array of code points in a given Unicode category:
-const codePoints = require('unicode-<%= version %>/General_Category/Uppercase_Letter/code-points');
+const codePoints = require('unicode-<%= version %>/General_Category/Uppercase_Letter/code-points.js');
 // Get an array of symbols (strings) in a given Unicode category:
-const symbols = require('unicode-<%= version %>/General_Category/Uppercase_Letter/symbols');
+const symbols = require('unicode-<%= version %>/General_Category/Uppercase_Letter/symbols.js');
 // Get a regular expression that matches any symbol in a given Unicode category:
-const regex = require('unicode-<%= version %>/General_Category/Uppercase_Letter/regex');
+const regex = require('unicode-<%= version %>/General_Category/Uppercase_Letter/regex.js');
 // Get the canonical category a given code point belongs to:
 // (Note: U+0041 is LATIN CAPITAL LETTER A)
 const category = require('unicode-<%= version %>/General_Category').get(0x41);
 // Get an array of all code points with a given bidi class:
-const on = require('unicode-<%= version %>/Bidi_Class/Other_Neutral/code-points');
+const on = require('unicode-<%= version %>/Bidi_Class/Other_Neutral/code-points.js');
 // Get a map from code points to bidi classes:
 const bidiClassMap = require('unicode-<%= version %>/Bidi_Class');
 // Get the directionality of a given code point:
@@ -49,14 +49,14 @@ const directionality = require('unicode-<%= version %>/Bidi_Class').get(0x41);
 const mirrored = require('unicode-<%= version %>/Bidi_Mirroring_Glyph').get(0xAB);
 <% } if (dirs.hasOwnProperty('Bidi_Paired_Bracket_Type')) { %>
 // Get a regular expression that matches all opening brackets:
-const openingBrackets = require('unicode-<%= version %>/Bidi_Paired_Bracket_Type/Open/regex');
+const openingBrackets = require('unicode-<%= version %>/Bidi_Paired_Bracket_Type/Open/regex.js');
 <% } %>
 // …you get the idea.
 ```
 
 Other than categories, data on Unicode properties, blocks, scripts, and script extensions is available too (for recent versions of the Unicode standard). Here’s the full list of the available data for v<%= version %>:
 
-```js<% Object.keys(dirs).forEach(function(type) { %>
+```js<% Object.keys(dirs).forEach(function(type) { if (type == 'Names') { return; } %>
 // `<%= type %>`:
 <%
 	if (/^(?:Bidi_Class|Bidi_Paired_Bracket_Type|Bidi_Mirroring_Glyph|General_Category)$/.test(type)) {
@@ -67,16 +67,16 @@ require('unicode-<%= version %>/<%= type %>').get(codePoint); // lookup map
 	dirs[type].forEach(function(dir) {
 		if ('Case_Folding' == type) {
 %>
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points'); // lookup map from code point to code point or array of code points
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points').get(codePoint);
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols'); // lookup map from symbol to symbol(s)
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols').get(symbol);
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.js'); // lookup map from code point to code point or array of code points
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.js').get(codePoint);
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.js'); // lookup map from symbol to symbol(s)
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.js').get(symbol);
 <%
 		} else {
 %>
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points');
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols');
-require('unicode-<%= version %>/<%= type %>/<%= dir %>/regex');
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.js');
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.js');
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/regex.js');
 <%
 		}
 	});
