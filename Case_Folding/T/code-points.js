@@ -1,1 +1,1 @@
-module.exports={'73':305,'304':105}
+module.exports=new Map([[73,305],[304,105]])
