@@ -1,3 +1,6 @@
+# npm error logs
+npm-debug.log
+
 # Installed npm modules
 node_modules
 
