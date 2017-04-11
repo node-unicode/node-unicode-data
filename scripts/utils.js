@@ -100,19 +100,20 @@ const writeFiles = function(options) {
 		}
 
 		const symbols = isCaseFolding ?
-			Object.keys(codePoints).reduce(function(result, current) {
-				let mappings = codePoints[current];
-				if (Array.isArray(mappings)) {
-					mappings = String.fromCodePoint.apply(null, mappings);
-				} else {
-					mappings = String.fromCodePoint(mappings);
+			(() => {
+				const result = new Map();
+				for (let [from, to] of codePoints) {
+					from = String.fromCodePoint(from);
+					if (Array.isArray(to)) {
+						to = String.fromCodePoint.apply(null, to);
+					} else {
+						to = String.fromCodePoint(to);
+					}
+					result.set(from, to);
 				}
-				result[String.fromCodePoint(current)] = mappings;
 				return result;
-			}, {}) :
-			codePoints.map(function(codePoint) {
-				return String.fromCodePoint(codePoint);
-			});
+			})() :
+			codePoints.map((codePoint) => String.fromCodePoint(codePoint));
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.js'),
 			'module.exports=' + (
