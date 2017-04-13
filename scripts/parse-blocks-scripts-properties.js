@@ -13,16 +13,16 @@ const parseBlocksScriptsProperties = function(type, version) {
 		return;
 	}
 	const lines = source.split('\n');
-	lines.forEach(function(line) {
+	for (const line of lines) {
 		if (
 			/^#/.test(line) ||
 			!(
-				/^(?:blocks|bidi-mirroring)$/.test(type)
+				/^(?:blocks|bidi-mirroring|properties)$/.test(type)
 					? /;\x20/.test(line)
 					: /\x20;\x20/.test(line)
 			)
 		) {
-			return;
+			continue;
 		}
 		const data = line.trim().split(';');
 		const charRange = data[0].replace('..', '-').trim();
@@ -33,14 +33,14 @@ const parseBlocksScriptsProperties = function(type, version) {
 			if (item == 'FNC') {
 				// Old Unicode versions up to v4.0.0 use the `FNC` alias instead of
 				// `FC_NFKC` (for `FC_NFKC_Closure`). This is not a binary property.
-				return;
+				continue;
 			} else {
 				const canonical = propertyAliases.get(item);
 				if (canonical) {
 					if (/FC_NFKC_Closure|NFKC_Casefold|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(canonical)) {
 						// These are not binary properties, or their default value (in the
 						// file) is not `True`.
-						return;
+						continue;
 					}
 					item = canonical;
 				}
@@ -63,7 +63,7 @@ const parseBlocksScriptsProperties = function(type, version) {
 		} else {
 			utils.append(map, item, parseInt(charRange, 16));
 		}
-	});
+	}
 	return map;
 };
 

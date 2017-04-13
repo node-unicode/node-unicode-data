@@ -126,11 +126,11 @@ const generateData = function(version) {
 		'type': 'Names'
 	}));
 	// Sort array values.
-	Object.keys(dirMap).forEach(function(property) {
+	for (const property of Object.keys(dirMap)) {
 		if (Array.isArray(dirMap[property])) {
 			dirMap[property] = dirMap[property].sort();
 		}
-	});
+	}
 	fs.writeFileSync(
 		path.resolve(__dirname, 'output', 'unicode-' + version, 'README.md'),
 		compileReadMe({
