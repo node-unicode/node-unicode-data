@@ -41,11 +41,11 @@ const parseLineBreak = function(version) {
 	});
 	// All code points, assigned and unassigned, that are not listed explicitly
 	// are given the value `XX`.
-	utils.range(0x000000, 0x10FFFF).forEach(function(codePoint) {
+	for (let codePoint = 0x000000; codePoint <= 0x10FFFF; codePoint++) {
 		if (!handled.has(codePoint)) {
 			utils.append(map, 'Unknown', codePoint);
 		}
-	});
+	}
 	return map;
 };
 

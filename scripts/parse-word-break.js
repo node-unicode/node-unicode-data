@@ -24,7 +24,7 @@ const parseWordBreak = function(version) {
 			utils.range(
 				parseInt(rangeParts[0], 16),
 				parseInt(rangeParts[1], 16)
-			).forEach(function(codePoint) {
+			).forEach((codePoint) => {
 				utils.append(map, canonicalName, codePoint);
 				handled.add(codePoint);
 			});
@@ -35,11 +35,11 @@ const parseWordBreak = function(version) {
 		}
 	});
 	// All code points not explicitly listed have the value `Other` (`XX`).
-	utils.range(0x000000, 0x10FFFF).forEach(function(codePoint) {
+	for (let codePoint = 0x000000; codePoint <= 0x10FFFF; codePoint++) {
 		if (!handled.has(codePoint)) {
 			utils.append(map, 'Other', codePoint);
 		}
-	});
+	}
 	return map;
 };
 

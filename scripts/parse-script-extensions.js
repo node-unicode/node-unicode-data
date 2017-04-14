@@ -39,6 +39,7 @@ const parseScriptExtensions = function(version, scriptsMap) {
 				scripts.forEach(function(script) {
 					const canonicalName = findCanonicalName(script);
 					scriptsMap.Common.delete(codePoint);
+					scriptsMap.Inherited.delete(codePoint);
 					console.assert(
 						scriptsMap[canonicalName],
 						`canonical name for ${ script } = ${
@@ -52,6 +53,7 @@ const parseScriptExtensions = function(version, scriptsMap) {
 				const canonicalName = findCanonicalName(script);
 				const codePoint = parseInt(charRange, 16);
 				scriptsMap.Common.delete(codePoint);
+				scriptsMap.Inherited.delete(codePoint);
 				console.assert(
 					scriptsMap[canonicalName],
 					`canonical name for ${ script } = ${
@@ -63,7 +65,7 @@ const parseScriptExtensions = function(version, scriptsMap) {
 	});
 	// Convert the sets back into arrays.
 	for (const script of knownScriptNames) {
-		scriptsMap[script] = [...scriptsMap[script]].sort();
+		scriptsMap[script] = [...scriptsMap[script]].sort((a, b) => a - b);
 	}
 	return scriptsMap;
 };

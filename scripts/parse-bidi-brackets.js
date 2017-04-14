@@ -44,13 +44,13 @@ const parseBidiBrackets = function(version) {
 			utils.append(map, item, codePoint);
 		}
 	});
-	utils.range(0x000000, 0x10FFFF).forEach(function(codePoint) {
+	for (let codePoint = 0x000000; codePoint <= 0x10FFFF; codePoint++) {
 		// Note: `Any`, `ASCII`, and `Assigned` are actually properties,
 		// not categories. http://unicode.org/reports/tr18/#Categories
 		if (!symbolsHandled.has(codePoint)) {
 			utils.append(map, 'None', codePoint);
 		}
-	});
+	}
 	return map;
 };
 

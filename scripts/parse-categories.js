@@ -51,7 +51,7 @@ const parseDatabase = function(version) {
 	// http://unicode.org/reports/tr18/#Categories
 	const categoryMap = {};
 	let categories = [];
-	utils.range(0x000000, 0x10FFFF).forEach(function(codePoint) {
+	for (let codePoint = 0x000000; codePoint <= 0x10FFFF; codePoint++) {
 		// Note: `Any`, `ASCII`, and `Assigned` are actually properties,
 		// not categories. http://unicode.org/reports/tr18/#Categories
 		if (!symbolMap.has(codePoint)) {
@@ -72,14 +72,14 @@ const parseDatabase = function(version) {
 		if (bidiMirrored.has(codePoint)) {
 			categories.push('Bidi_Mirrored');
 		}
-		categories.forEach(function(category) {
+		for (const category of categories) {
 			utils.append(
 				categoryMap,
 				categoryAliases.get(category) || category,
 				codePoint
 			);
-		});
-	});
+		}
+	}
 	return categoryMap;
 };
 
