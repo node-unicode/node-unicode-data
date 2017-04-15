@@ -52,6 +52,6 @@
   },
   "devDependencies": {
     "istanbul": "^0.4.5",
-    "unicode-property-value-aliases": "^2.0.0"
+    "unicode-property-value-aliases": "^3.0.0"
   }
 }
