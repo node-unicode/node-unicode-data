@@ -48,10 +48,10 @@
     "request": "^2.81.0",
     "unicode-loose-match": "^2.2.0",
     "unicode-property-aliases": "^1.1.1",
-    "unicode-property-value-aliases": "^1.2.2",
     "when": "^3.7.8"
   },
   "devDependencies": {
-    "istanbul": "^0.4.5"
+    "istanbul": "^0.4.5",
+    "unicode-property-value-aliases": "^2.0.0"
   }
 }
