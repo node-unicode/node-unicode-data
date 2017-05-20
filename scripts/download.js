@@ -28,25 +28,27 @@ const guardedDownload = guard(guard.n(PARALLEL_REQUEST_LIMIT), download);
 
 console.log('Downloading resources…');
 
-resources.forEach(function(resource) {
+const TYPES = [
+	'scripts',
+	'script-extensions',
+	'blocks',
+	'properties',
+	'derived-core-properties',
+	'derived-normalization-properties',
+	'composition-exclusions',
+	'case-folding',
+	'bidi-mirroring',
+	'bidi-brackets',
+	'line-break',
+	'word-break'
+];
+
+for (const resource of resources) {
 	const version = resource.version;
 	guardedDownload(resource.main, version, 'database');
-	[
-		'scripts',
-		'script-extensions',
-		'blocks',
-		'properties',
-		'derived-core-properties',
-		'derived-normalization-properties',
-		'composition-exclusions',
-		'case-folding',
-		'bidi-mirroring',
-		'bidi-brackets',
-		'line-break',
-		'word-break'
-	].forEach(function(type) {
+	for (const type of TYPES) {
 		if (resource[type]) {
 			guardedDownload(resource[type], version, type);
 		}
-	});
-});
+	}
+}
