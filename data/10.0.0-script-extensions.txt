@@ -1,5 +1,5 @@
 # ScriptExtensions-10.0.0.txt
-# Date: 2017-03-11, 06:40:37 GMT
+# Date: 2017-05-31, 01:07:00 GMT [RP]
 # © 2017 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see http://www.unicode.org/terms_of_use.html
@@ -264,10 +264,12 @@ A8F3          ; Deva Taml # Lo       DEVANAGARI SIGN CANDRABINDU VIRAMA
 0BB5          ; Gran Taml # Lo       TAMIL LETTER VA
 0BE6..0BEF    ; Gran Taml # Nd  [10] TAMIL DIGIT ZERO..TAMIL DIGIT NINE
 0BF0..0BF2    ; Gran Taml # No   [3] TAMIL NUMBER TEN..TAMIL NUMBER ONE THOUSAND
+11301         ; Gran Taml # Mn       GRANTHA SIGN CANDRABINDU
 11303         ; Gran Taml # Mc       GRANTHA SIGN VISARGA
 1133C         ; Gran Taml # Mn       GRANTHA SIGN NUKTA
 
-# Total code points: 17
+
+# Total code points: 18
 
 # ================================================
 

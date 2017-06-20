@@ -245,19 +245,19 @@ var resources = [
 	},
 	{
 		'version': '10.0.0',
-		'main': 'http://unicode.org/Public/10.0.0/ucd/UnicodeData-10.0.0d5.txt',
-		'scripts': 'http://unicode.org/Public/10.0.0/ucd/Scripts-10.0.0d13.txt',
-		'script-extensions': 'http://unicode.org/Public/10.0.0/ucd/ScriptExtensions-10.0.0d13.txt',
-		'blocks': 'http://unicode.org/Public/10.0.0/ucd/Blocks-10.0.0d2.txt',
-		'properties': 'http://unicode.org/Public/10.0.0/ucd/PropList-10.0.0d12.txt',
-		'derived-core-properties': 'http://unicode.org/Public/10.0.0/ucd/DerivedCoreProperties-10.0.0d14.txt',
-		'derived-normalization-properties': 'http://unicode.org/Public/10.0.0/ucd/DerivedNormalizationProps-10.0.0d5.txt',
-		'composition-exclusions': 'http://unicode.org/Public/10.0.0/ucd/CompositionExclusions-10.0.0d1.txt',
-		'case-folding': 'http://unicode.org/Public/10.0.0/ucd/CaseFolding-10.0.0d16.txt',
-		'bidi-mirroring': 'http://unicode.org/Public/10.0.0/ucd/BidiMirroring-10.0.0d2.txt',
-		'bidi-brackets': 'http://unicode.org/Public/10.0.0/ucd/BidiBrackets-10.0.0d2.txt',
-		'line-break': 'http://unicode.org/Public/10.0.0/ucd/LineBreak-10.0.0d2.txt',
-		'word-break': 'http://unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty-10.0.0d11.txt'
+		'main': 'http://unicode.org/Public/10.0.0/ucd/UnicodeData.txt',
+		'scripts': 'http://unicode.org/Public/10.0.0/ucd/Scripts.txt',
+		'script-extensions': 'http://unicode.org/Public/10.0.0/ucd/ScriptExtensions.txt',
+		'blocks': 'http://unicode.org/Public/10.0.0/ucd/Blocks.txt',
+		'properties': 'http://unicode.org/Public/10.0.0/ucd/PropList.txt',
+		'derived-core-properties': 'http://unicode.org/Public/10.0.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'http://unicode.org/Public/10.0.0/ucd/DerivedNormalizationProps.txt',
+		'composition-exclusions': 'http://unicode.org/Public/10.0.0/ucd/CompositionExclusions.txt',
+		'case-folding': 'http://unicode.org/Public/10.0.0/ucd/CaseFolding.txt',
+		'bidi-mirroring': 'http://unicode.org/Public/10.0.0/ucd/BidiMirroring.txt',
+		'bidi-brackets': 'http://unicode.org/Public/10.0.0/ucd/BidiBrackets.txt',
+		'line-break': 'http://unicode.org/Public/10.0.0/ucd/LineBreak.txt',
+		'word-break': 'http://unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty.txt'
 	}
 ];
 
