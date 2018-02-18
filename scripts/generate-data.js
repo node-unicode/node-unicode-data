@@ -9,18 +9,18 @@ const utils = require('../scripts/utils.js');
 const cluster = require('cluster');
 const numCPUs = require('os').cpus().length;
 
-const pad = function(number) {
-	return ('00' + String(number)).slice(-2);
+const pad = (number) => {
+	return String(number).padStart(2, '0');
 };
 
-const getTime = function() {
+const getTime = () => {
 	const currentdate = new Date();
 	return pad(currentdate.getHours()) + ':' +
 		pad(currentdate.getMinutes()) + ':' +
 		pad(currentdate.getSeconds());
 };
 
-const complicatedWorkThatTakesTime = function(resource, callback) {
+const complicatedWorkThatTakesTime = (resource, callback) => {
 
 	if (resource.length) {
 
@@ -46,7 +46,7 @@ if (cluster.isMaster) {
 		cluster.fork();
 	}
 
-	cluster.on('online', function(worker) {
+	cluster.on('online', (worker) => {
 
 		const size = Math.round(resources.length / numCPUs);
 		const x = worker.id - 1;
@@ -62,16 +62,16 @@ if (cluster.isMaster) {
 
 	});
 
-	cluster.on('exit', function(worker) {
-		if (worker.suicide) {
+	cluster.on('exit', (worker) => {
+		if (worker.exitedAfterDisconnect) {
 			console.log('[%s] Worker %d is done!', getTime(), worker.id);
 		}
 	});
 
 } else {
 
-	process.on('message', function(message) {
-		complicatedWorkThatTakesTime(message, function() {
+	process.on('message', (message) => {
+		complicatedWorkThatTakesTime(message, () => {
 			cluster.worker.kill();
 		});
 	});
