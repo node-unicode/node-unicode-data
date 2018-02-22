@@ -273,7 +273,13 @@ var resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/11.0.0/ucd/BidiMirroring-11.0.0d3.txt',
 		'bidi-brackets': 'https://unicode.org/Public/11.0.0/ucd/BidiBrackets-11.0.0d1.txt',
 		'line-break': 'https://unicode.org/Public/11.0.0/ucd/LineBreak-11.0.0d10.txt',
-		'word-break': 'https://unicode.org/Public/11.0.0/ucd/auxiliary/WordBreakProperty-11.0.0d20.txt'
+		'word-break': 'https://unicode.org/Public/11.0.0/ucd/auxiliary/WordBreakProperty-11.0.0d20.txt',
+		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
+		'emoji': 'https://unicode.org/Public/emoji/11.0/emoji-data.txt',
+		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence,
+		'emoji-sequences': 'https://unicode.org/Public/emoji/11.0/emoji-sequences.txt',
+		// Emoji_ZWJ_Sequence
+		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/11.0/emoji-zwj-sequences.txt',
 	},
 ];
 

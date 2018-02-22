@@ -11,6 +11,8 @@ parsers.parseCompositionExclusions = require('./scripts/parse-composition-exclus
 parsers.parseLineBreak = require('./scripts/parse-line-break.js');
 parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
 parsers.parseWordBreak = require('./scripts/parse-word-break.js');
+parsers.parseEmoji = require('./scripts/parse-emoji.js');
+parsers.parseEmojiSequences = require('./scripts/parse-emoji-sequences.js');
 parsers.parseNames = require('./scripts/parse-names.js');
 const extend = utils.extend;
 const cp = require('cp');
@@ -118,6 +120,18 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseWordBreak(version),
 		'type': 'Word_Break'
+	}));
+	console.log('Parsing Unicode v%s binary emoji properties…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseEmoji(version),
+		'type': 'Binary_Property'
+	}));
+	console.log('Parsing Unicode v%s emoji sequence properties…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseEmojiSequences(version),
+		'type': 'Sequence_Property'
 	}));
 	console.log('Parsing Unicode v%s `Names`…', version);
 	extend(dirMap, utils.writeFiles({

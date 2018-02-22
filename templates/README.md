@@ -72,6 +72,10 @@ require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.js').get(code
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.js'); // lookup map from symbol to symbol(s)
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.js').get(symbol);
 <%
+		} else if ('Sequence_Property' == type) {
+%>
+require('unicode-<%= version %>/<%= type %>/<%= dir %>/index.js'); // array containing a string for each sequence
+<%
 		} else {
 %>
 require('unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.js');

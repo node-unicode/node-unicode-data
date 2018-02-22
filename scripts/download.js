@@ -40,7 +40,10 @@ const TYPES = [
 	'bidi-mirroring',
 	'bidi-brackets',
 	'line-break',
-	'word-break'
+	'word-break',
+	'emoji',
+	'emoji-sequences',
+	'emoji-zwj-sequences'
 ];
 
 for (const resource of resources) {

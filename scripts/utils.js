@@ -83,8 +83,20 @@ const writeFiles = function(options) {
 			return;
 		}
 		append(dirMap, type, item);
-		// Create the target directory if it doesn’t exist yet
+		// Create the target directory if it doesn’t exist yet.
 		mkdirp.sync(dir);
+
+		// Sequence properties are special.
+		if (type == 'Sequence_Property') {
+			const sequences = codePoints;
+			const output = `module.exports=${ gzipInline(map[item]) }`;
+			fs.writeFileSync(
+				path.resolve(dir, 'index.js'),
+				output
+			);
+			return;
+		}
+
 		// Save the data to a file
 		fs.writeFileSync(
 			path.resolve(dir, 'code-points.js'),
