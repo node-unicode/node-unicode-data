@@ -258,7 +258,23 @@ var resources = [
 		'bidi-brackets': 'https://unicode.org/Public/10.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/10.0.0/ucd/LineBreak.txt',
 		'word-break': 'https://unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty.txt'
-	}
+	},
+	{
+		'version': '11.0.0',
+		'main': 'https://unicode.org/Public/11.0.0/ucd/UnicodeData-11.0.0d13.txt',
+		'scripts': 'https://unicode.org/Public/11.0.0/ucd/Scripts-11.0.0d20.txt',
+		'script-extensions': 'https://unicode.org/Public/11.0.0/ucd/ScriptExtensions-11.0.0d14.txt',
+		'blocks': 'https://unicode.org/Public/11.0.0/ucd/Blocks-11.0.0d1.txt',
+		'properties': 'https://unicode.org/Public/11.0.0/ucd/PropList-11.0.0d20.txt',
+		'derived-core-properties': 'https://unicode.org/Public/11.0.0/ucd/DerivedCoreProperties-11.0.0d20.txt',
+		'derived-normalization-properties': 'https://unicode.org/Public/11.0.0/ucd/DerivedNormalizationProps-11.0.0d13.txt',
+		'composition-exclusions': 'https://unicode.org/Public/11.0.0/ucd/CompositionExclusions-11.0.0d1.txt',
+		'case-folding': 'https://unicode.org/Public/11.0.0/ucd/CaseFolding-11.0.0d13.txt',
+		'bidi-mirroring': 'https://unicode.org/Public/11.0.0/ucd/BidiMirroring-11.0.0d3.txt',
+		'bidi-brackets': 'https://unicode.org/Public/11.0.0/ucd/BidiBrackets-11.0.0d1.txt',
+		'line-break': 'https://unicode.org/Public/11.0.0/ucd/LineBreak-11.0.0d10.txt',
+		'word-break': 'https://unicode.org/Public/11.0.0/ucd/auxiliary/WordBreakProperty-11.0.0d20.txt'
+	},
 ];
 
 module.exports = resources;
