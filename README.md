@@ -139,6 +139,26 @@ require('unicode-11.0.0/Binary_Property/Diacritic/code-points.js');
 require('unicode-11.0.0/Binary_Property/Diacritic/symbols.js');
 require('unicode-11.0.0/Binary_Property/Diacritic/regex.js');
 
+require('unicode-11.0.0/Binary_Property/Emoji/code-points.js');
+require('unicode-11.0.0/Binary_Property/Emoji/symbols.js');
+require('unicode-11.0.0/Binary_Property/Emoji/regex.js');
+
+require('unicode-11.0.0/Binary_Property/Emoji_Component/code-points.js');
+require('unicode-11.0.0/Binary_Property/Emoji_Component/symbols.js');
+require('unicode-11.0.0/Binary_Property/Emoji_Component/regex.js');
+
+require('unicode-11.0.0/Binary_Property/Emoji_Modifier/code-points.js');
+require('unicode-11.0.0/Binary_Property/Emoji_Modifier/symbols.js');
+require('unicode-11.0.0/Binary_Property/Emoji_Modifier/regex.js');
+
+require('unicode-11.0.0/Binary_Property/Emoji_Modifier_Base/code-points.js');
+require('unicode-11.0.0/Binary_Property/Emoji_Modifier_Base/symbols.js');
+require('unicode-11.0.0/Binary_Property/Emoji_Modifier_Base/regex.js');
+
+require('unicode-11.0.0/Binary_Property/Emoji_Presentation/code-points.js');
+require('unicode-11.0.0/Binary_Property/Emoji_Presentation/symbols.js');
+require('unicode-11.0.0/Binary_Property/Emoji_Presentation/regex.js');
+
 require('unicode-11.0.0/Binary_Property/Expands_On_NFC/code-points.js');
 require('unicode-11.0.0/Binary_Property/Expands_On_NFC/symbols.js');
 require('unicode-11.0.0/Binary_Property/Expands_On_NFC/regex.js');
@@ -154,6 +174,10 @@ require('unicode-11.0.0/Binary_Property/Expands_On_NFKC/regex.js');
 require('unicode-11.0.0/Binary_Property/Expands_On_NFKD/code-points.js');
 require('unicode-11.0.0/Binary_Property/Expands_On_NFKD/symbols.js');
 require('unicode-11.0.0/Binary_Property/Expands_On_NFKD/regex.js');
+
+require('unicode-11.0.0/Binary_Property/Extended_Pictographic/code-points.js');
+require('unicode-11.0.0/Binary_Property/Extended_Pictographic/symbols.js');
+require('unicode-11.0.0/Binary_Property/Extended_Pictographic/regex.js');
 
 require('unicode-11.0.0/Binary_Property/Extender/code-points.js');
 require('unicode-11.0.0/Binary_Property/Extender/symbols.js');
@@ -3222,6 +3246,16 @@ require('unicode-11.0.0/Word_Break/WSegSpace/regex.js');
 require('unicode-11.0.0/Word_Break/ZWJ/code-points.js');
 require('unicode-11.0.0/Word_Break/ZWJ/symbols.js');
 require('unicode-11.0.0/Word_Break/ZWJ/regex.js');
+
+// `Sequence_Property`:
+
+require('unicode-11.0.0/Sequence_Property/Emoji_Flag_Sequence/index.js'); // array containing a string for each sequence
+
+require('unicode-11.0.0/Sequence_Property/Emoji_Keycap_Sequence/index.js'); // array containing a string for each sequence
+
+require('unicode-11.0.0/Sequence_Property/Emoji_Modifier_Sequence/index.js'); // array containing a string for each sequence
+
+require('unicode-11.0.0/Sequence_Property/Emoji_Tag_Sequence/index.js'); // array containing a string for each sequence
 ```
 
 ## Author
