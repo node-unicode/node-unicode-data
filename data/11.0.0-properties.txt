@@ -1,5 +1,5 @@
 # PropList-11.0.0.txt
-# Date: 2018-02-21, 05:34:15 GMT
+# Date: 2018-03-15, 04:28:35 GMT
 # © 2018 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see http://www.unicode.org/terms_of_use.html
@@ -125,7 +125,7 @@ FF63          ; Quotation_Mark # Pe       HALFWIDTH RIGHT CORNER BRACKET
 05C3          ; Terminal_Punctuation # Po       HEBREW PUNCTUATION SOF PASUQ
 060C          ; Terminal_Punctuation # Po       ARABIC COMMA
 061B          ; Terminal_Punctuation # Po       ARABIC SEMICOLON
-061F          ; Terminal_Punctuation # Po       ARABIC QUESTION MARK
+061E..061F    ; Terminal_Punctuation # Po   [2] ARABIC TRIPLE DOT PUNCTUATION MARK..ARABIC QUESTION MARK
 06D4          ; Terminal_Punctuation # Po       ARABIC FULL STOP
 0700..070A    ; Terminal_Punctuation # Po  [11] SYRIAC END OF PARAGRAPH..SYRIAC CONTRACTION
 070C          ; Terminal_Punctuation # Po       SYRIAC HARKLEAN METOBELUS
@@ -217,7 +217,7 @@ FF64          ; Terminal_Punctuation # Po       HALFWIDTH IDEOGRAPHIC COMMA
 1BC9F         ; Terminal_Punctuation # Po       DUPLOYAN PUNCTUATION CHINOOK FULL STOP
 1DA87..1DA8A  ; Terminal_Punctuation # Po   [4] SIGNWRITING COMMA..SIGNWRITING COLON
 
-# Total code points: 263
+# Total code points: 264
 
 # ================================================
 
@@ -1275,10 +1275,13 @@ AABB..AABC    ; Logical_Order_Exception # Lo   [2] TAI VIET VOWEL AUE..TAI VIET 
 002E          ; Sentence_Terminal # Po       FULL STOP
 003F          ; Sentence_Terminal # Po       QUESTION MARK
 0589          ; Sentence_Terminal # Po       ARMENIAN FULL STOP
-061F          ; Sentence_Terminal # Po       ARABIC QUESTION MARK
+061E..061F    ; Sentence_Terminal # Po   [2] ARABIC TRIPLE DOT PUNCTUATION MARK..ARABIC QUESTION MARK
 06D4          ; Sentence_Terminal # Po       ARABIC FULL STOP
 0700..0702    ; Sentence_Terminal # Po   [3] SYRIAC END OF PARAGRAPH..SYRIAC SUBLINEAR FULL STOP
 07F9          ; Sentence_Terminal # Po       NKO EXCLAMATION MARK
+0837          ; Sentence_Terminal # Po       SAMARITAN PUNCTUATION MELODIC QITSA
+0839          ; Sentence_Terminal # Po       SAMARITAN PUNCTUATION QITSA
+083D..083E    ; Sentence_Terminal # Po   [2] SAMARITAN PUNCTUATION SOF MASHFAAT..SAMARITAN PUNCTUATION ANNAAU
 0964..0965    ; Sentence_Terminal # Po   [2] DEVANAGARI DANDA..DEVANAGARI DOUBLE DANDA
 104A..104B    ; Sentence_Terminal # Po   [2] MYANMAR SIGN LITTLE SECTION..MYANMAR SIGN SECTION
 1362          ; Sentence_Terminal # Po       ETHIOPIC FULL STOP
@@ -1343,7 +1346,7 @@ FF61          ; Sentence_Terminal # Po       HALFWIDTH IDEOGRAPHIC FULL STOP
 1BC9F         ; Sentence_Terminal # Po       DUPLOYAN PUNCTUATION CHINOOK FULL STOP
 1DA88         ; Sentence_Terminal # Po       SIGNWRITING FULL STOP
 
-# Total code points: 136
+# Total code points: 141
 
 # ================================================
 
