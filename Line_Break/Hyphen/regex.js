@@ -1,1 +1,1 @@
-module.exports=/\-/
+module.exports=/\x2D/

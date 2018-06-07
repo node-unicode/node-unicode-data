@@ -3175,14 +3175,6 @@ require('unicode-11.0.0/Word_Break/Double_Quote/code-points.js');
 require('unicode-11.0.0/Word_Break/Double_Quote/symbols.js');
 require('unicode-11.0.0/Word_Break/Double_Quote/regex.js');
 
-require('unicode-11.0.0/Word_Break/E_Base/code-points.js');
-require('unicode-11.0.0/Word_Break/E_Base/symbols.js');
-require('unicode-11.0.0/Word_Break/E_Base/regex.js');
-
-require('unicode-11.0.0/Word_Break/E_Modifier/code-points.js');
-require('unicode-11.0.0/Word_Break/E_Modifier/symbols.js');
-require('unicode-11.0.0/Word_Break/E_Modifier/regex.js');
-
 require('unicode-11.0.0/Word_Break/Extend/code-points.js');
 require('unicode-11.0.0/Word_Break/Extend/symbols.js');
 require('unicode-11.0.0/Word_Break/Extend/regex.js');
