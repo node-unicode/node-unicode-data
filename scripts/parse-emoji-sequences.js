@@ -2,14 +2,14 @@
 
 const utils = require('./utils.js');
 
-const parseEmojiSequences = function(version) {
-	const source = utils.readDataFile(version, 'emoji-sequences');
+const parseEmojiSequencesWithId = ({ version, id }) => {
+	const source = utils.readDataFile(version, id);
 	if (!source) {
 		return;
 	}
 	const propertyMap = new Map();
 	const lines = source.split('\n');
-	lines.forEach(function(line) {
+	lines.forEach((line) => {
 		if (!line || /^#/.test(line)) {
 			return;
 		}
@@ -30,6 +30,13 @@ const parseEmojiSequences = function(version) {
 		plainObject[property] = [...codePoints].sort((a, b) => a - b);
 	}
 	return plainObject;
+};
+
+const parseEmojiSequences = (version) => {
+	return {
+		...parseEmojiSequencesWithId({ version, id: 'emoji-sequences' }),
+		...parseEmojiSequencesWithId({ version, id: 'emoji-zwj-sequences' }),
+	};
 };
 
 module.exports = parseEmojiSequences;

@@ -276,7 +276,7 @@ var resources = [
 		'word-break': 'https://unicode.org/Public/11.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		'emoji': 'https://unicode.org/Public/emoji/11.0/emoji-data.txt',
-		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence,
+		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
 		'emoji-sequences': 'https://unicode.org/Public/emoji/11.0/emoji-sequences.txt',
 		// Emoji_ZWJ_Sequence
 		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/11.0/emoji-zwj-sequences.txt',
