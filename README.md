@@ -3248,6 +3248,8 @@ require('unicode-11.0.0/Sequence_Property/Emoji_Keycap_Sequence/index.js'); // a
 require('unicode-11.0.0/Sequence_Property/Emoji_Modifier_Sequence/index.js'); // array containing a string for each sequence
 
 require('unicode-11.0.0/Sequence_Property/Emoji_Tag_Sequence/index.js'); // array containing a string for each sequence
+
+require('unicode-11.0.0/Sequence_Property/Emoji_ZWJ_Sequence/index.js'); // array containing a string for each sequence
 ```
 
 ## Author
