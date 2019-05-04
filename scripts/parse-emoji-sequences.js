@@ -14,15 +14,31 @@ const parseEmojiSequencesWithId = ({ version, id }) => {
 			return;
 		}
 		const data = line.trim().split('; ');
-		const codePoints = data[0].trim().split(' ').map((hex) => {
-			return parseInt(hex, 16);
-		});
-		const sequence = String.fromCodePoint(...codePoints);
+		const charRange = data[0].replace('..', '-').trim();
+		const rangeParts = charRange.split('-');
 		const property = data[1].split('#')[0].trim();
-		if (propertyMap.has(property)) {
-			propertyMap.get(property).add(sequence);
+		if (rangeParts.length == 2) {
+			utils.range(
+				parseInt(rangeParts[0], 16),
+				parseInt(rangeParts[1], 16)
+			).forEach((codePoint) => {
+					const symbol = String.fromCodePoint(codePoint);
+				if (propertyMap.has(property)) {
+					propertyMap.get(property).add(symbol);
+				} else {
+					propertyMap.set(property, new Set([symbol]));
+				}
+			});
 		} else {
-			propertyMap.set(property, new Set([sequence]));
+			const codePoints = data[0].trim().split(' ').map((hex) => {
+				return parseInt(hex, 16);
+			});
+			const sequence = String.fromCodePoint(...codePoints);
+			if (propertyMap.has(property)) {
+				propertyMap.get(property).add(sequence);
+			} else {
+				propertyMap.set(property, new Set([sequence]));
+			}
 		}
 	});
 	const plainObject = {};
