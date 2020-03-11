@@ -47,11 +47,11 @@
     "regenerate": "^1.4.0",
     "request": "^2.88.0",
     "unicode-loose-match": "^2.5.0",
-    "unicode-property-aliases": "^1.4.0",
+    "unicode-property-aliases": "^1.5.0",
+    "unicode-property-value-aliases": "^3.5.0",
     "when": "^3.7.8"
   },
   "devDependencies": {
-    "istanbul": "^0.4.5",
-    "unicode-property-value-aliases": "^3.4.0"
+    "istanbul": "^0.4.5"
   }
 }

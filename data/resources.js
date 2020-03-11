@@ -325,6 +325,28 @@ var resources = [
 		// Emoji_ZWJ_Sequence
 		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/12.0/emoji-zwj-sequences.txt',
 	},
+	{
+		'version': '13.0.0',
+		'main': 'https://unicode.org/Public/13.0.0/ucd/UnicodeData.txt',
+		'scripts': 'https://unicode.org/Public/13.0.0/ucd/Scripts.txt',
+		'script-extensions': 'https://unicode.org/Public/13.0.0/ucd/ScriptExtensions.txt',
+		'blocks': 'https://unicode.org/Public/13.0.0/ucd/Blocks.txt',
+		'properties': 'https://unicode.org/Public/13.0.0/ucd/PropList.txt',
+		'derived-core-properties': 'https://unicode.org/Public/13.0.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'https://unicode.org/Public/13.0.0/ucd/DerivedNormalizationProps.txt',
+		'composition-exclusions': 'https://unicode.org/Public/13.0.0/ucd/CompositionExclusions.txt',
+		'case-folding': 'https://unicode.org/Public/13.0.0/ucd/CaseFolding.txt',
+		'bidi-mirroring': 'https://unicode.org/Public/13.0.0/ucd/BidiMirroring.txt',
+		'bidi-brackets': 'https://unicode.org/Public/13.0.0/ucd/BidiBrackets.txt',
+		'line-break': 'https://unicode.org/Public/13.0.0/ucd/LineBreak.txt',
+		'word-break': 'https://unicode.org/Public/13.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
+		'emoji': 'https://unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt',
+		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
+		'emoji-sequences': 'https://unicode.org/Public/emoji/13.0/emoji-sequences.txt',
+		// Emoji_ZWJ_Sequence
+		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/13.0/emoji-zwj-sequences.txt',
+	},
 ];
 
 module.exports = resources;
