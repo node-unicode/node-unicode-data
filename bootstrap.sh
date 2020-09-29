@@ -11,11 +11,10 @@ for dir in $(find ./unicode-* -type d -maxdepth 0 | sort -r); do
 	cd "${dir}";
 	echo "Taking care of ${dir}…";
 	git add -A;
-	git commit -m 'Prepare scoped npm packages';
-	#git commit -m 'Release v0.7.5'
-	#git tag v0.7.5;
+	git commit -m 'Reset version'
+	# git tag v1.0.0;
 	git push;
-	#git push --tags;
-	#npm publish;
+	# git push --tags;
+	# npm publish --access public;
 	cd ..;
 done;
