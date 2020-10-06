@@ -49,10 +49,24 @@ const parseEmojiSequencesWithId = ({ version, id }) => {
 };
 
 const parseEmojiSequences = (version) => {
-	return {
+	const props = {
 		...parseEmojiSequencesWithId({ version, id: 'emoji-sequences' }),
 		...parseEmojiSequencesWithId({ version, id: 'emoji-zwj-sequences' }),
 	};
+	// https://unicode.org/reports/tr51/#def_rgi_set
+	const RGI_Emoji = [
+		...props.Basic_Emoji,
+		...props.Emoji_Keycap_Sequence,
+		...props.RGI_Emoji_Modifier_Sequence,
+		...props.RGI_Emoji_Flag_Sequence,
+		...props.RGI_Emoji_Tag_Sequence,
+		...props.RGI_Emoji_ZWJ_Sequence,
+	].sort();
+	const result = {
+		RGI_Emoji,
+		...props,
+	};
+	return result;
 };
 
 module.exports = parseEmojiSequences;
