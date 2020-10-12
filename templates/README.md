@@ -1,4 +1,4 @@
-# Unicode v<%= version %> data
+# Unicode v<%= version %> data [![@unicode/unicode-<%= version %> on npm](https://img.shields.io/npm/v/@unicode/unicode-<%= version %>)](https://www.npmjs.com/package/@unicode/unicode-<%= version %>)
 
 JavaScript-compatible Unicode data for use in Node.js. Included: arrays of code points, arrays of symbols, and regular expressions for Unicode v<%= version %>’s categories, scripts, script extensions, blocks, and properties, as well as bidi mirroring and case folding data.
 
