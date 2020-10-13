@@ -146,7 +146,7 @@ const generateData = function(version) {
 		}
 	}
 	fs.writeFileSync(
-		path.resolve(__dirname, 'output', 'unicode-' + version, 'README.md'),
+		path.resolve(__dirname, `output/unicode-${version}/README.md`),
 		compileReadMe({
 			'version': version,
 			'dirs': dirMap,
@@ -154,20 +154,29 @@ const generateData = function(version) {
 		})
 	);
 	fs.writeFileSync(
-		path.resolve(__dirname, 'output', 'unicode-' + version, 'index.js'),
+		path.resolve(__dirname, `output/unicode-${version}/index.js`),
 		compileIndex({ 'version': version, 'data': jsesc(dirMap) })
 	);
 	fs.writeFileSync(
-		path.resolve(__dirname, 'output', 'unicode-' + version, 'package.json'),
+		path.resolve(__dirname, `output/unicode-${version}/package.json`),
 		compilePackage({ 'version': version })
 	);
+	fs.mkdirSync(
+		path.resolve(__dirname, `output/unicode-${version}/.github/workflows`),
+		{
+			recursive: true,
+		}
+	);
 	[
+		'.github/workflows/publish-on-tag.yml',
 		'.gitattributes',
-		'.gitignore'
+		'.gitignore',
+		'.npmignore',
+		'.npmrc',
 	].forEach(function(file) {
 		cp.sync(
 			path.resolve(staticPath, file),
-			path.resolve(__dirname, 'output', 'unicode-' + version, file)
+			path.resolve(__dirname, `output/unicode-${version}/${file}`)
 		);
 	});
 	return dirMap;
