@@ -48,10 +48,35 @@ const parseEmojiSequencesWithId = ({ version, id }) => {
 	return plainObject;
 };
 
+const parseEmojiTestData = ({ version }) => {
+	const source = utils.readDataFile(version, 'emoji-test');
+	if (!source) {
+		return;
+	}
+	const sequences = [];
+	const lines = source.split('\n');
+	lines.forEach((line) => {
+		if (!line || /^#/.test(line)) {
+			return;
+		}
+		const data = line.trim().split('; ');
+		const codePoints = data[0].trim().split(' ').map((hex) => {
+			return parseInt(hex, 16);
+		});
+		const sequence = String.fromCodePoint(...codePoints);
+		sequences.push(sequence);
+	});
+	const plainObject = {
+		'Emoji_Test': sequences.sort((a, b) => a - b),
+	};
+	return plainObject;
+};
+
 const parseEmojiSequences = (version) => {
 	const props = {
 		...parseEmojiSequencesWithId({ version, id: 'emoji-sequences' }),
 		...parseEmojiSequencesWithId({ version, id: 'emoji-zwj-sequences' }),
+		...parseEmojiTestData({ version }),
 	};
 	// Older Unicode versions that lack RGI_Emoji_* properties should not
 	// get RGI_Emoji either.

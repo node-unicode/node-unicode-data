@@ -43,7 +43,8 @@ const TYPES = [
 	'word-break',
 	'emoji',
 	'emoji-sequences',
-	'emoji-zwj-sequences'
+	'emoji-test',
+	'emoji-zwj-sequences',
 ];
 
 for (const resource of resources) {

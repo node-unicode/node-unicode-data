@@ -1,27 +1,27 @@
 var resources = [
 	{
 		'version': '1.1.5',
-		'main': 'https://unicode.org/Public/1.1-Update/UnicodeData-1.1.5.txt'
+		'main': 'https://unicode.org/Public/1.1-Update/UnicodeData-1.1.5.txt',
 	},
 	{
 		'version': '2.0.14',
-		'main': 'https://unicode.org/Public/2.0-Update/UnicodeData-2.0.14.txt'
+		'main': 'https://unicode.org/Public/2.0-Update/UnicodeData-2.0.14.txt',
 	},
 	{
 		'version': '2.1.2',
-		'main': 'https://unicode.org/Public/2.1-Update/UnicodeData-2.1.2.txt'
+		'main': 'https://unicode.org/Public/2.1-Update/UnicodeData-2.1.2.txt',
 	},
 	{
 		'version': '2.1.5',
-		'main': 'https://unicode.org/Public/2.1-Update2/UnicodeData-2.1.5.txt'
+		'main': 'https://unicode.org/Public/2.1-Update2/UnicodeData-2.1.5.txt',
 	},
 	{
 		'version': '2.1.8',
-		'main': 'https://unicode.org/Public/2.1-Update3/UnicodeData-2.1.8.txt'
+		'main': 'https://unicode.org/Public/2.1-Update3/UnicodeData-2.1.8.txt',
 	},
 	{
 		'version': '2.1.9',
-		'main': 'https://unicode.org/Public/2.1-Update4/UnicodeData-2.1.9.txt'
+		'main': 'https://unicode.org/Public/2.1-Update4/UnicodeData-2.1.9.txt',
 	},
 	{
 		'version': '3.0.0',
@@ -43,7 +43,7 @@ var resources = [
 		'derived-core-properties': 'https://unicode.org/Public/3.1-Update/DerivedCoreProperties-3.1.0.txt',
 		'derived-normalization-properties': 'https://unicode.org/Public/3.1-Update/DerivedNormalizationProperties-3.1.0.txt',
 		'case-folding': 'https://unicode.org/Public/3.1-Update/CaseFolding-3.txt',
-		'line-break': 'https://unicode.org/Public/3.1-Update/LineBreak-6.txt'
+		'line-break': 'https://unicode.org/Public/3.1-Update/LineBreak-6.txt',
 	},
 	{
 		'version': '3.2.0',
@@ -54,7 +54,7 @@ var resources = [
 		'derived-core-properties': 'https://unicode.org/Public/3.2-Update/DerivedCoreProperties-3.2.0.txt',
 		'derived-normalization-properties': 'https://unicode.org/Public/3.2-Update/DerivedNormalizationProps-3.2.0.txt',
 		'case-folding': 'https://unicode.org/Public/3.2-Update/CaseFolding-3.2.0.txt',
-		'line-break': 'https://unicode.org/Public/3.2-Update/LineBreak-3.2.0.txt'
+		'line-break': 'https://unicode.org/Public/3.2-Update/LineBreak-3.2.0.txt',
 	},
 	{
 		'version': '4.0.0',
@@ -65,7 +65,7 @@ var resources = [
 		'derived-core-properties': 'https://unicode.org/Public/4.0-Update/DerivedCoreProperties-4.0.0.txt',
 		'derived-normalization-properties': 'https://unicode.org/Public/4.0-Update/DerivedNormalizationProps-4.0.0.txt',
 		'case-folding': 'https://unicode.org/Public/4.0-Update/CaseFolding-4.0.0.txt',
-		'line-break': 'https://unicode.org/Public/4.0-Update/LineBreak-4.0.0.txt'
+		'line-break': 'https://unicode.org/Public/4.0-Update/LineBreak-4.0.0.txt',
 	},
 	{
 		'version': '4.0.1',
@@ -76,7 +76,7 @@ var resources = [
 		'derived-core-properties': 'https://unicode.org/Public/4.0-Update1/DerivedCoreProperties-4.0.1.txt',
 		'derived-normalization-properties': 'https://unicode.org/Public/4.0-Update1/DerivedNormalizationProps-4.0.1.txt',
 		'case-folding': 'https://unicode.org/Public/4.0-Update1/CaseFolding-4.0.1.txt',
-		'line-break': 'https://unicode.org/Public/4.0-Update1/LineBreak-4.0.1.txt'
+		'line-break': 'https://unicode.org/Public/4.0-Update1/LineBreak-4.0.1.txt',
 	},
 	{
 		'version': '4.1.0',
@@ -90,7 +90,7 @@ var resources = [
 		'case-folding': 'https://unicode.org/Public/4.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/4.1.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/4.1.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/4.1.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/4.1.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '5.0.0',
@@ -104,7 +104,7 @@ var resources = [
 		'case-folding': 'https://unicode.org/Public/5.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.0.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.0.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/5.0.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/5.0.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '5.1.0',
@@ -118,7 +118,7 @@ var resources = [
 		'case-folding': 'https://unicode.org/Public/5.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.1.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.1.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/5.1.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/5.1.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '5.2.0',
@@ -132,7 +132,7 @@ var resources = [
 		'case-folding': 'https://unicode.org/Public/5.2.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.2.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.2.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/5.2.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/5.2.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '6.0.0',
@@ -147,7 +147,7 @@ var resources = [
 		'case-folding': 'https://unicode.org/Public/6.0.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.0.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/6.0.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/6.0.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/6.0.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '6.1.0',
@@ -162,7 +162,7 @@ var resources = [
 		'case-folding': 'https://unicode.org/Public/6.1.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.1.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/6.1.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/6.1.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/6.1.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '6.2.0',
@@ -177,7 +177,7 @@ var resources = [
 		'case-folding': 'https://unicode.org/Public/6.2.0/ucd/CaseFolding.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.2.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/6.2.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/6.2.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/6.2.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '6.3.0',
@@ -193,7 +193,7 @@ var resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/6.3.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/6.3.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/6.3.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/6.3.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '7.0.0',
@@ -209,7 +209,7 @@ var resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/7.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/7.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/7.0.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/7.0.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/7.0.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '8.0.0',
@@ -225,7 +225,7 @@ var resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/8.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/8.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/8.0.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/8.0.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/8.0.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '9.0.0',
@@ -241,7 +241,7 @@ var resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/9.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/9.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/9.0.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/9.0.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/9.0.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '10.0.0',
@@ -257,7 +257,7 @@ var resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/10.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/10.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/10.0.0/ucd/LineBreak.txt',
-		'word-break': 'https://unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty.txt'
+		'word-break': 'https://unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty.txt',
 	},
 	{
 		'version': '11.0.0',
@@ -280,6 +280,8 @@ var resources = [
 		'emoji-sequences': 'https://unicode.org/Public/emoji/11.0/emoji-sequences.txt',
 		// Emoji_ZWJ_Sequence
 		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/11.0/emoji-zwj-sequences.txt',
+		// Emoji_Test (not an official property)
+		'emoji-test': 'https://unicode.org/Public/emoji/11.0/emoji-test.txt',
 	},
 	{
 		'version': '12.0.0',
@@ -302,6 +304,8 @@ var resources = [
 		'emoji-sequences': 'https://unicode.org/Public/emoji/12.0/emoji-sequences.txt',
 		// Emoji_ZWJ_Sequence
 		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/12.0/emoji-zwj-sequences.txt',
+		// Emoji_Test (not an official property)
+		'emoji-test': 'https://unicode.org/Public/emoji/12.0/emoji-test.txt',
 	},
 	{
 		'version': '12.1.0',
@@ -319,11 +323,13 @@ var resources = [
 		'line-break': 'https://unicode.org/Public/12.1.0/ucd/LineBreak.txt',
 		'word-break': 'https://unicode.org/Public/12.1.0/ucd/auxiliary/WordBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
-		'emoji': 'https://unicode.org/Public/emoji/12.0/emoji-data.txt',
+		'emoji': 'https://unicode.org/Public/emoji/12.1/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
-		'emoji-sequences': 'https://unicode.org/Public/emoji/12.0/emoji-sequences.txt',
+		'emoji-sequences': 'https://unicode.org/Public/emoji/12.1/emoji-sequences.txt',
 		// Emoji_ZWJ_Sequence
-		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/12.0/emoji-zwj-sequences.txt',
+		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/12.1/emoji-zwj-sequences.txt',
+		// Emoji_Test (not an official property)
+		'emoji-test': 'https://unicode.org/Public/emoji/12.1/emoji-test.txt',
 	},
 	{
 		'version': '13.0.0',
@@ -346,6 +352,8 @@ var resources = [
 		'emoji-sequences': 'https://unicode.org/Public/emoji/13.1/emoji-sequences.txt',
 		// Emoji_ZWJ_Sequence
 		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/13.1/emoji-zwj-sequences.txt',
+		// Emoji_Test (not an official property)
+		'emoji-test': 'https://unicode.org/Public/emoji/13.1/emoji-test.txt',
 	},
 ];
 
