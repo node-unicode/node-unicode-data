@@ -349,11 +349,11 @@ var resources = [
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		'emoji': 'https://unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
-		'emoji-sequences': 'https://unicode.org/Public/emoji/13.0/emoji-sequences.txt',
+		'emoji-sequences': 'https://unicode.org/Public/emoji/13.1/emoji-sequences.txt',
 		// Emoji_ZWJ_Sequence
-		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/13.0/emoji-zwj-sequences.txt',
+		'emoji-zwj-sequences': 'https://unicode.org/Public/emoji/13.1/emoji-zwj-sequences.txt',
 		// Emoji_Test (not an official property)
-		'emoji-test': 'https://unicode.org/Public/emoji/13.0/emoji-test.txt',
+		'emoji-test': 'https://unicode.org/Public/emoji/13.1/emoji-test.txt',
 	},
 ];
 
