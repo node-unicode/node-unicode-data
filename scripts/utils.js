@@ -6,6 +6,7 @@ const zlib = require('zlib');
 const jsesc = require('jsesc');
 const mkdirp = require('mkdirp');
 const regenerate = require('regenerate');
+const decodeRanges = require('../static/decode-ranges');
 
 const gzipInline = function(data) {
 	if (data instanceof Map) {
@@ -99,39 +100,45 @@ const writeFiles = function(options) {
 		}
 
 		// Save the data to a file
-		fs.writeFileSync(
-			path.resolve(dir, 'code-points.js'),
-			'module.exports=' + (
-				codePoints.length > 999 ? gzipInline : jsesc
-			)(codePoints)
-		);
+		let codePointsExports = `require('./ranges').flatMap(r=>Array.from(r.keys()))`;
+		let symbolsExports = `require('./ranges').flatMap(r=>Array.from(r.values()))`;
 		if (!isCaseFolding) {
+			const sortedCodePoints = [...codePoints].sort((a, b) => a - b);
+			fs.writeFileSync(
+				path.resolve(dir, 'ranges.js'),
+				`module.exports=require('../../decode-ranges')('${
+					decodeRanges.encode(sortedCodePoints)
+				}')`
+			);
 			fs.writeFileSync(
 				path.resolve(dir, 'regex.js'),
 				'module.exports=/' + regenerate(codePoints).toString() + '/'
 			);
-		}
-
-		const symbols = isCaseFolding ?
-			(() => {
-				const result = new Map();
-				for (let [from, to] of codePoints) {
-					from = String.fromCodePoint(from);
-					if (Array.isArray(to)) {
-						to = String.fromCodePoint.apply(null, to);
-					} else {
-						to = String.fromCodePoint(to);
-					}
-					result.set(from, to);
+			if (codePoints.length < 10) {
+				codePointsExports = jsesc(codePoints);
+				symbolsExports = jsesc(codePoints.map(cp => String.fromCodePoint(cp)));
+			}
+		} else {
+			const symbols = new Map();
+			for (let [from, to] of codePoints) {
+				from = String.fromCodePoint(from);
+				if (Array.isArray(to)) {
+					to = String.fromCodePoint.apply(null, to);
+				} else {
+					to = String.fromCodePoint(to);
 				}
-				return result;
-			})() :
-			codePoints.map((codePoint) => String.fromCodePoint(codePoint));
+				symbols.set(from, to);
+			}
+			codePointsExports = jsesc(codePoints);
+			symbolsExports = jsesc(symbols);
+		}
+		fs.writeFileSync(
+			path.resolve(dir, 'code-points.js'),
+			`module.exports=${ codePointsExports }`
+		);
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.js'),
-			'module.exports=' + (
-				!isCaseFolding && symbols.length > 999 ? gzipInline : jsesc
-			)(symbols)
+			`module.exports=${ symbolsExports }`
 		);
 	});
 	Object.keys(auxMap).forEach(function(type) {
