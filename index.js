@@ -173,6 +173,7 @@ const generateData = function(version) {
 		'.gitignore',
 		'.npmignore',
 		'.npmrc',
+		'decode-property-map.js',
 		'decode-ranges.js',
 	].forEach(function(file) {
 		cp.sync(
