@@ -13,7 +13,8 @@ const gzipInline = function(data) {
 	}
 	const json = jsesc(data, { 'json': true });
 	const gzipBuffer = zlib.gzipSync(json);
-	return `JSON.parse(require('zlib').gunzipSync(${ jsesc(gzipBuffer) }))`;
+	const str = gzipBuffer.toString('base64');
+	return `JSON.parse(require('zlib').gunzipSync(Buffer.from('${ str }','base64')))`;
 };
 
 const range = function(start, stop) {
