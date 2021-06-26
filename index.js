@@ -173,6 +173,7 @@ const generateData = function(version) {
 		'.gitignore',
 		'.npmignore',
 		'.npmrc',
+		'decode-ranges.js',
 	].forEach(function(file) {
 		cp.sync(
 			path.resolve(staticPath, file),
