@@ -39,6 +39,24 @@ const append = function(object, key, value) {
 	}
 };
 
+const samePropertyRuns = function(codePointProperties) {
+	const result = [];
+	const len = codePointProperties.length;
+	for (let last = 0, cur = 0; cur < len; ) {
+		const begin = cur;
+		const value = codePointProperties[cur];
+		while (++cur < len && codePointProperties[cur] === value)
+			;
+		if (value !== undefined) {
+			const gapLen = begin - last;
+			const runLen = cur - begin;
+			result.push(gapLen, runLen, value);
+			last = cur;
+		}
+	}
+	return result;
+}
+
 const writeFiles = function(options) {
 	const version = options.version;
 	const map = options.map;
@@ -151,22 +169,26 @@ const writeFiles = function(options) {
 		}
 		mkdirp.sync(dir);
 		let output = '';
-		if (/^(?:Bidi_Class|Bidi_Mirroring_Glyph|bidi-brackets|Names)$/.test(type)) {
-			const map = new Map();
-			Object.keys(auxMap[type]).forEach(function(key) {
-				const codePoint = Number(key);
-				const value = auxMap[type][key];
-				map.set(codePoint, value);
-			});
-			if ('Bidi_Mirroring_Glyph' == type) { // `Bidi_Mirroring_Glyph/index.js`
-				// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
-				output = `module.exports=${ jsesc(map) }`;
-			} else { // `Bidi_Class/index.js` or `bidi-brackets/index.js` or `Names/index.js`
-				output = `module.exports=${ gzipInline(map) }`;
-			}
+		if ('Bidi_Mirroring_Glyph' == type) { // `Bidi_Mirroring_Glyph/index.js`
+			// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
+			const flatPairs = auxMap[type]
+				.map(ch => ch.codePointAt(0))
+				.flatMap((a, b) => a < b ? [a, b - a] : []);
+			output = [
+				`const chr=String.fromCodePoint`,
+				`const pair=(t,u,v)=>[t?u+v:v,chr(t?u:u+v)]`,
+				`module.exports=new Map(${
+					jsesc(flatPairs)
+				}.map((v,i,a)=>pair(i&1,a[i^1],v)))`
+			].join('\n');
 		} else { // `categories/index.js`
-			const array = auxMap[type];
-			output = `var x=${ gzipInline(array) };module.exports=new Map(x.entries())`;
+			// or `Bidi_Class/index.js`
+			// or `bidi-brackets/index.js`
+			// or `Names/index.js`
+			const flatRuns = samePropertyRuns(auxMap[type]);
+			output = `module.exports=require('../decode-property-map')(${
+				gzipInline(flatRuns)
+			})`;
 		}
 		fs.writeFileSync(
 			path.resolve(dir, 'index.js'),
