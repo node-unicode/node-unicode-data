@@ -6,7 +6,7 @@ const zlib = require('zlib');
 const jsesc = require('jsesc');
 const mkdirp = require('mkdirp');
 const regenerate = require('regenerate');
-const decodeRanges = require('../static/decode-ranges');
+const decodeRanges = require('../static/decode-ranges.js');
 
 const gzipInline = function(data) {
 	if (data instanceof Map) {
@@ -55,7 +55,7 @@ const samePropertyRuns = function(codePointProperties) {
 		}
 	}
 	return result;
-}
+};
 
 const writeFiles = function(options) {
 	const version = options.version;
@@ -119,12 +119,12 @@ const writeFiles = function(options) {
 
 		// Save the data to a file
 		let codePointsExports = `require('./ranges').flatMap(r=>Array.from(r.keys()))`;
-		let symbolsExports = `require('./ranges').flatMap(r=>Array.from(r.values()))`;
+		let symbolsExports = `require('./ranges.js').flatMap(r=>Array.from(r.values()))`;
 		if (!isCaseFolding) {
 			const sortedCodePoints = [...codePoints].sort((a, b) => a - b);
 			fs.writeFileSync(
 				path.resolve(dir, 'ranges.js'),
-				`module.exports=require('../../decode-ranges')('${
+				`module.exports=require('../../decode-ranges.js')('${
 					decodeRanges.encode(sortedCodePoints)
 				}')`
 			);
@@ -180,13 +180,13 @@ const writeFiles = function(options) {
 				`module.exports=new Map(${
 					jsesc(flatPairs)
 				}.map((v,i,a)=>pair(i&1,a[i^1],v)))`
-			].join('\n');
+			].join(';');
 		} else { // `categories/index.js`
 			// or `Bidi_Class/index.js`
 			// or `bidi-brackets/index.js`
 			// or `Names/index.js`
 			const flatRuns = samePropertyRuns(auxMap[type]);
-			output = `module.exports=require('../decode-property-map')(${
+			output = `module.exports=require('../decode-property-map.js')(${
 				gzipInline(flatRuns)
 			})`;
 		}

@@ -1,5 +1,5 @@
 const base64enc =
-	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
 const base64dec = Object.freeze(Object.fromEntries(
 	Array.from(base64enc, (c, i) => [c, i])
