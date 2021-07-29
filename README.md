@@ -1,4 +1,4 @@
-# node-unicode-data [![Build status](https://travis-ci.org/node-unicode/node-unicode-data.svg?branch=master)](https://travis-ci.org/node-unicode/node-unicode-data)
+# node-unicode-data
 
 JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, script extensions, blocks, bidi data, and other properties — neatly packaged into a separate npm package per Unicode version.
 
