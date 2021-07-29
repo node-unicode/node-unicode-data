@@ -172,7 +172,6 @@ const generateData = function(version) {
 		'.gitattributes',
 		'.gitignore',
 		'.npmignore',
-		'.npmrc',
 		'decode-property-map.js',
 		'decode-ranges.js',
 	].forEach(function(file) {
