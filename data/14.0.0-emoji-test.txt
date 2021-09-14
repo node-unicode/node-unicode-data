@@ -1,5 +1,5 @@
 # emoji-test.txt
-# Date: 2021-05-19, 06:19:23 GMT
+# Date: 2021-08-26, 17:22:23 GMT
 # © 2021 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see http://www.unicode.org/terms_of_use.html
@@ -69,7 +69,7 @@
 1F911                                                  ; fully-qualified     # 🤑 E1.0 money-mouth face
 
 # subgroup: face-hand
-1F917                                                  ; fully-qualified     # 🤗 E1.0 hugging face
+1F917                                                  ; fully-qualified     # 🤗 E1.0 smiling face with open hands
 1F92D                                                  ; fully-qualified     # 🤭 E5.0 face with hand over mouth
 1FAE2                                                  ; fully-qualified     # 🫢 E14.0 face with open eyes and hand over mouth
 1FAE3                                                  ; fully-qualified     # 🫣 E14.0 face with peeking eye
@@ -110,7 +110,7 @@
 1F975                                                  ; fully-qualified     # 🥵 E11.0 hot face
 1F976                                                  ; fully-qualified     # 🥶 E11.0 cold face
 1F974                                                  ; fully-qualified     # 🥴 E11.0 woozy face
-1F635                                                  ; fully-qualified     # 😵 E0.6 knocked-out face
+1F635                                                  ; fully-qualified     # 😵 E0.6 face with crossed-out eyes
 1F635 200D 1F4AB                                       ; fully-qualified     # 😵‍💫 E13.1 face with spiral eyes
 1F92F                                                  ; fully-qualified     # 🤯 E5.0 exploding head
 

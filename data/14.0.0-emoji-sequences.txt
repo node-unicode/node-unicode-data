@@ -1,5 +1,5 @@
 # emoji-sequences.txt
-# Date: 2021-05-19, 06:19:22 GMT
+# Date: 2021-08-26, 17:22:22 GMT
 # © 2021 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see http://www.unicode.org/terms_of_use.html
@@ -193,7 +193,7 @@
 1F62E..1F62F  ; Basic_Emoji                  ; face with open mouth                                           # E1.0   [2] (😮..😯)
 1F630..1F633  ; Basic_Emoji                  ; anxious face with sweat                                        # E0.6   [4] (😰..😳)
 1F634         ; Basic_Emoji                  ; sleeping face                                                  # E1.0   [1] (😴)
-1F635         ; Basic_Emoji                  ; knocked-out face                                               # E0.6   [1] (😵)
+1F635         ; Basic_Emoji                  ; face with crossed-out eyes                                     # E0.6   [1] (😵)
 1F636         ; Basic_Emoji                  ; face without mouth                                             # E1.0   [1] (😶)
 1F637..1F640  ; Basic_Emoji                  ; face with medical mask                                         # E0.6  [10] (😷..🙀)
 1F641..1F644  ; Basic_Emoji                  ; slightly frowning face                                         # E1.0   [4] (🙁..🙄)
