@@ -106,9 +106,9 @@ This clones all the generated repositories to your local `output` folder. You ca
 
 ## Generating the data
 
-`npm run-script download` (re-)downloads the Unicode source files for all the Unicode versions defined in `data/resources.js`, saving them in the `data` folder.
+`npm run download` (re-)downloads the Unicode source files for all the Unicode versions defined in `data/resources.js`, saving them in the `data` folder.
 
-`npm run-script build` generates data for categories, scripts, blocks, and properties for all the Unicode versions defined in `data/resources.js`. This may take a few minutes… In total, roughly 1.5 GB of data is generated. The regular expressions are generated using [Regenerate](https://mths.be/regenerate).
+`npm run build` generates data for all the Unicode versions defined in `data/resources.js`. This may take a few minutes… The regular expressions are generated using [Regenerate](https://mths.be/regenerate).
 
 ## Testing
 
