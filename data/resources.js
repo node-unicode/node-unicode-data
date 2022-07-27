@@ -392,7 +392,7 @@ var resources = [
 		'case-folding': 'https://unicode.org/Public/15.0.0/ucd/CaseFolding-15.0.0d1.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/15.0.0/ucd/BidiMirroring-15.0.0d1.txt',
 		'bidi-brackets': 'https://unicode.org/Public/15.0.0/ucd/BidiBrackets-15.0.0d1.txt',
-		'line-break': 'https://unicode.org/Public/15.0.0/ucd/LineBreak-15.0.0d6.txt',
+		'line-break': 'https://unicode.org/Public/15.0.0/ucd/LineBreak-15.0.0d7.txt',
 		'word-break': 'https://unicode.org/Public/15.0.0/ucd/auxiliary/WordBreakProperty-15.0.0d1.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		'emoji': 'https://unicode.org/Public/15.0.0/ucd/emoji/emoji-data.txt',

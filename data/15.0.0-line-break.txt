@@ -1,5 +1,5 @@
 # LineBreak-15.0.0.txt
-# Date: 2022-05-11 [KW, LI]
+# Date: 2022-07-08, 13:19:20 GMT [KW, LI]
 # © 2022 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see https://www.unicode.org/terms_of_use.html
@@ -3322,7 +3322,7 @@ FFFD;AI           # So         REPLACEMENT CHARACTER
 1E2FF;PR          # Sc         WANCHO NGUN SIGN
 1E4D0..1E4EA;AL   # Lo    [27] NAG MUNDARI LETTER O..NAG MUNDARI LETTER ELL
 1E4EB;AL          # Lm         NAG MUNDARI SIGN OJOD
-1E4EC..1E4EF;AL   # Mn     [4] NAG MUNDARI SIGN MUHOR..NAG MUNDARI SIGN SUTUH
+1E4EC..1E4EF;CM   # Mn     [4] NAG MUNDARI SIGN MUHOR..NAG MUNDARI SIGN SUTUH
 1E4F0..1E4F9;NU   # Nd    [10] NAG MUNDARI DIGIT ZERO..NAG MUNDARI DIGIT NINE
 1E7E0..1E7E6;AL   # Lo     [7] ETHIOPIC SYLLABLE HHYA..ETHIOPIC SYLLABLE HHYO
 1E7E8..1E7EB;AL   # Lo     [4] ETHIOPIC SYLLABLE GURAGE HHWA..ETHIOPIC SYLLABLE HHWE
