@@ -33,6 +33,7 @@ const TYPES = [
 	'script-extensions',
 	'blocks',
 	'properties',
+	'name-aliases',
 	'derived-core-properties',
 	'derived-normalization-properties',
 	'composition-exclusions',

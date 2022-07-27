@@ -14,6 +14,7 @@ parsers.parseWordBreak = require('./scripts/parse-word-break.js');
 parsers.parseEmoji = require('./scripts/parse-emoji.js');
 parsers.parseEmojiSequences = require('./scripts/parse-emoji-sequences.js');
 parsers.parseNames = require('./scripts/parse-names.js');
+parsers.parseNameAliases = require('./scripts/parse-name-aliases.js');
 const extend = utils.extend;
 const cp = require('cp');
 const jsesc = require('jsesc');
@@ -138,6 +139,13 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseNames(version),
 		'type': 'Names'
+	}));
+	console.log('Parsing Unicode v%s Aliases…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseNameAliases(version),
+		'type': 'Names',
+		'subType': 'name-aliases'
 	}));
 	// Sort array values.
 	for (const property of Object.keys(dirMap)) {
