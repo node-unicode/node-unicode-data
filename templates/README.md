@@ -56,7 +56,15 @@ const openingBrackets = require('@unicode/unicode-<%= version %>/Bidi_Paired_Bra
 
 Other than categories, data on Unicode properties, blocks, scripts, and script extensions is available too (for recent versions of the Unicode standard). Here’s the full list of the available data for v<%= version %>:
 
-```js<% Object.keys(dirs).forEach(function(type) { if (type == 'Names') { return; } %>
+```js
+// `Names`:
+
+require('@unicode/unicode-<%= version %>/Names/index.js'); // array of canonical names
+<% dirs.Names.forEach(function(subdir) { %>require('@unicode/unicode-<%= version %>/Names/<%= subdir %>/index.js'); // lookup map from code point to aliases
+<% }); %>
+<% Object.keys(dirs).forEach(function(type) {
+    if (type == 'Names' && !dirs[type].subType) { return; }
+%>
 // `<%= type %>`:
 <%
 	if (/^(?:Bidi_Class|Bidi_Paired_Bracket_Type|Bidi_Mirroring_Glyph|General_Category)$/.test(type)) {

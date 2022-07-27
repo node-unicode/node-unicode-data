@@ -59,6 +59,8 @@ const samePropertyRuns = function(codePointProperties) {
 
 const writeFiles = function(options) {
 	const version = options.version;
+	const subType = options.subType;
+
 	const map = options.map;
 	if (map == null) {
 		return;
@@ -72,18 +74,21 @@ const writeFiles = function(options) {
 			: options.type;
 		const isCaseFolding = type == 'Case_Folding';
 		const isBidiClass = type == 'Bidi_Class';
+		const isNamesCanon = type == 'Names' && !subType;
+		const isNameAliases = type == 'Names' && subType == 'name-aliases';
 		if (isBidiClass) {
 			item = item.replace(/^Bidi_/, '');
 		}
+		const subdir = isNameAliases ? item.charAt(0).toUpperCase() + item.slice(1) : item;
 		const dir = path.resolve(
 			__dirname, '..',
-			'output', 'unicode-' + version, type, item
+			'output', 'unicode-' + version, type, subdir
 		);
 		if (
 			type == 'Bidi_Class' ||
 			type == 'Bidi_Mirroring_Glyph' ||
 			type == 'Bidi_Paired_Bracket_Type' ||
-			type == 'Names' ||
+			isNamesCanon ||
 			(
 				type == 'General_Category' &&
 				// Use the most specific category names, i.e. those whose aliases match
@@ -99,15 +104,15 @@ const writeFiles = function(options) {
 				auxMap[type][codePoint] = item;
 			});
 		}
-		if (type == 'Bidi_Mirroring_Glyph' || type == 'Names') {
+		if (type == 'Bidi_Mirroring_Glyph' || isNamesCanon) {
 			return;
 		}
-		append(dirMap, type, item);
+		append(dirMap, type, subdir);
 		// Create the target directory if it doesn’t exist yet.
 		mkdirp.sync(dir);
 
 		// Sequence properties are special.
-		if (type == 'Sequence_Property') {
+		if (type == 'Sequence_Property' || isNameAliases) {
 			const sequences = codePoints;
 			const output = `module.exports=${ gzipInline(map[item]) }`;
 			fs.writeFileSync(
