@@ -74,7 +74,7 @@ const writeFiles = function(options) {
 			: options.type;
 		const isCaseFolding = type == 'Case_Folding';
 		const isBidiClass = type == 'Bidi_Class';
-		const isNamesCanon = type == 'Names' && ! subType;
+		const isNamesCanon = type == 'Names' && !subType;
 		const isNameAliases = type == 'Names' && subType == 'name-aliases';
 		if (isBidiClass) {
 			item = item.replace(/^Bidi_/, '');
