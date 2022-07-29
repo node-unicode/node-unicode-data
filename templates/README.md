@@ -60,7 +60,7 @@ Other than categories, data on Unicode properties, blocks, scripts, and script e
 // `Names`:
 
 require('@unicode/unicode-<%= version %>/Names/index.js'); // array of canonical names
-<% dirs.Names.forEach(function(subdir) { %>require('@unicode/unicode-<%= version %>/Names/<%= subdir %>/index.js'); // lookup map from codepoint to aliases
+<% dirs.Names.forEach(function(subdir) { %>require('@unicode/unicode-<%= version %>/Names/<%= subdir %>/index.js'); // lookup map from code point to aliases
 <% }); %>
 <% Object.keys(dirs).forEach(function(type) {
     if (type == 'Names' && !dirs[type].subType) { return; }
