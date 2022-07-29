@@ -79,7 +79,7 @@ const writeFiles = function(options) {
 		if (isBidiClass) {
 			item = item.replace(/^Bidi_/, '');
 		}
-		const subdir = isNameAliases ? item.charAt(0).toUpperCase() + item.substring(1) : item;
+		const subdir = isNameAliases ? item.charAt(0).toUpperCase() + item.slice(1) : item;
 		const dir = path.resolve(
 			__dirname, '..',
 			'output', 'unicode-' + version, type, subdir
