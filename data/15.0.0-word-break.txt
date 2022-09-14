@@ -1,5 +1,5 @@
 # WordBreakProperty-15.0.0.txt
-# Date: 2022-04-26, 23:15:03 GMT
+# Date: 2022-04-27, 02:41:26 GMT
 # © 2022 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see https://www.unicode.org/terms_of_use.html
@@ -1204,6 +1204,9 @@ FFDA..FFDC    ; ALetter # Lo   [3] HALFWIDTH HANGUL LETTER EU..HALFWIDTH HANGUL 
 11D6A..11D89  ; ALetter # Lo  [32] GUNJALA GONDI LETTER OO..GUNJALA GONDI LETTER SA
 11D98         ; ALetter # Lo       GUNJALA GONDI OM
 11EE0..11EF2  ; ALetter # Lo  [19] MAKASAR LETTER KA..MAKASAR ANGKA
+11F02         ; ALetter # Lo       KAWI SIGN REPHA
+11F04..11F10  ; ALetter # Lo  [13] KAWI LETTER A..KAWI LETTER O
+11F12..11F33  ; ALetter # Lo  [34] KAWI LETTER KA..KAWI LETTER JNYA
 11FB0         ; ALetter # Lo       LISU LETTER YHA
 12000..12399  ; ALetter # Lo [922] CUNEIFORM SIGN A..CUNEIFORM SIGN U U
 12400..1246E  ; ALetter # Nl [111] CUNEIFORM NUMERIC SIGN TWO ASH..CUNEIFORM NUMERIC SIGN NINE U VARIANT FORM
@@ -1316,7 +1319,7 @@ FFDA..FFDC    ; ALetter # Lo   [3] HALFWIDTH HANGUL LETTER EU..HALFWIDTH HANGUL 
 1F150..1F169  ; ALetter # So  [26] NEGATIVE CIRCLED LATIN CAPITAL LETTER A..NEGATIVE CIRCLED LATIN CAPITAL LETTER Z
 1F170..1F189  ; ALetter # So  [26] NEGATIVE SQUARED LATIN CAPITAL LETTER A..NEGATIVE SQUARED LATIN CAPITAL LETTER Z
 
-# Total code points: 29441
+# Total code points: 29489
 
 # ================================================
 

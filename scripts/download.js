@@ -16,6 +16,7 @@ const download = function(url, version, type) {
 		'..', 'data', version + '-' + type + '.txt'
 	);
 	console.log(' ', url, '→', path.basename(file));
+	//console.log(`curl ${url} > data/${path.basename(file)};`);
 	request(url).on('end', function() {
 		return deferred.resolve();
 	}).on('error', function(err) {
