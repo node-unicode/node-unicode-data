@@ -1,5 +1,5 @@
 # emoji-test.txt
-# Date: 2023-02-01, 02:18:10 GMT
+# Date: 2023-06-05, 21:39:54 GMT
 # © 2023 Unicode®, Inc.
 # Unicode and the Unicode Logo are registered trademarks of Unicode, Inc. in the U.S. and other countries.
 # For terms of use, see https://www.unicode.org/terms_of_use.html
@@ -3536,11 +3536,6 @@
 1F469 1F3FF 200D 2764 200D 1F469 1F3FE                 ; minimally-qualified # 👩🏿‍❤‍👩🏾 E13.1 couple with heart: woman, woman, dark skin tone, medium-dark skin tone
 1F469 1F3FF 200D 2764 FE0F 200D 1F469 1F3FF            ; fully-qualified     # 👩🏿‍❤️‍👩🏿 E13.1 couple with heart: woman, woman, dark skin tone
 1F469 1F3FF 200D 2764 200D 1F469 1F3FF                 ; minimally-qualified # 👩🏿‍❤‍👩🏿 E13.1 couple with heart: woman, woman, dark skin tone
-1F46A                                                  ; fully-qualified     # 👪 E0.6 family
-1F9D1 200D 1F9D1 200D 1F9D2                            ; fully-qualified     # 🧑‍🧑‍🧒 E15.1 adult, adult, child
-1F9D1 200D 1F9D1 200D 1F9D2 200D 1F9D2                 ; fully-qualified     # 🧑‍🧑‍🧒‍🧒 E15.1 adult, adult, child, child
-1F9D1 200D 1F9D2                                       ; fully-qualified     # 🧑‍🧒 E15.1 family: adult, child
-1F9D1 200D 1F9D2 200D 1F9D2                            ; fully-qualified     # 🧑‍🧒‍🧒 E15.1 adult, child, child
 1F468 200D 1F469 200D 1F466                            ; fully-qualified     # 👨‍👩‍👦 E2.0 family: man, woman, boy
 1F468 200D 1F469 200D 1F467                            ; fully-qualified     # 👨‍👩‍👧 E2.0 family: man, woman, girl
 1F468 200D 1F469 200D 1F467 200D 1F466                 ; fully-qualified     # 👨‍👩‍👧‍👦 E2.0 family: man, woman, girl, boy
@@ -3573,6 +3568,11 @@
 1F464                                                  ; fully-qualified     # 👤 E0.6 bust in silhouette
 1F465                                                  ; fully-qualified     # 👥 E1.0 busts in silhouette
 1FAC2                                                  ; fully-qualified     # 🫂 E13.0 people hugging
+1F46A                                                  ; fully-qualified     # 👪 E0.6 family
+1F9D1 200D 1F9D1 200D 1F9D2                            ; fully-qualified     # 🧑‍🧑‍🧒 E15.1 family: adult, adult, child
+1F9D1 200D 1F9D1 200D 1F9D2 200D 1F9D2                 ; fully-qualified     # 🧑‍🧑‍🧒‍🧒 E15.1 family: adult, adult, child, child
+1F9D1 200D 1F9D2                                       ; fully-qualified     # 🧑‍🧒 E15.1 family: adult, child
+1F9D1 200D 1F9D2 200D 1F9D2                            ; fully-qualified     # 🧑‍🧒‍🧒 E15.1 family: adult, child, child
 1F463                                                  ; fully-qualified     # 👣 E0.6 footprints
 
 # People & Body subtotal:		3290
@@ -5280,7 +5280,7 @@
 1F1F9 1F1F2                                            ; fully-qualified     # 🇹🇲 E2.0 flag: Turkmenistan
 1F1F9 1F1F3                                            ; fully-qualified     # 🇹🇳 E2.0 flag: Tunisia
 1F1F9 1F1F4                                            ; fully-qualified     # 🇹🇴 E2.0 flag: Tonga
-1F1F9 1F1F7                                            ; fully-qualified     # 🇹🇷 E2.0 flag: Turkey
+1F1F9 1F1F7                                            ; fully-qualified     # 🇹🇷 E2.0 flag: Türkiye
 1F1F9 1F1F9                                            ; fully-qualified     # 🇹🇹 E2.0 flag: Trinidad & Tobago
 1F1F9 1F1FB                                            ; fully-qualified     # 🇹🇻 E2.0 flag: Tuvalu
 1F1F9 1F1FC                                            ; fully-qualified     # 🇹🇼 E2.0 flag: Taiwan
