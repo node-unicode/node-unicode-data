@@ -4,6 +4,14 @@ const looseMatch = require('unicode-loose-match');
 const propertyAliases = require('unicode-property-aliases');
 const utils = require('./utils.js');
 
+const findCanonicalName = function(shortName) {
+	const canonicalName = propertyAliases.get(shortName);
+	if (!canonicalName) {
+		throw new Error(`Failed to find canonical name for property ${shortName}. Update \`unicode-property-aliases\`.`);
+	}
+	return canonicalName;
+};
+
 const parseBlocksScriptsProperties = function(type, version) {
 	// `type` is 'properties', 'derived-core-properties', 'scripts', 'blocks',
 	// or 'bidi-mirroring'.
@@ -35,7 +43,7 @@ const parseBlocksScriptsProperties = function(type, version) {
 				// `FC_NFKC` (for `FC_NFKC_Closure`). This is not a binary property.
 				continue;
 			} else {
-				const canonical = propertyAliases.get(item);
+				const canonical = findCanonicalName(item);
 				if (canonical) {
 					if (/FC_NFKC_Closure|NFKC_Casefold|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(canonical)) {
 						// These are not binary properties, or their default value (in the

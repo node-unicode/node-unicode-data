@@ -4,7 +4,11 @@ const aliases = require('unicode-property-value-aliases').get('Line_Break');
 const utils = require('./utils.js');
 
 const findCanonicalName = function(shortName) {
-	return aliases.get(shortName);
+	const canonicalName = aliases.get(shortName);
+	if (!canonicalName) {
+		throw new Error(`Failed to find canonical name for Line_Break=${shortName}. Update \`unicode-property-value-aliases\`.`);
+	}
+	return canonicalName;
 };
 
 const handled = new Set();
