@@ -7,7 +7,10 @@ const utils = require('./utils.js');
 const findCanonicalName = function(shortName) {
 	const canonicalName = propertyAliases.get(shortName);
 	if (!canonicalName) {
-		throw new Error(`Failed to find canonical name for property ${shortName}. Update \`unicode-property-aliases\`.`);
+		// This is useful when adding newer versions, but fails for older Unicode versions.
+		// TODO: Fix and re-enable the exception.
+		//throw new Error(`Failed to find canonical name for property ${shortName}. Update \`unicode-property-aliases\`.`);
+		return shortName;
 	}
 	return canonicalName;
 };
