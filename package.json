@@ -37,7 +37,7 @@
     "build": "node scripts/generate-data.js",
     "test": "node tests/tests.js",
     "t": "node tests/quick.js",
-    "cover": "istanbul cover --report html --verbose --dir coverage tests/tests.js"
+    "cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage tests/tests.js"
   },
   "dependencies": {
     "jsesc": "^3.0.2",
@@ -47,8 +47,5 @@
     "unicode-property-aliases": "^1.6.1",
     "unicode-property-value-aliases": "^3.7.1",
     "when": "^3.7.8"
-  },
-  "devDependencies": {
-    "istanbul": "^0.4.5"
   }
 }
