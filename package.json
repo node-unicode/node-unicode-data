@@ -40,7 +40,6 @@
     "cover": "istanbul cover --report html --verbose --dir coverage tests/tests.js"
   },
   "dependencies": {
-    "cp": "^0.2.0",
     "jsesc": "^3.0.2",
     "lodash.template": "^4.5.0",
     "regenerate": "^1.4.2",

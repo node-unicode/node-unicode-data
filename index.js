@@ -16,7 +16,6 @@ parsers.parseEmojiSequences = require('./scripts/parse-emoji-sequences.js');
 parsers.parseNames = require('./scripts/parse-names.js');
 parsers.parseNameAliases = require('./scripts/parse-name-aliases.js');
 const extend = utils.extend;
-const cp = require('cp');
 const jsesc = require('jsesc');
 const template = require('lodash.template');
 
@@ -183,7 +182,7 @@ const generateData = function(version) {
 		'decode-property-map.js',
 		'decode-ranges.js',
 	].forEach(function(file) {
-		cp.sync(
+		fs.copyFileSync(
 			path.resolve(staticPath, file),
 			path.resolve(__dirname, `output/unicode-${version}/${file}`)
 		);
