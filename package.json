@@ -43,7 +43,6 @@
     "jsesc": "^3.0.2",
     "lodash.template": "^4.5.0",
     "regenerate": "^1.4.2",
-    "request": "^2.88.0",
     "unicode-loose-match": "^2.6.0",
     "unicode-property-aliases": "^1.6.1",
     "unicode-property-value-aliases": "^3.7.1",
