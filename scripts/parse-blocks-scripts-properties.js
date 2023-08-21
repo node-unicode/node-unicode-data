@@ -60,7 +60,9 @@ const parseBlocksScriptsProperties = function(type, version) {
 		if (type == 'blocks') {
 			// Use canonical block names. See #34
 			const tmp = looseMatch('Block', item).value;
-			console.assert(item, `Canonical block name not found for ${item}`);
+			if (!tmp) {
+				throw new Error(`Canonical block name not found for ${item}. Update \`unicode-loose-match\`.`);
+			}
 			item = tmp;
 		} else if (type == 'bidi-mirroring') {
 			item = String.fromCodePoint(parseInt(item, 16));
