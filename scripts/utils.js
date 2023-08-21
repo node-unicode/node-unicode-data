@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const zlib = require('zlib');
 const jsesc = require('jsesc');
-const mkdirp = require('mkdirp');
 const regenerate = require('regenerate');
 const decodeRanges = require('../static/decode-ranges.js');
 
@@ -109,7 +108,7 @@ const writeFiles = function(options) {
 		}
 		append(dirMap, type, subdir);
 		// Create the target directory if it doesn’t exist yet.
-		mkdirp.sync(dir);
+		fs.mkdirSync(dir, { recursive: true });
 
 		// Sequence properties are special.
 		if (type == 'Sequence_Property' || isNameAliases) {
@@ -172,7 +171,7 @@ const writeFiles = function(options) {
 		if (!hasKey(dirMap, type)) {
 			dirMap[type] = [];
 		}
-		mkdirp.sync(dir);
+		fs.mkdirSync(dir, { recursive: true });
 		let output = '';
 		if ('Bidi_Mirroring_Glyph' == type) { // `Bidi_Mirroring_Glyph/index.js`
 			// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
