@@ -12,11 +12,11 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
-            - name: Use Node.js latest
-              uses: actions/setup-node@v3
-              with:
-                node-version: latest
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
             - name: Install dependencies
               run: npm install
             - name: Run tests
-              run: npm run test
+              run: npm test
