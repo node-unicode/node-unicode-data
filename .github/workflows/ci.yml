@@ -3,20 +3,20 @@ name: CI
 on: [push, pull_request]
 
 permissions:
-    contents: read
+  contents: read
 
 jobs:
-    test:
-        name: Test on Node.js Latest
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v3
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-            - name: Install dependencies
-              run: npm install
-            - name: Run tests
-              run: npm test
+      - name: Install dependencies
+        run: npm install
+      - name: Run tests
+        run: npm test
