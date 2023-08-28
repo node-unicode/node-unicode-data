@@ -3,8 +3,8 @@
 const fs = require('fs');
 const guard = require('when/guard');
 const path = require('path');
-const { Readable } = require("stream");
-const { finished } = require("stream/promises");
+const { Readable } = require('stream');
+const { finished } = require('stream/promises');
 const resources = require('../data/resources.js');
 
 const PARALLEL_REQUEST_LIMIT = 5;
