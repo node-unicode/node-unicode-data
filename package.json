@@ -37,21 +37,15 @@
     "build": "node scripts/generate-data.js",
     "test": "node tests/tests.js",
     "t": "node tests/quick.js",
-    "cover": "istanbul cover --report html --verbose --dir coverage tests/tests.js"
+    "cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage tests/tests.js"
   },
   "dependencies": {
-    "cp": "^0.2.0",
     "jsesc": "^3.0.2",
     "lodash.template": "^4.5.0",
-    "mkdirp": "^3.0.1",
     "regenerate": "^1.4.2",
-    "request": "^2.88.0",
     "unicode-loose-match": "^2.6.0",
     "unicode-property-aliases": "^1.6.1",
     "unicode-property-value-aliases": "^3.7.1",
     "when": "^3.7.8"
-  },
-  "devDependencies": {
-    "istanbul": "^0.4.5"
   }
 }

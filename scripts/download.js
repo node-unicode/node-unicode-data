@@ -3,26 +3,23 @@
 const fs = require('fs');
 const guard = require('when/guard');
 const path = require('path');
-const request = require('request');
+const { Readable } = require('stream');
+const { finished } = require('stream/promises');
 const resources = require('../data/resources.js');
-const when = require('when');
 
 const PARALLEL_REQUEST_LIMIT = 5;
 
-const download = function(url, version, type) {
-	const deferred = when.defer();
+const download = async function(url, version, type) {
+	const res = await fetch(url);
 	const file = path.resolve(
 		__dirname,
 		'..', 'data', version + '-' + type + '.txt'
 	);
 	console.log(' ', url, '→', path.basename(file));
 	//console.log(`curl ${url} > data/${path.basename(file)};`);
-	request(url).on('end', function() {
-		return deferred.resolve();
-	}).on('error', function(err) {
-		return deferred.reject(err);
-	}).pipe(fs.createWriteStream(file));
-	return deferred.promise;
+	return finished(
+		Readable.fromWeb(res.body).pipe(fs.createWriteStream(file))
+	);
 };
 // Limit maximum parallelism to something reasonable
 const guardedDownload = guard(guard.n(PARALLEL_REQUEST_LIMIT), download);
