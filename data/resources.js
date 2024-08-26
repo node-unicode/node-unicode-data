@@ -1,4 +1,4 @@
-var resources = [
+const resources = [
 		{
 			'version': '1.1.5',
 			'main': 'https://unicode.org/Public/1.1-Update/UnicodeData-1.1.5.txt',
@@ -440,6 +440,31 @@ var resources = [
 		'emoji-zwj-sequences': 'https://www.unicode.org/Public/emoji/15.1/emoji-zwj-sequences.txt',
 		// Emoji_Test (not an official property)
 		'emoji-test': 'https://www.unicode.org/Public/emoji/15.1/emoji-test.txt',
+	},
+	{
+		'version': '16.0.0',
+		'main': 'https://www.unicode.org/Public/16.0.0/ucd/UnicodeData.txt',
+		'scripts': 'https://www.unicode.org/Public/16.0.0/ucd/Scripts.txt',
+		'script-extensions': 'https://www.unicode.org/Public/16.0.0/ucd/ScriptExtensions.txt',
+		'blocks': 'https://www.unicode.org/Public/16.0.0/ucd/Blocks.txt',
+		'properties': 'https://www.unicode.org/Public/16.0.0/ucd/PropList.txt',
+		'name-aliases': 'https://www.unicode.org/Public/16.0.0/ucd/NameAliases.txt',
+		'derived-core-properties': 'https://www.unicode.org/Public/16.0.0/ucd/DerivedCoreProperties.txt',
+		'derived-normalization-properties': 'https://www.unicode.org/Public/16.0.0/ucd/DerivedNormalizationProps.txt',
+		'composition-exclusions': 'https://www.unicode.org/Public/16.0.0/ucd/CompositionExclusions.txt',
+		'case-folding': 'https://www.unicode.org/Public/16.0.0/ucd/CaseFolding.txt',
+		'bidi-mirroring': 'https://www.unicode.org/Public/16.0.0/ucd/BidiMirroring.txt',
+		'bidi-brackets': 'https://www.unicode.org/Public/16.0.0/ucd/BidiBrackets.txt',
+		'line-break': 'https://www.unicode.org/Public/16.0.0/ucd/LineBreak.txt',
+		'word-break': 'https://www.unicode.org/Public/16.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
+		'emoji': 'https://www.unicode.org/Public/16.0.0/ucd/emoji/emoji-data.txt',
+		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
+		'emoji-sequences': 'https://www.unicode.org/Public/emoji/16.0/emoji-sequences.txt',
+		// Emoji_ZWJ_Sequence
+		'emoji-zwj-sequences': 'https://www.unicode.org/Public/emoji/16.0/emoji-zwj-sequences.txt',
+		// Emoji_Test (not an official property)
+		'emoji-test': 'https://www.unicode.org/Public/emoji/16.0/emoji-test.txt',
 	},
 ];
 
