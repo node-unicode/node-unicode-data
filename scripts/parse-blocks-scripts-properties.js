@@ -48,7 +48,7 @@ const parseBlocksScriptsProperties = function(type, version) {
 			} else {
 				const canonical = findCanonicalName(item);
 				if (canonical) {
-					if (/FC_NFKC_Closure|NFKC_Casefold|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(canonical)) {
+					if (/FC_NFKC_Closure|^NFKC_Casefold$|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(canonical)) {
 						// These are not binary properties, or their default value (in the
 						// file) is not `True`.
 						continue;
