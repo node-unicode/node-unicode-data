@@ -36,6 +36,7 @@ const TYPES = [
 	'derived-normalization-properties',
 	'composition-exclusions',
 	'case-folding',
+	'special-casing',
 	'bidi-mirroring',
 	'bidi-brackets',
 	'line-break',
