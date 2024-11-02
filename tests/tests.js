@@ -72,8 +72,9 @@ suite(`The generated latest Unicode js`, () => {
 		);
 	});
 	test("Case_Folding/S should match the snapshot", (t) => {
+		const map = require('../output/unicode-' + newest + '/Case_Folding/S/code-points.js');
 		t.assert.snapshot(
-			require('../output/unicode-' + newest + '/Case_Folding/S/code-points.js')
+			[...map.entries()]
 		);
 	});
 });
