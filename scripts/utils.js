@@ -151,8 +151,8 @@ const writeFiles = function(options) {
 				}
 				symbols.set(from, to);
 			}
-			codePointsExports = jsesc(codePoints);
-			symbolsExports = jsesc(symbols);
+			codePointsExports = codePoints.size < 10 ? jsesc(codePoints) : gzipInline(codePoints);
+			symbolsExports = codePoints.size < 10 ? jsesc(symbols) : gzipInline(symbols);
 		}
 		fs.writeFileSync(
 			path.resolve(dir, 'code-points.js'),
