@@ -10,6 +10,8 @@ parsers.parseCategories = require('./scripts/parse-categories.js');
 parsers.parseCompositionExclusions = require('./scripts/parse-composition-exclusions.js');
 parsers.parseLineBreak = require('./scripts/parse-line-break.js');
 parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
+parsers.parseSpecialCasing = require('./scripts/parse-special-casing.js');
+parsers.parseSimpleCaseMapping = require('./scripts/parse-simple-case-mapping.js');
 parsers.parseWordBreak = require('./scripts/parse-word-break.js');
 parsers.parseEmoji = require('./scripts/parse-emoji.js');
 parsers.parseEmojiSequences = require('./scripts/parse-emoji-sequences.js');
@@ -145,6 +147,12 @@ const generateData = function(version) {
 		'map': parsers.parseNameAliases(version),
 		'type': 'Names',
 		'subType': 'name-aliases'
+	}));
+	console.log('Parsing Unicode v%s `Special_Casing`…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseSpecialCasing(version),
+		'type': 'Special_Casing'
 	}));
 	// Sort array values.
 	for (const property of Object.keys(dirMap)) {
