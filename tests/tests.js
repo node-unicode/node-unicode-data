@@ -1,12 +1,5 @@
 'use strict';
 
-const fs = require('fs');
-
-const readFile = (fileName) => {
-	fileName = `${__dirname}/${fileName}`;
-	return fs.readFileSync(fileName, 'utf8');
-};
-
 const resources = require('../data/resources.js');
 const generateData = require('../index.js');
 
@@ -16,59 +9,72 @@ generateData(oldest);
 const newest = resources.pop().version;
 generateData(newest);
 
-const assert = require('assert');
-const test = require("node:test");
+const { suite, test } = require("node:test");
 
-test("The generated Unicode 1.1.5 js should match the baseline files", () => {
-	assert.deepStrictEqual(
-		readFile('./expected/' + oldest + '-General_Category-Modifier_Letter.js'),
-		readFile('../output/unicode-' + oldest + '/General_Category/Modifier_Letter/ranges.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + oldest + '-Binary_Property-ASCII.js'),
-		readFile('../output/unicode-' + oldest + '/Binary_Property/ASCII/ranges.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + oldest + '-Bidi_Class-Right_To_Left.js'),
-		readFile('../output/unicode-' + oldest + '/Bidi_Class/Right_To_Left/ranges.js')
-	);
-})
+suite(`The generated Unicode ${oldest} js`, () => {
+	test("General_Category/Modifier_Letter should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + oldest + '/General_Category/Modifier_Letter/ranges.js')
+		);
+	});
+	test("Binary_Property/ASCII should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + oldest + '/Binary_Property/ASCII/ranges.js')
+		);
+	});
+	test("Bidi_Class/Right_To_Left should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + oldest + '/Bidi_Class/Right_To_Left/ranges.js')
+		);
+	});
+});
 
-test("The generated latest Unicode js should match the baseline files", () => {
-	assert.deepStrictEqual(
-		readFile('./expected/' + newest + '-Block-Bopomofo.js'),
-		readFile('../output/unicode-' + newest + '/Block/Bopomofo/ranges.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + newest + '-General_Category-Modifier_Letter.js'),
-		readFile('../output/unicode-' + newest + '/General_Category/Modifier_Letter/ranges.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + newest + '-Binary_Property-Sentence_Terminal.js'),
-		readFile('../output/unicode-' + newest + '/Binary_Property/Sentence_Terminal/ranges.js')
-	);
-	assert.deepStrictEqual( // Note: `Hex_Digit` is a derived core property.
-		readFile('./expected/' + newest + '-Binary_Property-Hex_Digit.js'),
-		readFile('../output/unicode-' + newest + '/Binary_Property/Hex_Digit/ranges.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + newest + '-Bidi_Class-Pop_Directional_Isolate.js'),
-		readFile('../output/unicode-' + newest + '/Bidi_Class/Pop_Directional_Isolate/ranges.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + newest + '-Script-Canadian_Aboriginal.js'),
-		readFile('../output/unicode-' + newest + '/Script/Canadian_Aboriginal/ranges.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + newest + '-Bidi_Mirroring_Glyph.js'),
-		readFile('../output/unicode-' + newest + '/Bidi_Mirroring_Glyph/index.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + newest + '-Bidi_Paired_Bracket_Type-Open.js'),
-		readFile('../output/unicode-' + newest + '/Bidi_Paired_Bracket_Type/Open/ranges.js')
-	);
-	assert.deepStrictEqual(
-		readFile('./expected/' + newest + '-Case_Folding-S.js'),
-		readFile('../output/unicode-' + newest + '/Case_Folding/S/code-points.js')
-	);
+
+suite(`The generated latest Unicode js`, () => {
+	test("Block/Bopomofo should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + newest + '/Block/Bopomofo/ranges.js')
+		);
+	});
+	test("General_Category/Modifier_Letter should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + newest + '/General_Category/Modifier_Letter/ranges.js')
+		);
+	});
+	test("Binary_Property/Sentence_Terminal should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + newest + '/Binary_Property/Sentence_Terminal/ranges.js')
+		);
+	});
+	test("Binary_Property/Hex_Digit should match the snapshot", (t) => {
+		t.assert.snapshot( // Note: `Hex_Digit` is a derived core property.
+			require('../output/unicode-' + newest + '/Binary_Property/Hex_Digit/ranges.js')
+		);
+	});
+	test("Bidi_Class/Pop_Directional_Isolate should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + newest + '/Bidi_Class/Pop_Directional_Isolate/ranges.js')
+		);
+	});
+	test("Script/Canadian_Aboriginal should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + newest + '/Script/Canadian_Aboriginal/ranges.js')
+		)
+	});
+	test("Bidi_Mirroring_Glyph should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + newest + '/Bidi_Mirroring_Glyph/index.js')
+		);
+	});
+	test("Bidi_Paired_Bracket_Type/Open should match the snapshot", (t) => {
+		t.assert.snapshot(
+			require('../output/unicode-' + newest + '/Bidi_Paired_Bracket_Type/Open/ranges.js')
+		);
+	});
+	test("Case_Folding/S should match the snapshot", (t) => {
+		const map = require('../output/unicode-' + newest + '/Case_Folding/S/code-points.js');
+		t.assert.snapshot(
+			[...map.entries()]
+		);
+	});
 });

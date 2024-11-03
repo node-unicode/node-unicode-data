@@ -35,9 +35,10 @@
     "download": "node scripts/download.js",
     "clean": "rm -rf -- output/*/*!(.git)",
     "build": "node scripts/generate-data.js",
-    "test": "node tests/tests.js",
-    "t": "node tests/quick.js",
-    "cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage tests/tests.js"
+    "test-update-snapshot": "node --test --experimental-test-snapshots --test-update-snapshots tests/tests.js",
+    "test": "node --test --experimental-test-snapshots tests/tests.js",
+    "t": "node --experimental-test-snapshots tests/quick.js",
+    "cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage --experimental-test-snapshots tests/tests.js"
   },
   "dependencies": {
     "jsesc": "^3.0.2",
