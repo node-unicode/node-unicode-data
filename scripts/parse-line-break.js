@@ -2,6 +2,7 @@
 
 const aliases = require('unicode-property-value-aliases').get('Line_Break');
 const utils = require('./utils.js');
+const regenerate = require('regenerate');
 
 const findCanonicalName = function(shortName) {
 	const canonicalName = aliases.get(shortName);
@@ -11,45 +12,41 @@ const findCanonicalName = function(shortName) {
 	return canonicalName;
 };
 
-const handled = new Set();
-
 const parseLineBreak = function(version) {
 	const source = utils.readDataFile(version, 'line-break');
 	if (!source) {
 		return;
 	}
-	const map = {};
+	const map = {
+		// All code points, assigned and unassigned, that are not listed explicitly
+		// are given the value `XX`.
+		'Unknown': regenerate().addRange(0, 0x10FFFF)
+	};
 	const lines = source.split('\n');
-	lines.forEach(function(line) {
+	for (const line of lines) {
 		if (!line || /^#/.test(line)) {
-			return;
+			continue;
 		}
 		const data = line.trim().split(';');
 		const charRange = data[0].replace('..', '-').trim();
 		const rangeParts = charRange.split('-');
 		const value = data[1].split('#')[0].trim();
 		const canonicalName = findCanonicalName(value);
+		map[canonicalName] ??= regenerate();
 		if (rangeParts.length == 2) {
-			utils.range(
+			const [from, to] = [
 				parseInt(rangeParts[0], 16),
-				parseInt(rangeParts[1], 16)
-			).forEach(function(codePoint) {
-				utils.append(map, canonicalName, codePoint);
-				handled.add(codePoint);
-			});
+				parseInt(rangeParts[1], 16),
+			];
+			map['Unknown'].removeRange(from, to);
+			map[canonicalName].addRange(from, to);
 		} else {
 			const codePoint = parseInt(charRange, 16);
-			utils.append(map, canonicalName, codePoint);
-			handled.add(codePoint);
+			map['Unknown'].remove(codePoint);
+			map[canonicalName].add(codePoint);
 		}
-	});
-	// All code points, assigned and unassigned, that are not listed explicitly
-	// are given the value `XX`.
-	for (let codePoint = 0x000000; codePoint <= 0x10FFFF; codePoint++) {
-		if (!handled.has(codePoint)) {
-			utils.append(map, 'Unknown', codePoint);
-		}
-	}
+	};
+	
 	return map;
 };
 
