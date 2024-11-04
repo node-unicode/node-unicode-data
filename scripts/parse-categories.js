@@ -8,7 +8,6 @@ const categoryAliases = valueAliases.get('General_Category');
 const parseDatabase = function(version) {
 	const symbolMap = new Map();
 	const bidiMap = new Map();
-	const bidiMirrored = new Set();
 	const source = utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
@@ -21,10 +20,6 @@ const parseDatabase = function(version) {
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
 		const generalCategory = data[2];
-		const isBidiMirrored = data[9] == 'Y';
-		if (isBidiMirrored) {
-			bidiMirrored.add(codePoint);
-		}
 		const bidiCategory = bidiAliases.get(data[4]);
 		if (flag) {
 			if (/<.+, Last>/.test(name)) {
@@ -68,9 +63,6 @@ const parseDatabase = function(version) {
 		}
 		if (bidiMap.has(codePoint)) {
 			categories.push('Bidi_' + bidiMap.get(codePoint));
-		}
-		if (bidiMirrored.has(codePoint)) {
-			categories.push('Bidi_Mirrored');
 		}
 		for (const category of categories) {
 			utils.append(

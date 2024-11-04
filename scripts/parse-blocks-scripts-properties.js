@@ -16,7 +16,7 @@ const findCanonicalName = function(shortName) {
 };
 
 const parseBlocksScriptsProperties = function(type, version) {
-	// `type` is 'properties', 'derived-core-properties', 'scripts', 'blocks',
+	// `type` is 'properties', 'derived-binary-properties', 'derived-core-properties', 'scripts', 'blocks',
 	// or 'bidi-mirroring'.
 	const map = {};
 	const source = utils.readDataFile(version, type);
@@ -82,11 +82,39 @@ const parseBlocksScriptsProperties = function(type, version) {
 	return map;
 };
 
+const parseDerivedBinaryProperties = function(version) {
+	if (version === "3.1.0" || version === "3.0.1" || version === "3.0.0" || parseInt(version.split(".")[0], 10) < 3) {
+		// Unicode <= 3.1.0 does not provide derived-binary-properties,
+		// so we should derive Bidi_Mirrored from the UnicodeData
+		const source = utils.readDataFile(version, 'database');
+		if (!source) {
+			return;
+		}
+		const result = [];
+		for (const line of source.split('\n')) {
+			if (line === "" || line.startsWith("#")) {
+				continue;
+			}
+			const data = line.split(';');
+			if (data[9] === "Y") {
+				const codePoint = parseInt(data[0], 16);
+				result.push(codePoint);
+			}
+		}
+		return {
+			Bidi_Mirrored: result
+		}
+	} else {
+		return parseBlocksScriptsProperties('derived-binary-properties', version);
+	}
+}
+
 module.exports = {
 	'parseScripts': parseBlocksScriptsProperties.bind(null, 'scripts'),
 	'parseProperties': parseBlocksScriptsProperties.bind(null, 'properties'),
 	'parseDerivedCoreProperties': parseBlocksScriptsProperties.bind(null, 'derived-core-properties'),
 	'parseDerivedNormalizationProperties': parseBlocksScriptsProperties.bind(null, 'derived-normalization-properties'),
 	'parseBlocks': parseBlocksScriptsProperties.bind(null, 'blocks'),
-	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring')
+	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring'),
+	'parseDerivedBinaryProperties': parseDerivedBinaryProperties
 };

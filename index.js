@@ -41,7 +41,7 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseCategories(version),
 		'type': function(category) {
-			if (/^(?:Any|ASCII|Assigned|Bidi_Mirrored)$/.test(category)) {
+			if (/^(?:Any|ASCII|Assigned)$/.test(category)) {
 				return 'Binary_Property';
 			}
 			if (/^Bidi_/.test(category)) {
@@ -73,6 +73,12 @@ const generateData = function(version) {
 	extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': parsers.parseDerivedCoreProperties(version),
+		'type': 'Binary_Property'
+	}));
+	console.log('Parsing Unicode v%s derived binary properties…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseDerivedBinaryProperties(version),
 		'type': 'Binary_Property'
 	}));
 	console.log('Parsing Unicode v%s derived normalization properties…', version);

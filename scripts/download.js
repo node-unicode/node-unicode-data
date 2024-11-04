@@ -32,6 +32,7 @@ const TYPES = [
 	'blocks',
 	'properties',
 	'name-aliases',
+	'derived-binary-properties',
 	'derived-core-properties',
 	'derived-normalization-properties',
 	'composition-exclusions',
