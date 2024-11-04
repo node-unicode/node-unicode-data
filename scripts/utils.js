@@ -71,7 +71,7 @@ const writeFiles = function(options) {
 		const type = typeof options.type == 'function'
 			? options.type(item)
 			: options.type;
-		const isCaseFolding = type == 'Case_Folding';
+		const isCaseFoldingOrMapping = type == 'Case_Folding' || type == 'Simple_Case_Mapping' || type == 'Special_Casing';
 		const isBidiClass = type == 'Bidi_Class';
 		const isNamesCanon = type == 'Names' && !subType;
 		const isNameAliases = type == 'Names' && subType == 'name-aliases';
@@ -124,7 +124,7 @@ const writeFiles = function(options) {
 		// Save the data to a file
 		let codePointsExports = `require('./ranges.js').flatMap(r=>Array.from(r.keys()))`;
 		let symbolsExports = `require('./ranges.js').flatMap(r=>Array.from(r.values()))`;
-		if (!isCaseFolding) {
+		if (!isCaseFoldingOrMapping) {
 			const sortedCodePoints = [...codePoints].sort((a, b) => a - b);
 			fs.writeFileSync(
 				path.resolve(dir, 'ranges.js'),
@@ -151,8 +151,8 @@ const writeFiles = function(options) {
 				}
 				symbols.set(from, to);
 			}
-			codePointsExports = jsesc(codePoints);
-			symbolsExports = jsesc(symbols);
+			codePointsExports = codePoints.size < 10 ? jsesc(codePoints) : gzipInline(codePoints);
+			symbolsExports = codePoints.size < 10 ? jsesc(symbols) : gzipInline(symbols);
 		}
 		fs.writeFileSync(
 			path.resolve(dir, 'code-points.js'),
