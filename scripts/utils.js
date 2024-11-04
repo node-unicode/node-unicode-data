@@ -67,7 +67,8 @@ const writeFiles = function(options) {
 	const dirMap = {};
 	const auxMap = {};
 	Object.keys(map).forEach(function(item) {
-		const codePoints = map[item];
+		const codePointsRegenerate = map[item];
+		const codePoints = codePointsRegenerate instanceof regenerate ? codePointsRegenerate.toArray() : map[item];
 		const type = typeof options.type == 'function'
 			? options.type(item)
 			: options.type;
@@ -134,7 +135,7 @@ const writeFiles = function(options) {
 			);
 			fs.writeFileSync(
 				path.resolve(dir, 'regex.js'),
-				'module.exports=/' + regenerate(codePoints).toString() + '/'
+				'module.exports=/' + regenerate(codePointsRegenerate).toString() + '/'
 			);
 			if (codePoints.length < 10) {
 				codePointsExports = jsesc(codePoints);
