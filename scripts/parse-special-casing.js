@@ -28,6 +28,8 @@ const parseSpecialCasing = function(version) {
 		// conditions can contain a language ID defined by BCP 47 and casing contexts
 		// defined in Table 3-17 Context Specification for Casing
 		// https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-3/#G54277
+		// Because the language ID may contain `-`, we let `--` be the separator
+		// between the language ID and the casing contexts.
 		const conditions = data[4].replaceAll(" ", "--");
 		const storageKeyPostfix = conditions ? "--" + conditions : ""
 		specialCasingMap["Lowercase" + storageKeyPostfix] ??= new Map();
