@@ -2,6 +2,7 @@
 
 const looseMatch = require('unicode-loose-match');
 const propertyAliases = require('unicode-property-aliases');
+const regenerate = require('regenerate');
 const utils = require('./utils.js');
 
 const findCanonicalName = function(shortName) {
@@ -67,16 +68,15 @@ const parseBlocksScriptsProperties = function(type, version) {
 		} else if (type == 'bidi-mirroring') {
 			item = String.fromCodePoint(parseInt(item, 16));
 		}
+		map[item] ??= regenerate();
 		const rangeParts = charRange.split('-');
 		if (rangeParts.length == 2) {
-			utils.range(
+			map[item].addRange(
 				parseInt(rangeParts[0], 16),
 				parseInt(rangeParts[1], 16)
-			).forEach(function(codePoint) {
-				utils.append(map, item, codePoint);
-			});
+			);
 		} else {
-			utils.append(map, item, parseInt(charRange, 16));
+			map[item].add(parseInt(charRange, 16));
 		}
 	}
 	return map;

@@ -16,7 +16,7 @@ const parseScriptExtensions = function(version, scriptsMap) {
 	// easily add/remove from them.
 	const knownScriptNames = Object.keys(scriptsMap);
 	for (const script of knownScriptNames) {
-		scriptsMap[script] = new Set(scriptsMap[script]);
+		scriptsMap[script] = new Set(scriptsMap[script].toArray());
 	}
 	const source = utils.readDataFile(version, 'script-extensions');
 	if (!source) {
