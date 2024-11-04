@@ -148,6 +148,12 @@ const generateData = function(version) {
 		'type': 'Names',
 		'subType': 'name-aliases'
 	}));
+	console.log('Parsing Unicode v%s simple case mappings…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseSimpleCaseMapping(version),
+		'type': 'Simple_Case_Mapping'
+	}));
 	console.log('Parsing Unicode v%s `Special_Casing`…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
