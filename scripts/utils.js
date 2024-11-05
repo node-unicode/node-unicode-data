@@ -38,7 +38,7 @@ const append = function(object, key, value) {
 	}
 };
 
-const samePropertyRuns = function(codePointProperties) {
+const samePropertyRunsForNames = function (codePointProperties) {
 	const result = [];
 	const len = codePointProperties.length;
 	for (let last = 0, cur = 0; cur < len; ) {
@@ -56,6 +56,28 @@ const samePropertyRuns = function(codePointProperties) {
 	return result;
 };
 
+const samePropertyRuns = function(codePointProperties) {
+	const result = [];
+	const unsorted = [];
+	for (const [value, regenerateSet] of codePointProperties) {
+		const regenerateData = regenerateSet.data;
+		for (let i = 0; i < regenerateData.length; i += 2) {
+			const start = regenerateData[i];
+			const runLen = regenerateData[i + 1] - start;
+			unsorted.push([start, runLen, value]);
+		}
+	}
+	unsorted.sort((a, b) => a[0] - b[0]);
+	const sorted = unsorted;
+
+	for (let i = 0, last = 0; i < sorted.length; i++) {
+		const element = sorted[i];
+		result.push(element[0] - last, element[1], element[2]);
+		last = element[0] + element[1];
+	}
+	return result;
+};
+
 const writeFiles = function(options) {
 	const version = options.version;
 	const subType = options.subType;
@@ -66,6 +88,7 @@ const writeFiles = function(options) {
 	}
 	const dirMap = {};
 	const auxMap = {};
+	const auxMap2 = {};
 	Object.keys(map).forEach(function(item) {
 		const codePointsRegenerate = map[item];
 		const codePoints = codePointsRegenerate instanceof regenerate ? codePointsRegenerate.toArray() : map[item];
@@ -94,11 +117,16 @@ const writeFiles = function(options) {
 		) {
 			if (!auxMap[type]) {
 				auxMap[type] = [];
+				auxMap2[type] = [];
 			}
-			codePoints.forEach(function(codePoint) {
-				console.assert(!auxMap[type][codePoint]);
-				auxMap[type][codePoint] = item;
-			});
+			if (type == 'Bidi_Mirroring_Glyph' || isNamesCanon) {
+				codePoints.forEach(function(codePoint) {
+					console.assert(!auxMap[type][codePoint]);
+					auxMap[type][codePoint] = item;
+				});
+			} else {
+				auxMap2[type].push([item, codePointsRegenerate]);
+			}
 		}
 		if (type == 'Bidi_Mirroring_Glyph' || isNamesCanon) {
 			return;
@@ -186,7 +214,7 @@ const writeFiles = function(options) {
 			// or `Bidi_Class/index.js`
 			// or `bidi-brackets/index.js`
 			// or `Names/index.js`
-			const flatRuns = samePropertyRuns(auxMap[type]);
+			const flatRuns = type !== "Names" ? samePropertyRuns(auxMap2[type]) : samePropertyRunsForNames(auxMap[type]);
 			output = `module.exports=require('../decode-property-map.js')(${
 				gzipInline(flatRuns)
 			})`;
