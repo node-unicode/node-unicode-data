@@ -30,6 +30,21 @@ const hasKey = function(object, key) {
 	return hasOwnProperty.call(object, key);
 };
 
+const codePointsSizeLt = function(codePoints, value) {
+	if (codePoints instanceof regenerate) {
+		const regenerateData = codePoints.data;
+		for (let seenSize = 0, i = 0; i < regenerateData.length; i+= 2) {
+			seenSize += (regenerateData[i + 1] - regenerateData[i]);
+			if (seenSize >= value) {
+				return false;
+			}
+		}
+		return true;
+	} else if (Array.isArray(codePoints)) {
+		return codePoints.length < value;
+	}
+}
+
 const append = function(object, key, value) {
 	if (hasKey(object, key)) {
 		object[key].push(value);
@@ -72,8 +87,7 @@ const writeFiles = function(options) {
 	const bidiMirroringGlyphMap = [];
 	const auxMap = {};
 	Object.keys(map).forEach(function(item) {
-		const codePointsRegenerate = map[item];
-		const codePoints = codePointsRegenerate instanceof regenerate ? codePointsRegenerate.toArray() : map[item];
+		const codePoints = map[item];
 		const type = typeof options.type == 'function'
 			? options.type(item)
 			: options.type;
@@ -99,7 +113,7 @@ const writeFiles = function(options) {
 		) {
 			if (type == 'Bidi_Mirroring_Glyph') {
 				const shortName = item.codePointAt(0);
-				codePoints.forEach(function(codePoint) {
+				codePoints.toArray().forEach(function(codePoint) {
 					console.assert(!bidiMirroringGlyphMap[codePoint]);
 					bidiMirroringGlyphMap[codePoint] = shortName;
 				});
@@ -107,7 +121,7 @@ const writeFiles = function(options) {
 				if (!auxMap[type]) {
 					auxMap[type] = [];
 				}
-				auxMap[type].push([item, codePointsRegenerate]);
+				auxMap[type].push([item, codePoints]);
 			}
 		}
 		if (isNamesCanon) {
@@ -160,18 +174,19 @@ const writeFiles = function(options) {
 		let codePointsExports = `require('./ranges.js').flatMap(r=>Array.from(r.keys()))`;
 		let symbolsExports = `require('./ranges.js').flatMap(r=>Array.from(r.values()))`;
 		if (!isCaseFoldingOrMapping) {
-			const encodedRanges = codePointsRegenerate instanceof regenerate ? encodeRegenerate(codePointsRegenerate) : encodeRanges(codePointsRegenerate);
+			const encodedRanges = codePoints instanceof regenerate ? encodeRegenerate(codePoints) : encodeRanges(codePoints);
 			fs.writeFileSync(
 				path.resolve(dir, 'ranges.js'),
 				`module.exports=require('../../decode-ranges.js')('${encodedRanges}')`
 			);
 			fs.writeFileSync(
 				path.resolve(dir, 'regex.js'),
-				'module.exports=/' + regenerate(codePointsRegenerate).toString() + '/'
+				'module.exports=/' + regenerate(codePoints).toString() + '/'
 			);
-			if (codePoints.length < 10) {
-				codePointsExports = jsesc(codePoints);
-				symbolsExports = jsesc(codePoints.map(cp => String.fromCodePoint(cp)));
+			if (codePointsSizeLt(codePoints, 10)) {
+				const codePointsAsArray = codePoints instanceof regenerate ? codePoints.toArray() : codePoints;
+				codePointsExports = jsesc(codePointsAsArray);
+				symbolsExports = jsesc(codePointsAsArray.map(cp => String.fromCodePoint(cp)));
 			}
 		} else {
 			const symbols = new Map();
