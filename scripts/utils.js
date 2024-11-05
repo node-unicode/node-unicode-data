@@ -5,7 +5,7 @@ const path = require('path');
 const zlib = require('zlib');
 const jsesc = require('jsesc');
 const regenerate = require('regenerate');
-const decodeRanges = require('../static/decode-ranges.js');
+const { encodeRanges, encodeRegenerate } = require('./encode-ranges.js');
 
 const gzipInline = function(data) {
 	if (data instanceof Map) {
@@ -160,11 +160,10 @@ const writeFiles = function(options) {
 		let codePointsExports = `require('./ranges.js').flatMap(r=>Array.from(r.keys()))`;
 		let symbolsExports = `require('./ranges.js').flatMap(r=>Array.from(r.values()))`;
 		if (!isCaseFoldingOrMapping) {
+			const encodedRanges = codePointsRegenerate instanceof regenerate ? encodeRegenerate(codePointsRegenerate) : encodeRanges(codePointsRegenerate);
 			fs.writeFileSync(
 				path.resolve(dir, 'ranges.js'),
-				`module.exports=require('../../decode-ranges.js')('${
-					decodeRanges.encode(codePoints)
-				}')`
+				`module.exports=require('../../decode-ranges.js')('${encodedRanges}')`
 			);
 			fs.writeFileSync(
 				path.resolve(dir, 'regex.js'),
