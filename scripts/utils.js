@@ -160,11 +160,10 @@ const writeFiles = function(options) {
 		let codePointsExports = `require('./ranges.js').flatMap(r=>Array.from(r.keys()))`;
 		let symbolsExports = `require('./ranges.js').flatMap(r=>Array.from(r.values()))`;
 		if (!isCaseFoldingOrMapping) {
-			const sortedCodePoints = [...codePoints].sort((a, b) => a - b);
 			fs.writeFileSync(
 				path.resolve(dir, 'ranges.js'),
 				`module.exports=require('../../decode-ranges.js')('${
-					decodeRanges.encode(sortedCodePoints)
+					decodeRanges.encode(codePoints)
 				}')`
 			);
 			fs.writeFileSync(
