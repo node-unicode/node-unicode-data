@@ -38,24 +38,6 @@ const append = function(object, key, value) {
 	}
 };
 
-const samePropertyRunsForNames = function (codePointProperties) {
-	const result = [];
-	const len = codePointProperties.length;
-	for (let last = 0, cur = 0; cur < len; ) {
-		const begin = cur;
-		const value = codePointProperties[cur];
-		while (++cur < len && codePointProperties[cur] === value)
-			;
-		if (value !== undefined) {
-			const gapLen = begin - last;
-			const runLen = cur - begin;
-			result.push(gapLen, runLen, value);
-			last = cur;
-		}
-	}
-	return result;
-};
-
 const samePropertyRuns = function(codePointProperties) {
 	const result = [];
 	const unsorted = [];
@@ -119,7 +101,7 @@ const writeFiles = function(options) {
 				auxMap[type] = [];
 				auxMap2[type] = [];
 			}
-			if (type == 'Bidi_Mirroring_Glyph' || isNamesCanon) {
+			if (type == 'Bidi_Mirroring_Glyph') {
 				codePoints.forEach(function(codePoint) {
 					console.assert(!auxMap[type][codePoint]);
 					auxMap[type][codePoint] = item;
@@ -138,7 +120,7 @@ const writeFiles = function(options) {
 		// Sequence properties are special.
 		if (type == 'Sequence_Property' || isNameAliases) {
 			const sequences = codePoints;
-			const output = `module.exports=${ gzipInline(map[item]) }`;
+			const output = `module.exports=${ gzipInline(sequences) }`;
 			fs.writeFileSync(
 				path.resolve(dir, 'index.js'),
 				output
@@ -214,7 +196,7 @@ const writeFiles = function(options) {
 			// or `Bidi_Class/index.js`
 			// or `bidi-brackets/index.js`
 			// or `Names/index.js`
-			const flatRuns = type !== "Names" ? samePropertyRuns(auxMap2[type]) : samePropertyRunsForNames(auxMap[type]);
+			const flatRuns = samePropertyRuns(auxMap2[type]);
 			output = `module.exports=require('../decode-property-map.js')(${
 				gzipInline(flatRuns)
 			})`;
