@@ -6,7 +6,7 @@ const utils = require('./scripts/utils.js');
 const parsers = require('./scripts/parse-blocks-scripts-properties.js');
 parsers.parseBidiBrackets = require('./scripts/parse-bidi-brackets.js');
 parsers.parseCaseFolding = require('./scripts/parse-case-folding.js');
-parsers.parseCategories = require('./scripts/parse-categories.js');
+parsers.parseBidiClass = require('./scripts/parse-bidi-class.js');
 parsers.parseCompositionExclusions = require('./scripts/parse-composition-exclusions.js');
 parsers.parseLineBreak = require('./scripts/parse-line-break.js');
 parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
@@ -39,16 +39,19 @@ const generateData = function(version) {
 	console.log('Parsing Unicode v%s categories…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
-		'map': parsers.parseCategories(version),
+		'map': parsers.parseDerivedGeneralCategory(version),
 		'type': function(category) {
 			if (/^(?:Any|ASCII|Assigned)$/.test(category)) {
 				return 'Binary_Property';
 			}
-			if (/^Bidi_/.test(category)) {
-				return 'Bidi_Class';
-			}
 			return 'General_Category';
 		}
+	}));
+	console.log('Parsing Unicode v%s `Bidi_Class`', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseBidiClass(version),
+		'type': 'Bidi_Class'
 	}));
 	console.log('Parsing Unicode v%s `Script`…', version);
 	const scriptsMap = parsers.parseScripts(version)

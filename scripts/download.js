@@ -34,6 +34,7 @@ const TYPES = [
 	'name-aliases',
 	'derived-binary-properties',
 	'derived-core-properties',
+	'derived-general-category',
 	'derived-normalization-properties',
 	'composition-exclusions',
 	'case-folding',

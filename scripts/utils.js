@@ -73,12 +73,8 @@ const writeFiles = function(options) {
 			? options.type(item)
 			: options.type;
 		const isCaseFoldingOrMapping = type == 'Case_Folding' || type == 'Simple_Case_Mapping' || type == 'Special_Casing';
-		const isBidiClass = type == 'Bidi_Class';
 		const isNamesCanon = type == 'Names' && !subType;
 		const isNameAliases = type == 'Names' && subType == 'name-aliases';
-		if (isBidiClass) {
-			item = item.replace(/^Bidi_/, '');
-		}
 		const subdir = isNameAliases ? item.charAt(0).toUpperCase() + item.slice(1) : item;
 		const dir = path.resolve(
 			__dirname, '..',
