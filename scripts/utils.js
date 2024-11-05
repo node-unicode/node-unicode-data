@@ -69,8 +69,8 @@ const writeFiles = function(options) {
 		return;
 	}
 	const dirMap = {};
+	const bidiMirroringGlyphMap = [];
 	const auxMap = {};
-	const auxMap2 = {};
 	Object.keys(map).forEach(function(item) {
 		const codePointsRegenerate = map[item];
 		const codePoints = codePointsRegenerate instanceof regenerate ? codePointsRegenerate.toArray() : map[item];
@@ -97,25 +97,53 @@ const writeFiles = function(options) {
 				!/^(?:Other|Letter|Cased_Letter|Mark|Number|Punctuation|Symbol|Separator)$/.test(item)
 			)
 		) {
-			if (!auxMap[type]) {
-				auxMap[type] = [];
-				auxMap2[type] = [];
-			}
 			if (type == 'Bidi_Mirroring_Glyph') {
+				const shortName = item.codePointAt(0);
 				codePoints.forEach(function(codePoint) {
-					console.assert(!auxMap[type][codePoint]);
-					auxMap[type][codePoint] = item;
+					console.assert(!bidiMirroringGlyphMap[codePoint]);
+					bidiMirroringGlyphMap[codePoint] = shortName;
 				});
 			} else {
-				auxMap2[type].push([item, codePointsRegenerate]);
+				if (!auxMap[type]) {
+					auxMap[type] = [];
+				}
+				auxMap[type].push([item, codePointsRegenerate]);
 			}
 		}
-		if (type == 'Bidi_Mirroring_Glyph' || isNamesCanon) {
+		if (isNamesCanon) {
 			return;
 		}
-		append(dirMap, type, subdir);
+
+		if (type == 'Bidi_Mirroring_Glyph') {
+			const dir = path.resolve(
+				__dirname, '..',
+				'output', 'unicode-' + version, type
+			);
+			if (!hasKey(dirMap, type)) {
+				dirMap[type] = [];
+			}
+			fs.mkdirSync(dir, { recursive: true });
+			// `Bidi_Mirroring_Glyph/index.js`
+			// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
+			const flatPairs = bidiMirroringGlyphMap
+				.flatMap((a, b) => a < b ? [a, b - a] : []);
+			const output = [
+				`const chr=String.fromCodePoint`,
+				`const pair=(t,u,v)=>[t?u+v:v,chr(t?u:u+v)]`,
+				`module.exports=new Map(${
+					jsesc(flatPairs)
+				}.map((v,i,a)=>pair(i&1,a[i^1],v)))`
+			].join(';');
+			fs.writeFileSync(
+				path.resolve(dir, 'index.js'),
+				output
+			);
+			return;
+		}
+
 		// Create the target directory if it doesn’t exist yet.
 		fs.mkdirSync(dir, { recursive: true });
+		append(dirMap, type, subdir);
 
 		// Sequence properties are special.
 		if (type == 'Sequence_Property' || isNameAliases) {
@@ -179,32 +207,15 @@ const writeFiles = function(options) {
 			dirMap[type] = [];
 		}
 		fs.mkdirSync(dir, { recursive: true });
-		let output = '';
-		if ('Bidi_Mirroring_Glyph' == type) { // `Bidi_Mirroring_Glyph/index.js`
-			// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
-			const flatPairs = auxMap[type]
-				.map(ch => ch.codePointAt(0))
-				.flatMap((a, b) => a < b ? [a, b - a] : []);
-			output = [
-				`const chr=String.fromCodePoint`,
-				`const pair=(t,u,v)=>[t?u+v:v,chr(t?u:u+v)]`,
-				`module.exports=new Map(${
-					jsesc(flatPairs)
-				}.map((v,i,a)=>pair(i&1,a[i^1],v)))`
-			].join(';');
-		} else { // `categories/index.js`
-			// or `Bidi_Class/index.js`
-			// or `bidi-brackets/index.js`
-			// or `Names/index.js`
-			const flatRuns = samePropertyRuns(auxMap2[type]);
-			output = `module.exports=require('../decode-property-map.js')(${
-				gzipInline(flatRuns)
-			})`;
-		}
-		fs.writeFileSync(
-			path.resolve(dir, 'index.js'),
-			output
-		);
+		// `categories/index.js`
+		// or `Bidi_Class/index.js`
+		// or `bidi-brackets/index.js`
+		// or `Names/index.js`
+		const flatRuns = samePropertyRuns(auxMap[type]);
+		const output = `module.exports=require('../decode-property-map.js')(${gzipInline(
+			flatRuns
+		)})`;
+		fs.writeFileSync(path.resolve(dir, "index.js"), output);
 	});
 	return dirMap;
 };
