@@ -11,7 +11,7 @@ const gzipInline = function(data) {
 	if (data instanceof Map) {
 		return `new Map(${ gzipInline([...data]) })`;
 	}
-	const json = jsesc(data, { 'json': true });
+	const json = JSON.stringify(data);
 	const gzipBuffer = zlib.gzipSync(json);
 	const str = gzipBuffer.toString('base64');
 	return `JSON.parse(require('zlib').gunzipSync(Buffer.from('${ str }','base64')))`;
