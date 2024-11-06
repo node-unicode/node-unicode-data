@@ -1,16 +1,17 @@
 'use strict';
 
 const utils = require('./utils.js');
+const valueAliases = require('unicode-property-value-aliases');
 const regenerate = require('regenerate');
+const bidiAliases = valueAliases.get('Bidi_Class');
 
-const parseNames = function(version) {
-	const map = {};
+const parseBidiClass = function (version) {
 	const source = utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
 	}
+	const categoryMap = {};
 	const lines = source.split('\n');
-
 	let flag = false;
 	let first = 0;
 	for (const line of lines) {
@@ -20,12 +21,15 @@ const parseNames = function(version) {
 		const data = line.trim().split(';');
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
+		const bidiCategory = data[4] === '' ? undefined : bidiAliases.get(data[4]);
+		if (bidiCategory === undefined) {
+			continue;
+		}
+		categoryMap[bidiCategory] ??= regenerate();
 		if (flag) {
 			if (/<.+, Last>/.test(name)) {
 				flag = false;
-				const rangeName = /<(.+), Last>/.exec(name)[1];
-				map[rangeName] ??= regenerate();
-				map[rangeName].addRange(first, codePoint);
+				categoryMap[bidiCategory].addRange(first, codePoint);
 			} else {
 				throw Error('Database exception');
 			}
@@ -34,13 +38,12 @@ const parseNames = function(version) {
 				flag = true;
 				first = codePoint;
 			} else {
-				map[name] ??= regenerate();
-				map[name].add(codePoint);
+				categoryMap[bidiCategory].add(codePoint);
 			}
 		}
 	}
 
-	return map;
+	return categoryMap;
 };
 
-module.exports = parseNames;
+module.exports = parseBidiClass;

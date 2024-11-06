@@ -5,7 +5,7 @@ const path = require('path');
 const zlib = require('zlib');
 const jsesc = require('jsesc');
 const regenerate = require('regenerate');
-const decodeRanges = require('../static/decode-ranges.js');
+const { encodeRanges, encodeRegenerate } = require('./encode-ranges.js');
 
 const gzipInline = function(data) {
 	if (data instanceof Map) {
@@ -30,6 +30,21 @@ const hasKey = function(object, key) {
 	return hasOwnProperty.call(object, key);
 };
 
+const codePointsSizeLt = function(codePoints, value) {
+	if (codePoints instanceof regenerate) {
+		const regenerateData = codePoints.data;
+		for (let seenSize = 0, i = 0; i < regenerateData.length; i+= 2) {
+			seenSize += (regenerateData[i + 1] - regenerateData[i]);
+			if (seenSize >= value) {
+				return false;
+			}
+		}
+		return true;
+	} else if (Array.isArray(codePoints)) {
+		return codePoints.length < value;
+	}
+}
+
 const append = function(object, key, value) {
 	if (hasKey(object, key)) {
 		object[key].push(value);
@@ -40,18 +55,22 @@ const append = function(object, key, value) {
 
 const samePropertyRuns = function(codePointProperties) {
 	const result = [];
-	const len = codePointProperties.length;
-	for (let last = 0, cur = 0; cur < len; ) {
-		const begin = cur;
-		const value = codePointProperties[cur];
-		while (++cur < len && codePointProperties[cur] === value)
-			;
-		if (value !== undefined) {
-			const gapLen = begin - last;
-			const runLen = cur - begin;
-			result.push(gapLen, runLen, value);
-			last = cur;
+	const unsorted = [];
+	for (const [value, regenerateSet] of codePointProperties) {
+		const regenerateData = regenerateSet.data;
+		for (let i = 0; i < regenerateData.length; i += 2) {
+			const start = regenerateData[i];
+			const runLen = regenerateData[i + 1] - start;
+			unsorted.push([start, runLen, value]);
 		}
+	}
+	unsorted.sort((a, b) => a[0] - b[0]);
+	const sorted = unsorted;
+
+	for (let i = 0, last = 0; i < sorted.length; i++) {
+		const element = sorted[i];
+		result.push(element[0] - last, element[1], element[2]);
+		last = element[0] + element[1];
 	}
 	return result;
 };
@@ -65,6 +84,7 @@ const writeFiles = function(options) {
 		return;
 	}
 	const dirMap = {};
+	const bidiMirroringGlyphMap = [];
 	const auxMap = {};
 	Object.keys(map).forEach(function(item) {
 		const codePoints = map[item];
@@ -72,12 +92,8 @@ const writeFiles = function(options) {
 			? options.type(item)
 			: options.type;
 		const isCaseFoldingOrMapping = type == 'Case_Folding' || type == 'Simple_Case_Mapping' || type == 'Special_Casing';
-		const isBidiClass = type == 'Bidi_Class';
 		const isNamesCanon = type == 'Names' && !subType;
 		const isNameAliases = type == 'Names' && subType == 'name-aliases';
-		if (isBidiClass) {
-			item = item.replace(/^Bidi_/, '');
-		}
 		const subdir = isNameAliases ? item.charAt(0).toUpperCase() + item.slice(1) : item;
 		const dir = path.resolve(
 			__dirname, '..',
@@ -95,25 +111,58 @@ const writeFiles = function(options) {
 				!/^(?:Other|Letter|Cased_Letter|Mark|Number|Punctuation|Symbol|Separator)$/.test(item)
 			)
 		) {
-			if (!auxMap[type]) {
-				auxMap[type] = [];
+			if (type == 'Bidi_Mirroring_Glyph') {
+				const shortName = item.codePointAt(0);
+				codePoints.toArray().forEach(function(codePoint) {
+					console.assert(!bidiMirroringGlyphMap[codePoint]);
+					bidiMirroringGlyphMap[codePoint] = shortName;
+				});
+			} else {
+				if (!auxMap[type]) {
+					auxMap[type] = [];
+				}
+				auxMap[type].push([item, codePoints]);
 			}
-			codePoints.forEach(function(codePoint) {
-				console.assert(!auxMap[type][codePoint]);
-				auxMap[type][codePoint] = item;
-			});
 		}
-		if (type == 'Bidi_Mirroring_Glyph' || isNamesCanon) {
+		if (isNamesCanon) {
 			return;
 		}
-		append(dirMap, type, subdir);
+
+		if (type == 'Bidi_Mirroring_Glyph') {
+			const dir = path.resolve(
+				__dirname, '..',
+				'output', 'unicode-' + version, type
+			);
+			if (!hasKey(dirMap, type)) {
+				dirMap[type] = [];
+			}
+			fs.mkdirSync(dir, { recursive: true });
+			// `Bidi_Mirroring_Glyph/index.js`
+			// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
+			const flatPairs = bidiMirroringGlyphMap
+				.flatMap((a, b) => a < b ? [a, b - a] : []);
+			const output = [
+				`const chr=String.fromCodePoint`,
+				`const pair=(t,u,v)=>[t?u+v:v,chr(t?u:u+v)]`,
+				`module.exports=new Map(${
+					jsesc(flatPairs)
+				}.map((v,i,a)=>pair(i&1,a[i^1],v)))`
+			].join(';');
+			fs.writeFileSync(
+				path.resolve(dir, 'index.js'),
+				output
+			);
+			return;
+		}
+
 		// Create the target directory if it doesn’t exist yet.
 		fs.mkdirSync(dir, { recursive: true });
+		append(dirMap, type, subdir);
 
 		// Sequence properties are special.
 		if (type == 'Sequence_Property' || isNameAliases) {
 			const sequences = codePoints;
-			const output = `module.exports=${ gzipInline(map[item]) }`;
+			const output = `module.exports=${ gzipInline(sequences) }`;
 			fs.writeFileSync(
 				path.resolve(dir, 'index.js'),
 				output
@@ -125,20 +174,19 @@ const writeFiles = function(options) {
 		let codePointsExports = `require('./ranges.js').flatMap(r=>Array.from(r.keys()))`;
 		let symbolsExports = `require('./ranges.js').flatMap(r=>Array.from(r.values()))`;
 		if (!isCaseFoldingOrMapping) {
-			const sortedCodePoints = [...codePoints].sort((a, b) => a - b);
+			const encodedRanges = codePoints instanceof regenerate ? encodeRegenerate(codePoints) : encodeRanges(codePoints);
 			fs.writeFileSync(
 				path.resolve(dir, 'ranges.js'),
-				`module.exports=require('../../decode-ranges.js')('${
-					decodeRanges.encode(sortedCodePoints)
-				}')`
+				`module.exports=require('../../decode-ranges.js')('${encodedRanges}')`
 			);
 			fs.writeFileSync(
 				path.resolve(dir, 'regex.js'),
 				'module.exports=/' + regenerate(codePoints).toString() + '/'
 			);
-			if (codePoints.length < 10) {
-				codePointsExports = jsesc(codePoints);
-				symbolsExports = jsesc(codePoints.map(cp => String.fromCodePoint(cp)));
+			if (codePointsSizeLt(codePoints, 10)) {
+				const codePointsAsArray = codePoints instanceof regenerate ? codePoints.toArray() : codePoints;
+				codePointsExports = jsesc(codePointsAsArray);
+				symbolsExports = jsesc(codePointsAsArray.map(cp => String.fromCodePoint(cp)));
 			}
 		} else {
 			const symbols = new Map();
@@ -172,32 +220,15 @@ const writeFiles = function(options) {
 			dirMap[type] = [];
 		}
 		fs.mkdirSync(dir, { recursive: true });
-		let output = '';
-		if ('Bidi_Mirroring_Glyph' == type) { // `Bidi_Mirroring_Glyph/index.js`
-			// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
-			const flatPairs = auxMap[type]
-				.map(ch => ch.codePointAt(0))
-				.flatMap((a, b) => a < b ? [a, b - a] : []);
-			output = [
-				`const chr=String.fromCodePoint`,
-				`const pair=(t,u,v)=>[t?u+v:v,chr(t?u:u+v)]`,
-				`module.exports=new Map(${
-					jsesc(flatPairs)
-				}.map((v,i,a)=>pair(i&1,a[i^1],v)))`
-			].join(';');
-		} else { // `categories/index.js`
-			// or `Bidi_Class/index.js`
-			// or `bidi-brackets/index.js`
-			// or `Names/index.js`
-			const flatRuns = samePropertyRuns(auxMap[type]);
-			output = `module.exports=require('../decode-property-map.js')(${
-				gzipInline(flatRuns)
-			})`;
-		}
-		fs.writeFileSync(
-			path.resolve(dir, 'index.js'),
-			output
-		);
+		// `categories/index.js`
+		// or `Bidi_Class/index.js`
+		// or `bidi-brackets/index.js`
+		// or `Names/index.js`
+		const flatRuns = samePropertyRuns(auxMap[type]);
+		const output = `module.exports=require('../decode-property-map.js')(${gzipInline(
+			flatRuns
+		)})`;
+		fs.writeFileSync(path.resolve(dir, "index.js"), output);
 	});
 	return dirMap;
 };
