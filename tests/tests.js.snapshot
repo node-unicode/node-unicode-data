@@ -366,24 +366,48 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "∋"
   ],
   [
-    8715,
-    "∈"
-  ],
-  [
     8713,
     "∌"
-  ],
-  [
-    8716,
-    "∉"
   ],
   [
     8714,
     "∍"
   ],
   [
+    8715,
+    "∈"
+  ],
+  [
+    8716,
+    "∉"
+  ],
+  [
     8717,
     "∊"
+  ],
+  [
+    8725,
+    "⧵"
+  ],
+  [
+    8735,
+    "⯾"
+  ],
+  [
+    8736,
+    "⦣"
+  ],
+  [
+    8737,
+    "⦛"
+  ],
+  [
+    8738,
+    "⦠"
+  ],
+  [
+    8740,
+    "⫮"
   ],
   [
     8764,
@@ -392,6 +416,10 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
   [
     8765,
     "∼"
+  ],
+  [
+    8771,
+    "⋍"
   ],
   [
     8773,
@@ -586,12 +614,32 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⊑"
   ],
   [
+    8856,
+    "⦸"
+  ],
+  [
     8866,
     "⊣"
   ],
   [
     8867,
     "⊢"
+  ],
+  [
+    8870,
+    "⫞"
+  ],
+  [
+    8872,
+    "⫤"
+  ],
+  [
+    8873,
+    "⫣"
+  ],
+  [
+    8875,
+    "⫥"
   ],
   [
     8880,
@@ -626,6 +674,10 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⊶"
   ],
   [
+    8888,
+    "⟜"
+  ],
+  [
     8905,
     "⋊"
   ],
@@ -640,10 +692,6 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
   [
     8908,
     "⋋"
-  ],
-  [
-    8771,
-    "⋍"
   ],
   [
     8909,
@@ -766,36 +814,36 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⋺"
   ],
   [
-    8954,
-    "⋲"
-  ],
-  [
     8947,
     "⋻"
-  ],
-  [
-    8955,
-    "⋳"
   ],
   [
     8948,
     "⋼"
   ],
   [
-    8956,
-    "⋴"
-  ],
-  [
     8950,
     "⋽"
   ],
   [
-    8957,
-    "⋶"
-  ],
-  [
     8951,
     "⋾"
+  ],
+  [
+    8954,
+    "⋲"
+  ],
+  [
+    8955,
+    "⋳"
+  ],
+  [
+    8956,
+    "⋴"
+  ],
+  [
+    8957,
+    "⋶"
   ],
   [
     8958,
@@ -922,10 +970,6 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⟕"
   ],
   [
-    8888,
-    "⟜"
-  ],
-  [
     10204,
     "⊸"
   ],
@@ -1034,16 +1078,16 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⦋"
   ],
   [
+    10637,
+    "⦐"
+  ],
+  [
     10638,
     "⦏"
   ],
   [
     10639,
     "⦎"
-  ],
-  [
-    10637,
-    "⦐"
   ],
   [
     10640,
@@ -1082,24 +1126,12 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⦗"
   ],
   [
-    8737,
-    "⦛"
-  ],
-  [
     10651,
     "∡"
   ],
   [
-    8738,
-    "⦠"
-  ],
-  [
     10656,
     "∢"
-  ],
-  [
-    8736,
-    "⦣"
   ],
   [
     10659,
@@ -1144,10 +1176,6 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
   [
     10671,
     "⦮"
-  ],
-  [
-    8856,
-    "⦸"
   ],
   [
     10680,
@@ -1216,10 +1244,6 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
   [
     10729,
     "⧨"
-  ],
-  [
-    8725,
-    "⧵"
   ],
   [
     10741,
@@ -1642,32 +1666,16 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⫕"
   ],
   [
-    8870,
-    "⫞"
-  ],
-  [
     10974,
     "⊦"
-  ],
-  [
-    8873,
-    "⫣"
   ],
   [
     10979,
     "⊩"
   ],
   [
-    8872,
-    "⫤"
-  ],
-  [
     10980,
     "⊨"
-  ],
-  [
-    8875,
-    "⫥"
   ],
   [
     10981,
@@ -1680,10 +1688,6 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
   [
     10989,
     "⫬"
-  ],
-  [
-    8740,
-    "⫮"
   ],
   [
     10990,
@@ -1704,10 +1708,6 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
   [
     11002,
     "⫹"
-  ],
-  [
-    8735,
-    "⯾"
   ],
   [
     11262,

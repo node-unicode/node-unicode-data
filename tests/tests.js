@@ -63,9 +63,8 @@ suite(`The generated latest Unicode js`, () => {
 	});
 	test("Bidi_Mirroring_Glyph should match the snapshot", (t) => {
 		const map = require('../output/unicode-' + newest + '/Bidi_Mirroring_Glyph/index.js');
-		t.assert.snapshot(
-			[...map.entries()]
-		);
+		const mapEntries = [...map.entries()].sort((a, b) => a[0] - b[0]);
+		t.assert.snapshot(mapEntries);
 	});
 	test("Bidi_Paired_Bracket_Type/Open should match the snapshot", (t) => {
 		t.assert.snapshot(
