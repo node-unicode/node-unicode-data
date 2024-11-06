@@ -84,7 +84,13 @@ const writeFiles = function(options) {
 		return;
 	}
 	const dirMap = {};
-	const bidiMirroringGlyphMap = [];
+	/**
+	 * A list of flatten (x, y) pairs,
+	 * where x is a codepoint, y := codepoint(z) - x,
+	 * where z is the BidiMirroringGlyph of character(x) and codepoint(z) > x
+	 * @type number[]
+	 */
+	const bidiMirroringGlyphFlatPairs = [];
 	const auxMap = {};
 	Object.keys(map).forEach(function(item) {
 		const codePoints = map[item];
@@ -112,10 +118,11 @@ const writeFiles = function(options) {
 			)
 		) {
 			if (type == 'Bidi_Mirroring_Glyph') {
-				const shortName = item.codePointAt(0);
+				const toCodepoint = item.codePointAt(0);
 				codePoints.toArray().forEach(function(codePoint) {
-					console.assert(!bidiMirroringGlyphMap[codePoint]);
-					bidiMirroringGlyphMap[codePoint] = shortName;
+					if (codePoint < toCodepoint) {
+						bidiMirroringGlyphFlatPairs.push(codePoint, toCodepoint - codePoint);
+					}
 				});
 			} else {
 				if (!auxMap[type]) {
@@ -124,34 +131,7 @@ const writeFiles = function(options) {
 				auxMap[type].push([item, codePoints]);
 			}
 		}
-		if (isNamesCanon) {
-			return;
-		}
-
-		if (type == 'Bidi_Mirroring_Glyph') {
-			const dir = path.resolve(
-				__dirname, '..',
-				'output', 'unicode-' + version, type
-			);
-			if (!hasKey(dirMap, type)) {
-				dirMap[type] = [];
-			}
-			fs.mkdirSync(dir, { recursive: true });
-			// `Bidi_Mirroring_Glyph/index.js`
-			// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
-			const flatPairs = bidiMirroringGlyphMap
-				.flatMap((a, b) => a < b ? [a, b - a] : []);
-			const output = [
-				`const chr=String.fromCodePoint`,
-				`const pair=(t,u,v)=>[t?u+v:v,chr(t?u:u+v)]`,
-				`module.exports=new Map(${
-					jsesc(flatPairs)
-				}.map((v,i,a)=>pair(i&1,a[i^1],v)))`
-			].join(';');
-			fs.writeFileSync(
-				path.resolve(dir, 'index.js'),
-				output
-			);
+		if (isNamesCanon || type == 'Bidi_Mirroring_Glyph') {
 			return;
 		}
 
@@ -211,6 +191,31 @@ const writeFiles = function(options) {
 			`module.exports=${ symbolsExports }`
 		);
 	});
+	if (options.type == 'Bidi_Mirroring_Glyph') {
+		const type = options.type;
+		const dir = path.resolve(
+			__dirname, '..',
+			'output', 'unicode-' + version, type
+		);
+		if (!hasKey(dirMap, type)) {
+			dirMap[type] = [];
+		}
+		fs.mkdirSync(dir, { recursive: true });
+		// `Bidi_Mirroring_Glyph/index.js`
+		// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
+		const output = [
+			`const chr=String.fromCodePoint`,
+			`const pair=(t,u,v)=>[t?u+v:v,chr(t?u:u+v)]`,
+			`module.exports=new Map(${
+				JSON.stringify(bidiMirroringGlyphFlatPairs)
+			}.map((v,i,a)=>pair(i&1,a[i^1],v)))`
+		].join(';');
+		fs.writeFileSync(
+			path.resolve(dir, 'index.js'),
+			output
+		);
+		return;
+	}
 	Object.keys(auxMap).forEach(function(type) {
 		const dir = path.resolve(
 			__dirname, '..',
