@@ -88,6 +88,7 @@ const parseBlocksScriptsProperties = function(type, version) {
 
 const parseDerivedBinaryProperties = function(version) {
 	if (version === '3.1.1' || version === '3.1.0' || version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
+		throw new Error("Unexpected data");
 		// Unicode <= 3.1.1 does not provide derived-binary-properties,
 		// so we should derive Bidi_Mirrored from the UnicodeData
 		const source = utils.readDataFile(version, 'database');
