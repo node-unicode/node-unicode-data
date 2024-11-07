@@ -44,7 +44,13 @@ const complicatedWorkThatTakesTime = (resource, callback) => {
 if (cluster.isPrimary) {
 
 	for (let index = 0; index < numCPUs; index++) {
-		cluster.fork();
+		const worker = cluster.fork();
+		worker.on('message', (error) => {
+			for (const id in cluster.workers) {
+				cluster.workers[id].kill();
+			}
+			throw new Error(`Worker ${worker.id} encountered an error: ${error}`);
+		})
 	}
 
 	cluster.on('online', (worker) => {
@@ -75,6 +81,16 @@ if (cluster.isPrimary) {
 		complicatedWorkThatTakesTime(message, () => {
 			cluster.worker.kill();
 		});
+	});
+
+	process.on('uncaughtException', (error) => {
+		console.error(error);
+		process.send(error.message);
+	});
+
+	process.on('unhandledRejection', (error) => {
+		console.error(error);
+		process.send(error.message || error);
 	});
 
 }
