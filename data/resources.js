@@ -48,6 +48,23 @@ const resources = [
 			'line-break': 'https://unicode.org/Public/3.1-Update/LineBreak-6.txt',
 		},
 		{
+			// Some resources are from Unicode 3.1.0
+			// Per https://unicode.org/Public/3.1-Update1/ReadMe-3.1.1.txt:
+			// It does not include the files that were not updated in this version.
+			// Those must be obtained from previous update directories in http://www.unicode.org/Public/.
+			'version': '3.1.1',
+			'main': 'https://unicode.org/Public/3.1-Update/UnicodeData-3.1.0.txt',
+			'scripts': 'https://unicode.org/Public/3.1-Update/Scripts-3.1.0.txt',
+			'blocks': 'https://unicode.org/Public/3.1-Update/Blocks-4.txt',
+			'properties': 'https://unicode.org/Public/3.1-Update/PropList-3.1.0.txt',
+			'derived-core-properties': 'https://unicode.org/Public/3.1-Update/DerivedCoreProperties-3.1.0.txt',
+			'derived-general-category': 'https://unicode.org/Public/3.1-Update/DerivedGeneralCategory-3.1.0.txt',
+			'derived-normalization-properties': 'https://unicode.org/Public/3.1-Update/DerivedNormalizationProperties-3.1.0.txt',
+			'case-folding': 'https://unicode.org/Public/3.1-Update1/CaseFolding-4.txt',
+			'special-casing': 'https://unicode.org/Public/3.1-Update1/SpecialCasing-5.txt',
+			'line-break': 'https://unicode.org/Public/3.1-Update/LineBreak-6.txt',
+		},
+		{
 			'version': '3.2.0',
 			'main': 'https://unicode.org/Public/3.2-Update/UnicodeData-3.2.0.txt',
 			'scripts': 'https://unicode.org/Public/3.2-Update/Scripts-3.2.0.txt',

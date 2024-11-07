@@ -1,13 +1,15 @@
 'use strict';
 
 const resources = require('../data/resources.js');
-const generateData = require('../index.js');
-
-// Generate the data for the oldest and newest available Unicode version
 const oldest = resources[0].version;
-generateData(oldest);
 const newest = resources.pop().version;
-generateData(newest);
+
+if (!process.env.CI) {
+	const generateData = require('../index.js');
+	// Generate the data for the oldest and newest available Unicode version
+	generateData(oldest);
+	generateData(newest);
+}
 
 const { suite, test } = require("node:test");
 

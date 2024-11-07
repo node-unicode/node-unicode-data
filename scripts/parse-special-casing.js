@@ -30,7 +30,7 @@ const parseSpecialCasing = function(version) {
 		// https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-3/#G54277
 		// Because the language ID may contain `-`, we let `--` be the separator
 		// between the language ID and the casing contexts.
-		const conditions = data[4].replaceAll(" ", "--");
+		const conditions = data[4].trim().replaceAll(" ", "--");
 		const storageKeyPostfix = conditions ? "--" + conditions : ""
 		specialCasingMap["Lowercase" + storageKeyPostfix] ??= new Map();
 		specialCasingMap["Lowercase" + storageKeyPostfix].set(from, lowercase);
