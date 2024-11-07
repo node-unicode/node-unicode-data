@@ -40,6 +40,7 @@ For more information, see the README for the package you’re interested in. [He
 * [_@unicode/3.0.0_](https://npmjs.org/package/@unicode/unicode-3.0.0#readme) ([repository](https://github.com/node-unicode/unicode-3.0.0#readme))
 * [_@unicode/3.0.1_](https://npmjs.org/package/@unicode/unicode-3.0.1#readme) ([repository](https://github.com/node-unicode/unicode-3.0.1#readme))
 * [_@unicode/3.1.0_](https://npmjs.org/package/@unicode/unicode-3.1.0#readme) ([repository](https://github.com/node-unicode/unicode-3.1.0#readme))
+* [_@unicode/3.1.1_](https://npmjs.org/package/@unicode/unicode-3.1.1#readme) ([repository](https://github.com/node-unicode/unicode-3.1.1#readme))
 * [_@unicode/3.2.0_](https://npmjs.org/package/@unicode/unicode-3.2.0#readme) ([repository](https://github.com/node-unicode/unicode-3.2.0#readme))
 * [_@unicode/4.0.0_](https://npmjs.org/package/@unicode/unicode-4.0.0#readme) ([repository](https://github.com/node-unicode/unicode-4.0.0#readme))
 * [_@unicode/4.0.1_](https://npmjs.org/package/@unicode/unicode-4.0.1#readme) ([repository](https://github.com/node-unicode/unicode-4.0.1#readme))
