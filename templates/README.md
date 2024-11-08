@@ -73,7 +73,7 @@ require('@unicode/unicode-<%= version %>/<%= type %>').get(codePoint); // lookup
 <%
 	}
 	dirs[type].forEach(function(dir) {
-		if ('Case_Folding' == type || 'Simple_Case_Folding' == type || 'Special_Casing' == type) {
+		if ('Case_Folding' == type || 'Simple_Case_Mapping' == type || 'Special_Casing' == type) {
 %>
 require('@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.js'); // lookup map from code point to code point or array of code points
 require('@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.js').get(codePoint);
