@@ -214,27 +214,27 @@ const writeFiles = function(options) {
 			path.resolve(dir, 'index.js'),
 			output
 		);
-		return;
+	} else {
+		Object.keys(auxMap).forEach(function(type) {
+			const dir = path.resolve(
+				__dirname, '..',
+				'output', 'unicode-' + version, type
+			);
+			if (!hasKey(dirMap, type)) {
+				dirMap[type] = [];
+			}
+			fs.mkdirSync(dir, { recursive: true });
+			// `categories/index.js`
+			// or `Bidi_Class/index.js`
+			// or `bidi-brackets/index.js`
+			// or `Names/index.js`
+			const flatRuns = samePropertyRuns(auxMap[type]);
+			const output = `module.exports=require('../decode-property-map.js')(${gzipInline(
+				flatRuns
+			)})`;
+			fs.writeFileSync(path.resolve(dir, "index.js"), output);
+		});
 	}
-	Object.keys(auxMap).forEach(function(type) {
-		const dir = path.resolve(
-			__dirname, '..',
-			'output', 'unicode-' + version, type
-		);
-		if (!hasKey(dirMap, type)) {
-			dirMap[type] = [];
-		}
-		fs.mkdirSync(dir, { recursive: true });
-		// `categories/index.js`
-		// or `Bidi_Class/index.js`
-		// or `bidi-brackets/index.js`
-		// or `Names/index.js`
-		const flatRuns = samePropertyRuns(auxMap[type]);
-		const output = `module.exports=require('../decode-property-map.js')(${gzipInline(
-			flatRuns
-		)})`;
-		fs.writeFileSync(path.resolve(dir, "index.js"), output);
-	});
 	return dirMap;
 };
 
