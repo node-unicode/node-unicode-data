@@ -2,7 +2,6 @@
 
 const resources = require('../data/resources.js');
 const generateData = require('../index.js');
-const utils = require('../scripts/utils.js');
 
 // -----------------------------------------------------------------------------
 
@@ -28,7 +27,9 @@ const complicatedWorkThatTakesTime = (resource, callback) => {
 		console.log('[%s] Worker %d \u2192 Unicode v%s',
 			getTime(), cluster.worker.id, version);
 
+		console.groupCollapsed();
 		generateData(version);
+		console.groupEnd();
 
 		complicatedWorkThatTakesTime(
 			resource.slice(1),
@@ -40,10 +41,16 @@ const complicatedWorkThatTakesTime = (resource, callback) => {
 	}
 };
 
-if (cluster.isMaster) {
+if (cluster.isPrimary) {
 
 	for (let index = 0; index < numCPUs; index++) {
-		cluster.fork();
+		const worker = cluster.fork();
+		worker.on('message', (error) => {
+			for (const id in cluster.workers) {
+				cluster.workers[id].kill();
+			}
+			throw new Error(`Worker ${worker.id} encountered an error: ${error}`);
+		})
 	}
 
 	cluster.on('online', (worker) => {
@@ -74,6 +81,16 @@ if (cluster.isMaster) {
 		complicatedWorkThatTakesTime(message, () => {
 			cluster.worker.kill();
 		});
+	});
+
+	process.on('uncaughtException', (error) => {
+		console.error(error);
+		process.send(error.message);
+	});
+
+	process.on('unhandledRejection', (error) => {
+		console.error(error);
+		process.send(error.message || error);
 	});
 
 }
