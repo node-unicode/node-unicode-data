@@ -239,12 +239,36 @@ const parseDerivedGeneralCategory = function (version) {
 	}
 }
 
+const parseBlocks = function (version) {
+	if (version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
+		const source = utils.readDataFile(version, 'blocks');
+		if (!source) {
+			return;
+		}
+		const map = {};
+		for (const line of source.trimEnd().split('\n')) {
+			if (line.startsWith('#')) {
+				continue;
+			}
+			const [start, end, blockName] = line.split('; ');
+			const canonicalBlockName = looseMatch('Block', blockName).value;
+			map[canonicalBlockName] = regenerate().addRange(
+				parseInt(start, 16),
+				parseInt(end, 16)
+			);
+		}
+		return map;
+	} else {
+		return parseBlocksScriptsProperties('blocks', version);
+	}
+}
+
 module.exports = {
 	'parseScripts': parseBlocksScriptsProperties.bind(null, 'scripts'),
 	'parseProperties': parseBlocksScriptsProperties.bind(null, 'properties'),
 	'parseDerivedCoreProperties': parseBlocksScriptsProperties.bind(null, 'derived-core-properties'),
 	'parseDerivedNormalizationProperties': parseBlocksScriptsProperties.bind(null, 'derived-normalization-properties'),
-	'parseBlocks': parseBlocksScriptsProperties.bind(null, 'blocks'),
+	'parseBlocks': parseBlocks,
 	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring'),
 	'parseDerivedBinaryProperties': parseDerivedBinaryProperties,
 	'parseDerivedGeneralCategory': parseDerivedGeneralCategory
