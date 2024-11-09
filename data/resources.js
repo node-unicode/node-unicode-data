@@ -25,18 +25,21 @@ const resources = [
 			'main': 'https://unicode.org/Public/2.1-Update3/UnicodeData-2.1.8.txt',
 			'blocks': 'https://unicode.org/Public/2.0-Update/Blocks-1.txt',
 			'properties': 'https://unicode.org/Public/2.1-Update3/PropList-2.1.8.txt',
+			'special-casing': 'https://unicode.org/Public/2.1-Update3/SpecialCasing-1.txt'
 		},
 		{
 			'version': '2.1.9',
 			'main': 'https://unicode.org/Public/2.1-Update4/UnicodeData-2.1.9.txt',
 			'blocks': 'https://unicode.org/Public/2.1-Update4/Blocks-2.txt',
 			'properties': 'https://unicode.org/Public/2.1-Update4/PropList-2.1.9.txt',
+			'special-casing': 'https://unicode.org/Public/2.1-Update4/SpecialCasing-2.txt',
 		},
 		{
 			'version': '3.0.0',
 			'main': 'https://unicode.org/Public/3.0-Update/UnicodeData-3.0.0.txt',
 			'blocks': 'https://unicode.org/Public/3.0-Update/Blocks-3.txt',
 			'properties': 'https://unicode.org/Public/3.0-Update/PropList-3.0.0.txt',
+			'special-casing': 'https://unicode.org/Public/3.0-Update/SpecialCasing-2.txt'
 		},
 		{
 			// Some resources are from Unicode 3.0.0
@@ -47,7 +50,9 @@ const resources = [
 			'version': '3.0.1',
 			'main': 'https://unicode.org/Public/3.0-Update1/UnicodeData-3.0.1.txt',
 			'blocks': 'https://unicode.org/Public/3.0-Update/Blocks-3.txt',
-			'properties': 'https://unicode.org/Public/3.0-Update1/PropList-3.0.1.txt'
+			'properties': 'https://unicode.org/Public/3.0-Update1/PropList-3.0.1.txt',
+			'case-folding': 'https://unicode.org/Public/3.0-Update1/CaseFolding-2.txt',
+			'special-casing': 'https://unicode.org/Public/3.0-Update1/SpecialCasing-3.txt',
 		},
 		{
 			'version': '3.1.0',
