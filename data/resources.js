@@ -7,11 +7,13 @@ const resources = [
 			'version': '2.0.14',
 			'main': 'https://unicode.org/Public/2.0-Update/UnicodeData-2.0.14.txt',
 			'blocks': 'https://unicode.org/Public/2.0-Update/Blocks-1.txt',
+			'properties': 'https://unicode.org/Public/2.0-Update/PropList-2.0.14.txt',
 		},
 		{
 			'version': '2.1.2',
 			'main': 'https://unicode.org/Public/2.1-Update/UnicodeData-2.1.2.txt',
 			'blocks': 'https://unicode.org/Public/2.0-Update/Blocks-1.txt',
+			'properties': 'https://unicode.org/Public/2.1-Update/PropList-2.1.2.txt',
 		},
 		{
 			'version': '2.1.5',
@@ -22,17 +24,19 @@ const resources = [
 			'version': '2.1.8',
 			'main': 'https://unicode.org/Public/2.1-Update3/UnicodeData-2.1.8.txt',
 			'blocks': 'https://unicode.org/Public/2.0-Update/Blocks-1.txt',
+			'properties': 'https://unicode.org/Public/2.1-Update3/PropList-2.1.8.txt',
 		},
 		{
 			'version': '2.1.9',
 			'main': 'https://unicode.org/Public/2.1-Update4/UnicodeData-2.1.9.txt',
 			'blocks': 'https://unicode.org/Public/2.1-Update4/Blocks-2.txt',
+			'properties': 'https://unicode.org/Public/2.1-Update4/PropList-2.1.9.txt',
 		},
 		{
 			'version': '3.0.0',
 			'main': 'https://unicode.org/Public/3.0-Update/UnicodeData-3.0.0.txt',
 			'blocks': 'https://unicode.org/Public/3.0-Update/Blocks-3.txt',
-			//'properties': 'https://unicode.org/Public/3.0-Update/PropList-3.0.0.txt' // issue #2
+			'properties': 'https://unicode.org/Public/3.0-Update/PropList-3.0.0.txt',
 		},
 		{
 			// Some resources are from Unicode 3.0.0
@@ -43,7 +47,7 @@ const resources = [
 			'version': '3.0.1',
 			'main': 'https://unicode.org/Public/3.0-Update1/UnicodeData-3.0.1.txt',
 			'blocks': 'https://unicode.org/Public/3.0-Update/Blocks-3.txt',
-			//'properties': 'https://unicode.org/Public/3.0-Update1/PropList-3.0.1.txt' // issue #2
+			'properties': 'https://unicode.org/Public/3.0-Update1/PropList-3.0.1.txt'
 		},
 		{
 			'version': '3.1.0',
