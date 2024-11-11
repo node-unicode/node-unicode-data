@@ -239,12 +239,85 @@ const parseDerivedGeneralCategory = function (version) {
 	}
 }
 
+const parseBlocks = function (version) {
+	if (version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
+		const source = utils.readDataFile(version, 'blocks');
+		if (!source) {
+			return;
+		}
+		const map = {};
+		for (const line of source.trimEnd().split('\n')) {
+			if (line.startsWith('#')) {
+				continue;
+			}
+			const [start, end, blockName] = line.split('; ');
+			const canonicalBlockName = looseMatch('Block', blockName).value;
+			map[canonicalBlockName] = regenerate().addRange(
+				parseInt(start, 16),
+				parseInt(end, 16)
+			);
+		}
+		return map;
+	} else {
+		return parseBlocksScriptsProperties('blocks', version);
+	}
+}
+
+const parseProperties = function (version) {
+	if (
+		version === '3.0.1' ||
+		version === '3.0.0' ||
+		parseInt(version.split('.')[0], 10) < 3
+	) {
+		const source = utils.readDataFile(version, 'properties');
+		if (!source) {
+			return;
+		}
+		const map = {};
+		const lines = source.trimEnd().split('\n');
+		let currentProperty, maybeProperty, maybeRange
+		for (let i = 0; i < lines.length; i++) {
+			const line = lines[i];
+			if ((maybeProperty = /0x[A-F\d]+ \((.+?)\)$/.exec(line)) != null) {
+				currentProperty = maybeProperty[1];
+				if (
+					// ignore Bidi_Class as they have been generated from UnicodeData
+					currentProperty.startsWith("Bidi:") || 
+					// ignore Not a Character and Unassigned Code Value as they have been generated from UnicodeData
+					currentProperty === "Not a Character" || 
+					currentProperty === "Unassigned Code Value"
+				) {
+					// skip contents
+					i++;
+					while (++i < lines.length && lines[i] !== "");
+					continue;
+				}
+				currentProperty = currentProperty.replaceAll(' ', '_');
+				currentProperty = findCanonicalName(currentProperty) ?? currentProperty;
+				map[currentProperty] = regenerate();
+			} else if ((maybeRange = /^([A-F\d]{4,5})(?:..([A-F\d]{4,5}))?/.exec(line)) != null) {
+				if (maybeRange[2]) {
+					map[currentProperty].addRange(
+						parseInt(maybeRange[1], 16),
+						parseInt(maybeRange[2], 16)
+					);
+				} else {
+					map[currentProperty].add(parseInt(maybeRange[1], 16));
+				}
+			}
+		}
+		return map;
+	} else {
+		return parseBlocksScriptsProperties('properties', version);
+	}
+};
+
 module.exports = {
 	'parseScripts': parseBlocksScriptsProperties.bind(null, 'scripts'),
-	'parseProperties': parseBlocksScriptsProperties.bind(null, 'properties'),
+	'parseProperties': parseProperties,
 	'parseDerivedCoreProperties': parseBlocksScriptsProperties.bind(null, 'derived-core-properties'),
 	'parseDerivedNormalizationProperties': parseBlocksScriptsProperties.bind(null, 'derived-normalization-properties'),
-	'parseBlocks': parseBlocksScriptsProperties.bind(null, 'blocks'),
+	'parseBlocks': parseBlocks,
 	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring'),
 	'parseDerivedBinaryProperties': parseDerivedBinaryProperties,
 	'parseDerivedGeneralCategory': parseDerivedGeneralCategory
