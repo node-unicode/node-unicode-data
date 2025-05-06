@@ -11,6 +11,10 @@ const base64dec = Object.freeze(Object.fromEntries(
 ));
 
 class UnicodeRange {
+	/**
+	 * @param {number} begin 
+	 * @param {number} end 
+	 */
 	constructor(begin, end) {
 		this.begin = begin;
 		this.end = end;
@@ -32,8 +36,10 @@ class UnicodeRange {
 
 /**
   * Base64 decode variable-length deltas (5/10/15/21-bit).
+  * @param {string} input
   */
 function decodeDeltas(input) {
+	/** @type {number[]} */
 	const output = [];
 	for (let i = 0; i < input.length; ) {
 		let x = base64dec[input[i++]];
@@ -63,6 +69,7 @@ function decodeDeltas(input) {
 
 /**
   * RLE + base64 decode code point ranges.
+  * @param {string} input
   */
 function decodeRanges(input) {
 	const deltas = decodeDeltas(input);
