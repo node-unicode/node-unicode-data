@@ -84,6 +84,12 @@ const writeFiles = function(options) {
 		return;
 	}
 	const dirMap = {};
+
+	const rootDir = path.resolve(
+		__dirname, '..',
+		'output', 'unicode-' + version
+	);
+
 	/**
 	 * A list of flatten (x, y) pairs,
 	 * where x is a codepoint, y := codepoint(z) - x,
@@ -101,10 +107,7 @@ const writeFiles = function(options) {
 		const isNamesCanon = type == 'Names' && !subType;
 		const isNameAliases = type == 'Names' && subType == 'name-aliases';
 		const subdir = isNameAliases ? item.charAt(0).toUpperCase() + item.slice(1) : item;
-		const dir = path.resolve(
-			__dirname, '..',
-			'output', 'unicode-' + version, type, subdir
-		);
+		const dir = path.resolve(rootDir, type, subdir);
 		if (
 			type == 'Bidi_Class' ||
 			type == 'Bidi_Mirroring_Glyph' ||
@@ -147,6 +150,12 @@ const writeFiles = function(options) {
 				path.resolve(dir, 'index.js'),
 				output
 			);
+			fs.writeFileSync(
+				path.resolve(dir, 'index.d.ts'),
+				type === 'Sequence_Property'
+					? `const data: string[];\nexport default data;`
+					: `const aliasMap: Record<number, string[]>;\nexport default aliasMap;`
+			);
 			return;
 		}
 
@@ -160,8 +169,16 @@ const writeFiles = function(options) {
 				`module.exports=require('../../decode-ranges.js')('${encodedRanges}')`
 			);
 			fs.writeFileSync(
+				path.resolve(dir, 'ranges.d.ts'),
+				'import type { UnicodeRange } from "../../decode-ranges.js";\n\nconst ranges: UnicodeRange[];\nexport default ranges;\n'
+			);
+			fs.writeFileSync(
 				path.resolve(dir, 'regex.js'),
 				'module.exports=/' + regenerate(codePoints).toString() + '/'
+			);
+			fs.writeFileSync(
+				path.resolve(dir, 'regex.d.ts'),
+				'declare const regex: RegExp;\nexport default regex;'
 			);
 			if (codePointsSizeLt(codePoints, 10)) {
 				const codePointsAsArray = codePoints instanceof regenerate ? codePoints.toArray() : codePoints;
@@ -187,8 +204,16 @@ const writeFiles = function(options) {
 			`module.exports=${ codePointsExports }`
 		);
 		fs.writeFileSync(
+			path.resolve(dir, 'code-points.d.ts'),
+			`declare const codePoints: number[];\nexport default codePoints;`
+		);
+		fs.writeFileSync(
 			path.resolve(dir, 'symbols.js'),
 			`module.exports=${ symbolsExports }`
+		);
+		fs.writeFileSync(
+			path.resolve(dir, 'symbols.d.ts'),
+			`declare const symbols: string[];\nexport default symbols;`
 		);
 	});
 	if (options.type == 'Bidi_Mirroring_Glyph') {
@@ -214,6 +239,10 @@ const writeFiles = function(options) {
 			path.resolve(dir, 'index.js'),
 			output
 		);
+		fs.writeFileSync(
+			path.resolve(dir, 'index.d.ts'),
+			`const data: Map<number, string>;\nexport default data;`
+		);
 	} else {
 		Object.keys(auxMap).forEach(function(type) {
 			const dir = path.resolve(
@@ -233,6 +262,7 @@ const writeFiles = function(options) {
 				flatRuns
 			)})`;
 			fs.writeFileSync(path.resolve(dir, "index.js"), output);
+			fs.writeFileSync(path.resolve(dir, "index.d.ts"), `declare const map: Map<number, string>;\nexport default map;`);
 		});
 	}
 	return dirMap;

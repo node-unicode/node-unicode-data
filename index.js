@@ -188,6 +188,12 @@ const generateData = function(version) {
 		compileIndex({ 'version': version, 'data': jsesc(dirMap) })
 	);
 	fs.writeFileSync(
+		path.resolve(__dirname, `output/unicode-${version}/index.d.ts`),
+		Object.keys(dirMap)
+			.map(key => `export const ${key}: string[];`)
+			.join('\n')
+	);
+	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/package.json`),
 		compilePackage({ 'version': version })
 	);
@@ -203,7 +209,9 @@ const generateData = function(version) {
 		'.gitignore',
 		'.npmignore',
 		'decode-property-map.js',
+		'decode-property-map.d.ts',
 		'decode-ranges.js',
+		'decode-ranges.d.ts',
 	].forEach(function(file) {
 		fs.copyFileSync(
 			path.resolve(staticPath, file),
