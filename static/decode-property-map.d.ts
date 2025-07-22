@@ -1,1 +1,5 @@
-export default function decodePropertyMap(runs: Array<number | string>): Map<number, string>;
+declare function decodePropertyMap(
+	runs: Array<number | string>,
+): Map<number, string>;
+
+export = decodePropertyMap;
