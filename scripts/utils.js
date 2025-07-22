@@ -153,8 +153,8 @@ const writeFiles = function(options) {
 			fs.writeFileSync(
 				path.resolve(dir, 'index.d.ts'),
 				type === 'Sequence_Property'
-					? `const data: string[];\nexport default data;`
-					: `const aliasMap: Record<number, string[]>;\nexport default aliasMap;`
+					? `declare const data: string[];\nexport = data;`
+					: `declare const aliasMap: Record<number, string[]>;\nexport = aliasMap;`
 			);
 			return;
 		}
@@ -170,7 +170,7 @@ const writeFiles = function(options) {
 			);
 			fs.writeFileSync(
 				path.resolve(dir, 'ranges.d.ts'),
-				'import type { UnicodeRange } from "../../decode-ranges.js";\n\nconst ranges: UnicodeRange[];\nexport default ranges;\n'
+				'import type { UnicodeRange } from "../../decode-ranges.js";\n\ndeclare const ranges: UnicodeRange[];\nexport = ranges;\n'
 			);
 			fs.writeFileSync(
 				path.resolve(dir, 'regex.js'),
@@ -178,7 +178,7 @@ const writeFiles = function(options) {
 			);
 			fs.writeFileSync(
 				path.resolve(dir, 'regex.d.ts'),
-				'declare const regex: RegExp;\nexport default regex;'
+				'declare const regex: RegExp;\nexport = regex;'
 			);
 			if (codePointsSizeLt(codePoints, 10)) {
 				const codePointsAsArray = codePoints instanceof regenerate ? codePoints.toArray() : codePoints;
@@ -205,7 +205,7 @@ const writeFiles = function(options) {
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'code-points.d.ts'),
-			`declare const codePoints: number[];\nexport default codePoints;`
+			`declare const codePoints: number[];\nexport = codePoints;`
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.js'),
@@ -213,7 +213,7 @@ const writeFiles = function(options) {
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.d.ts'),
-			`declare const symbols: string[];\nexport default symbols;`
+			`declare const symbols: string[];\nexport = symbols;`
 		);
 	});
 	if (options.type == 'Bidi_Mirroring_Glyph') {
@@ -241,7 +241,7 @@ const writeFiles = function(options) {
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'index.d.ts'),
-			`const data: Map<number, string>;\nexport default data;`
+			`declare const data: Map<number, string>;\nexport = data;`
 		);
 	} else {
 		Object.keys(auxMap).forEach(function(type) {
@@ -262,7 +262,7 @@ const writeFiles = function(options) {
 				flatRuns
 			)})`;
 			fs.writeFileSync(path.resolve(dir, "index.js"), output);
-			fs.writeFileSync(path.resolve(dir, "index.d.ts"), `declare const map: Map<number, string>;\nexport default map;`);
+			fs.writeFileSync(path.resolve(dir, "index.d.ts"), `declare const map: Map<number, string>;\nexport = map;`);
 		});
 	}
 	return dirMap;
