@@ -162,6 +162,8 @@ const writeFiles = function(options) {
 		// Save the data to a file
 		let codePointsExports = `require('./ranges.js').flatMap(r=>Array.from(r.keys()))`;
 		let symbolsExports = `require('./ranges.js').flatMap(r=>Array.from(r.values()))`;
+		let codePointsType = 'number[]';
+		let symbolsType = 'string[]';
 		if (!isCaseFoldingOrMapping) {
 			const encodedRanges = codePoints instanceof regenerate ? encodeRegenerate(codePoints) : encodeRanges(codePoints);
 			fs.writeFileSync(
@@ -198,6 +200,12 @@ const writeFiles = function(options) {
 			}
 			codePointsExports = codePoints.size < 10 ? jsesc(codePoints) : gzipInline(codePoints);
 			symbolsExports = codePoints.size < 10 ? jsesc(symbols) : gzipInline(symbols);
+			if ((type === 'Case_Folding' && item === 'F') || type === 'Special_Casing') {
+				codePointsType = 'Map<number, number[]>';
+			} else {
+				codePointsType = 'Map<number, number>';
+			}
+			symbolsType = 'Map<string, string>';
 		}
 		fs.writeFileSync(
 			path.resolve(dir, 'code-points.js'),
@@ -205,7 +213,7 @@ const writeFiles = function(options) {
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'code-points.d.ts'),
-			`declare const codePoints: number[];\nexport = codePoints;`
+			`declare const codePoints: ${ codePointsType };\nexport = codePoints;`
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.js'),
@@ -213,7 +221,7 @@ const writeFiles = function(options) {
 		);
 		fs.writeFileSync(
 			path.resolve(dir, 'symbols.d.ts'),
-			`declare const symbols: string[];\nexport = symbols;`
+			`declare const symbols: ${ symbolsType };\nexport = symbols;`
 		);
 	});
 	if (options.type == 'Bidi_Mirroring_Glyph') {
