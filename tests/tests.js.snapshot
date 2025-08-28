@@ -3157,9 +3157,9 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
     "length": 1
   },
   {
-    "begin": 42994,
+    "begin": 42993,
     "end": 42997,
-    "length": 3
+    "length": 4
   },
   {
     "begin": 43000,
@@ -3237,6 +3237,16 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
     "length": 1
   },
   {
+    "begin": 69317,
+    "end": 69318,
+    "length": 1
+  },
+  {
+    "begin": 73177,
+    "end": 73178,
+    "length": 1
+  },
+  {
     "begin": 92992,
     "end": 92996,
     "length": 4
@@ -3267,6 +3277,11 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
     "length": 1
   },
   {
+    "begin": 94194,
+    "end": 94196,
+    "length": 2
+  },
+  {
     "begin": 110576,
     "end": 110580,
     "length": 4
@@ -3294,6 +3309,11 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
   {
     "begin": 124139,
     "end": 124140,
+    "length": 1
+  },
+  {
+    "begin": 124671,
+    "end": 124672,
     "length": 1
   },
   {

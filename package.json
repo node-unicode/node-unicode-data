@@ -1,52 +1,52 @@
 {
-  "name": "unicode-data",
-  "version": "0.1.0",
-  "description": "JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, blocks, and properties.",
-  "homepage": "https://mths.be/node-unicode-data",
-  "main": "index.js",
-  "keywords": [
-    "unicode",
-    "code points",
-    "regex",
-    "regexp",
-    "data",
-    "generator",
-    "tool"
-  ],
-  "license": "MIT",
-  "author": {
-    "name": "Mathias Bynens",
-    "url": "https://mathiasbynens.be/"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/node-unicode/node-unicode-data.git"
-  },
-  "bugs": "https://github.com/node-unicode/node-unicode-data/issues",
-  "files": [
-    "LICENSE-MIT.txt",
-    "index.js",
-    "data/",
-    "scripts/",
-    "templates/",
-    "tests/"
-  ],
-  "scripts": {
-    "download": "node scripts/download.js",
-    "clean": "rm -rf -- output/*/*!(.git)",
-    "build": "node scripts/generate-data.js",
-    "test-update-snapshot": "node --test --experimental-test-snapshots --test-update-snapshots tests/tests.js",
-    "test": "node --test --experimental-test-snapshots tests/tests.js",
-    "t": "node --experimental-test-snapshots tests/quick.js",
-    "cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage --experimental-test-snapshots tests/tests.js"
-  },
-  "dependencies": {
-    "jsesc": "^3.0.2",
-    "lodash.template": "^4.5.0",
-    "regenerate": "^1.4.2",
-    "unicode-loose-match": "^2.7.0",
-    "unicode-property-aliases": "^1.6.2",
-    "unicode-property-value-aliases": "^3.8.0",
-    "when": "^3.7.8"
-  }
+	"name": "unicode-data",
+	"version": "0.1.0",
+	"description": "JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, blocks, and properties.",
+	"homepage": "https://mths.be/node-unicode-data",
+	"main": "index.js",
+	"keywords": [
+		"unicode",
+		"code points",
+		"regex",
+		"regexp",
+		"data",
+		"generator",
+		"tool"
+	],
+	"license": "MIT",
+	"author": {
+		"name": "Mathias Bynens",
+		"url": "https://mathiasbynens.be/"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/node-unicode/node-unicode-data.git"
+	},
+	"bugs": "https://github.com/node-unicode/node-unicode-data/issues",
+	"files": [
+		"LICENSE-MIT.txt",
+		"index.js",
+		"data/",
+		"scripts/",
+		"templates/",
+		"tests/"
+	],
+	"scripts": {
+		"download": "node scripts/download.js",
+		"clean": "rm -rf -- output/*/*!(.git)",
+		"build": "node scripts/generate-data.js",
+		"test-update-snapshot": "node --test --experimental-test-snapshots --test-update-snapshots tests/tests.js",
+		"test": "node --test --experimental-test-snapshots tests/tests.js",
+		"t": "node --experimental-test-snapshots tests/quick.js",
+		"cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage --experimental-test-snapshots tests/tests.js"
+	},
+	"devDependencies": {
+		"jsesc": "^3.0.2",
+		"lodash.template": "^4.5.0",
+		"regenerate": "^1.4.2",
+		"unicode-loose-match": "^2.8.0",
+		"unicode-property-aliases": "^2.1.0",
+		"unicode-property-value-aliases": "^3.9.0",
+		"when": "^3.7.8"
+	}
 }
