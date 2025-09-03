@@ -3,11 +3,14 @@ name: publish-on-tag
 on:
   push:
     tags:
-    - '*'
+      - '*'
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,4 +21,4 @@ jobs:
           npm config set access public
           npm config set registry 'https://wombat-dressing-room.appspot.com/'
           npm config set '//wombat-dressing-room.appspot.com/:_authToken' '${NPM_TOKEN}'
-          npm publish
+          npm publish --provenance --access public
