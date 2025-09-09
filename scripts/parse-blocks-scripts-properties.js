@@ -19,10 +19,24 @@ const findCanonicalName = function(shortName) {
 	return canonicalName;
 };
 
+const initialMapForType = function(type) {
+	switch (type) {
+		case 'scripts':
+			return {
+				Unknown: regenerate().addRange(0, CODEPOINT_MAX),
+			};
+		default:
+			return {};
+	}
+};
+
+/**
+ * @param {'blocks' | 'bidi-mirroring' | 'derived-binary-properties' | 'derived-core-properties' | 'derived-general-category' | 'scripts'} type
+ * @param {string} version
+ * @returns
+ */
 const parseBlocksScriptsProperties = function(type, version) {
-	// `type` is 'properties', 'derived-binary-properties', 'derived-core-properties', 'derived-general-category', 'scripts', 'blocks',
-	// or 'bidi-mirroring'.
-	const map = {};
+	const map = initialMapForType(type);
 	const source = utils.readDataFile(version, type);
 	if (!source) {
 		return;
@@ -75,12 +89,17 @@ const parseBlocksScriptsProperties = function(type, version) {
 		map[item] ??= regenerate();
 		const rangeParts = charRange.split('-');
 		if (rangeParts.length == 2) {
-			map[item].addRange(
-				parseInt(rangeParts[0], 16),
-				parseInt(rangeParts[1], 16)
-			);
+			const start = parseInt(rangeParts[0], 16), end = parseInt(rangeParts[1], 16);
+			map[item].addRange(start, end);
+			if (type == 'scripts') {
+				map.Unknown.removeRange(start, end);
+			}
 		} else {
-			map[item].add(parseInt(charRange, 16));
+			const codepoint = parseInt(charRange, 16);
+			map[item].add(codepoint);
+			if (type == 'scripts') {
+				map.Unknown.remove(codepoint);
+			}
 		}
 	}
 	return map;
@@ -282,9 +301,9 @@ const parseProperties = function (version) {
 				currentProperty = maybeProperty[1];
 				if (
 					// ignore Bidi_Class as they have been generated from UnicodeData
-					currentProperty.startsWith("Bidi:") || 
+					currentProperty.startsWith("Bidi:") ||
 					// ignore Not a Character and Unassigned Code Value as they have been generated from UnicodeData
-					currentProperty === "Not a Character" || 
+					currentProperty === "Not a Character" ||
 					currentProperty === "Unassigned Code Value"
 				) {
 					// skip contents
