@@ -176,8 +176,12 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/4.1.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/4.1.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/4.1.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/4.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/4.1.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/4.1.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '5.0.0',
@@ -199,8 +203,12 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/5.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.0.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/5.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/5.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/5.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '5.1.0',
@@ -222,8 +230,12 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/5.1.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.1.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.1.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/5.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/5.1.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/5.1.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '5.2.0',
@@ -245,8 +257,12 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/5.2.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.2.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.2.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/5.2.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/5.2.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/5.2.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '6.0.0',
@@ -270,8 +286,12 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/6.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.0.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/6.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/6.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/6.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/6.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '6.1.0',
@@ -296,8 +316,12 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/6.1.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.1.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/6.1.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/6.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/6.1.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/6.1.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '6.2.0',
@@ -322,8 +346,12 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/6.2.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.2.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/6.2.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/6.2.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/6.2.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/6.2.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '6.3.0',
@@ -349,8 +377,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/6.3.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/6.3.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/6.3.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/6.3.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/6.3.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '7.0.0',
@@ -376,8 +408,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/7.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/7.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/7.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/7.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/7.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/7.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '8.0.0',
@@ -403,8 +439,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/8.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/8.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/8.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/8.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/8.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/8.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '9.0.0',
@@ -430,8 +470,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/9.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/9.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/9.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/9.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/9.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/9.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '10.0.0',
@@ -457,8 +501,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/10.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/10.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/10.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/10.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/10.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 	},
 	{
 		version: '11.0.0',
@@ -484,8 +532,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/11.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/11.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/11.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/11.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/11.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/11.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/emoji/11.0/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -521,8 +573,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/12.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/12.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/12.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/12.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/12.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/12.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/emoji/12.0/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -558,8 +614,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/12.1.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/12.1.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/12.1.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/12.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/12.1.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/12.1.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/emoji/12.1/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -595,8 +655,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/13.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/13.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/13.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/13.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/13.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/13.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -632,8 +696,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/14.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/14.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/14.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/14.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/14.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/14.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/14.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -669,8 +737,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/15.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/15.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/15.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/15.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/15.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/15.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/15.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -706,8 +778,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/15.1.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/15.1.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/15.1.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/15.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/15.1.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/15.1.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/15.1.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -743,8 +819,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/16.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/16.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/16.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/16.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/16.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/16.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/16.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -780,45 +860,12 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/17.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/17.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/17.0.0/ucd/LineBreak.txt',
+		'grapheme-cluster-break':
+			'https://unicode.org/Public/17.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
 			'https://unicode.org/Public/17.0.0/ucd/auxiliary/WordBreakProperty.txt',
-		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
-		emoji: 'https://unicode.org/Public/17.0.0/ucd/emoji/emoji-data.txt',
-		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
-		'emoji-sequences':
-			'https://unicode.org/Public/emoji/17.0/emoji-sequences.txt',
-		// Emoji_ZWJ_Sequence
-		'emoji-zwj-sequences':
-			'https://unicode.org/Public/emoji/17.0/emoji-zwj-sequences.txt',
-		// Emoji_Test (not an official property)
-		'emoji-test': 'https://unicode.org/Public/emoji/17.0/emoji-test.txt',
-	},
-	{
-		version: '17.0.0',
-		main: 'https://unicode.org/Public/17.0.0/ucd/UnicodeData.txt',
-		scripts: 'https://unicode.org/Public/17.0.0/ucd/Scripts.txt',
-		'script-extensions':
-			'https://unicode.org/Public/17.0.0/ucd/ScriptExtensions.txt',
-		blocks: 'https://unicode.org/Public/17.0.0/ucd/Blocks.txt',
-		properties: 'https://unicode.org/Public/17.0.0/ucd/PropList.txt',
-		'name-aliases': 'https://unicode.org/Public/17.0.0/ucd/NameAliases.txt',
-		'derived-binary-properties':
-			'https://unicode.org/Public/17.0.0/ucd/extracted/DerivedBinaryProperties.txt',
-		'derived-core-properties':
-			'https://unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt',
-		'derived-general-category':
-			'https://unicode.org/Public/17.0.0/ucd/extracted/DerivedGeneralCategory.txt',
-		'derived-normalization-properties':
-			'https://unicode.org/Public/17.0.0/ucd/DerivedNormalizationProps.txt',
-		'composition-exclusions':
-			'https://unicode.org/Public/17.0.0/ucd/CompositionExclusions.txt',
-		'case-folding': 'https://unicode.org/Public/17.0.0/ucd/CaseFolding.txt',
-		'special-casing': 'https://unicode.org/Public/17.0.0/ucd/SpecialCasing.txt',
-		'bidi-mirroring': 'https://unicode.org/Public/17.0.0/ucd/BidiMirroring.txt',
-		'bidi-brackets': 'https://unicode.org/Public/17.0.0/ucd/BidiBrackets.txt',
-		'line-break': 'https://unicode.org/Public/17.0.0/ucd/LineBreak.txt',
-		'word-break':
-			'https://unicode.org/Public/17.0.0/ucd/auxiliary/WordBreakProperty.txt',
+		'sentence-break':
+			'https://unicode.org/Public/17.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/17.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence

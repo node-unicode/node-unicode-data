@@ -12,7 +12,7 @@ parsers.parseLineBreak = require('./scripts/parse-line-break.js');
 parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
 parsers.parseSpecialCasing = require('./scripts/parse-special-casing.js');
 parsers.parseSimpleCaseMapping = require('./scripts/parse-simple-case-mapping.js');
-parsers.parseWordBreak = require('./scripts/parse-word-break.js');
+parsers.parseGraphemeWordSentenceBreak = require('./scripts/parse-grapheme-word-sentence-break.js');
 parsers.parseEmoji = require('./scripts/parse-emoji.js');
 parsers.parseEmojiSequences = require('./scripts/parse-emoji-sequences.js');
 parsers.parseNames = require('./scripts/parse-names.js');
@@ -126,11 +126,23 @@ const generateData = function(version) {
 		'map': parsers.parseLineBreak(version),
 		'type': 'Line_Break'
 	}));
+	console.log('Parsing Unicode v%s `Grapheme_Cluster_Break`…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseGraphemeWordSentenceBreak(version, 'grapheme-cluster-break'),
+		'type': 'Grapheme_Cluster_Break'
+	}));
 	console.log('Parsing Unicode v%s `Word_Break`…', version);
 	extend(dirMap, utils.writeFiles({
 		'version': version,
-		'map': parsers.parseWordBreak(version),
+		'map': parsers.parseGraphemeWordSentenceBreak(version, 'word-break'),
 		'type': 'Word_Break'
+	}));
+	console.log('Parsing Unicode v%s `Sentence_Break`…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseGraphemeWordSentenceBreak(version, 'sentence-break'),
+		'type': 'Sentence_Break'
 	}));
 	console.log('Parsing Unicode v%s binary emoji properties…', version);
 	extend(dirMap, utils.writeFiles({

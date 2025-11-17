@@ -3,8 +3,8 @@
 const utils = require('./utils.js');
 const regenerate = require('regenerate');
 
-const parseWordBreak = function(version) {
-	const source = utils.readDataFile(version, 'word-break');
+const parseGraphemeWordSentenceBreak = function(version, kind) {
+	const source = utils.readDataFile(version, kind);
 	if (!source) {
 		return;
 	}
@@ -39,4 +39,4 @@ const parseWordBreak = function(version) {
 	return map;
 };
 
-module.exports = parseWordBreak;
+module.exports = parseGraphemeWordSentenceBreak;
