@@ -45,6 +45,7 @@ const TYPES = [
 	'grapheme-cluster-break',
 	'word-break',
 	'sentence-break',
+	'vertical-orientation',
 	'emoji',
 	'emoji-sequences',
 	'emoji-test',
