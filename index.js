@@ -8,6 +8,8 @@ parsers.parseBidiBrackets = require('./scripts/parse-bidi-brackets.js');
 parsers.parseCaseFolding = require('./scripts/parse-case-folding.js');
 parsers.parseBidiClass = require('./scripts/parse-bidi-class.js');
 parsers.parseCompositionExclusions = require('./scripts/parse-composition-exclusions.js');
+parsers.parseIndicPositionalCategory = require('./scripts/parse-indic-positional-category.js');
+parsers.parseIndicSyllabicCategory = require('./scripts/parse-indic-syllabic-category.js');
 parsers.parseLineBreak = require('./scripts/parse-line-break.js');
 parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
 parsers.parseSpecialCasing = require('./scripts/parse-special-casing.js');
@@ -119,6 +121,21 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseBidiBrackets(version),
 		'type': 'Bidi_Paired_Bracket_Type'
+	}));
+	{
+		const InPCName = +version.split(".")[0] >= 8 ? 'Indic_Positional_Category' : 'Indic_Matra_Category';
+		console.log('Parsing Unicode v%s `%s`…', version, InPCName);
+		extend(dirMap, utils.writeFiles({
+			'version': version,
+			'map': parsers.parseIndicPositionalCategory(version),
+			'type': InPCName
+		}));
+	}
+	console.log('Parsing Unicode v%s `Indic_Syllabic_Category`…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseIndicSyllabicCategory(version),
+		'type': 'Indic_Syllabic_Category'
 	}));
 	console.log('Parsing Unicode v%s `Line_Break`…', version);
 	extend(dirMap, utils.writeFiles({
