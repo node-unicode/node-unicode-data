@@ -46,7 +46,6 @@
 		"regenerate": "^1.4.2",
 		"unicode-loose-match": "^2.8.0",
 		"unicode-property-aliases": "^2.1.0",
-		"unicode-property-value-aliases": "^3.9.0",
-		"when": "^3.7.8"
+		"unicode-property-value-aliases": "^3.9.0"
 	}
 }
