@@ -507,6 +507,8 @@ const resources = [
 			'https://unicode.org/Public/10.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/10.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/10.0.0/ucd/VerticalOrientation.txt',
 	},
 	{
 		version: '11.0.0',
@@ -538,6 +540,8 @@ const resources = [
 			'https://unicode.org/Public/11.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/11.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/11.0.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/emoji/11.0/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -579,6 +583,8 @@ const resources = [
 			'https://unicode.org/Public/12.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/12.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/12.0.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/emoji/12.0/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -620,6 +626,8 @@ const resources = [
 			'https://unicode.org/Public/12.1.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/12.1.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/12.1.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/emoji/12.1/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -661,6 +669,8 @@ const resources = [
 			'https://unicode.org/Public/13.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/13.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/13.0.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -702,6 +712,8 @@ const resources = [
 			'https://unicode.org/Public/14.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/14.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/14.0.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/14.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -743,6 +755,8 @@ const resources = [
 			'https://unicode.org/Public/15.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/15.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/15.0.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/15.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -784,6 +798,8 @@ const resources = [
 			'https://unicode.org/Public/15.1.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/15.1.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/15.1.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/15.1.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -825,6 +841,8 @@ const resources = [
 			'https://unicode.org/Public/16.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/16.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/16.0.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/16.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
@@ -866,6 +884,8 @@ const resources = [
 			'https://unicode.org/Public/17.0.0/ucd/auxiliary/WordBreakProperty.txt',
 		'sentence-break':
 			'https://unicode.org/Public/17.0.0/ucd/auxiliary/SentenceBreakProperty.txt',
+		'vertical-orientation':
+			'https://unicode.org/Public/17.0.0/ucd/VerticalOrientation.txt',
 		// Emoji, Emoji_Presentation, Emoji_Modifier, Emoji_Modifier_Base, Emoji_Component, Extended_Pictographic
 		emoji: 'https://unicode.org/Public/17.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence

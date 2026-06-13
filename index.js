@@ -13,6 +13,7 @@ parsers.parseScriptExtensions = require('./scripts/parse-script-extensions.js');
 parsers.parseSpecialCasing = require('./scripts/parse-special-casing.js');
 parsers.parseSimpleCaseMapping = require('./scripts/parse-simple-case-mapping.js');
 parsers.parseGraphemeWordSentenceBreak = require('./scripts/parse-grapheme-word-sentence-break.js');
+parsers.parseVerticalOrientation = require('./scripts/parse-vertical-orientation.js');
 parsers.parseEmoji = require('./scripts/parse-emoji.js');
 parsers.parseEmojiSequences = require('./scripts/parse-emoji-sequences.js');
 parsers.parseNames = require('./scripts/parse-names.js');
@@ -143,6 +144,12 @@ const generateData = function(version) {
 		'version': version,
 		'map': parsers.parseGraphemeWordSentenceBreak(version, 'sentence-break'),
 		'type': 'Sentence_Break'
+	}));
+	console.log('Parsing Unicode v%s `Vertical_Orientation`…', version);
+	extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': parsers.parseVerticalOrientation(version),
+		'type': 'Vertical_Orientation'
 	}));
 	console.log('Parsing Unicode v%s binary emoji properties…', version);
 	extend(dirMap, utils.writeFiles({
