@@ -890,12 +890,12 @@ const resources = [
 		emoji: 'https://unicode.org/Public/17.0.0/ucd/emoji/emoji-data.txt',
 		// Emoji_Keycap_Sequence, Emoji_Flag_Sequence, Emoji_Modifier_Sequence
 		'emoji-sequences':
-			'https://www.unicode.org/Public/17.0.0/emoji/emoji-sequences.txt',
+			'https://unicode.org/Public/17.0.0/emoji/emoji-sequences.txt',
 		// Emoji_ZWJ_Sequence
 		'emoji-zwj-sequences':
-			'https://www.unicode.org/Public/17.0.0/emoji/emoji-zwj-sequences.txt',
+			'https://unicode.org/Public/17.0.0/emoji/emoji-zwj-sequences.txt',
 		// Emoji_Test (not an official property)
-		'emoji-test': 'https://www.unicode.org/Public/17.0.0/emoji/emoji-test.txt',
+		'emoji-test': 'https://unicode.org/Public/17.0.0/emoji/emoji-test.txt',
 	},
 ];
 
