@@ -63,6 +63,8 @@ const TYPES = [
 	'special-casing',
 	'bidi-mirroring',
 	'bidi-brackets',
+	'indic-positional-category',
+	'indic-syllabic-category',
 	'line-break',
 	'grapheme-cluster-break',
 	'word-break',

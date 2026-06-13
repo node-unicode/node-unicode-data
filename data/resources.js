@@ -285,6 +285,8 @@ const resources = [
 		'case-folding': 'https://unicode.org/Public/6.0.0/ucd/CaseFolding.txt',
 		'special-casing': 'https://unicode.org/Public/6.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.0.0/ucd/BidiMirroring.txt',
+		'indic-positional-category': 'https://unicode.org/Public/6.0.0/ucd/IndicMatraCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/6.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/6.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/6.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -315,6 +317,8 @@ const resources = [
 		'case-folding': 'https://unicode.org/Public/6.1.0/ucd/CaseFolding.txt',
 		'special-casing': 'https://unicode.org/Public/6.1.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.1.0/ucd/BidiMirroring.txt',
+		'indic-positional-category': 'https://unicode.org/Public/6.1.0/ucd/IndicMatraCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/6.1.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/6.1.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/6.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -345,6 +349,8 @@ const resources = [
 		'case-folding': 'https://unicode.org/Public/6.2.0/ucd/CaseFolding.txt',
 		'special-casing': 'https://unicode.org/Public/6.2.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.2.0/ucd/BidiMirroring.txt',
+		'indic-positional-category': 'https://unicode.org/Public/6.2.0/ucd/IndicMatraCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/6.2.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/6.2.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/6.2.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -376,6 +382,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/6.3.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/6.3.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/6.3.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/6.3.0/ucd/IndicMatraCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/6.3.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/6.3.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/6.3.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -405,6 +413,8 @@ const resources = [
 			'https://unicode.org/Public/7.0.0/ucd/CompositionExclusions.txt',
 		'case-folding': 'https://unicode.org/Public/7.0.0/ucd/CaseFolding.txt',
 		'special-casing': 'https://unicode.org/Public/7.0.0/ucd/SpecialCasing.txt',
+		'indic-positional-category': 'https://unicode.org/Public/7.0.0/ucd/IndicMatraCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/7.0.0/ucd/IndicSyllabicCategory.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/7.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/7.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/7.0.0/ucd/LineBreak.txt',
@@ -438,6 +448,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/8.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/8.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/8.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/8.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/8.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/8.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/8.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -469,6 +481,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/9.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/9.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/9.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/9.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/9.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/9.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/9.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -500,6 +514,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/10.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/10.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/10.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/10.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/10.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/10.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/10.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -533,6 +549,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/11.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/11.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/11.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/11.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/11.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/11.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/11.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -576,6 +594,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/12.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/12.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/12.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/12.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/12.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/12.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/12.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -619,6 +639,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/12.1.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/12.1.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/12.1.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/12.1.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/12.1.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/12.1.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/12.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -662,6 +684,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/13.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/13.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/13.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/13.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/13.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/13.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/13.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -705,6 +729,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/14.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/14.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/14.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/14.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/14.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/14.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/14.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -748,6 +774,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/15.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/15.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/15.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/15.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/15.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/15.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/15.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -791,6 +819,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/15.1.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/15.1.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/15.1.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/15.1.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/15.1.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/15.1.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/15.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -834,6 +864,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/16.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/16.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/16.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/16.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/16.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/16.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/16.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
@@ -877,6 +909,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/17.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/17.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/17.0.0/ucd/BidiBrackets.txt',
+		'indic-positional-category': 'https://unicode.org/Public/17.0.0/ucd/IndicPositionalCategory.txt',
+		'indic-syllabic-category': 'https://unicode.org/Public/17.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/17.0.0/ucd/LineBreak.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/17.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
