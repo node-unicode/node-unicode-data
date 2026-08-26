@@ -390,6 +390,10 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⧵"
   ],
   [
+    8733,
+    "𝬐"
+  ],
+  [
     8735,
     "⯾"
   ],
@@ -1826,6 +1830,14 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
     "⹛"
   ],
   [
+    11874,
+    "⹣"
+  ],
+  [
+    11875,
+    "⹢"
+  ],
+  [
     12296,
     "〉"
   ],
@@ -1976,6 +1988,34 @@ exports[`The generated latest Unicode js > Bidi_Mirroring_Glyph should match the
   [
     65379,
     "｢"
+  ],
+  [
+    121603,
+    "𝬄"
+  ],
+  [
+    121604,
+    "𝬃"
+  ],
+  [
+    121605,
+    "𝬆"
+  ],
+  [
+    121606,
+    "𝬅"
+  ],
+  [
+    121608,
+    "𝬉"
+  ],
+  [
+    121609,
+    "𝬈"
+  ],
+  [
+    121616,
+    "∝"
   ]
 ]
 `;
@@ -2215,6 +2255,11 @@ exports[`The generated latest Unicode js > Bidi_Paired_Bracket_Type/Open should 
   {
     "begin": 11867,
     "end": 11868,
+    "length": 1
+  },
+  {
+    "begin": 11874,
+    "end": 11875,
     "length": 1
   },
   {
@@ -2515,6 +2560,11 @@ exports[`The generated latest Unicode js > Binary_Property/Sentence_Terminal sho
   {
     "begin": 11859,
     "end": 11861,
+    "length": 2
+  },
+  {
+    "begin": 11872,
+    "end": 11874,
     "length": 2
   },
   {
@@ -2920,6 +2970,10 @@ exports[`The generated latest Unicode js > Case_Folding/S should match the snaps
   [
     64261,
     64262
+  ],
+  [
+    122773,
+    223
   ]
 ]
 `;
@@ -2962,9 +3016,14 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
     "length": 1
   },
   {
-    "begin": 1369,
+    "begin": 1368,
     "end": 1370,
-    "length": 1
+    "length": 2
+  },
+  {
+    "begin": 1419,
+    "end": 1421,
+    "length": 2
   },
   {
     "begin": 1600,
@@ -3072,9 +3131,9 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
     "length": 1
   },
   {
-    "begin": 8336,
-    "end": 8349,
-    "length": 13
+    "begin": 8335,
+    "end": 8352,
+    "length": 17
   },
   {
     "begin": 11388,
@@ -3223,8 +3282,8 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
   },
   {
     "begin": 67506,
-    "end": 67515,
-    "length": 9
+    "end": 67520,
+    "length": 14
   },
   {
     "begin": 68942,
@@ -3295,6 +3354,11 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
     "begin": 110589,
     "end": 110591,
     "length": 2
+  },
+  {
+    "begin": 122829,
+    "end": 122880,
+    "length": 51
   },
   {
     "begin": 122928,

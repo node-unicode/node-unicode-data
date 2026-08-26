@@ -1,14 +1,14 @@
 /**
- * See static/decode-ranges.js for decode utilities
+ * See static/decode-ranges.mjs for decode utilities.
  */
 
 const base64enc =
 	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
 /**
-  * Base64 encode variable-length deltas (5/10/15/21-bit).
-  */
-function encodeDeltas(input) {
+ * Base64 encode variable-length deltas (5/10/15/21-bit).
+ */
+const encodeDeltas = (input) => {
 	const output = [];
 	for (let i = 0; i < input.length; ++i) {
 		const x = input[i];
@@ -23,13 +23,13 @@ function encodeDeltas(input) {
 			output.push(56 + (x >> 18), x >> 12, x >> 6, x);
 		}
 	}
-	return output.map(x => base64enc[x & 63]).join('');
-}
+	return output.map((x) => base64enc[x & 63]).join('');
+};
 
 /**
-  * RLE + base64 encode code point ranges.
-  */
-function encodeRanges(values) {
+ * RLE + base64 encode code point ranges.
+ */
+const encodeRanges = (values) => {
 	const deltas = [];
 	for (let end = -1, i = 0; i < values.length; ) {
 		const begin = values[i];
@@ -41,14 +41,13 @@ function encodeRanges(values) {
 		}
 		deltas.push(end - begin - 1);
 	}
-	debugger;
 	return encodeDeltas(deltas);
-}
+};
 
-function encodeRegenerate(regenerateSet) {
+const encodeRegenerate = (regenerateSet) => {
 	const deltas = [];
 	const regenerateData = regenerateSet.data;
-	for (let end = - 1, i = 0; i < regenerateData.length; i += 2) {
+	for (let end = -1, i = 0; i < regenerateData.length; i += 2) {
 		const begin = regenerateData[i];
 		console.assert(begin > end, `code point ${begin} out of order`);
 		deltas.push(begin - end - 1);
@@ -56,9 +55,9 @@ function encodeRegenerate(regenerateSet) {
 		deltas.push(end - begin - 1);
 	}
 	return encodeDeltas(deltas);
-}
+};
 
-module.exports = {
-    encodeRanges: encodeRanges,
-    encodeRegenerate: encodeRegenerate,
-}
+export {
+	encodeRanges,
+	encodeRegenerate,
+};

@@ -3,7 +3,7 @@
 	"version": "0.1.0",
 	"description": "JavaScript-compatible Unicode data generator. Arrays of code points, arrays of symbols, and regular expressions for every Unicode version’s categories, scripts, blocks, and properties.",
 	"homepage": "https://mths.be/node-unicode-data",
-	"main": "index.js",
+	"main": "index.mjs",
 	"keywords": [
 		"unicode",
 		"code points",
@@ -25,27 +25,27 @@
 	"bugs": "https://github.com/node-unicode/node-unicode-data/issues",
 	"files": [
 		"LICENSE-MIT.txt",
-		"index.js",
+		"index.mjs",
 		"data/",
 		"scripts/",
 		"templates/",
 		"tests/"
 	],
 	"scripts": {
-		"download": "node scripts/download.js",
+		"download": "node scripts/download.mjs",
 		"clean": "rm -rf -- output/*/*!(.git)",
-		"build": "node scripts/generate-data.js",
-		"test-update-snapshot": "node --test --experimental-test-snapshots --test-update-snapshots tests/tests.js",
-		"test": "node --test --experimental-test-snapshots tests/tests.js",
-		"t": "node --experimental-test-snapshots tests/quick.js",
-		"cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage --experimental-test-snapshots tests/tests.js"
+		"build": "node scripts/generate-data.mjs",
+		"test-update-snapshot": "node --test --experimental-test-snapshots --test-update-snapshots tests/tests.mjs",
+		"test": "node --test --experimental-test-snapshots tests/tests.mjs",
+		"t": "node --experimental-test-snapshots tests/quick.mjs",
+		"cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage --experimental-test-snapshots tests/tests.mjs"
 	},
 	"devDependencies": {
-		"jsesc": "^3.0.2",
-		"lodash.template": "^4.5.0",
+		"jsesc": "^3.1.0",
+		"lodash.template": "^4.18.1",
 		"regenerate": "^1.4.2",
-		"unicode-loose-match": "^2.8.0",
-		"unicode-property-aliases": "^2.1.0",
-		"unicode-property-value-aliases": "^3.9.0"
+		"unicode-loose-match": "^3.0.0",
+		"unicode-property-aliases": "^3.0.0",
+		"unicode-property-value-aliases": "^4.0.0"
 	}
 }

@@ -1,14 +1,14 @@
-'use strict';
+import valueAliases from 'unicode-property-value-aliases';
+import utils from './utils.mjs';
 
-const scriptAliases = require('unicode-property-value-aliases').get('Script');
-const utils = require('./utils.js');
+const scriptAliases = valueAliases.get('Script');
 
-const findCanonicalName = function(shortName) {
+const findCanonicalName = (shortName) => {
 	return scriptAliases.get(shortName);
 };
 
-const parseScriptExtensions = function(version, scriptsMap) {
-	const source = utils.readDataFile(version, 'script-extensions');
+const parseScriptExtensions = async (version, scriptsMap) => {
+	const source = await utils.readDataFile(version, 'script-extensions');
 	if (!source) {
 		return;
 	}
@@ -26,19 +26,19 @@ const parseScriptExtensions = function(version, scriptsMap) {
 		const charRange = data[0].replace('..', '-').trim();
 		const rangeParts = charRange.split('-');
 		const scripts = data[1].split('#')[0].trim().split(' ');
-		if (rangeParts.length == 2) {
-			const from = parseInt(rangeParts[0], 16),
-				to = parseInt(rangeParts[1], 16);
-				for (const script of scripts) {
-					const canonicalName = findCanonicalName(script);
-					scriptsMap.Common.removeRange(from, to);
-					scriptsMap.Inherited.removeRange(from, to);
-					console.assert(
-						scriptsMap[canonicalName],
-						`canonical name for ${script} = ${canonicalName} not present in \`scriptsMap\``
-					);
-					scriptsMap[canonicalName].addRange(from, to);
-				}
+		if (rangeParts.length === 2) {
+			const from = parseInt(rangeParts[0], 16);
+			const to = parseInt(rangeParts[1], 16);
+			for (const script of scripts) {
+				const canonicalName = findCanonicalName(script);
+				scriptsMap.Common.removeRange(from, to);
+				scriptsMap.Inherited.removeRange(from, to);
+				console.assert(
+					scriptsMap[canonicalName],
+					`canonical name for ${script} = ${canonicalName} not present in \`scriptsMap\``
+				);
+				scriptsMap[canonicalName].addRange(from, to);
+			}
 		} else {
 			const codePoint = parseInt(charRange, 16);
 			for (const script of scripts) {
@@ -52,8 +52,9 @@ const parseScriptExtensions = function(version, scriptsMap) {
 				scriptsMap[canonicalName].add(codePoint);
 			}
 		}
-	};
+	}
 	return scriptsMap;
 };
 
-module.exports = parseScriptExtensions;
+export default parseScriptExtensions;
+

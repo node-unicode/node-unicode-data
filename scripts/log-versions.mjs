@@ -1,6 +1,4 @@
-'use strict';
-
-const resources = require('../data/resources.js');
+import resources from '../data/resources.mjs';
 
 for (const resource of resources) {
 	const version = resource.version;

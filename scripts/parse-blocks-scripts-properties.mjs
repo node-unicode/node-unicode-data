@@ -1,25 +1,21 @@
-'use strict';
+import looseMatch from 'unicode-loose-match';
+import propertyAliases from 'unicode-property-aliases';
+import regenerate from 'regenerate';
+import utils from './utils.mjs';
+import valueAliases from 'unicode-property-value-aliases';
 
-const looseMatch = require('unicode-loose-match');
-const propertyAliases = require('unicode-property-aliases');
-const regenerate = require('regenerate');
-const utils = require('./utils.js');
-const valueAliases = require('unicode-property-value-aliases');
 const categoryAliases = valueAliases.get('General_Category');
 const CODEPOINT_MAX = 0x10ffff;
 
-const findCanonicalName = function(shortName) {
+const findCanonicalName = (shortName) => {
 	const canonicalName = propertyAliases.get(shortName);
 	if (!canonicalName) {
-		// This is useful when adding newer versions, but fails for older Unicode versions.
-		// TODO: Fix and re-enable the exception.
-		//throw new Error(`Failed to find canonical name for property ${shortName}. Update \`unicode-property-aliases\`.`);
 		return shortName;
 	}
 	return canonicalName;
 };
 
-const initialMapForType = function(type) {
+const initialMapForType = (type) => {
 	switch (type) {
 		case 'scripts':
 			return {
@@ -35,9 +31,9 @@ const initialMapForType = function(type) {
  * @param {string} version
  * @returns
  */
-const parseBlocksScriptsProperties = function(type, version) {
+const parseBlocksScriptsProperties = async (type, version) => {
 	const map = initialMapForType(type);
-	const source = utils.readDataFile(version, type);
+	const source = await utils.readDataFile(version, type);
 	if (!source) {
 		return;
 	}
@@ -56,10 +52,10 @@ const parseBlocksScriptsProperties = function(type, version) {
 		const data = line.trim().split(';');
 		const charRange = data[0].replace('..', '-').trim();
 		let item = data[1].split(
-			type == 'blocks' ? ';' : '#'
+			type === 'blocks' ? ';' : '#'
 		)[0].trim().replace(/\x20/g, '_');
-		if (type == 'derived-normalization-properties') {
-			if (item == 'FNC') {
+		if (type === 'derived-normalization-properties') {
+			if (item === 'FNC') {
 				// Old Unicode versions up to v4.0.0 use the `FNC` alias instead of
 				// `FC_NFKC` (for `FC_NFKC_Closure`). This is not a binary property.
 				continue;
@@ -74,30 +70,31 @@ const parseBlocksScriptsProperties = function(type, version) {
 					item = canonical;
 				}
 			}
-		} else if (type == 'blocks') {
-			// Use canonical block names. See #34
+		} else if (type === 'blocks') {
+			// Use canonical block names. See #34.
 			const tmp = looseMatch('Block', item).value;
 			if (!tmp) {
 				throw new Error(`Canonical block name not found for ${item}. Update \`unicode-loose-match\`.`);
 			}
 			item = tmp;
-		} else if (type == 'bidi-mirroring') {
+		} else if (type === 'bidi-mirroring') {
 			item = String.fromCodePoint(parseInt(item, 16));
-		} else if (type == 'derived-general-category') {
-			item = categoryAliases.get(item) || item
+		} else if (type === 'derived-general-category') {
+			item = categoryAliases.get(item) || item;
 		}
 		map[item] ??= regenerate();
 		const rangeParts = charRange.split('-');
-		if (rangeParts.length == 2) {
-			const start = parseInt(rangeParts[0], 16), end = parseInt(rangeParts[1], 16);
+		if (rangeParts.length === 2) {
+			const start = parseInt(rangeParts[0], 16);
+			const end = parseInt(rangeParts[1], 16);
 			map[item].addRange(start, end);
-			if (type == 'scripts') {
+			if (type === 'scripts') {
 				map.Unknown.removeRange(start, end);
 			}
 		} else {
 			const codepoint = parseInt(charRange, 16);
 			map[item].add(codepoint);
-			if (type == 'scripts') {
+			if (type === 'scripts') {
 				map.Unknown.remove(codepoint);
 			}
 		}
@@ -105,11 +102,11 @@ const parseBlocksScriptsProperties = function(type, version) {
 	return map;
 };
 
-const parseDerivedBinaryProperties = function(version) {
+const parseDerivedBinaryProperties = async (version) => {
 	if (version === '3.1.1' || version === '3.1.0' || version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
 		// Unicode <= 3.1.1 does not provide derived-binary-properties,
-		// so we should derive Bidi_Mirrored from the UnicodeData
-		const source = utils.readDataFile(version, 'database');
+		// so we should derive Bidi_Mirrored from the UnicodeData.
+		const source = await utils.readDataFile(version, 'database');
 		if (!source) {
 			return;
 		}
@@ -125,22 +122,22 @@ const parseDerivedBinaryProperties = function(version) {
 			}
 		}
 		return {
-			Bidi_Mirrored: result
-		}
+			Bidi_Mirrored: result,
+		};
 	} else {
-		return parseBlocksScriptsProperties('derived-binary-properties', version);
+		return await parseBlocksScriptsProperties('derived-binary-properties', version);
 	}
-}
+};
 
-const parseDerivedGeneralCategory = function (version) {
+const parseDerivedGeneralCategory = async (version) => {
 	if (
 		version === '3.0.1' ||
 		version === '3.0.0' ||
 		parseInt(version.split('.')[0], 10) < 3
 	) {
 		// Unicode <= 3.0.1 does not provide derived-general-category,
-		// so we should derive General_Category from the UnicodeData
-		const source = utils.readDataFile(version, 'database');
+		// so we should derive General_Category from the UnicodeData.
+		const source = await utils.readDataFile(version, 'database');
 		if (!source) {
 			return;
 		}
@@ -183,10 +180,10 @@ const parseDerivedGeneralCategory = function (version) {
 						categoryMap[category].addRange(first, codePoint);
 					}
 				} else {
-					throw Error('Database exception');
+					throw new Error('Database exception');
 				}
 			} else {
-				// If there is a gap within UnicodeData, it must be unassigned code points
+				// If there is a gap within UnicodeData, it must be unassigned code points.
 				if (lastCodePoint + 1 < codePoint) {
 					const categories = [
 						categoryAliases.get('C'),
@@ -210,7 +207,7 @@ const parseDerivedGeneralCategory = function (version) {
 		}
 
 		if (lastCodePoint < CODEPOINT_MAX) {
-			// Add the last unassigned code point range
+			// Add the last unassigned code point range.
 			const categories = [categoryAliases.get('C'), categoryAliases.get('Cn')];
 			for (const category of categories) {
 				categoryMap[category] ??= regenerate();
@@ -220,7 +217,7 @@ const parseDerivedGeneralCategory = function (version) {
 
 		return categoryMap;
 	} else {
-		const map = parseBlocksScriptsProperties(
+		const map = await parseBlocksScriptsProperties(
 			'derived-general-category',
 			version
 		);
@@ -256,11 +253,11 @@ const parseDerivedGeneralCategory = function (version) {
 		}
 		return map;
 	}
-}
+};
 
-const parseBlocks = function (version) {
+const parseBlocks = async (version) => {
 	if (version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
-		const source = utils.readDataFile(version, 'blocks');
+		const source = await utils.readDataFile(version, 'blocks');
 		if (!source) {
 			return;
 		}
@@ -278,35 +275,35 @@ const parseBlocks = function (version) {
 		}
 		return map;
 	} else {
-		return parseBlocksScriptsProperties('blocks', version);
+		return await parseBlocksScriptsProperties('blocks', version);
 	}
-}
+};
 
-const parseProperties = function (version) {
+const parseProperties = async (version) => {
 	if (
 		version === '3.0.1' ||
 		version === '3.0.0' ||
 		parseInt(version.split('.')[0], 10) < 3
 	) {
-		const source = utils.readDataFile(version, 'properties');
+		const source = await utils.readDataFile(version, 'properties');
 		if (!source) {
 			return;
 		}
 		const map = {};
 		const lines = source.trimEnd().split('\n');
-		let currentProperty, maybeProperty, maybeRange
+		let currentProperty, maybeProperty, maybeRange;
 		for (let i = 0; i < lines.length; i++) {
 			const line = lines[i];
 			if ((maybeProperty = /0x[A-F\d]+ \((.+?)\)$/.exec(line)) != null) {
 				currentProperty = maybeProperty[1];
 				if (
-					// ignore Bidi_Class as they have been generated from UnicodeData
+					// Ignore Bidi_Class as they have been generated from UnicodeData.
 					currentProperty.startsWith("Bidi:") ||
-					// ignore Not a Character and Unassigned Code Value as they have been generated from UnicodeData
+					// Ignore Not a Character and Unassigned Code Value as they have been generated from UnicodeData.
 					currentProperty === "Not a Character" ||
 					currentProperty === "Unassigned Code Value"
 				) {
-					// skip contents
+					// Skip contents.
 					i++;
 					while (++i < lines.length && lines[i] !== "");
 					continue;
@@ -327,17 +324,23 @@ const parseProperties = function (version) {
 		}
 		return map;
 	} else {
-		return parseBlocksScriptsProperties('properties', version);
+		return await parseBlocksScriptsProperties('properties', version);
 	}
 };
 
-module.exports = {
-	'parseScripts': parseBlocksScriptsProperties.bind(null, 'scripts'),
-	'parseProperties': parseProperties,
-	'parseDerivedCoreProperties': parseBlocksScriptsProperties.bind(null, 'derived-core-properties'),
-	'parseDerivedNormalizationProperties': parseBlocksScriptsProperties.bind(null, 'derived-normalization-properties'),
-	'parseBlocks': parseBlocks,
-	'parseMirroring': parseBlocksScriptsProperties.bind(null, 'bidi-mirroring'),
-	'parseDerivedBinaryProperties': parseDerivedBinaryProperties,
-	'parseDerivedGeneralCategory': parseDerivedGeneralCategory
+const parseScripts = (version) => parseBlocksScriptsProperties('scripts', version);
+const parseDerivedCoreProperties = (version) => parseBlocksScriptsProperties('derived-core-properties', version);
+const parseDerivedNormalizationProperties = (version) => parseBlocksScriptsProperties('derived-normalization-properties', version);
+const parseMirroring = (version) => parseBlocksScriptsProperties('bidi-mirroring', version);
+
+export {
+	parseScripts,
+	parseProperties,
+	parseDerivedCoreProperties,
+	parseDerivedNormalizationProperties,
+	parseBlocks,
+	parseMirroring,
+	parseDerivedBinaryProperties,
+	parseDerivedGeneralCategory,
 };
+

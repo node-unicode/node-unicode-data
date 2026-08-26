@@ -11,8 +11,8 @@ for dir in $(find unicode-* -maxdepth 0 -type d | sort -r); do
 	cd "${dir}";
 	echo "Taking care of ${dir}…";
 	git add -A;
-	git commit -m 'Release v1.6.17';
-	git tag v1.6.17;
+	git commit -m 'Release v2.0.1';
+	git tag v2.0.1;
 	git push;
 	git push --tags;
 	cd ..;
