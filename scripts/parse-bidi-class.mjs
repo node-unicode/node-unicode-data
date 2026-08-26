@@ -1,12 +1,11 @@
-'use strict';
+import utils from './utils.mjs';
+import valueAliases from 'unicode-property-value-aliases';
+import regenerate from 'regenerate';
 
-const utils = require('./utils.js');
-const valueAliases = require('unicode-property-value-aliases');
-const regenerate = require('regenerate');
 const bidiAliases = valueAliases.get('Bidi_Class');
 
-const parseBidiClass = function (version) {
-	const source = utils.readDataFile(version, 'database');
+const parseBidiClass = async (version) => {
+	const source = await utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
 	}
@@ -31,7 +30,7 @@ const parseBidiClass = function (version) {
 				flag = false;
 				categoryMap[bidiCategory].addRange(first, codePoint);
 			} else {
-				throw Error('Database exception');
+				throw new Error('Database exception');
 			}
 		} else {
 			if (/<.+, First>/.test(name)) {
@@ -46,4 +45,5 @@ const parseBidiClass = function (version) {
 	return categoryMap;
 };
 
-module.exports = parseBidiClass;
+export default parseBidiClass;
+

@@ -1,6 +1,6 @@
 /**
  * This file ships to end users.
- * See scripts/encode-ranges.js for encode utilities
+ * See scripts/encode-ranges.mjs for encode utilities.
  */
 
 const base64enc =
@@ -12,8 +12,8 @@ const base64dec = Object.freeze(Object.fromEntries(
 
 class UnicodeRange {
 	/**
-	 * @param {number} begin 
-	 * @param {number} end 
+	 * @param {number} begin
+	 * @param {number} end
 	 */
 	constructor(begin, end) {
 		this.begin = begin;
@@ -35,10 +35,10 @@ class UnicodeRange {
 }
 
 /**
-  * Base64 decode variable-length deltas (5/10/15/21-bit).
-  * @param {string} input
-  */
-function decodeDeltas(input) {
+ * Base64 decode variable-length deltas (5/10/15/21-bit).
+ * @param {string} input
+ */
+const decodeDeltas = (input) => {
 	/** @type {number[]} */
 	const output = [];
 	for (let i = 0; i < input.length; ) {
@@ -64,14 +64,13 @@ function decodeDeltas(input) {
 		output.push(x);
 	}
 	return output;
-}
-
+};
 
 /**
-  * RLE + base64 decode code point ranges.
-  * @param {string} input
-  */
-function decodeRanges(input) {
+ * RLE + base64 decode code point ranges.
+ * @param {string} input
+ */
+const decodeRanges = (input) => {
 	const deltas = decodeDeltas(input);
 	const ranges = [];
 	for (let end = -1, i = 1; i < deltas.length; i += 2) {
@@ -81,6 +80,7 @@ function decodeRanges(input) {
 		ranges.push(new UnicodeRange(begin, end));
 	}
 	return ranges;
-}
+};
 
-module.exports = decodeRanges;
+export default decodeRanges;
+

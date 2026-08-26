@@ -1,7 +1,7 @@
 /**
-  * Generate [codePoint, value] pairs from RLE array of values.
-  */
-function * generateEntries(runs) {
+ * Generate [codePoint, value] pairs from RLE array of values.
+ */
+const generateEntries = function*(runs) {
 	const len = runs.length - 2;
 	for (let cp = 0, i = 0; i < len; ) {
 		cp += runs[i++];
@@ -11,10 +11,10 @@ function * generateEntries(runs) {
 			yield [cp++, value];
 		}
 	}
-}
+};
 
-function decodePropertyMap(runs) {
+const decodePropertyMap = (runs) => {
 	return new Map(generateEntries(runs));
-}
+};
 
-module.exports = decodePropertyMap;
+export default decodePropertyMap;

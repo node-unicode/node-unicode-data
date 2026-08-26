@@ -1,22 +1,18 @@
-'use strict';
+import utils from './utils.mjs';
 
-const utils = require('./utils.js');
-
-const parseNameAliases = function(version) {
+const parseNameAliases = async (version) => {
 	const map = {};
-	const source = utils.readDataFile(version, 'name-aliases');
+	const source = await utils.readDataFile(version, 'name-aliases');
 	if (!source) {
 		return;
 	}
 	const lines = source.split('\n');
 
-	let first = 0;
-	lines.forEach(function(line) {
+	for (const line of lines) {
 		const data = line.trim().split(';');
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
 		const type = data[2];
-
 
 		if (!isNaN(codePoint)) {
 			if (map[type] === undefined) {
@@ -24,9 +20,10 @@ const parseNameAliases = function(version) {
 			}
 			utils.append(map[type], codePoint, name);
 		}
-	});
+	}
 
 	return map;
 };
 
-module.exports = parseNameAliases;
+export default parseNameAliases;
+

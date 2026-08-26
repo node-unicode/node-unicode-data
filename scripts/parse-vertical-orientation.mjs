@@ -1,16 +1,14 @@
-'use strict';
+import utils from './utils.mjs';
+import regenerate from 'regenerate';
 
-const utils = require('./utils.js');
-const regenerate = require('regenerate');
-
-const parseIndicSyllabicCategory = function(version) {
-	const source = utils.readDataFile(version, 'indic-syllabic-category');
+const parseVerticalOrientation = async (version) => {
+	const source = await utils.readDataFile(version, 'vertical-orientation');
 	if (!source) {
 		return;
 	}
 	const map = {
-		// All code points not explicitly listed for Indic_Syllabic_Category have the value Other.
-		'Other': regenerate().addRange(0, 0x10FFFF)
+		// All other code points, assigned and unassigned, that are not listed explicitly in the data section of VerticalOrientation.txt are given the value R.
+		'R': regenerate().addRange(0, 0x10FFFF),
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
@@ -23,20 +21,25 @@ const parseIndicSyllabicCategory = function(version) {
 		const value = data[1].split('#')[0].trim();
 		const propertyValue = value;
 		map[propertyValue] ??= regenerate();
-		if (rangeParts.length == 2) {
+		// Skip handling R since it's the default property value.
+		if (propertyValue === 'R') {
+			continue;
+		}
+		if (rangeParts.length === 2) {
 			const [from, to] = [
 				parseInt(rangeParts[0], 16),
 				parseInt(rangeParts[1], 16),
 			];
-			map['Other'].removeRange(from, to);
+			map['R'].removeRange(from, to);
 			map[propertyValue].addRange(from, to);
 		} else {
 			const codePoint = parseInt(charRange, 16);
-			map['Other'].remove(codePoint);
+			map['R'].remove(codePoint);
 			map[propertyValue].add(codePoint);
 		}
 	}
 	return map;
 };
 
-module.exports = parseIndicSyllabicCategory;
+export default parseVerticalOrientation;
+

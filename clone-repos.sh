@@ -2,7 +2,7 @@
 
 cd "$(dirname "${BASH_SOURCE}")";
 
-VERSIONS=$(node scripts/log-versions.js);
+VERSIONS=$(node scripts/log-versions.mjs);
 
 mkdir -p output;
 cd output;

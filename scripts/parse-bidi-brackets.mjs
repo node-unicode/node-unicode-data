@@ -1,21 +1,19 @@
-'use strict';
-
-const regenerate = require('regenerate');
-const utils = require('./utils.js');
+import regenerate from 'regenerate';
+import utils from './utils.mjs';
 
 const bidiBracketMap = new Map([
 	['o', 'Open'],
 	['c', 'Close'],
-	['n', 'None']
+	['n', 'None'],
 ]);
 
-const parseBidiBrackets = function(version) {
+const parseBidiBrackets = async (version) => {
 	const map = {
 		'Open': regenerate(),
 		'Close': regenerate(),
-		'None': regenerate().addRange(0, 0x10FFFF)
+		'None': regenerate().addRange(0, 0x10FFFF),
 	};
-	const source = utils.readDataFile(version, 'bidi-brackets');
+	const source = await utils.readDataFile(version, 'bidi-brackets');
 	if (!source) {
 		return;
 	}
@@ -32,7 +30,7 @@ const parseBidiBrackets = function(version) {
 		let item = data[2].split('#')[0].trim();
 		item = bidiBracketMap.get(item);
 		const rangeParts = charRange.split('-');
-		if (rangeParts.length == 2) {
+		if (rangeParts.length === 2) {
 			const [from, to] = [
 				parseInt(rangeParts[0], 16),
 				parseInt(rangeParts[1], 16),
@@ -49,4 +47,5 @@ const parseBidiBrackets = function(version) {
 	return map;
 };
 
-module.exports = parseBidiBrackets;
+export default parseBidiBrackets;
+

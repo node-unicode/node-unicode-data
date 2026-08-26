@@ -1,11 +1,9 @@
-'use strict';
+import utils from './utils.mjs';
+import regenerate from 'regenerate';
 
-const utils = require('./utils.js');
-const regenerate = require('regenerate');
-
-const parseNames = function(version) {
+const parseNames = async (version) => {
 	const map = {};
-	const source = utils.readDataFile(version, 'database');
+	const source = await utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
 	}
@@ -27,7 +25,7 @@ const parseNames = function(version) {
 				map[rangeName] ??= regenerate();
 				map[rangeName].addRange(first, codePoint);
 			} else {
-				throw Error('Database exception');
+				throw new Error('Database exception');
 			}
 		} else {
 			if (/<.+, First>/.test(name)) {
@@ -43,4 +41,5 @@ const parseNames = function(version) {
 	return map;
 };
 
-module.exports = parseNames;
+export default parseNames;
+

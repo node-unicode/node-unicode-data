@@ -17,4 +17,4 @@ declare namespace decodeRanges {
  */
 declare function decodeRanges(input: string): decodeRanges.UnicodeRange[];
 
-export = decodeRanges;
+export default decodeRanges;

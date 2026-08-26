@@ -1,10 +1,10 @@
-'use strict';
+import valueAliases from 'unicode-property-value-aliases';
+import utils from './utils.mjs';
+import regenerate from 'regenerate';
 
-const aliases = require('unicode-property-value-aliases').get('Line_Break');
-const utils = require('./utils.js');
-const regenerate = require('regenerate');
+const aliases = valueAliases.get('Line_Break');
 
-const findCanonicalName = function(shortName) {
+const findCanonicalName = (shortName) => {
 	const canonicalName = aliases.get(shortName);
 	if (!canonicalName) {
 		throw new Error(`Failed to find canonical name for Line_Break=${shortName}. Update \`unicode-property-value-aliases\`.`);
@@ -12,15 +12,15 @@ const findCanonicalName = function(shortName) {
 	return canonicalName;
 };
 
-const parseLineBreak = function(version) {
-	const source = utils.readDataFile(version, 'line-break');
+const parseLineBreak = async (version) => {
+	const source = await utils.readDataFile(version, 'line-break');
 	if (!source) {
 		return;
 	}
 	const map = {
 		// All code points, assigned and unassigned, that are not listed explicitly
 		// are given the value `XX`.
-		'Unknown': regenerate().addRange(0, 0x10FFFF)
+		'Unknown': regenerate().addRange(0, 0x10FFFF),
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
@@ -33,7 +33,7 @@ const parseLineBreak = function(version) {
 		const value = data[1].split('#')[0].trim();
 		const canonicalName = findCanonicalName(value);
 		map[canonicalName] ??= regenerate();
-		if (rangeParts.length == 2) {
+		if (rangeParts.length === 2) {
 			const [from, to] = [
 				parseInt(rangeParts[0], 16),
 				parseInt(rangeParts[1], 16),
@@ -45,9 +45,10 @@ const parseLineBreak = function(version) {
 			map['Unknown'].remove(codePoint);
 			map[canonicalName].add(codePoint);
 		}
-	};
-	
+	}
+
 	return map;
 };
 
-module.exports = parseLineBreak;
+export default parseLineBreak;
+
