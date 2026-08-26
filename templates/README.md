@@ -64,7 +64,9 @@ Other than categories, data on Unicode properties, blocks, scripts, and script e
 // `Names`:
 
 import names from '@unicode/unicode-<%= version %>/Names/index.mjs'; // Array of canonical names.
-<% dirs.Names.forEach(function(subdir) { %>import <%= subdir %> from '@unicode/unicode-<%= version %>/Names/<%= subdir %>/index.mjs'; // Lookup map from code point to aliases.
+<% dirs.Names.forEach(function(subdir) {
+	const id = subdir.replaceAll(/[^a-zA-Z0-9_$]/g, '_').replace(/^([0-9])/, '_$1');
+%>import <%= id %> from '@unicode/unicode-<%= version %>/Names/<%= subdir %>/index.mjs'; // Lookup map from code point to aliases.
 <% }); %>
 <% Object.keys(dirs).forEach(function(type) {
     if (type == 'Names' && !dirs[type].subType) { return; }
@@ -72,25 +74,27 @@ import names from '@unicode/unicode-<%= version %>/Names/index.mjs'; // Array of
 // `<%= type %>`:
 <%
 	if (/^(?:Bidi_Class|Bidi_Paired_Bracket_Type|Bidi_Mirroring_Glyph|General_Category)$/.test(type)) {
+		const id = type.replaceAll(/[^a-zA-Z0-9_$]/g, '_').replace(/^([0-9])/, '_$1');
 %>
-import <%= type %> from '@unicode/unicode-<%= version %>/<%= type %>/index.mjs'; // Lookup map.
+import <%= id %> from '@unicode/unicode-<%= version %>/<%= type %>/index.mjs'; // Lookup map.
 <%
 	}
 	dirs[type].forEach(function(dir) {
+		const id = dir.replaceAll(/[^a-zA-Z0-9_$]/g, '_').replace(/^([0-9])/, '_$1');
 		if ('Case_Folding' == type || 'Simple_Case_Mapping' == type || 'Special_Casing' == type) {
 %>
-import <%= dir %>CodePoints from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.mjs'; // Lookup map from code point to code point or array of code points.
-import <%= dir %>Symbols from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.mjs'; // Lookup map from symbol to symbol(s).
+import <%= id %>CodePoints from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.mjs'; // Lookup map from code point to code point or array of code points.
+import <%= id %>Symbols from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.mjs'; // Lookup map from symbol to symbol(s).
 <%
 		} else if ('Sequence_Property' == type) {
 %>
-import <%= dir %> from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/index.mjs'; // Array containing a string for each sequence.
+import <%= id %> from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/index.mjs'; // Array containing a string for each sequence.
 <%
 		} else {
 %>
-import <%= dir %>CodePoints from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.mjs';
-import <%= dir %>Symbols from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.mjs';
-import <%= dir %>Regex from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/regex.mjs';
+import <%= id %>CodePoints from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.mjs';
+import <%= id %>Symbols from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.mjs';
+import <%= id %>Regex from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/regex.mjs';
 <%
 		}
 	});
