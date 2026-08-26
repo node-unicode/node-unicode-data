@@ -38,29 +38,28 @@ const complicatedWorkThatTakesTime = async (resource, callback) => {
 };
 
 if (cluster.isPrimary) {
+	const chunks = Array.from({ length: numCPUs }, () => []);
+	resources.forEach((resource, index) => {
+		chunks[index % numCPUs].push(resource);
+	});
+
 	for (let index = 0; index < numCPUs; index++) {
 		const worker = cluster.fork();
-		worker.on('message', (error) => {
-			for (const id in cluster.workers) {
-				cluster.workers[id].kill();
+		worker.on('message', (message) => {
+			if (message?.type === 'ready') {
+				const workerIndex = worker.id - 1;
+				worker.send({
+					type: 'work',
+					resources: chunks[workerIndex] || [],
+				});
+			} else if (message?.type === 'error') {
+				for (const id in cluster.workers) {
+					cluster.workers[id].kill();
+				}
+				throw new Error(`Worker ${worker.id} encountered an error: ${message.message}`);
 			}
-			throw new Error(`Worker ${worker.id} encountered an error: ${error}`);
 		});
 	}
-
-	cluster.on('online', (worker) => {
-		const size = Math.round(resources.length / numCPUs);
-		const x = worker.id - 1;
-
-		// Divide work.
-		if (worker.id === 1) { // First worker.
-			worker.send(resources.slice(0, worker.id * size));
-		} else if (worker.id < numCPUs) { // Other workers, except the last one.
-			worker.send(resources.slice(x * size, worker.id * size));
-		} else { // Last worker.
-			worker.send(resources.slice(x * size, resources.length));
-		}
-	});
 
 	cluster.on('exit', (worker) => {
 		if (worker.exitedAfterDisconnect) {
@@ -69,19 +68,32 @@ if (cluster.isPrimary) {
 	});
 } else {
 	process.on('message', (message) => {
-		complicatedWorkThatTakesTime(message, () => {
-			cluster.worker.kill();
-		});
+		if (message?.type === 'work') {
+			complicatedWorkThatTakesTime(message.resources, () => {
+				cluster.worker.kill();
+			});
+		}
 	});
 
 	process.on('uncaughtException', (error) => {
 		console.error(error);
-		process.send(error.message);
+		process.send({
+			type: 'error',
+			message: error.message,
+		});
 	});
 
 	process.on('unhandledRejection', (error) => {
 		console.error(error);
-		process.send(error.message || error);
+		process.send({
+			type: 'error',
+			message: error.message || error,
+		});
+	});
+
+	process.send({
+		type: 'ready',
 	});
 }
+
 
