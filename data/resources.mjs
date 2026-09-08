@@ -115,6 +115,8 @@ const resources = [
 		'special-casing':
 			'https://unicode.org/Public/3.2-Update/SpecialCasing-3.2.0.txt',
 		'line-break': 'https://unicode.org/Public/3.2-Update/LineBreak-3.2.0.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/3.2-Update/ArabicShaping-3.2.0.txt',
 	},
 	{
 		version: '4.0.0',
@@ -135,6 +137,8 @@ const resources = [
 		'special-casing':
 			'https://unicode.org/Public/4.0-Update/SpecialCasing-4.0.0.txt',
 		'line-break': 'https://unicode.org/Public/4.0-Update/LineBreak-4.0.0.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/4.0-Update/ArabicShaping-4.0.0.txt',
 	},
 	{
 		version: '4.0.1',
@@ -155,6 +159,8 @@ const resources = [
 		'special-casing':
 			'https://unicode.org/Public/4.0-Update1/SpecialCasing-4.0.1.txt',
 		'line-break': 'https://unicode.org/Public/4.0-Update1/LineBreak-4.0.1.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/4.0-Update1/ArabicShaping-4.0.1.txt',
 	},
 	{
 		version: '4.1.0',
@@ -176,6 +182,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/4.1.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/4.1.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/4.1.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/4.1.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/4.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -203,6 +211,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/5.0.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.0.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/5.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/5.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -230,6 +240,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/5.1.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.1.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.1.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/5.1.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/5.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -257,6 +269,8 @@ const resources = [
 		'special-casing': 'https://unicode.org/Public/5.2.0/ucd/SpecialCasing.txt',
 		'bidi-mirroring': 'https://unicode.org/Public/5.2.0/ucd/BidiMirroring.txt',
 		'line-break': 'https://unicode.org/Public/5.2.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/5.2.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/5.2.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -290,6 +304,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/6.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/6.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/6.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/6.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -324,6 +340,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/6.1.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/6.1.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/6.1.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/6.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -358,6 +376,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/6.2.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/6.2.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/6.2.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/6.2.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -393,6 +413,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/6.3.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/6.3.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/6.3.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/6.3.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -428,6 +450,8 @@ const resources = [
 		'bidi-mirroring': 'https://unicode.org/Public/7.0.0/ucd/BidiMirroring.txt',
 		'bidi-brackets': 'https://unicode.org/Public/7.0.0/ucd/BidiBrackets.txt',
 		'line-break': 'https://unicode.org/Public/7.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/7.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/7.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -463,6 +487,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/8.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/8.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/8.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/8.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -498,6 +524,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/9.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/9.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/9.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/9.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -533,6 +561,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/10.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/10.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/10.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/10.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -570,6 +600,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/11.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/11.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/11.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/11.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -617,6 +649,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/12.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/12.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/12.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/12.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -664,6 +698,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/12.1.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/12.1.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/12.1.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/12.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -711,6 +747,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/13.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/13.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/13.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/13.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -758,6 +796,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/14.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/14.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/14.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/14.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -805,6 +845,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/15.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/15.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/15.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/15.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -852,6 +894,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/15.1.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/15.1.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/15.1.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/15.1.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -899,6 +943,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/16.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/16.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/16.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/16.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -946,6 +992,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/17.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/17.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/17.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/17.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
@@ -993,6 +1041,8 @@ const resources = [
 		'indic-syllabic-category':
 			'https://unicode.org/Public/18.0.0/ucd/IndicSyllabicCategory.txt',
 		'line-break': 'https://unicode.org/Public/18.0.0/ucd/LineBreak.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/18.0.0/ucd/ArabicShaping.txt',
 		'grapheme-cluster-break':
 			'https://unicode.org/Public/18.0.0/ucd/auxiliary/GraphemeBreakProperty.txt',
 		'word-break':
