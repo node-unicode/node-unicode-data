@@ -66,5 +66,9 @@ suite(`The generated latest Unicode js`, () => {
 			[...map.entries()]
 		);
 	});
+	test('Joining_Type/Dual_Joining should match the snapshot', async (t) => {
+		const { default: data } = await import(`../output/unicode-${newest}/Joining_Type/Dual_Joining/ranges.mjs`);
+		t.assert.snapshot(data);
+	});
 });
 
