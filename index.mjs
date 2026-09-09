@@ -17,6 +17,7 @@ import parseSpecialCasing from './scripts/parse-special-casing.mjs';
 import parseSimpleCaseMapping from './scripts/parse-simple-case-mapping.mjs';
 import parseGraphemeWordSentenceBreak from './scripts/parse-grapheme-word-sentence-break.mjs';
 import parseVerticalOrientation from './scripts/parse-vertical-orientation.mjs';
+import parseArabicShaping from './scripts/parse-arabic-shaping.mjs';
 import parseEmoji from './scripts/parse-emoji.mjs';
 import parseEmojiSequences from './scripts/parse-emoji-sequences.mjs';
 import parseNames from './scripts/parse-names.mjs';
@@ -168,6 +169,12 @@ const generateData = async (version) => {
 		'version': version,
 		'map': await parseVerticalOrientation(version),
 		'type': 'Vertical_Orientation',
+	}));
+	console.log('Parsing Unicode v%s `Joining_Type`…', version);
+	utils.extend(dirMap, await utils.writeFiles({
+		'version': version,
+		'map': await parseArabicShaping(version),
+		'type': 'Joining_Type',
 	}));
 	console.log('Parsing Unicode v%s binary emoji properties…', version);
 	utils.extend(dirMap, await utils.writeFiles({

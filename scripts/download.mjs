@@ -64,6 +64,7 @@ const TYPES = [
 	'word-break',
 	'sentence-break',
 	'vertical-orientation',
+	'arabic-shaping',
 	'emoji',
 	'emoji-sequences',
 	'emoji-test',
