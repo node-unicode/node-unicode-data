@@ -232,7 +232,7 @@ const generateData = async (version) => {
 		compileIndex({ 'version': version, 'data': jsesc(dirMap) })
 	);
 	await fs.writeFile(
-		path.resolve(__dirname, `output/unicode-${version}/index.d.ts`),
+		path.resolve(__dirname, `output/unicode-${version}/index.d.mts`),
 		Object.keys(dirMap)
 			.map((key) => `export const ${key}: string[];`)
 			.join('\n')
@@ -253,9 +253,9 @@ const generateData = async (version) => {
 		'.gitignore',
 		'.npmignore',
 		'decode-property-map.mjs',
-		'decode-property-map.d.ts',
+		'decode-property-map.d.mts',
 		'decode-ranges.mjs',
-		'decode-ranges.d.ts',
+		'decode-ranges.d.mts',
 	];
 	for (const file of staticFiles) {
 		await fs.copyFile(

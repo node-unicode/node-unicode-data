@@ -152,7 +152,7 @@ const writeFiles = async (options) => {
 				output
 			);
 			await fs.writeFile(
-				path.resolve(dir, 'index.d.ts'),
+				path.resolve(dir, 'index.d.mts'),
 				type === 'Sequence_Property'
 					? `declare const data: string[];\nexport default data;\n`
 					: `declare const aliasMap: Record<number, string[]>;\nexport default aliasMap;\n`
@@ -172,7 +172,7 @@ const writeFiles = async (options) => {
 				`import decodeRanges from '../../decode-ranges.mjs';\n\nexport default decodeRanges('${encodedRanges}');\n`
 			);
 			await fs.writeFile(
-				path.resolve(dir, 'ranges.d.ts'),
+				path.resolve(dir, 'ranges.d.mts'),
 				'import type { UnicodeRange } from "../../decode-ranges.mjs";\n\ndeclare const ranges: UnicodeRange[];\nexport default ranges;\n'
 			);
 			await fs.writeFile(
@@ -180,7 +180,7 @@ const writeFiles = async (options) => {
 				'export default /' + regenerate(codePoints).toString() + '/;\n'
 			);
 			await fs.writeFile(
-				path.resolve(dir, 'regex.d.ts'),
+				path.resolve(dir, 'regex.d.mts'),
 				'declare const regex: RegExp;\nexport default regex;\n'
 			);
 			if (codePointsSizeLt(codePoints, 10)) {
@@ -218,7 +218,7 @@ const writeFiles = async (options) => {
 			codePointsFileContent
 		);
 		await fs.writeFile(
-			path.resolve(dir, 'code-points.d.ts'),
+			path.resolve(dir, 'code-points.d.mts'),
 			`declare const codePoints: ${ codePointsType };\nexport default codePoints;\n`
 		);
 		await fs.writeFile(
@@ -226,7 +226,7 @@ const writeFiles = async (options) => {
 			symbolsFileContent
 		);
 		await fs.writeFile(
-			path.resolve(dir, 'symbols.d.ts'),
+			path.resolve(dir, 'symbols.d.mts'),
 			`declare const symbols: ${ symbolsType };\nexport default symbols;\n`
 		);
 	}
@@ -254,7 +254,7 @@ const writeFiles = async (options) => {
 			output
 		);
 		await fs.writeFile(
-			path.resolve(dir, 'index.d.ts'),
+			path.resolve(dir, 'index.d.mts'),
 			`declare const data: Map<number, string>;\nexport default data;\n`
 		);
 	} else {
@@ -276,7 +276,7 @@ const writeFiles = async (options) => {
 				flatRuns
 			)});\n`;
 			await fs.writeFile(path.resolve(dir, 'index.mjs'), output);
-			await fs.writeFile(path.resolve(dir, 'index.d.ts'), `declare const map: Map<number, string>;\nexport default map;\n`);
+			await fs.writeFile(path.resolve(dir, 'index.d.mts'), `declare const map: Map<number, string>;\nexport default map;\n`);
 		}
 	}
 	return dirMap;
