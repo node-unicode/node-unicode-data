@@ -3388,6 +3388,401 @@ exports[`The generated latest Unicode js > General_Category/Modifier_Letter shou
 ]
 `;
 
+exports[`The generated latest Unicode js > Joining_Type/Dual_Joining should match the snapshot 1`] = `
+[
+  {
+    "begin": 1568,
+    "end": 1569,
+    "length": 1
+  },
+  {
+    "begin": 1574,
+    "end": 1575,
+    "length": 1
+  },
+  {
+    "begin": 1576,
+    "end": 1577,
+    "length": 1
+  },
+  {
+    "begin": 1578,
+    "end": 1583,
+    "length": 5
+  },
+  {
+    "begin": 1587,
+    "end": 1600,
+    "length": 13
+  },
+  {
+    "begin": 1601,
+    "end": 1608,
+    "length": 7
+  },
+  {
+    "begin": 1609,
+    "end": 1611,
+    "length": 2
+  },
+  {
+    "begin": 1646,
+    "end": 1648,
+    "length": 2
+  },
+  {
+    "begin": 1656,
+    "end": 1672,
+    "length": 16
+  },
+  {
+    "begin": 1690,
+    "end": 1728,
+    "length": 38
+  },
+  {
+    "begin": 1729,
+    "end": 1731,
+    "length": 2
+  },
+  {
+    "begin": 1740,
+    "end": 1741,
+    "length": 1
+  },
+  {
+    "begin": 1742,
+    "end": 1743,
+    "length": 1
+  },
+  {
+    "begin": 1744,
+    "end": 1746,
+    "length": 2
+  },
+  {
+    "begin": 1786,
+    "end": 1789,
+    "length": 3
+  },
+  {
+    "begin": 1791,
+    "end": 1792,
+    "length": 1
+  },
+  {
+    "begin": 1810,
+    "end": 1813,
+    "length": 3
+  },
+  {
+    "begin": 1818,
+    "end": 1822,
+    "length": 4
+  },
+  {
+    "begin": 1823,
+    "end": 1832,
+    "length": 9
+  },
+  {
+    "begin": 1833,
+    "end": 1834,
+    "length": 1
+  },
+  {
+    "begin": 1835,
+    "end": 1836,
+    "length": 1
+  },
+  {
+    "begin": 1837,
+    "end": 1839,
+    "length": 2
+  },
+  {
+    "begin": 1870,
+    "end": 1881,
+    "length": 11
+  },
+  {
+    "begin": 1884,
+    "end": 1899,
+    "length": 15
+  },
+  {
+    "begin": 1901,
+    "end": 1905,
+    "length": 4
+  },
+  {
+    "begin": 1906,
+    "end": 1907,
+    "length": 1
+  },
+  {
+    "begin": 1909,
+    "end": 1912,
+    "length": 3
+  },
+  {
+    "begin": 1914,
+    "end": 1920,
+    "length": 6
+  },
+  {
+    "begin": 1994,
+    "end": 2027,
+    "length": 33
+  },
+  {
+    "begin": 2113,
+    "end": 2118,
+    "length": 5
+  },
+  {
+    "begin": 2120,
+    "end": 2121,
+    "length": 1
+  },
+  {
+    "begin": 2122,
+    "end": 2132,
+    "length": 10
+  },
+  {
+    "begin": 2133,
+    "end": 2134,
+    "length": 1
+  },
+  {
+    "begin": 2144,
+    "end": 2145,
+    "length": 1
+  },
+  {
+    "begin": 2146,
+    "end": 2150,
+    "length": 4
+  },
+  {
+    "begin": 2152,
+    "end": 2153,
+    "length": 1
+  },
+  {
+    "begin": 2182,
+    "end": 2183,
+    "length": 1
+  },
+  {
+    "begin": 2185,
+    "end": 2190,
+    "length": 5
+  },
+  {
+    "begin": 2191,
+    "end": 2192,
+    "length": 1
+  },
+  {
+    "begin": 2208,
+    "end": 2218,
+    "length": 10
+  },
+  {
+    "begin": 2223,
+    "end": 2225,
+    "length": 2
+  },
+  {
+    "begin": 2227,
+    "end": 2233,
+    "length": 6
+  },
+  {
+    "begin": 2234,
+    "end": 2249,
+    "length": 15
+  },
+  {
+    "begin": 6151,
+    "end": 6152,
+    "length": 1
+  },
+  {
+    "begin": 6176,
+    "end": 6265,
+    "length": 89
+  },
+  {
+    "begin": 6279,
+    "end": 6313,
+    "length": 34
+  },
+  {
+    "begin": 6314,
+    "end": 6315,
+    "length": 1
+  },
+  {
+    "begin": 43072,
+    "end": 43122,
+    "length": 50
+  },
+  {
+    "begin": 68288,
+    "end": 68293,
+    "length": 5
+  },
+  {
+    "begin": 68307,
+    "end": 68311,
+    "length": 4
+  },
+  {
+    "begin": 68312,
+    "end": 68317,
+    "length": 5
+  },
+  {
+    "begin": 68318,
+    "end": 68321,
+    "length": 3
+  },
+  {
+    "begin": 68331,
+    "end": 68335,
+    "length": 4
+  },
+  {
+    "begin": 68480,
+    "end": 68481,
+    "length": 1
+  },
+  {
+    "begin": 68482,
+    "end": 68483,
+    "length": 1
+  },
+  {
+    "begin": 68486,
+    "end": 68489,
+    "length": 3
+  },
+  {
+    "begin": 68490,
+    "end": 68492,
+    "length": 2
+  },
+  {
+    "begin": 68493,
+    "end": 68494,
+    "length": 1
+  },
+  {
+    "begin": 68496,
+    "end": 68497,
+    "length": 1
+  },
+  {
+    "begin": 68525,
+    "end": 68527,
+    "length": 2
+  },
+  {
+    "begin": 68865,
+    "end": 68898,
+    "length": 33
+  },
+  {
+    "begin": 68899,
+    "end": 68900,
+    "length": 1
+  },
+  {
+    "begin": 69315,
+    "end": 69317,
+    "length": 2
+  },
+  {
+    "begin": 69318,
+    "end": 69320,
+    "length": 2
+  },
+  {
+    "begin": 69424,
+    "end": 69427,
+    "length": 3
+  },
+  {
+    "begin": 69428,
+    "end": 69445,
+    "length": 17
+  },
+  {
+    "begin": 69457,
+    "end": 69460,
+    "length": 3
+  },
+  {
+    "begin": 69488,
+    "end": 69492,
+    "length": 4
+  },
+  {
+    "begin": 69494,
+    "end": 69506,
+    "length": 12
+  },
+  {
+    "begin": 69552,
+    "end": 69553,
+    "length": 1
+  },
+  {
+    "begin": 69554,
+    "end": 69556,
+    "length": 2
+  },
+  {
+    "begin": 69560,
+    "end": 69561,
+    "length": 1
+  },
+  {
+    "begin": 69563,
+    "end": 69565,
+    "length": 2
+  },
+  {
+    "begin": 69566,
+    "end": 69568,
+    "length": 2
+  },
+  {
+    "begin": 69569,
+    "end": 69570,
+    "length": 1
+  },
+  {
+    "begin": 69572,
+    "end": 69573,
+    "length": 1
+  },
+  {
+    "begin": 69578,
+    "end": 69579,
+    "length": 1
+  },
+  {
+    "begin": 125184,
+    "end": 125252,
+    "length": 68
+  }
+]
+`;
+
 exports[`The generated latest Unicode js > Script/Canadian_Aboriginal should match the snapshot 1`] = `
 [
   {
