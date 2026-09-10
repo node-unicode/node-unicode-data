@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import jsesc from 'jsesc';
@@ -28,11 +28,11 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const templatePath = path.resolve(__dirname, 'templates');
 const staticPath = path.resolve(__dirname, 'static');
-const compileReadMe = template(await fs.readFile(
+const compileReadMe = template(fs.readFileSync(
 	path.resolve(templatePath, 'README.md'),
 	'utf-8'
 ));
-const compilePackage = template(await fs.readFile(
+const compilePackage = template(fs.readFileSync(
 	path.resolve(templatePath, 'package.json'),
 	'utf-8'
 ));
@@ -42,7 +42,7 @@ const generateData = async (version) => {
 	const dirMap = {};
 	console.log('Generating data for Unicode v%s…', version);
 	console.log('Parsing Unicode v%s categories…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parsers.parseDerivedGeneralCategory(version),
 		'type': (category) => {
@@ -53,74 +53,74 @@ const generateData = async (version) => {
 		},
 	}));
 	console.log('Parsing Unicode v%s `Bidi_Class`', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseBidiClass(version),
 		'type': 'Bidi_Class',
 	}));
 	console.log('Parsing Unicode v%s `Script`…', version);
 	const scriptsMap = await parsers.parseScripts(version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': scriptsMap,
 		'type': 'Script',
 	}));
 	console.log('Parsing Unicode v%s `Script_Extensions`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseScriptExtensions(version, scriptsMap),
 		'type': 'Script_Extensions',
 	}));
 	console.log('Parsing Unicode v%s properties…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parsers.parseProperties(version),
 		'type': 'Binary_Property',
 	}));
 	console.log('Parsing Unicode v%s derived core properties…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parsers.parseDerivedCoreProperties(version),
 		'type': 'Binary_Property',
 	}));
 	console.log('Parsing Unicode v%s derived binary properties…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parsers.parseDerivedBinaryProperties(version),
 		'type': 'Binary_Property',
 	}));
 	console.log('Parsing Unicode v%s derived normalization properties…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parsers.parseDerivedNormalizationProperties(version),
 		'type': 'Binary_Property',
 	}));
 	console.log('Parsing Unicode v%s composition exclusions…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseCompositionExclusions(version),
 		'type': 'Binary_Property',
 	}));
 	console.log('Parsing Unicode v%s `Case_Folding`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseCaseFolding(version),
 		'type': 'Case_Folding',
 	}));
 	console.log('Parsing Unicode v%s `Block`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parsers.parseBlocks(version),
 		'type': 'Block',
 	}));
 	console.log('Parsing Unicode v%s `Bidi_Mirroring_Glyph`', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parsers.parseMirroring(version),
 		'type': 'Bidi_Mirroring_Glyph',
 	}));
 	console.log('Parsing Unicode v%s bidi brackets…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseBidiBrackets(version),
 		'type': 'Bidi_Paired_Bracket_Type',
@@ -128,87 +128,87 @@ const generateData = async (version) => {
 	{
 		const InPCName = +version.split('.')[0] >= 8 ? 'Indic_Positional_Category' : 'Indic_Matra_Category';
 		console.log('Parsing Unicode v%s `%s`…', version, InPCName);
-		utils.extend(dirMap, await utils.writeFiles({
+		utils.extend(dirMap, utils.writeFiles({
 			'version': version,
 			'map': await parseIndicPositionalCategory(version),
 			'type': InPCName,
 		}));
 	}
 	console.log('Parsing Unicode v%s `Indic_Syllabic_Category`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseIndicSyllabicCategory(version),
 		'type': 'Indic_Syllabic_Category',
 	}));
 	console.log('Parsing Unicode v%s `Line_Break`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseLineBreak(version),
 		'type': 'Line_Break',
 	}));
 	console.log('Parsing Unicode v%s `Grapheme_Cluster_Break`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseGraphemeWordSentenceBreak(version, 'grapheme-cluster-break'),
 		'type': 'Grapheme_Cluster_Break',
 	}));
 	console.log('Parsing Unicode v%s `Word_Break`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseGraphemeWordSentenceBreak(version, 'word-break'),
 		'type': 'Word_Break',
 	}));
 	console.log('Parsing Unicode v%s `Sentence_Break`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseGraphemeWordSentenceBreak(version, 'sentence-break'),
 		'type': 'Sentence_Break',
 	}));
 	console.log('Parsing Unicode v%s `Vertical_Orientation`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseVerticalOrientation(version),
 		'type': 'Vertical_Orientation',
 	}));
 	console.log('Parsing Unicode v%s `Joining_Type`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseArabicShaping(version),
 		'type': 'Joining_Type',
 	}));
 	console.log('Parsing Unicode v%s binary emoji properties…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseEmoji(version),
 		'type': 'Binary_Property',
 	}));
 	console.log('Parsing Unicode v%s emoji sequence properties…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseEmojiSequences(version),
 		'type': 'Sequence_Property',
 	}));
 	console.log('Parsing Unicode v%s `Names`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseNames(version),
 		'type': 'Names',
 	}));
 	console.log('Parsing Unicode v%s Aliases…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseNameAliases(version),
 		'type': 'Names',
 		'subType': 'name-aliases',
 	}));
 	console.log('Parsing Unicode v%s simple case mappings…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseSimpleCaseMapping(version),
 		'type': 'Simple_Case_Mapping',
 	}));
 	console.log('Parsing Unicode v%s `Special_Casing`…', version);
-	utils.extend(dirMap, await utils.writeFiles({
+	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
 		'map': await parseSpecialCasing(version),
 		'type': 'Special_Casing',
@@ -219,7 +219,7 @@ const generateData = async (version) => {
 			dirMap[property] = dirMap[property].sort();
 		}
 	}
-	await fs.writeFile(
+	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/README.md`),
 		compileReadMe({
 			'version': version,
@@ -227,21 +227,21 @@ const generateData = async (version) => {
 			'regenerateExample': '<%= set.toString() %>',
 		})
 	);
-	await fs.writeFile(
+	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/index.mjs`),
 		compileIndex({ 'version': version, 'data': jsesc(dirMap) })
 	);
-	await fs.writeFile(
+	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/index.d.mts`),
 		Object.keys(dirMap)
 			.map((key) => `export const ${key}: string[];`)
 			.join('\n')
 	);
-	await fs.writeFile(
+	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/package.json`),
 		compilePackage({ 'version': version })
 	);
-	await fs.mkdir(
+	fs.mkdirSync(
 		path.resolve(__dirname, `output/unicode-${version}/.github/workflows`),
 		{
 			recursive: true,
@@ -258,7 +258,7 @@ const generateData = async (version) => {
 		'decode-ranges.d.mts',
 	];
 	for (const file of staticFiles) {
-		await fs.copyFile(
+		fs.copyFileSync(
 			path.resolve(staticPath, file),
 			path.resolve(__dirname, `output/unicode-${version}/${file}`)
 		);

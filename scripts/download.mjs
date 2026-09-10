@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import resources from '../data/resources.mjs';
@@ -17,7 +17,7 @@ const download = async (url, version, type) => {
 	if (!res.ok) {
 		throw new Error(`Failed to download ${url}: ${res.status} ${res.statusText}`);
 	}
-	await fs.writeFile(file, Buffer.from(await res.arrayBuffer()));
+	fs.writeFileSync(file, Buffer.from(await res.arrayBuffer()));
 };
 
 const parallelLimit = async (tasks, limit) => {

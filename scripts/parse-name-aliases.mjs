@@ -2,7 +2,7 @@ import utils from './utils.mjs';
 
 const parseNameAliases = async (version) => {
 	const map = {};
-	const source = await utils.readDataFile(version, 'name-aliases');
+	const source = utils.readDataFile(version, 'name-aliases');
 	if (!source) {
 		return;
 	}

@@ -13,7 +13,7 @@ const findCanonicalName = (shortName) => {
 };
 
 const parseArabicShaping = async (version) => {
-	const source = await utils.readDataFile(version, 'arabic-shaping');
+	const source = utils.readDataFile(version, 'arabic-shaping');
 	if (!source) {
 		return;
 	}

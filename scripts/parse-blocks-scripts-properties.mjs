@@ -33,7 +33,7 @@ const initialMapForType = (type) => {
  */
 const parseBlocksScriptsProperties = async (type, version) => {
 	const map = initialMapForType(type);
-	const source = await utils.readDataFile(version, type);
+	const source = utils.readDataFile(version, type);
 	if (!source) {
 		return;
 	}
@@ -106,7 +106,7 @@ const parseDerivedBinaryProperties = async (version) => {
 	if (version === '3.1.1' || version === '3.1.0' || version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
 		// Unicode <= 3.1.1 does not provide derived-binary-properties,
 		// so we should derive Bidi_Mirrored from the UnicodeData.
-		const source = await utils.readDataFile(version, 'database');
+		const source = utils.readDataFile(version, 'database');
 		if (!source) {
 			return;
 		}
@@ -137,7 +137,7 @@ const parseDerivedGeneralCategory = async (version) => {
 	) {
 		// Unicode <= 3.0.1 does not provide derived-general-category,
 		// so we should derive General_Category from the UnicodeData.
-		const source = await utils.readDataFile(version, 'database');
+		const source = utils.readDataFile(version, 'database');
 		if (!source) {
 			return;
 		}
@@ -257,7 +257,7 @@ const parseDerivedGeneralCategory = async (version) => {
 
 const parseBlocks = async (version) => {
 	if (version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
-		const source = await utils.readDataFile(version, 'blocks');
+		const source = utils.readDataFile(version, 'blocks');
 		if (!source) {
 			return;
 		}
@@ -285,7 +285,7 @@ const parseProperties = async (version) => {
 		version === '3.0.0' ||
 		parseInt(version.split('.')[0], 10) < 3
 	) {
-		const source = await utils.readDataFile(version, 'properties');
+		const source = utils.readDataFile(version, 'properties');
 		if (!source) {
 			return;
 		}

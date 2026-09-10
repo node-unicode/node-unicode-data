@@ -5,7 +5,7 @@ import regenerate from 'regenerate';
 const bidiAliases = valueAliases.get('Bidi_Class');
 
 const parseBidiClass = async (version) => {
-	const source = await utils.readDataFile(version, 'database');
+	const source = utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
 	}

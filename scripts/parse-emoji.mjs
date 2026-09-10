@@ -1,7 +1,7 @@
 import utils from './utils.mjs';
 
 const parseEmoji = async (version) => {
-	const source = await utils.readDataFile(version, 'emoji');
+	const source = utils.readDataFile(version, 'emoji');
 	if (!source) {
 		return;
 	}

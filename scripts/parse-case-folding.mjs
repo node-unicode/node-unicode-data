@@ -2,7 +2,7 @@ import utils from './utils.mjs';
 
 const parseCaseFolding = async (version) => {
 	const caseFoldingMap = {};
-	const source = await utils.readDataFile(version, 'case-folding');
+	const source = utils.readDataFile(version, 'case-folding');
 	if (!source) {
 		return;
 	}

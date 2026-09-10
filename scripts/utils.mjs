@@ -1,4 +1,4 @@
-import fs from 'node:fs/promises';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import zlib from 'node:zlib';
@@ -76,7 +76,7 @@ const samePropertyRuns = (codePointProperties) => {
 	return result;
 };
 
-const writeFiles = async (options) => {
+const writeFiles = (options) => {
 	const version = options.version;
 	const subType = options.subType;
 
@@ -140,18 +140,18 @@ const writeFiles = async (options) => {
 		}
 
 		// Create the target directory if it doesn’t exist yet.
-		await fs.mkdir(dir, { recursive: true });
+		fs.mkdirSync(dir, { recursive: true });
 		append(dirMap, type, subdir);
 
 		// Sequence properties are special.
 		if (type === 'Sequence_Property' || isNameAliases) {
 			const sequences = codePoints;
 			const output = `import { gunzipSync } from 'node:zlib';\n\nexport default ${ gzipInline(sequences) };\n`;
-			await fs.writeFile(
+			fs.writeFileSync(
 				path.resolve(dir, 'index.mjs'),
 				output
 			);
-			await fs.writeFile(
+			fs.writeFileSync(
 				path.resolve(dir, 'index.d.mts'),
 				type === 'Sequence_Property'
 					? `declare const data: string[];\nexport default data;\n`
@@ -167,19 +167,19 @@ const writeFiles = async (options) => {
 		let symbolsType = 'string[]';
 		if (!isCaseFoldingOrMapping) {
 			const encodedRanges = codePoints instanceof regenerate ? encodeRegenerate(codePoints) : encodeRanges(codePoints);
-			await fs.writeFile(
+			fs.writeFileSync(
 				path.resolve(dir, 'ranges.mjs'),
 				`import decodeRanges from '../../decode-ranges.mjs';\n\nexport default decodeRanges('${encodedRanges}');\n`
 			);
-			await fs.writeFile(
+			fs.writeFileSync(
 				path.resolve(dir, 'ranges.d.mts'),
 				'import type { UnicodeRange } from "../../decode-ranges.mjs";\n\ndeclare const ranges: UnicodeRange[];\nexport default ranges;\n'
 			);
-			await fs.writeFile(
+			fs.writeFileSync(
 				path.resolve(dir, 'regex.mjs'),
 				'export default /' + regenerate(codePoints).toString() + '/;\n'
 			);
-			await fs.writeFile(
+			fs.writeFileSync(
 				path.resolve(dir, 'regex.d.mts'),
 				'declare const regex: RegExp;\nexport default regex;\n'
 			);
@@ -213,19 +213,19 @@ const writeFiles = async (options) => {
 			}
 			symbolsType = 'Map<string, string>';
 		}
-		await fs.writeFile(
+		fs.writeFileSync(
 			path.resolve(dir, 'code-points.mjs'),
 			codePointsFileContent
 		);
-		await fs.writeFile(
+		fs.writeFileSync(
 			path.resolve(dir, 'code-points.d.mts'),
 			`declare const codePoints: ${ codePointsType };\nexport default codePoints;\n`
 		);
-		await fs.writeFile(
+		fs.writeFileSync(
 			path.resolve(dir, 'symbols.mjs'),
 			symbolsFileContent
 		);
-		await fs.writeFile(
+		fs.writeFileSync(
 			path.resolve(dir, 'symbols.d.mts'),
 			`declare const symbols: ${ symbolsType };\nexport default symbols;\n`
 		);
@@ -239,7 +239,7 @@ const writeFiles = async (options) => {
 		if (!hasKey(dirMap, type)) {
 			dirMap[type] = [];
 		}
-		await fs.mkdir(dir, { recursive: true });
+		fs.mkdirSync(dir, { recursive: true });
 		// `Bidi_Mirroring_Glyph/index.mjs`
 		// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
 		const output = [
@@ -249,11 +249,11 @@ const writeFiles = async (options) => {
 				JSON.stringify(bidiMirroringGlyphFlatPairs)
 			}.map((v, i, a) => pair(i & 1, a[i ^ 1], v)));\n`
 		].join('\n');
-		await fs.writeFile(
+		fs.writeFileSync(
 			path.resolve(dir, 'index.mjs'),
 			output
 		);
-		await fs.writeFile(
+		fs.writeFileSync(
 			path.resolve(dir, 'index.d.mts'),
 			`declare const data: Map<number, string>;\nexport default data;\n`
 		);
@@ -266,7 +266,7 @@ const writeFiles = async (options) => {
 			if (!hasKey(dirMap, type)) {
 				dirMap[type] = [];
 			}
-			await fs.mkdir(dir, { recursive: true });
+			fs.mkdirSync(dir, { recursive: true });
 			// `categories/index.mjs`
 			// or `Bidi_Class/index.mjs`
 			// or `bidi-brackets/index.mjs`
@@ -275,8 +275,8 @@ const writeFiles = async (options) => {
 			const output = `import { gunzipSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${gzipInline(
 				flatRuns
 			)});\n`;
-			await fs.writeFile(path.resolve(dir, 'index.mjs'), output);
-			await fs.writeFile(path.resolve(dir, 'index.d.mts'), `declare const map: Map<number, string>;\nexport default map;\n`);
+			fs.writeFileSync(path.resolve(dir, 'index.mjs'), output);
+			fs.writeFileSync(path.resolve(dir, 'index.d.mts'), `declare const map: Map<number, string>;\nexport default map;\n`);
 		}
 	}
 	return dirMap;
@@ -295,13 +295,13 @@ const extend = (destination, source) => {
 	}
 };
 
-const readDataFile = async (version, type) => {
+const readDataFile = (version, type) => {
 	const sourceFile = path.resolve(
 		__dirname, '..',
 		'data', version + '-' + type + '.txt'
 	);
 	try {
-		const source = await fs.readFile(sourceFile, 'utf-8');
+		const source = fs.readFileSync(sourceFile, 'utf-8');
 		return source;
 	} catch {
 		return;

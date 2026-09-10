@@ -13,7 +13,7 @@ const parseBidiBrackets = async (version) => {
 		'Close': regenerate(),
 		'None': regenerate().addRange(0, 0x10FFFF),
 	};
-	const source = await utils.readDataFile(version, 'bidi-brackets');
+	const source = utils.readDataFile(version, 'bidi-brackets');
 	if (!source) {
 		return;
 	}

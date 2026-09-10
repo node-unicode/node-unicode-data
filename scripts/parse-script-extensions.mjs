@@ -8,7 +8,7 @@ const findCanonicalName = (shortName) => {
 };
 
 const parseScriptExtensions = async (version, scriptsMap) => {
-	const source = await utils.readDataFile(version, 'script-extensions');
+	const source = utils.readDataFile(version, 'script-extensions');
 	if (!source) {
 		return;
 	}

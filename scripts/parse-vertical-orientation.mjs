@@ -2,7 +2,7 @@ import utils from './utils.mjs';
 import regenerate from 'regenerate';
 
 const parseVerticalOrientation = async (version) => {
-	const source = await utils.readDataFile(version, 'vertical-orientation');
+	const source = utils.readDataFile(version, 'vertical-orientation');
 	if (!source) {
 		return;
 	}

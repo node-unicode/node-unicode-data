@@ -13,7 +13,7 @@ const parseSimpleCaseMapping = async (version) => {
 	// https://www.unicode.org/reports/tr44/#UnicodeData.txt
 	const columnIndexOfSimpleUppercaseMapping = 12;
 
-	const source = await utils.readDataFile(version, 'database');
+	const source = utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
 	}
