@@ -2,7 +2,7 @@ import utils from './utils.mjs';
 import regenerate from 'regenerate';
 
 const parseGraphemeWordSentenceBreak = async (version, kind) => {
-	const source = await utils.readDataFile(version, kind);
+	const source = utils.readDataFile(version, kind);
 	if (!source) {
 		return;
 	}

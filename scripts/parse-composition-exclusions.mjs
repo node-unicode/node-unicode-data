@@ -2,7 +2,7 @@ import regenerate from 'regenerate';
 import utils from './utils.mjs';
 
 const parseCompositionExclusions = async (version) => {
-	const source = await utils.readDataFile(version, 'composition-exclusions');
+	const source = utils.readDataFile(version, 'composition-exclusions');
 	if (!source) {
 		return;
 	}

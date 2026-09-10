@@ -2,7 +2,7 @@ import utils from './utils.mjs';
 
 const parseSpecialCasing = async (version) => {
 	const specialCasingMap = {};
-	const source = await utils.readDataFile(version, 'special-casing');
+	const source = utils.readDataFile(version, 'special-casing');
 	if (!source) {
 		return;
 	}

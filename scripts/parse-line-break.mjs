@@ -13,7 +13,7 @@ const findCanonicalName = (shortName) => {
 };
 
 const parseLineBreak = async (version) => {
-	const source = await utils.readDataFile(version, 'line-break');
+	const source = utils.readDataFile(version, 'line-break');
 	if (!source) {
 		return;
 	}

@@ -3,7 +3,7 @@ import regenerate from 'regenerate';
 
 const parseNames = async (version) => {
 	const map = {};
-	const source = await utils.readDataFile(version, 'database');
+	const source = utils.readDataFile(version, 'database');
 	if (!source) {
 		return;
 	}

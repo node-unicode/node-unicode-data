@@ -2,7 +2,7 @@ import utils from './utils.mjs';
 import regenerate from 'regenerate';
 
 const parseIndicSyllabicCategory = async (version) => {
-	const source = await utils.readDataFile(version, 'indic-syllabic-category');
+	const source = utils.readDataFile(version, 'indic-syllabic-category');
 	if (!source) {
 		return;
 	}

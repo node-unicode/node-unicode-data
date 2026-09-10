@@ -2,7 +2,7 @@ import utils from './utils.mjs';
 import regenerate from 'regenerate';
 
 const parseIndicPositionalCategory = async (version) => {
-	const source = await utils.readDataFile(version, 'indic-positional-category');
+	const source = utils.readDataFile(version, 'indic-positional-category');
 	if (!source) {
 		return;
 	}
