@@ -1,6 +1,6 @@
 {
 	"name": "@unicode/unicode-<%= version %>",
-	"version": "2.0.5",
+	"version": "2.0.6",
 	"description": "JavaScript-compatible Unicode data. Arrays of code points, arrays of symbols, and regular expressions for Unicode v<%= version %>’s categories, scripts, blocks, bidi, and other properties.",
 	"homepage": "https://github.com/node-unicode/unicode-<%= version %>",
 	"main": "index.mjs",
