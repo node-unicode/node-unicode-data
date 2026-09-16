@@ -70,5 +70,15 @@ suite(`The generated latest Unicode js`, () => {
 		const { default: data } = await import(`../output/unicode-${newest}/Joining_Type/Dual_Joining/ranges.mjs`);
 		t.assert.snapshot(data);
 	});
+	test('Joining_Type/Transparent should match the snapshot', async (t) => {
+		const { default: data } = await import(`../output/unicode-${newest}/Joining_Type/Transparent/ranges.mjs`);
+		t.assert.snapshot(data);
+	});
+	test('Decomposition_Mapping/Isolated should match the snapshot', async (t) => {
+		const { default: map } = await import(`../output/unicode-${newest}/Decomposition_Mapping/Isolated/code-points.mjs`);
+		t.assert.snapshot(
+			[...map.entries()]
+		);
+	});
 });
 

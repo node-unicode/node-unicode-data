@@ -104,7 +104,7 @@ const writeFiles = (options) => {
 		const type = typeof options.type === 'function'
 			? options.type(item)
 			: options.type;
-		const isCaseFoldingOrMapping = type === 'Case_Folding' || type === 'Simple_Case_Mapping' || type === 'Special_Casing';
+		const isCodePointMapping = type === 'Case_Folding' || type === 'Simple_Case_Mapping' || type === 'Special_Casing' || type === 'Decomposition_Mapping';
 		const isNamesCanon = type === 'Names' && !subType;
 		const isNameAliases = type === 'Names' && subType === 'name-aliases';
 		const subdir = isNameAliases ? item.charAt(0).toUpperCase() + item.slice(1) : item;
@@ -165,7 +165,7 @@ const writeFiles = (options) => {
 		let symbolsFileContent = `import ranges from './ranges.mjs';\n\nexport default ranges.flatMap((r) => Array.from(r.values()));\n`;
 		let codePointsType = 'number[]';
 		let symbolsType = 'string[]';
-		if (!isCaseFoldingOrMapping) {
+		if (!isCodePointMapping) {
 			const encodedRanges = codePoints instanceof regenerate ? encodeRegenerate(codePoints) : encodeRanges(codePoints);
 			fs.writeFileSync(
 				path.resolve(dir, 'ranges.mjs'),
@@ -206,7 +206,7 @@ const writeFiles = (options) => {
 				codePointsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${ gzipInline(codePoints) };\n`;
 				symbolsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${ gzipInline(symbols) };\n`;
 			}
-			if ((type === 'Case_Folding' && item === 'F') || type === 'Special_Casing') {
+			if ((type === 'Case_Folding' && item === 'F') || type === 'Special_Casing' || type === 'Decomposition_Mapping') {
 				codePointsType = 'Map<number, number[]>';
 			} else {
 				codePointsType = 'Map<number, number>';
