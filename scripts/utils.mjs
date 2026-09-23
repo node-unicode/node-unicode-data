@@ -77,7 +77,7 @@ const samePropertyRuns = (codePointProperties) => {
 };
 
 // Only write the file if its content has changed.
-// Avoid the unnecessary filesystem I/O
+// Reading files is cheaper than writing files, and most files don’t change between builds.
 const writeFileIfChanged = (filePath, content) => {
 	try {
 		if (fs.readFileSync(filePath, 'utf8') === content) {
