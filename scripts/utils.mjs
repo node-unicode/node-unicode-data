@@ -76,6 +76,19 @@ const samePropertyRuns = (codePointProperties) => {
 	return result;
 };
 
+// Only write the file if its content has changed.
+// Avoid the unnecessary filesystem I/O
+const writeFileIfChanged = (filePath, content) => {
+	try {
+		if (fs.readFileSync(filePath, 'utf8') === content) {
+			return;
+		}
+	} catch {
+		// Ignore errors such ENOENT (file not found)
+	}
+	fs.writeFileSync(filePath, content);
+};
+
 const writeFiles = (options) => {
 	const version = options.version;
 	const subType = options.subType;
@@ -147,11 +160,11 @@ const writeFiles = (options) => {
 		if (type === 'Sequence_Property' || isNameAliases) {
 			const sequences = codePoints;
 			const output = `import { gunzipSync } from 'node:zlib';\n\nexport default ${ gzipInline(sequences) };\n`;
-			fs.writeFileSync(
+			writeFileIfChanged(
 				path.resolve(dir, 'index.mjs'),
 				output
 			);
-			fs.writeFileSync(
+			writeFileIfChanged(
 				path.resolve(dir, 'index.d.mts'),
 				type === 'Sequence_Property'
 					? `declare const data: string[];\nexport default data;\n`
@@ -167,19 +180,19 @@ const writeFiles = (options) => {
 		let symbolsType = 'string[]';
 		if (!isCaseFoldingOrMapping) {
 			const encodedRanges = codePoints instanceof regenerate ? encodeRegenerate(codePoints) : encodeRanges(codePoints);
-			fs.writeFileSync(
+			writeFileIfChanged(
 				path.resolve(dir, 'ranges.mjs'),
 				`import decodeRanges from '../../decode-ranges.mjs';\n\nexport default decodeRanges('${encodedRanges}');\n`
 			);
-			fs.writeFileSync(
+			writeFileIfChanged(
 				path.resolve(dir, 'ranges.d.mts'),
 				'import type { UnicodeRange } from "../../decode-ranges.mjs";\n\ndeclare const ranges: UnicodeRange[];\nexport default ranges;\n'
 			);
-			fs.writeFileSync(
+			writeFileIfChanged(
 				path.resolve(dir, 'regex.mjs'),
 				'export default /' + regenerate(codePoints).toString() + '/;\n'
 			);
-			fs.writeFileSync(
+			writeFileIfChanged(
 				path.resolve(dir, 'regex.d.mts'),
 				'declare const regex: RegExp;\nexport default regex;\n'
 			);
@@ -213,19 +226,19 @@ const writeFiles = (options) => {
 			}
 			symbolsType = 'Map<string, string>';
 		}
-		fs.writeFileSync(
+		writeFileIfChanged(
 			path.resolve(dir, 'code-points.mjs'),
 			codePointsFileContent
 		);
-		fs.writeFileSync(
+		writeFileIfChanged(
 			path.resolve(dir, 'code-points.d.mts'),
 			`declare const codePoints: ${ codePointsType };\nexport default codePoints;\n`
 		);
-		fs.writeFileSync(
+		writeFileIfChanged(
 			path.resolve(dir, 'symbols.mjs'),
 			symbolsFileContent
 		);
-		fs.writeFileSync(
+		writeFileIfChanged(
 			path.resolve(dir, 'symbols.d.mts'),
 			`declare const symbols: ${ symbolsType };\nexport default symbols;\n`
 		);
@@ -249,11 +262,11 @@ const writeFiles = (options) => {
 				JSON.stringify(bidiMirroringGlyphFlatPairs)
 			}.map((v, i, a) => pair(i & 1, a[i ^ 1], v)));\n`
 		].join('\n');
-		fs.writeFileSync(
+		writeFileIfChanged(
 			path.resolve(dir, 'index.mjs'),
 			output
 		);
-		fs.writeFileSync(
+		writeFileIfChanged(
 			path.resolve(dir, 'index.d.mts'),
 			`declare const data: Map<number, string>;\nexport default data;\n`
 		);
@@ -275,8 +288,8 @@ const writeFiles = (options) => {
 			const output = `import { gunzipSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${gzipInline(
 				flatRuns
 			)});\n`;
-			fs.writeFileSync(path.resolve(dir, 'index.mjs'), output);
-			fs.writeFileSync(path.resolve(dir, 'index.d.mts'), `declare const map: Map<number, string>;\nexport default map;\n`);
+			writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
+			writeFileIfChanged(path.resolve(dir, 'index.d.mts'), `declare const map: Map<number, string>;\nexport default map;\n`);
 		}
 	}
 	return dirMap;
