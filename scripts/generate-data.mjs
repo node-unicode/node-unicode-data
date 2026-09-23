@@ -1,11 +1,11 @@
 import cluster from 'node:cluster';
-import os from 'node:os';
+import { availableParallelism } from 'node:os';
 import resources from '../data/resources.mjs';
 import generateData from '../index.mjs';
 
 // -----------------------------------------------------------------------------
 
-const numCPUs = os.cpus().length;
+const numCPUs = Math.min(4, availableParallelism());
 
 const pad = (number) => {
 	return String(number).padStart(2, '0');
