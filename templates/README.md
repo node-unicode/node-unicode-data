@@ -81,7 +81,7 @@ import <%= id %> from '@unicode/unicode-<%= version %>/<%= type %>/index.mjs'; /
 	}
 	dirs[type].forEach(function(dir) {
 		const id = dir.replaceAll(/[^a-zA-Z0-9_$]/g, '_').replace(/^([0-9])/, '_$1');
-		if ('Case_Folding' == type || 'Simple_Case_Mapping' == type || 'Special_Casing' == type) {
+		if ('Case_Folding' == type || 'Simple_Case_Mapping' == type || 'Special_Casing' == type || 'Decomposition_Mapping' == type) {
 %>
 import <%= id %>CodePoints from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/code-points.mjs'; // Lookup map from code point to code point or array of code points.
 import <%= id %>Symbols from '@unicode/unicode-<%= version %>/<%= type %>/<%= dir %>/symbols.mjs'; // Lookup map from symbol to symbol(s).

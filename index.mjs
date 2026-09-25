@@ -17,7 +17,8 @@ import parseSpecialCasing from './scripts/parse-special-casing.mjs';
 import parseSimpleCaseMapping from './scripts/parse-simple-case-mapping.mjs';
 import parseGraphemeWordSentenceBreak from './scripts/parse-grapheme-word-sentence-break.mjs';
 import parseVerticalOrientation from './scripts/parse-vertical-orientation.mjs';
-import parseArabicShaping from './scripts/parse-arabic-shaping.mjs';
+import parseJoiningType from './scripts/parse-joining-type.mjs';
+import parseDecompositionMapping from './scripts/parse-decomposition-mapping.mjs';
 import parseEmoji from './scripts/parse-emoji.mjs';
 import parseEmojiSequences from './scripts/parse-emoji-sequences.mjs';
 import parseNames from './scripts/parse-names.mjs';
@@ -173,7 +174,7 @@ const generateData = async (version) => {
 	console.log('Parsing Unicode v%s `Joining_Type`…', version);
 	utils.extend(dirMap, utils.writeFiles({
 		'version': version,
-		'map': await parseArabicShaping(version),
+		'map': await parseJoiningType(version),
 		'type': 'Joining_Type',
 	}));
 	console.log('Parsing Unicode v%s binary emoji properties…', version);
@@ -212,6 +213,12 @@ const generateData = async (version) => {
 		'version': version,
 		'map': await parseSpecialCasing(version),
 		'type': 'Special_Casing',
+	}));
+	console.log('Parsing Unicode v%s `Decomposition_Mapping`…', version);
+	utils.extend(dirMap, utils.writeFiles({
+		'version': version,
+		'map': await parseDecompositionMapping(version),
+		'type': 'Decomposition_Mapping',
 	}));
 	// Sort array values.
 	for (const property of Object.keys(dirMap)) {
