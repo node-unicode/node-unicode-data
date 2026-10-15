@@ -38,11 +38,14 @@
 		"test-update-snapshot": "node --test --experimental-test-snapshots --test-update-snapshots tests/tests.mjs",
 		"test": "node --test --experimental-test-snapshots tests/tests.mjs",
 		"t": "node --experimental-test-snapshots tests/quick.mjs",
-		"cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage --experimental-test-snapshots tests/tests.mjs"
+		"cover": "NODE_V8_COVERAGE=coverage node --experimental-test-coverage --experimental-test-snapshots tests/tests.mjs",
+		"format": "oxfmt",
+		"format:check": "oxfmt --check"
 	},
 	"devDependencies": {
 		"jsesc": "^3.1.0",
 		"lodash.template": "^4.18.1",
+		"oxfmt": "^0.73.0",
 		"regenerate": "^1.4.2",
 		"unicode-loose-match": "^3.0.0",
 		"unicode-property-aliases": "^3.0.0",

@@ -1,0 +1,12 @@
+{
+	"arrowParens": "always",
+	"objectWrap": "preserve",
+	"semi": true,
+	"singleQuote": true,
+	"trailingComma": "all",
+	"printWidth": 80,
+	"tabWidth": 2,
+	"useTabs": true,
+	"sortPackageJson": false,
+	"ignorePatterns": ["templates/README.md"]
+}
