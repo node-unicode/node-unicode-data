@@ -46,4 +46,3 @@ const parseBidiClass = async (version) => {
 };
 
 export default parseBidiClass;
-

@@ -6,9 +6,9 @@
 const base64enc =
 	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
-const base64dec = Object.freeze(Object.fromEntries(
-	Array.from(base64enc, (c, i) => [c, i])
-));
+const base64dec = Object.freeze(
+	Object.fromEntries(Array.from(base64enc, (c, i) => [c, i])),
+);
 
 class UnicodeRange {
 	/**
@@ -41,7 +41,7 @@ class UnicodeRange {
 const decodeDeltas = (input) => {
 	/** @type {number[]} */
 	const output = [];
-	for (let i = 0; i < input.length; ) {
+	for (let i = 0; i < input.length;) {
 		let x = base64dec[input[i++]];
 		switch (x & 56) {
 			case 32:
@@ -83,4 +83,3 @@ const decodeRanges = (input) => {
 };
 
 export default decodeRanges;
-

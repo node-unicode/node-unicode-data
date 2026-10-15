@@ -4,14 +4,18 @@ import valueAliases from 'unicode-property-value-aliases';
 // The tags in UnicodeData.txt are the long Decomposition_Type names (e.g.
 // `<noBreak>`), not the short aliases the map is keyed by.
 const canonicalNames = new Map(
-	[...valueAliases.get('Decomposition_Type').values()]
-		.map((name) => [name.toLowerCase(), name])
+	[...valueAliases.get('Decomposition_Type').values()].map((name) => [
+		name.toLowerCase(),
+		name,
+	]),
 );
 
 const findCanonicalName = (tag) => {
 	const canonicalName = canonicalNames.get(tag.toLowerCase());
 	if (!canonicalName) {
-		throw new Error(`Failed to find canonical name for Decomposition_Type=${tag}. Update \`unicode-property-value-aliases\`.`);
+		throw new Error(
+			`Failed to find canonical name for Decomposition_Type=${tag}. Update \`unicode-property-value-aliases\`.`,
+		);
 	}
 	return canonicalName;
 };
@@ -47,7 +51,8 @@ const parseDecompositionMapping = async (version) => {
 		const match = /^<(\w+)>\s*(.*)$/.exec(decomposition);
 		const decompositionType = match ? findCanonicalName(match[1]) : 'Canonical';
 		const from = parseInt(data[0], 16);
-		const to = (match ? match[2] : decomposition).split(/\s+/)
+		const to = (match ? match[2] : decomposition)
+			.split(/\s+/)
 			.map((codePoint) => parseInt(codePoint, 16));
 		if (to.some(Number.isNaN)) {
 			throw new Error('Cannot parse the unicode data: ' + line);

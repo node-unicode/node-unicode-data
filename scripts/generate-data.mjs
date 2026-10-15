@@ -13,25 +13,30 @@ const pad = (number) => {
 
 const getTime = () => {
 	const currentdate = new Date();
-	return pad(currentdate.getHours()) + ':' +
-		pad(currentdate.getMinutes()) + ':' +
-		pad(currentdate.getSeconds());
+	return (
+		pad(currentdate.getHours()) +
+		':' +
+		pad(currentdate.getMinutes()) +
+		':' +
+		pad(currentdate.getSeconds())
+	);
 };
 
 const complicatedWorkThatTakesTime = async (resource, callback) => {
 	if (resource.length) {
 		const version = resource[0].version;
-		console.log('[%s] Worker %d \u2192 Unicode v%s',
-			getTime(), cluster.worker.id, version);
+		console.log(
+			'[%s] Worker %d \u2192 Unicode v%s',
+			getTime(),
+			cluster.worker.id,
+			version,
+		);
 
 		console.groupCollapsed();
 		await generateData(version);
 		console.groupEnd();
 
-		await complicatedWorkThatTakesTime(
-			resource.slice(1),
-			callback
-		);
+		await complicatedWorkThatTakesTime(resource.slice(1), callback);
 	} else {
 		callback();
 	}
@@ -56,7 +61,9 @@ if (cluster.isPrimary) {
 				for (const id in cluster.workers) {
 					cluster.workers[id].kill();
 				}
-				throw new Error(`Worker ${worker.id} encountered an error: ${message.message}`);
+				throw new Error(
+					`Worker ${worker.id} encountered an error: ${message.message}`,
+				);
 			}
 		});
 	}
@@ -95,5 +102,3 @@ if (cluster.isPrimary) {
 		type: 'ready',
 	});
 }
-
-

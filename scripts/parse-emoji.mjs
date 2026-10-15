@@ -16,16 +16,15 @@ const parseEmoji = async (version) => {
 		const rangeParts = charRange.split('-');
 		const property = data[1].split('#')[0].trim();
 		if (rangeParts.length === 2) {
-			utils.range(
-				parseInt(rangeParts[0], 16),
-				parseInt(rangeParts[1], 16)
-			).forEach((codePoint) => {
-				if (propertyMap.has(property)) {
-					propertyMap.get(property).add(codePoint);
-				} else {
-					propertyMap.set(property, new Set([codePoint]));
-				}
-			});
+			utils
+				.range(parseInt(rangeParts[0], 16), parseInt(rangeParts[1], 16))
+				.forEach((codePoint) => {
+					if (propertyMap.has(property)) {
+						propertyMap.get(property).add(codePoint);
+					} else {
+						propertyMap.set(property, new Set([codePoint]));
+					}
+				});
 		} else {
 			const codePoint = parseInt(charRange, 16);
 			if (propertyMap.has(property)) {
@@ -43,4 +42,3 @@ const parseEmoji = async (version) => {
 };
 
 export default parseEmoji;
-

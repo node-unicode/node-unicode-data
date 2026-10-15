@@ -10,12 +10,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const gzipInline = (data) => {
 	if (data instanceof Map) {
-		return `new Map(${ gzipInline([...data]) })`;
+		return `new Map(${gzipInline([...data])})`;
 	}
 	const json = JSON.stringify(data);
 	const gzipBuffer = zlib.gzipSync(json);
 	const str = gzipBuffer.toString('base64');
-	return `JSON.parse(gunzipSync(Buffer.from('${ str }', 'base64')))`;
+	return `JSON.parse(gunzipSync(Buffer.from('${str}', 'base64')))`;
 };
 
 const range = (start, stop) => {
@@ -35,7 +35,7 @@ const codePointsSizeLt = (codePoints, value) => {
 	if (codePoints instanceof regenerate) {
 		const regenerateData = codePoints.data;
 		for (let seenSize = 0, i = 0; i < regenerateData.length; i += 2) {
-			seenSize += (regenerateData[i + 1] - regenerateData[i]);
+			seenSize += regenerateData[i + 1] - regenerateData[i];
 			if (seenSize >= value) {
 				return false;
 			}
@@ -99,10 +99,7 @@ const writeFiles = (options) => {
 	}
 	const dirMap = {};
 
-	const rootDir = path.resolve(
-		__dirname, '..',
-		'output', 'unicode-' + version
-	);
+	const rootDir = path.resolve(__dirname, '..', 'output', 'unicode-' + version);
 
 	/**
 	 * A list of flatten (x, y) pairs,
@@ -114,31 +111,39 @@ const writeFiles = (options) => {
 	const auxMap = {};
 	for (const item of Object.keys(map)) {
 		const codePoints = map[item];
-		const type = typeof options.type === 'function'
-			? options.type(item)
-			: options.type;
-		const isCodePointMapping = type === 'Case_Folding' || type === 'Simple_Case_Mapping' || type === 'Special_Casing' || type === 'Decomposition_Mapping';
+		const type =
+			typeof options.type === 'function' ? options.type(item) : options.type;
+		const isCodePointMapping =
+			type === 'Case_Folding' ||
+			type === 'Simple_Case_Mapping' ||
+			type === 'Special_Casing' ||
+			type === 'Decomposition_Mapping';
 		const isNamesCanon = type === 'Names' && !subType;
 		const isNameAliases = type === 'Names' && subType === 'name-aliases';
-		const subdir = isNameAliases ? item.charAt(0).toUpperCase() + item.slice(1) : item;
+		const subdir = isNameAliases
+			? item.charAt(0).toUpperCase() + item.slice(1)
+			: item;
 		const dir = path.resolve(rootDir, type, subdir);
 		if (
 			type === 'Bidi_Class' ||
 			type === 'Bidi_Mirroring_Glyph' ||
 			type === 'Bidi_Paired_Bracket_Type' ||
 			isNamesCanon ||
-			(
-				type === 'General_Category' &&
+			(type === 'General_Category' &&
 				// Use the most specific category names, i.e. those whose aliases match
 				// `^[A-Z][a-z]$`. Ignore the others.
-				!/^(?:Other|Letter|Cased_Letter|Mark|Number|Punctuation|Symbol|Separator)$/.test(item)
-			)
+				!/^(?:Other|Letter|Cased_Letter|Mark|Number|Punctuation|Symbol|Separator)$/.test(
+					item,
+				))
 		) {
 			if (type === 'Bidi_Mirroring_Glyph') {
 				const toCodepoint = item.codePointAt(0);
 				codePoints.toArray().forEach((codePoint) => {
 					if (codePoint < toCodepoint) {
-						bidiMirroringGlyphFlatPairs.push(codePoint, toCodepoint - codePoint);
+						bidiMirroringGlyphFlatPairs.push(
+							codePoint,
+							toCodepoint - codePoint,
+						);
 					}
 				});
 			} else {
@@ -159,16 +164,13 @@ const writeFiles = (options) => {
 		// Sequence properties are special.
 		if (type === 'Sequence_Property' || isNameAliases) {
 			const sequences = codePoints;
-			const output = `import { gunzipSync } from 'node:zlib';\n\nexport default ${ gzipInline(sequences) };\n`;
-			writeFileIfChanged(
-				path.resolve(dir, 'index.mjs'),
-				output
-			);
+			const output = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(sequences)};\n`;
+			writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
 			writeFileIfChanged(
 				path.resolve(dir, 'index.d.mts'),
 				type === 'Sequence_Property'
 					? `declare const data: string[];\nexport default data;\n`
-					: `declare const aliasMap: Record<number, string[]>;\nexport default aliasMap;\n`
+					: `declare const aliasMap: Record<number, string[]>;\nexport default aliasMap;\n`,
 			);
 			continue;
 		}
@@ -179,27 +181,31 @@ const writeFiles = (options) => {
 		let codePointsType = 'number[]';
 		let symbolsType = 'string[]';
 		if (!isCodePointMapping) {
-			const encodedRanges = codePoints instanceof regenerate ? encodeRegenerate(codePoints) : encodeRanges(codePoints);
+			const encodedRanges =
+				codePoints instanceof regenerate
+					? encodeRegenerate(codePoints)
+					: encodeRanges(codePoints);
 			writeFileIfChanged(
 				path.resolve(dir, 'ranges.mjs'),
-				`import decodeRanges from '../../decode-ranges.mjs';\n\nexport default decodeRanges('${encodedRanges}');\n`
+				`import decodeRanges from '../../decode-ranges.mjs';\n\nexport default decodeRanges('${encodedRanges}');\n`,
 			);
 			writeFileIfChanged(
 				path.resolve(dir, 'ranges.d.mts'),
-				'import type { UnicodeRange } from "../../decode-ranges.mjs";\n\ndeclare const ranges: UnicodeRange[];\nexport default ranges;\n'
+				'import type { UnicodeRange } from "../../decode-ranges.mjs";\n\ndeclare const ranges: UnicodeRange[];\nexport default ranges;\n',
 			);
 			writeFileIfChanged(
 				path.resolve(dir, 'regex.mjs'),
-				'export default /' + regenerate(codePoints).toString() + '/;\n'
+				'export default /' + regenerate(codePoints).toString() + '/;\n',
 			);
 			writeFileIfChanged(
 				path.resolve(dir, 'regex.d.mts'),
-				'declare const regex: RegExp;\nexport default regex;\n'
+				'declare const regex: RegExp;\nexport default regex;\n',
 			);
 			if (codePointsSizeLt(codePoints, 10)) {
-				const codePointsAsArray = codePoints instanceof regenerate ? codePoints.toArray() : codePoints;
-				codePointsFileContent = `export default ${ jsesc(codePointsAsArray) };\n`;
-				symbolsFileContent = `export default ${ jsesc(codePointsAsArray.map((cp) => String.fromCodePoint(cp))) };\n`;
+				const codePointsAsArray =
+					codePoints instanceof regenerate ? codePoints.toArray() : codePoints;
+				codePointsFileContent = `export default ${jsesc(codePointsAsArray)};\n`;
+				symbolsFileContent = `export default ${jsesc(codePointsAsArray.map((cp) => String.fromCodePoint(cp)))};\n`;
 			}
 		} else {
 			const symbols = new Map();
@@ -213,13 +219,17 @@ const writeFiles = (options) => {
 				symbols.set(from, to);
 			}
 			if (codePoints.size < 10) {
-				codePointsFileContent = `export default ${ jsesc(codePoints) };\n`;
-				symbolsFileContent = `export default ${ jsesc(symbols) };\n`;
+				codePointsFileContent = `export default ${jsesc(codePoints)};\n`;
+				symbolsFileContent = `export default ${jsesc(symbols)};\n`;
 			} else {
-				codePointsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${ gzipInline(codePoints) };\n`;
-				symbolsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${ gzipInline(symbols) };\n`;
+				codePointsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(codePoints)};\n`;
+				symbolsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(symbols)};\n`;
 			}
-			if ((type === 'Case_Folding' && item === 'F') || type === 'Special_Casing' || type === 'Decomposition_Mapping') {
+			if (
+				(type === 'Case_Folding' && item === 'F') ||
+				type === 'Special_Casing' ||
+				type === 'Decomposition_Mapping'
+			) {
 				codePointsType = 'Map<number, number[]>';
 			} else {
 				codePointsType = 'Map<number, number>';
@@ -228,26 +238,26 @@ const writeFiles = (options) => {
 		}
 		writeFileIfChanged(
 			path.resolve(dir, 'code-points.mjs'),
-			codePointsFileContent
+			codePointsFileContent,
 		);
 		writeFileIfChanged(
 			path.resolve(dir, 'code-points.d.mts'),
-			`declare const codePoints: ${ codePointsType };\nexport default codePoints;\n`
+			`declare const codePoints: ${codePointsType};\nexport default codePoints;\n`,
 		);
-		writeFileIfChanged(
-			path.resolve(dir, 'symbols.mjs'),
-			symbolsFileContent
-		);
+		writeFileIfChanged(path.resolve(dir, 'symbols.mjs'), symbolsFileContent);
 		writeFileIfChanged(
 			path.resolve(dir, 'symbols.d.mts'),
-			`declare const symbols: ${ symbolsType };\nexport default symbols;\n`
+			`declare const symbols: ${symbolsType};\nexport default symbols;\n`,
 		);
 	}
 	if (options.type === 'Bidi_Mirroring_Glyph') {
 		const type = options.type;
 		const dir = path.resolve(
-			__dirname, '..',
-			'output', 'unicode-' + version, type
+			__dirname,
+			'..',
+			'output',
+			'unicode-' + version,
+			type,
 		);
 		if (!hasKey(dirMap, type)) {
 			dirMap[type] = [];
@@ -258,23 +268,23 @@ const writeFiles = (options) => {
 		const output = [
 			`const chr = String.fromCodePoint;`,
 			`const pair = (t, u, v) => [t ? u + v : v, chr(t ? u : u + v)];`,
-			`export default new Map(${
-				JSON.stringify(bidiMirroringGlyphFlatPairs)
-			}.map((v, i, a) => pair(i & 1, a[i ^ 1], v)));\n`
+			`export default new Map(${JSON.stringify(
+				bidiMirroringGlyphFlatPairs,
+			)}.map((v, i, a) => pair(i & 1, a[i ^ 1], v)));\n`,
 		].join('\n');
-		writeFileIfChanged(
-			path.resolve(dir, 'index.mjs'),
-			output
-		);
+		writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
 		writeFileIfChanged(
 			path.resolve(dir, 'index.d.mts'),
-			`declare const data: Map<number, string>;\nexport default data;\n`
+			`declare const data: Map<number, string>;\nexport default data;\n`,
 		);
 	} else {
 		for (const type of Object.keys(auxMap)) {
 			const dir = path.resolve(
-				__dirname, '..',
-				'output', 'unicode-' + version, type
+				__dirname,
+				'..',
+				'output',
+				'unicode-' + version,
+				type,
 			);
 			if (!hasKey(dirMap, type)) {
 				dirMap[type] = [];
@@ -286,10 +296,13 @@ const writeFiles = (options) => {
 			// or `Names/index.mjs`
 			const flatRuns = samePropertyRuns(auxMap[type]);
 			const output = `import { gunzipSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${gzipInline(
-				flatRuns
+				flatRuns,
 			)});\n`;
 			writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
-			writeFileIfChanged(path.resolve(dir, 'index.d.mts'), `declare const map: Map<number, string>;\nexport default map;\n`);
+			writeFileIfChanged(
+				path.resolve(dir, 'index.d.mts'),
+				`declare const map: Map<number, string>;\nexport default map;\n`,
+			);
 		}
 	}
 	return dirMap;
@@ -310,8 +323,10 @@ const extend = (destination, source) => {
 
 const readDataFile = (version, type) => {
 	const sourceFile = path.resolve(
-		__dirname, '..',
-		'data', version + '-' + type + '.txt'
+		__dirname,
+		'..',
+		'data',
+		version + '-' + type + '.txt',
 	);
 	try {
 		const source = fs.readFileSync(sourceFile, 'utf-8');
@@ -328,4 +343,3 @@ export default {
 	readDataFile,
 	writeFiles,
 };
-

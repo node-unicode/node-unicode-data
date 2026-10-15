@@ -26,4 +26,3 @@ const parseNameAliases = async (version) => {
 };
 
 export default parseNameAliases;
-

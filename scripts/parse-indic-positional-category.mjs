@@ -9,7 +9,7 @@ const parseIndicPositionalCategory = async (version) => {
 	const NAKey = +version.split('.')[0] >= 17 ? 'Not_Applicable' : 'NA';
 	const map = {
 		// All code points not explicitly listed for Indic_Positional_Category have the value Not_Applicable (NA).
-		[NAKey]: regenerate().addRange(0, 0x10FFFF),
+		[NAKey]: regenerate().addRange(0, 0x10ffff),
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
@@ -39,4 +39,3 @@ const parseIndicPositionalCategory = async (version) => {
 };
 
 export default parseIndicPositionalCategory;
-

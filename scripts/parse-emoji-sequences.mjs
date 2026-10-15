@@ -16,21 +16,23 @@ const parseEmojiSequencesWithId = async ({ version, id }) => {
 		const rangeParts = charRange.split('-');
 		const property = data[1].split('#')[0].trim();
 		if (rangeParts.length === 2) {
-			utils.range(
-				parseInt(rangeParts[0], 16),
-				parseInt(rangeParts[1], 16)
-			).forEach((codePoint) => {
-				const symbol = String.fromCodePoint(codePoint);
-				if (propertyMap.has(property)) {
-					propertyMap.get(property).add(symbol);
-				} else {
-					propertyMap.set(property, new Set([symbol]));
-				}
-			});
+			utils
+				.range(parseInt(rangeParts[0], 16), parseInt(rangeParts[1], 16))
+				.forEach((codePoint) => {
+					const symbol = String.fromCodePoint(codePoint);
+					if (propertyMap.has(property)) {
+						propertyMap.get(property).add(symbol);
+					} else {
+						propertyMap.set(property, new Set([symbol]));
+					}
+				});
 		} else {
-			const codePoints = data[0].trim().split(' ').map((hex) => {
-				return parseInt(hex, 16);
-			});
+			const codePoints = data[0]
+				.trim()
+				.split(' ')
+				.map((hex) => {
+					return parseInt(hex, 16);
+				});
 			const sequence = String.fromCodePoint(...codePoints);
 			if (propertyMap.has(property)) {
 				propertyMap.get(property).add(sequence);
@@ -58,14 +60,17 @@ const parseEmojiTestData = async ({ version }) => {
 			continue;
 		}
 		const data = line.trim().split('; ');
-		const codePoints = data[0].trim().split(' ').map((hex) => {
-			return parseInt(hex, 16);
-		});
+		const codePoints = data[0]
+			.trim()
+			.split(' ')
+			.map((hex) => {
+				return parseInt(hex, 16);
+			});
 		const sequence = String.fromCodePoint(...codePoints);
 		sequences.push(sequence);
 	}
 	const plainObject = {
-		'Emoji_Test': sequences.sort((a, b) => a - b),
+		Emoji_Test: sequences.sort((a, b) => a - b),
 	};
 	return plainObject;
 };
@@ -103,4 +108,3 @@ const parseEmojiSequences = async (version) => {
 };
 
 export default parseEmojiSequences;
-

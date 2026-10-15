@@ -12,14 +12,14 @@ const encodeDeltas = (input) => {
 	const output = [];
 	for (let i = 0; i < input.length; ++i) {
 		const x = input[i];
-		if ((x >> 5) === 0) {
+		if (x >> 5 === 0) {
 			output.push(x);
-		} else if ((x >> 10) === 0) {
+		} else if (x >> 10 === 0) {
 			output.push(32 + (x >> 6), x);
-		} else if ((x >> 15) === 0) {
+		} else if (x >> 15 === 0) {
 			output.push(48 + (x >> 12), x >> 6, x);
 		} else {
-			console.assert((x >> 21) === 0, `delta ${x} out of range`);
+			console.assert(x >> 21 === 0, `delta ${x} out of range`);
 			output.push(56 + (x >> 18), x >> 12, x >> 6, x);
 		}
 	}
@@ -31,7 +31,7 @@ const encodeDeltas = (input) => {
  */
 const encodeRanges = (values) => {
 	const deltas = [];
-	for (let end = -1, i = 0; i < values.length; ) {
+	for (let end = -1, i = 0; i < values.length;) {
 		const begin = values[i];
 		console.assert(begin > end, `code point ${begin} out of order`);
 		deltas.push(begin - end - 1);
@@ -57,7 +57,4 @@ const encodeRegenerate = (regenerateSet) => {
 	return encodeDeltas(deltas);
 };
 
-export {
-	encodeRanges,
-	encodeRegenerate,
-};
+export { encodeRanges, encodeRegenerate };

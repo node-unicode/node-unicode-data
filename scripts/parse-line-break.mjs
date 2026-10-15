@@ -7,7 +7,9 @@ const aliases = valueAliases.get('Line_Break');
 const findCanonicalName = (shortName) => {
 	const canonicalName = aliases.get(shortName);
 	if (!canonicalName) {
-		throw new Error(`Failed to find canonical name for Line_Break=${shortName}. Update \`unicode-property-value-aliases\`.`);
+		throw new Error(
+			`Failed to find canonical name for Line_Break=${shortName}. Update \`unicode-property-value-aliases\`.`,
+		);
 	}
 	return canonicalName;
 };
@@ -20,7 +22,7 @@ const parseLineBreak = async (version) => {
 	const map = {
 		// All code points, assigned and unassigned, that are not listed explicitly
 		// are given the value `XX`.
-		'Unknown': regenerate().addRange(0, 0x10FFFF),
+		Unknown: regenerate().addRange(0, 0x10ffff),
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
@@ -51,4 +53,3 @@ const parseLineBreak = async (version) => {
 };
 
 export default parseLineBreak;
-

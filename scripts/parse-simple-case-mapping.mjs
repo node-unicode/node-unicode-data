@@ -44,4 +44,3 @@ const parseSimpleCaseMapping = async (version) => {
 };
 
 export default parseSimpleCaseMapping;
-

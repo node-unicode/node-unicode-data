@@ -41,19 +41,20 @@ const parseBlocksScriptsProperties = async (type, version) => {
 	for (const line of lines) {
 		if (
 			/^#/.test(line) ||
-			!(
-				/^(?:blocks|bidi-mirroring|derived-general-category|properties)$/.test(type)
-					? /;\x20/.test(line)
-					: /\x20;\x20/.test(line)
+			!(/^(?:blocks|bidi-mirroring|derived-general-category|properties)$/.test(
+				type,
 			)
+				? /;\x20/.test(line)
+				: /\x20;\x20/.test(line))
 		) {
 			continue;
 		}
 		const data = line.trim().split(';');
 		const charRange = data[0].replace('..', '-').trim();
-		let item = data[1].split(
-			type === 'blocks' ? ';' : '#'
-		)[0].trim().replace(/\x20/g, '_');
+		let item = data[1]
+			.split(type === 'blocks' ? ';' : '#')[0]
+			.trim()
+			.replace(/\x20/g, '_');
 		if (type === 'derived-normalization-properties') {
 			if (item === 'FNC') {
 				// Old Unicode versions up to v4.0.0 use the `FNC` alias instead of
@@ -62,7 +63,11 @@ const parseBlocksScriptsProperties = async (type, version) => {
 			} else {
 				const canonical = findCanonicalName(item);
 				if (canonical) {
-					if (/FC_NFKC_Closure|^NFKC_Casefold$|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(canonical)) {
+					if (
+						/FC_NFKC_Closure|^NFKC_Casefold$|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(
+							canonical,
+						)
+					) {
 						// These are not binary properties, or their default value (in the
 						// file) is not `True`.
 						continue;
@@ -74,7 +79,9 @@ const parseBlocksScriptsProperties = async (type, version) => {
 			// Use canonical block names. See #34.
 			const tmp = looseMatch('Block', item).value;
 			if (!tmp) {
-				throw new Error(`Canonical block name not found for ${item}. Update \`unicode-loose-match\`.`);
+				throw new Error(
+					`Canonical block name not found for ${item}. Update \`unicode-loose-match\`.`,
+				);
 			}
 			item = tmp;
 		} else if (type === 'bidi-mirroring') {
@@ -103,7 +110,13 @@ const parseBlocksScriptsProperties = async (type, version) => {
 };
 
 const parseDerivedBinaryProperties = async (version) => {
-	if (version === '3.1.1' || version === '3.1.0' || version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
+	if (
+		version === '3.1.1' ||
+		version === '3.1.0' ||
+		version === '3.0.1' ||
+		version === '3.0.0' ||
+		parseInt(version.split('.')[0], 10) < 3
+	) {
 		// Unicode <= 3.1.1 does not provide derived-binary-properties,
 		// so we should derive Bidi_Mirrored from the UnicodeData.
 		const source = utils.readDataFile(version, 'database');
@@ -125,7 +138,10 @@ const parseDerivedBinaryProperties = async (version) => {
 			Bidi_Mirrored: result,
 		};
 	} else {
-		return await parseBlocksScriptsProperties('derived-binary-properties', version);
+		return await parseBlocksScriptsProperties(
+			'derived-binary-properties',
+			version,
+		);
 	}
 };
 
@@ -219,7 +235,7 @@ const parseDerivedGeneralCategory = async (version) => {
 	} else {
 		const map = await parseBlocksScriptsProperties(
 			'derived-general-category',
-			version
+			version,
 		);
 		const getCategory = (shortName) =>
 			categoryAliases.get(shortName) || shortName;
@@ -256,7 +272,11 @@ const parseDerivedGeneralCategory = async (version) => {
 };
 
 const parseBlocks = async (version) => {
-	if (version === '3.0.1' || version === '3.0.0' || parseInt(version.split('.')[0], 10) < 3) {
+	if (
+		version === '3.0.1' ||
+		version === '3.0.0' ||
+		parseInt(version.split('.')[0], 10) < 3
+	) {
 		const source = utils.readDataFile(version, 'blocks');
 		if (!source) {
 			return;
@@ -270,7 +290,7 @@ const parseBlocks = async (version) => {
 			const canonicalBlockName = looseMatch('Block', blockName).value;
 			map[canonicalBlockName] = regenerate().addRange(
 				parseInt(start, 16),
-				parseInt(end, 16)
+				parseInt(end, 16),
 			);
 		}
 		return map;
@@ -298,24 +318,26 @@ const parseProperties = async (version) => {
 				currentProperty = maybeProperty[1];
 				if (
 					// Ignore Bidi_Class as they have been generated from UnicodeData.
-					currentProperty.startsWith("Bidi:") ||
+					currentProperty.startsWith('Bidi:') ||
 					// Ignore Not a Character and Unassigned Code Value as they have been generated from UnicodeData.
-					currentProperty === "Not a Character" ||
-					currentProperty === "Unassigned Code Value"
+					currentProperty === 'Not a Character' ||
+					currentProperty === 'Unassigned Code Value'
 				) {
 					// Skip contents.
 					i++;
-					while (++i < lines.length && lines[i] !== "");
+					while (++i < lines.length && lines[i] !== '');
 					continue;
 				}
 				currentProperty = currentProperty.replaceAll(' ', '_');
 				currentProperty = findCanonicalName(currentProperty) ?? currentProperty;
 				map[currentProperty] = regenerate();
-			} else if ((maybeRange = /^([A-F\d]{4,5})(?:..([A-F\d]{4,5}))?/.exec(line)) != null) {
+			} else if (
+				(maybeRange = /^([A-F\d]{4,5})(?:..([A-F\d]{4,5}))?/.exec(line)) != null
+			) {
 				if (maybeRange[2]) {
 					map[currentProperty].addRange(
 						parseInt(maybeRange[1], 16),
-						parseInt(maybeRange[2], 16)
+						parseInt(maybeRange[2], 16),
 					);
 				} else {
 					map[currentProperty].add(parseInt(maybeRange[1], 16));
@@ -328,10 +350,14 @@ const parseProperties = async (version) => {
 	}
 };
 
-const parseScripts = (version) => parseBlocksScriptsProperties('scripts', version);
-const parseDerivedCoreProperties = (version) => parseBlocksScriptsProperties('derived-core-properties', version);
-const parseDerivedNormalizationProperties = (version) => parseBlocksScriptsProperties('derived-normalization-properties', version);
-const parseMirroring = (version) => parseBlocksScriptsProperties('bidi-mirroring', version);
+const parseScripts = (version) =>
+	parseBlocksScriptsProperties('scripts', version);
+const parseDerivedCoreProperties = (version) =>
+	parseBlocksScriptsProperties('derived-core-properties', version);
+const parseDerivedNormalizationProperties = (version) =>
+	parseBlocksScriptsProperties('derived-normalization-properties', version);
+const parseMirroring = (version) =>
+	parseBlocksScriptsProperties('bidi-mirroring', version);
 
 export {
 	parseScripts,
@@ -343,4 +369,3 @@ export {
 	parseDerivedBinaryProperties,
 	parseDerivedGeneralCategory,
 };
-

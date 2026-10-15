@@ -28,4 +28,3 @@ const parseCompositionExclusions = async (version) => {
 };
 
 export default parseCompositionExclusions;
-

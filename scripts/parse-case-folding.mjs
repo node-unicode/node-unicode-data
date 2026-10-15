@@ -14,17 +14,19 @@ const parseCaseFolding = async (version) => {
 		const data = line.trim().split(';');
 		const codePoint = parseInt(data[0], 16);
 		const status = data[1].trim();
-		const mappings = data[2].trim().split(' ').map((cp) => parseInt(cp, 16)); // Note: this could be two characters!
+		const mappings = data[2]
+			.trim()
+			.split(' ')
+			.map((cp) => parseInt(cp, 16)); // Note: this could be two characters!
 		if (!caseFoldingMap[status]) {
 			caseFoldingMap[status] = new Map();
 		}
 		caseFoldingMap[status].set(
 			codePoint,
-			mappings.length === 1 ? mappings[0] : mappings
+			mappings.length === 1 ? mappings[0] : mappings,
 		);
 	}
 	return caseFoldingMap;
 };
 
 export default parseCaseFolding;
-

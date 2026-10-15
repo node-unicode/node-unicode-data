@@ -8,7 +8,7 @@ const parseVerticalOrientation = async (version) => {
 	}
 	const map = {
 		// All other code points, assigned and unassigned, that are not listed explicitly in the data section of VerticalOrientation.txt are given the value R.
-		'R': regenerate().addRange(0, 0x10FFFF),
+		R: regenerate().addRange(0, 0x10ffff),
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
@@ -42,4 +42,3 @@ const parseVerticalOrientation = async (version) => {
 };
 
 export default parseVerticalOrientation;
-

@@ -35,7 +35,7 @@ const parseScriptExtensions = async (version, scriptsMap) => {
 				scriptsMap.Inherited.removeRange(from, to);
 				console.assert(
 					scriptsMap[canonicalName],
-					`canonical name for ${script} = ${canonicalName} not present in \`scriptsMap\``
+					`canonical name for ${script} = ${canonicalName} not present in \`scriptsMap\``,
 				);
 				scriptsMap[canonicalName].addRange(from, to);
 			}
@@ -47,7 +47,7 @@ const parseScriptExtensions = async (version, scriptsMap) => {
 				scriptsMap.Inherited.remove(codePoint);
 				console.assert(
 					scriptsMap[canonicalName],
-					`canonical name for ${script} = ${canonicalName} not present in \`scriptsMap\``
+					`canonical name for ${script} = ${canonicalName} not present in \`scriptsMap\``,
 				);
 				scriptsMap[canonicalName].add(codePoint);
 			}
@@ -57,4 +57,3 @@ const parseScriptExtensions = async (version, scriptsMap) => {
 };
 
 export default parseScriptExtensions;
-

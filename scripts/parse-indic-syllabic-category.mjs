@@ -8,7 +8,7 @@ const parseIndicSyllabicCategory = async (version) => {
 	}
 	const map = {
 		// All code points not explicitly listed for Indic_Syllabic_Category have the value Other.
-		'Other': regenerate().addRange(0, 0x10FFFF),
+		Other: regenerate().addRange(0, 0x10ffff),
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
@@ -38,4 +38,3 @@ const parseIndicSyllabicCategory = async (version) => {
 };
 
 export default parseIndicSyllabicCategory;
-

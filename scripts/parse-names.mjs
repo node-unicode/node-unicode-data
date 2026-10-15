@@ -42,4 +42,3 @@ const parseNames = async (version) => {
 };
 
 export default parseNames;
-

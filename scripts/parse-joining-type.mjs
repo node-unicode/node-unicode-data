@@ -7,7 +7,9 @@ const aliases = valueAliases.get('Joining_Type');
 const findCanonicalName = (shortName) => {
 	const canonicalName = aliases.get(shortName);
 	if (!canonicalName) {
-		throw new Error(`Failed to find canonical name for Joining_Type=${shortName}. Update \`unicode-property-value-aliases\`.`);
+		throw new Error(
+			`Failed to find canonical name for Joining_Type=${shortName}. Update \`unicode-property-value-aliases\`.`,
+		);
 	}
 	return canonicalName;
 };
@@ -22,14 +24,16 @@ const parseDerivedJoiningType = (source) => {
 		}
 		// Format: `064B..0655; T # Mn [11] ARABIC FATHATAN..ARABIC HAMZA BELOW`.
 		const data = trimmed.split(';');
-		const [first, last] = data[0].trim().split('..')
+		const [first, last] = data[0]
+			.trim()
+			.split('..')
 			.map((codePoint) => parseInt(codePoint, 16));
 		const joiningType = findCanonicalName(data[1].split('#')[0].trim());
 		map[joiningType] ??= regenerate();
 		map[joiningType].addRange(first, last ?? first);
 	}
 	// Code points that aren’t listed have the default value `Non_Joining`.
-	const nonJoining = regenerate().addRange(0, 0x10FFFF);
+	const nonJoining = regenerate().addRange(0, 0x10ffff);
 	for (const codePoints of Object.values(map)) {
 		nonJoining.remove(codePoints);
 	}

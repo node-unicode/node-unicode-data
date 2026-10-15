@@ -8,7 +8,7 @@ const parseGraphemeWordSentenceBreak = async (version, kind) => {
 	}
 	const map = {
 		// All code points not explicitly listed have the value `Other` (`XX`).
-		'Other': regenerate().addRange(0, 0x10FFFF),
+		Other: regenerate().addRange(0, 0x10ffff),
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
@@ -38,4 +38,3 @@ const parseGraphemeWordSentenceBreak = async (version, kind) => {
 };
 
 export default parseGraphemeWordSentenceBreak;
-

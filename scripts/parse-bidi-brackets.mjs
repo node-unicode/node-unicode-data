@@ -9,9 +9,9 @@ const bidiBracketMap = new Map([
 
 const parseBidiBrackets = async (version) => {
 	const map = {
-		'Open': regenerate(),
-		'Close': regenerate(),
-		'None': regenerate().addRange(0, 0x10FFFF),
+		Open: regenerate(),
+		Close: regenerate(),
+		None: regenerate().addRange(0, 0x10ffff),
 	};
 	const source = utils.readDataFile(version, 'bidi-brackets');
 	if (!source) {
@@ -19,10 +19,7 @@ const parseBidiBrackets = async (version) => {
 	}
 	const lines = source.split('\n');
 	for (const line of lines) {
-		if (
-			/^#/.test(line) ||
-			!/;\x20/.test(line)
-		) {
+		if (/^#/.test(line) || !/;\x20/.test(line)) {
 			continue;
 		}
 		const data = line.trim().split(';');
@@ -48,4 +45,3 @@ const parseBidiBrackets = async (version) => {
 };
 
 export default parseBidiBrackets;
-

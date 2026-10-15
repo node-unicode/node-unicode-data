@@ -11,11 +11,15 @@ const download = async (url, version, type) => {
 	const res = await fetch(url);
 	const file = path.resolve(
 		__dirname,
-		'..', 'data', version + '-' + type + '.txt'
+		'..',
+		'data',
+		version + '-' + type + '.txt',
 	);
 	console.log(' ', url, '→', path.basename(file));
 	if (!res.ok) {
-		throw new Error(`Failed to download ${url}: ${res.status} ${res.statusText}`);
+		throw new Error(
+			`Failed to download ${url}: ${res.status} ${res.statusText}`,
+		);
 	}
 	fs.writeFileSync(file, Buffer.from(await res.arrayBuffer()));
 };
@@ -36,7 +40,8 @@ const parallelLimit = async (tasks, limit) => {
 };
 
 const tasks = [];
-const addDownloadTask = (url, version, type) => tasks.push(() => download(url, version, type));
+const addDownloadTask = (url, version, type) =>
+	tasks.push(() => download(url, version, type));
 
 const guardedDownload = () => parallelLimit(tasks, PARALLEL_REQUEST_LIMIT);
 
