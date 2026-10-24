@@ -15,11 +15,11 @@ const findCanonicalName = (shortName) => {
 	return canonicalName;
 };
 
-const initialMapForType = (type) => {
+const initialMapForType = (type, defaultScript) => {
 	switch (type) {
 		case 'scripts':
 			return {
-				Unknown: regenerate().addRange(0, CODEPOINT_MAX),
+				[defaultScript]: regenerate().addRange(0, CODEPOINT_MAX),
 			};
 		default:
 			return {};
@@ -32,7 +32,9 @@ const initialMapForType = (type) => {
  * @returns
  */
 const parseBlocksScriptsProperties = async (type, version) => {
-	const map = initialMapForType(type);
+	// Script=Unknown was introduced in Unicode 5.0. Earlier releases use Common.
+	const defaultScript = parseInt(version, 10) < 5 ? 'Common' : 'Unknown';
+	const map = initialMapForType(type, defaultScript);
 	const source = utils.readDataFile(version, type);
 	if (!source) {
 		return;
@@ -89,14 +91,14 @@ const parseBlocksScriptsProperties = async (type, version) => {
 			const start = parseInt(rangeParts[0], 16);
 			const end = parseInt(rangeParts[1], 16);
 			map[item].addRange(start, end);
-			if (type === 'scripts') {
-				map.Unknown.removeRange(start, end);
+			if (type === 'scripts' && item !== defaultScript) {
+				map[defaultScript].removeRange(start, end);
 			}
 		} else {
 			const codepoint = parseInt(charRange, 16);
 			map[item].add(codepoint);
-			if (type === 'scripts') {
-				map.Unknown.remove(codepoint);
+			if (type === 'scripts' && item !== defaultScript) {
+				map[defaultScript].remove(codepoint);
 			}
 		}
 	}
