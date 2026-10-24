@@ -19,6 +19,14 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
 });
 
+test('Legacy property ranges preserve six-digit code points', async (t) => {
+	const properties = await parseProperties('3.0.1');
+	t.assert.ok(properties.Private_Use.contains(0x100000));
+	t.assert.ok(properties.Private_Use.contains(0x10fffd));
+	t.assert.ok(!properties.Private_Use.contains(0x10000));
+	t.assert.ok(!properties.Private_Use.contains(0xffff));
+});
+
 test('Property records do not require spaces around semicolons', async (t) => {
 	for (const version of ['4.0.1', '4.1.0']) {
 		const scripts = await parseScripts(version);
