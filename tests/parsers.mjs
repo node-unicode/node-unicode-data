@@ -3,6 +3,7 @@ import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mj
 import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
 import {
 	parseDerivedCoreProperties,
+	parseDerivedNormalizationProperties,
 	parseProperties,
 	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
@@ -18,6 +19,16 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 		}
 	}
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
+});
+
+test('Normalization mappings are not emitted as binary properties', async (t) => {
+	for (const version of ['15.1.0', '16.0.0', '17.0.0', '18.0.0']) {
+		const binary = await parseDerivedNormalizationProperties(version);
+		t.assert.equal(binary.NFKC_Simple_Casefold, undefined);
+		t.assert.equal(binary.NFKC_Casefold, undefined);
+		t.assert.ok(binary.Changes_When_NFKC_Casefolded.contains(0x41));
+		t.assert.ok(binary.Full_Composition_Exclusion.contains(0x340));
+	}
 });
 
 test('Indic conjunct break retains enumerated values', async (t) => {
