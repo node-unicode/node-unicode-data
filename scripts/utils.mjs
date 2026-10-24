@@ -209,11 +209,14 @@ const writeFiles = (options) => {
 			}
 		} else {
 			const symbols = new Map();
+			const valueTypes = new Set();
 			for (let [from, to] of codePoints) {
 				from = String.fromCodePoint(from);
 				if (Array.isArray(to)) {
+					valueTypes.add('number[]');
 					to = String.fromCodePoint.apply(null, to);
 				} else {
+					valueTypes.add('number');
 					to = String.fromCodePoint(to);
 				}
 				symbols.set(from, to);
@@ -225,15 +228,7 @@ const writeFiles = (options) => {
 				codePointsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(codePoints)};\n`;
 				symbolsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(symbols)};\n`;
 			}
-			if (
-				(type === 'Case_Folding' && item === 'F') ||
-				type === 'Special_Casing' ||
-				type === 'Decomposition_Mapping'
-			) {
-				codePointsType = 'Map<number, number[]>';
-			} else {
-				codePointsType = 'Map<number, number>';
-			}
+			codePointsType = `Map<number, ${[...valueTypes].sort().join(' | ') || 'number'}>`;
 			symbolsType = 'Map<string, string>';
 		}
 		writeFileIfChanged(

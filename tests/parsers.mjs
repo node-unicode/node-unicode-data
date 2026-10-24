@@ -1,4 +1,7 @@
 import { test } from 'node:test';
+import fs from 'node:fs';
+import parseCaseFolding from '../scripts/parse-case-folding.mjs';
+import utils from '../scripts/utils.mjs';
 import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mjs';
 import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
 import parseJoiningType from '../scripts/parse-joining-type.mjs';
@@ -20,6 +23,21 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 		}
 	}
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
+});
+
+test('Case folding declarations describe scalar and expansion values', async (t) => {
+	const map = await parseCaseFolding('3.0.1');
+	t.assert.equal(map.E.get(0xb5), 0x3bc);
+	t.assert.deepEqual(map.E.get(0xdf), [0x73, 0x73]);
+	utils.writeFiles({ version: 'parser-types-test', type: 'Case_Folding', map });
+	const declaration = fs.readFileSync(
+		new URL(
+			'../output/unicode-parser-types-test/Case_Folding/E/code-points.d.mts',
+			import.meta.url,
+		),
+		'utf8',
+	);
+	t.assert.match(declaration, /Map<number, number \| number\[\]>/);
 });
 
 test('ArabicShaping fallback derives implicit joining types', async (t) => {
