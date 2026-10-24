@@ -84,6 +84,12 @@ const parseBlocksScriptsProperties = async (type, version) => {
 			item = String.fromCodePoint(parseInt(item, 16));
 		} else if (type === 'derived-general-category') {
 			item = categoryAliases.get(item) || item;
+		} else if (type === 'scripts') {
+			// Older Scripts.txt files use names such as LATIN and OLD_ITALIC.
+			item = looseMatch('Script', item).value;
+			if (!item) {
+				throw new Error(`Canonical script name not found in ${line}.`);
+			}
 		}
 		map[item] ??= regenerate();
 		const rangeParts = charRange.split('-');

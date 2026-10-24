@@ -19,6 +19,19 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
 });
 
+test('Historical Script values use canonical names', async (t) => {
+	for (const version of ['3.1.0', '3.1.1', '3.2.0', '4.0.0']) {
+		const scripts = await parseScripts(version);
+		t.assert.ok(scripts.Latin.contains(0x41));
+		t.assert.ok(scripts.Greek.contains(0x3b1));
+		t.assert.ok(scripts.Inherited.contains(0x300));
+		t.assert.equal(scripts.LATIN, undefined);
+		if (version === '3.2.0' || version === '4.0.0') {
+			t.assert.ok(scripts.Old_Italic.contains(0x10300));
+		}
+	}
+});
+
 test('Legacy property ranges preserve six-digit code points', async (t) => {
 	const properties = await parseProperties('3.0.1');
 	t.assert.ok(properties.Private_Use.contains(0x100000));
