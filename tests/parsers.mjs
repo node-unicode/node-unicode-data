@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mjs';
+import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
 import {
 	parseDerivedCoreProperties,
 	parseProperties,
@@ -19,8 +20,35 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
 });
 
+test('Indic conjunct break retains enumerated values', async (t) => {
+	for (const version of ['15.1.0', '16.0.0', '17.0.0', '18.0.0']) {
+		const map = await parseIndicConjunctBreak(version);
+		t.assert.ok(map.Linker.contains(0x94d));
+		t.assert.ok(map.Consonant.contains(0x915));
+		t.assert.ok(map.Extend.contains(0x300));
+		t.assert.ok(map.None.contains(0x41));
+		for (const cp of [0x94d, 0x915, 0x300, 0x41]) {
+			t.assert.equal(
+				Object.values(map).filter((set) => set.contains(cp)).length,
+				1,
+			);
+		}
+		const binary = await parseDerivedCoreProperties(version);
+		t.assert.equal(binary.InCB, undefined);
+		t.assert.equal(binary.Indic_Conjunct_Break, undefined);
+	}
+	t.assert.equal(await parseIndicConjunctBreak('15.0.0'), undefined);
+});
+
 test('Binary property aliases use canonical names', async (t) => {
-	for (const version of ['4.0.1', '4.1.0', '5.0.0', '6.3.0', '8.0.0', '18.0.0']) {
+	for (const version of [
+		'4.0.1',
+		'4.1.0',
+		'5.0.0',
+		'6.3.0',
+		'8.0.0',
+		'18.0.0',
+	]) {
 		const properties = await parseProperties(version);
 		t.assert.ok(properties.Sentence_Terminal.contains(0x21));
 		t.assert.equal(properties.STerm, undefined);
@@ -63,7 +91,14 @@ test('Property records do not require spaces around semicolons', async (t) => {
 });
 
 test('Script defaults follow the Unicode version', async (t) => {
-	for (const version of ['3.1.0', '3.1.1', '3.2.0', '4.0.0', '4.0.1', '4.1.0']) {
+	for (const version of [
+		'3.1.0',
+		'3.1.1',
+		'3.2.0',
+		'4.0.0',
+		'4.0.1',
+		'4.1.0',
+	]) {
 		const scripts = await parseScripts(version);
 		t.assert.ok(scripts.Common.contains(0x20));
 		t.assert.ok(scripts.Common.contains(0x378));

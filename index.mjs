@@ -11,6 +11,7 @@ import parseBidiClass from './scripts/parse-bidi-class.mjs';
 import parseCompositionExclusions from './scripts/parse-composition-exclusions.mjs';
 import parseIndicPositionalCategory from './scripts/parse-indic-positional-category.mjs';
 import parseIndicSyllabicCategory from './scripts/parse-indic-syllabic-category.mjs';
+import parseIndicConjunctBreak from './scripts/parse-indic-conjunct-break.mjs';
 import parseLineBreak from './scripts/parse-line-break.mjs';
 import parseScriptExtensions from './scripts/parse-script-extensions.mjs';
 import parseSpecialCasing from './scripts/parse-special-casing.mjs';
@@ -206,6 +207,15 @@ const generateData = async (version) => {
 				'grapheme-cluster-break',
 			),
 			type: 'Grapheme_Cluster_Break',
+		}),
+	);
+	console.log('Parsing Unicode v%s `Indic_Conjunct_Break`…', version);
+	utils.extend(
+		dirMap,
+		utils.writeFiles({
+			version: version,
+			map: await parseIndicConjunctBreak(version),
+			type: 'Indic_Conjunct_Break',
 		}),
 	);
 	console.log('Parsing Unicode v%s `Word_Break`…', version);
