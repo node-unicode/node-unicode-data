@@ -1,6 +1,7 @@
 import utils from './utils.mjs';
 import valueAliases from 'unicode-property-value-aliases';
 import regenerate from 'regenerate';
+import { parseDerivedGeneralCategory } from './parse-blocks-scripts-properties.mjs';
 
 const aliases = valueAliases.get('Joining_Type');
 
@@ -41,8 +42,18 @@ const parseDerivedJoiningType = (source) => {
 	return map;
 };
 
-const parseArabicShaping = (source) => {
-	const map = {};
+const parseArabicShaping = (source, categories) => {
+	// The older releases that need this fallback define implicit T as Mn or Cf,
+	// excluding joining controls. Explicit ArabicShaping records override defaults.
+	const transparent = regenerate()
+		.add(categories.Nonspacing_Mark)
+		.add(categories.Format)
+		.remove(0x200c)
+		.remove(0x200d);
+	const map = {
+		Transparent: transparent,
+		Non_Joining: regenerate().addRange(0, 0x10ffff).remove(transparent),
+	};
 	const lines = source.split('\n');
 	for (const line of lines) {
 		const trimmed = line.trim();
@@ -55,6 +66,8 @@ const parseArabicShaping = (source) => {
 		const data = trimmed.split(';');
 		const codePoint = parseInt(data[0].trim(), 16);
 		const joiningType = findCanonicalName(data[2].trim());
+		map.Transparent.remove(codePoint);
+		map.Non_Joining.remove(codePoint);
 		map[joiningType] ??= regenerate();
 		map[joiningType].add(codePoint);
 	}
@@ -72,7 +85,7 @@ const parseJoiningType = async (version) => {
 	if (!source) {
 		return;
 	}
-	return parseArabicShaping(source);
+	return parseArabicShaping(source, await parseDerivedGeneralCategory(version));
 };
 
 export default parseJoiningType;
