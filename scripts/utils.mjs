@@ -278,6 +278,10 @@ const writeFiles = (options) => {
 				symbolsFileContent = `export default ${jsesc(codePointsAsArray.map((cp) => String.fromCodePoint(cp)))};\n`;
 			}
 		} else {
+			const valueTypes = new Set();
+			for (const to of codePoints.values()) {
+				valueTypes.add(Array.isArray(to) ? 'number[]' : 'number');
+			}
 			if (codePoints.size < 10) {
 				const symbols = new Map();
 				for (let [from, to] of codePoints) {
@@ -299,15 +303,7 @@ const writeFiles = (options) => {
 				// rather than shipped as a second copy of the same data.
 				symbolsFileContent = `import codePoints from './code-points.mjs';\nimport mappingToSymbols from '../../mapping-to-symbols.mjs';\n\nexport default mappingToSymbols(codePoints);\n`;
 			}
-			if (
-				(type === 'Case_Folding' && item === 'F') ||
-				type === 'Special_Casing' ||
-				type === 'Decomposition_Mapping'
-			) {
-				codePointsType = 'Map<number, number[]>';
-			} else {
-				codePointsType = 'Map<number, number>';
-			}
+			codePointsType = `Map<number, ${[...valueTypes].sort().join(' | ') || 'number'}>`;
 			symbolsType = 'Map<string, string>';
 		}
 		writeFileIfChanged(
