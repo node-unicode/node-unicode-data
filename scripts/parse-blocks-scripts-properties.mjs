@@ -326,7 +326,9 @@ const parseProperties = async (version) => {
 				currentProperty = findCanonicalName(currentProperty) ?? currentProperty;
 				map[currentProperty] = regenerate();
 			} else if (
-				(maybeRange = /^([A-F\d]{4,5})(?:..([A-F\d]{4,5}))?/.exec(line)) != null
+				(maybeRange = /^([A-F\d]{4,6})(?:\.\.([A-F\d]{4,6}))?(?=\s|$)/.exec(
+					line,
+				)) != null
 			) {
 				if (maybeRange[2]) {
 					map[currentProperty].addRange(
