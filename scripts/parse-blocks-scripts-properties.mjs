@@ -39,17 +39,11 @@ const parseBlocksScriptsProperties = async (type, version) => {
 	}
 	const lines = source.split('\n');
 	for (const line of lines) {
-		if (
-			/^#/.test(line) ||
-			!(/^(?:blocks|bidi-mirroring|derived-general-category|properties)$/.test(
-				type,
-			)
-				? /;\x20/.test(line)
-				: /\x20;\x20/.test(line))
-		) {
+		const trimmed = line.trim();
+		if (!trimmed || trimmed.startsWith('#')) {
 			continue;
 		}
-		const data = line.trim().split(';');
+		const data = trimmed.split(';');
 		const charRange = data[0].replace('..', '-').trim();
 		let item = data[1]
 			.split(type === 'blocks' ? ';' : '#')[0]
