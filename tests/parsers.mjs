@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mjs';
 import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
+import parseJoiningType from '../scripts/parse-joining-type.mjs';
 import {
 	parseDerivedCoreProperties,
 	parseDerivedNormalizationProperties,
@@ -19,6 +20,34 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 		}
 	}
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
+});
+
+test('ArabicShaping fallback derives implicit joining types', async (t) => {
+	for (const version of ['3.2.0', '4.0.0', '4.0.1']) {
+		const map = await parseJoiningType(version);
+		for (const [cp, type] of [
+			[0x41, 'Non_Joining'],
+			[0x378, 'Non_Joining'],
+			[0x300, 'Transparent'],
+			[0x200e, 'Transparent'],
+			[0x200c, 'Non_Joining'],
+			[0x200d, 'Join_Causing'],
+			[0x628, 'Dual_Joining'],
+		]) {
+			t.assert.ok(
+				map[type].contains(cp),
+				`${version}: ${cp.toString(16)}=${type}`,
+			);
+			t.assert.equal(
+				Object.values(map).filter((set) => set.contains(cp)).length,
+				1,
+			);
+		}
+		if (version !== '3.2.0') {
+			t.assert.ok(map.Non_Joining.contains(0x600));
+			t.assert.ok(!map.Transparent.contains(0x600));
+		}
+	}
 });
 
 test('Normalization mappings are not emitted as binary properties', async (t) => {
