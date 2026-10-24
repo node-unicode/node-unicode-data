@@ -64,7 +64,7 @@ const parseBlocksScriptsProperties = async (type, version) => {
 				const canonical = findCanonicalName(item);
 				if (canonical) {
 					if (
-						/FC_NFKC_Closure|^NFKC_Casefold$|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(
+						/FC_NFKC_Closure|^NFKC_(?:Simple_)?Casefold$|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(
 							canonical,
 						)
 					) {
