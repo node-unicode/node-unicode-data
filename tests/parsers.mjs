@@ -32,11 +32,25 @@ test('Property records do not require spaces around semicolons', async (t) => {
 		const scripts = await parseScripts(version);
 		t.assert.ok(scripts.Common.contains(0x100000));
 		t.assert.ok(scripts.Common.contains(0x10fffd));
-		t.assert.ok(!scripts.Unknown.contains(0x100000));
+		t.assert.ok(!scripts.Unknown?.contains(0x100000));
 	}
 	for (const version of ['4.0.1', '4.1.0', '5.0.0']) {
 		const core = await parseDerivedCoreProperties(version);
 		t.assert.ok(core.Default_Ignorable_Code_Point.contains(0x10fffe));
 		t.assert.ok(core.Default_Ignorable_Code_Point.contains(0x10ffff));
 	}
+});
+
+test('Script defaults follow the Unicode version', async (t) => {
+	for (const version of ['3.1.0', '3.1.1', '3.2.0', '4.0.0', '4.0.1', '4.1.0']) {
+		const scripts = await parseScripts(version);
+		t.assert.ok(scripts.Common.contains(0x20));
+		t.assert.ok(scripts.Common.contains(0x378));
+		t.assert.ok(!scripts.Common.contains(0x41));
+		t.assert.equal(scripts.Unknown, undefined);
+	}
+	const scripts = await parseScripts('5.0.0');
+	t.assert.ok(scripts.Common.contains(0x20));
+	t.assert.ok(scripts.Unknown.contains(0x378));
+	t.assert.ok(!scripts.Common.contains(0x378));
 });
