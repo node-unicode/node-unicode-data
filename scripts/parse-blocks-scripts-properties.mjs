@@ -46,6 +46,10 @@ const parseBlocksScriptsProperties = async (type, version) => {
 			continue;
 		}
 		const data = trimmed.split(';');
+		if (type === 'derived-core-properties' && data.length > 2) {
+			// Enumerated properties such as InCB have an explicit third field.
+			continue;
+		}
 		const charRange = data[0].replace('..', '-').trim();
 		let item = data[1]
 			.split(type === 'blocks' ? ';' : '#')[0]
