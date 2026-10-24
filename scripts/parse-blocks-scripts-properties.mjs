@@ -90,6 +90,8 @@ const parseBlocksScriptsProperties = async (type, version) => {
 			if (!item) {
 				throw new Error(`Canonical script name not found in ${line}.`);
 			}
+		} else {
+			item = findCanonicalName(item);
 		}
 		map[item] ??= regenerate();
 		const rangeParts = charRange.split('-');

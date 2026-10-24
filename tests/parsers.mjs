@@ -19,6 +19,14 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
 });
 
+test('Binary property aliases use canonical names', async (t) => {
+	for (const version of ['4.0.1', '4.1.0', '5.0.0', '6.3.0', '8.0.0', '18.0.0']) {
+		const properties = await parseProperties(version);
+		t.assert.ok(properties.Sentence_Terminal.contains(0x21));
+		t.assert.equal(properties.STerm, undefined);
+	}
+});
+
 test('Historical Script values use canonical names', async (t) => {
 	for (const version of ['3.1.0', '3.1.1', '3.2.0', '4.0.0']) {
 		const scripts = await parseScripts(version);
