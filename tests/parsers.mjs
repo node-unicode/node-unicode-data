@@ -1,5 +1,10 @@
 import { test } from 'node:test';
 import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mjs';
+import {
+	parseDerivedCoreProperties,
+	parseProperties,
+	parseScripts,
+} from '../scripts/parse-blocks-scripts-properties.mjs';
 
 test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 	for (const version of ['2.0.14', '3.2.0', '18.0.0']) {
@@ -12,4 +17,18 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 		}
 	}
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
+});
+
+test('Property records do not require spaces around semicolons', async (t) => {
+	for (const version of ['4.0.1', '4.1.0']) {
+		const scripts = await parseScripts(version);
+		t.assert.ok(scripts.Common.contains(0x100000));
+		t.assert.ok(scripts.Common.contains(0x10fffd));
+		t.assert.ok(!scripts.Unknown.contains(0x100000));
+	}
+	for (const version of ['4.0.1', '4.1.0', '5.0.0']) {
+		const core = await parseDerivedCoreProperties(version);
+		t.assert.ok(core.Default_Ignorable_Code_Point.contains(0x10fffe));
+		t.assert.ok(core.Default_Ignorable_Code_Point.contains(0x10ffff));
+	}
 });
