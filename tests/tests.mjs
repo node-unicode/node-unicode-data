@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { suite, test } from 'node:test';
+import './parsers.mjs';
 import resources from '../data/resources.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

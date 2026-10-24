@@ -35,6 +35,24 @@ const parseDecompositionMapping = async (version) => {
 		return;
 	}
 	const map = {};
+	// UnicodeData represents all modern Hangul syllables as a range with empty
+	// decomposition fields. Their canonical mappings are defined algorithmically:
+	// https://www.unicode.org/versions/Unicode18.0.0/core-spec/chapter-3/#G56669
+	const hangul = new Map();
+	for (let syllable = 0xac00; syllable <= 0xd7a3; syllable++) {
+		const index = syllable - 0xac00;
+		const trailing = index % 28;
+		hangul.set(
+			syllable,
+			trailing
+				? [syllable - trailing, 0x11a7 + trailing]
+				: [
+						0x1100 + Math.floor(index / 588),
+						0x1161 + (Math.floor(index / 28) % 21),
+					],
+		);
+	}
+	map.Canonical = hangul;
 	const lines = source.split('\n');
 	for (const line of lines) {
 		const trimmed = line.trim();
