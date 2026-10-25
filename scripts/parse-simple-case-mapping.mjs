@@ -23,7 +23,7 @@ const parseSimpleCaseMapping = async (version) => {
 	}
 	const lines = source.split('\n');
 	for (const line of lines) {
-		const lineTrimmed = line.trim();
+		const lineTrimmed = line.split('#')[0].trim();
 		if (lineTrimmed === '' || lineTrimmed.startsWith('#')) {
 			continue;
 		}
