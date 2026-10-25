@@ -46,6 +46,38 @@ const assertRegexesMatchRegenerate = async (t, version) => {
 	t.assert.ok(count > 0, 'found regex.mjs files');
 };
 
+// Every mapping `symbols.mjs` must equal its `code-points.mjs` with each code
+// point replaced by the corresponding symbol.
+const assertSymbolsMatchCodePoints = async (t, version) => {
+	const root = path.resolve(__dirname, '..', 'output', `unicode-${version}`);
+	let count = 0;
+	for (const type of [
+		'Case_Folding',
+		'Simple_Case_Mapping',
+		'Special_Casing',
+		'Decomposition_Mapping',
+	]) {
+		const typeDir = path.join(root, type);
+		if (!fs.existsSync(typeDir)) {
+			continue;
+		}
+		for (const name of fs.readdirSync(typeDir)) {
+			const dir = path.join(typeDir, name);
+			const { default: codePoints } = await import(
+				path.join(dir, 'code-points.mjs')
+			);
+			const { default: symbols } = await import(path.join(dir, 'symbols.mjs'));
+			const expected = [...codePoints].map(([from, to]) => [
+				String.fromCodePoint(from),
+				String.fromCodePoint(...(Array.isArray(to) ? to : [to])),
+			]);
+			t.assert.deepStrictEqual([...symbols], expected, `${type}/${name}`);
+			count++;
+		}
+	}
+	t.assert.ok(count > 0, 'found mapping directories');
+};
+
 suite(`The generated Unicode ${oldest} js`, () => {
 	test('General_Category/Modifier_Letter should match the snapshot', async (t) => {
 		const { default: data } = await import(
@@ -146,5 +178,8 @@ suite(`The generated latest Unicode js`, () => {
 	});
 	test('every regex.mjs should match Regenerate output', async (t) => {
 		await assertRegexesMatchRegenerate(t, newest);
+	});
+	test('every mapping symbols.mjs should match code-points.mjs', async (t) => {
+		await assertSymbolsMatchCodePoints(t, newest);
 	});
 });
