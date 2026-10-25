@@ -16,6 +16,7 @@ import {
 	parseDerivedCoreProperties,
 	parseDerivedGeneralCategory,
 	parseDerivedNormalizationProperties,
+	parseMirroring,
 	parseProperties,
 	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
@@ -436,6 +437,48 @@ test('Composition exclusions are available from Unicode 3.0', async (t) => {
 		t.assert.equal(Composition_Exclusion.contains(0x1d1bf), size > 66, version);
 	}
 	t.assert.equal(await parseCompositionExclusions('2.1.9'), undefined);
+});
+
+test('Bidi mirroring data is available from Unicode 3.0.1', async (t) => {
+	for (const [version, size] of [
+		['3.0.1', 140],
+		['3.1.0', 140],
+		['3.1.1', 140],
+		['3.2.0', 318],
+		['4.0.0', 318],
+		['4.0.1', 318],
+	]) {
+		const mirroring = await parseMirroring(version);
+		const count = Object.values(mirroring).reduce(
+			(sum, codePoints) => sum + codePoints.toArray().length,
+			0,
+		);
+		t.assert.equal(count, size, version);
+		t.assert.ok(mirroring[')'].contains(0x28), version);
+	}
+	t.assert.equal(await parseMirroring('3.0.0'), undefined);
+});
+
+test('Generated Bidi_Mirroring_Glyph keeps one-way mappings', async (t) => {
+	// Unicode 3.2 maps U+2A2D to U+2A2C, while U+2A2C maps back to U+2A2B.
+	const version = 'test-bidi-mirroring-glyph';
+	const dir = new URL(`../output/unicode-${version}/`, import.meta.url);
+	t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+	utils.writeFiles({
+		version,
+		map: await parseMirroring('3.2.0'),
+		type: 'Bidi_Mirroring_Glyph',
+	});
+	const { default: glyphs } = await import(
+		new URL('Bidi_Mirroring_Glyph/index.mjs', dir)
+	);
+	t.assert.equal(glyphs.size, 318);
+	t.assert.equal(glyphs.get(0x2a2b), '\u2a2c');
+	t.assert.equal(glyphs.get(0x2a2c), '\u2a2b');
+	t.assert.equal(glyphs.get(0x2a2d), '\u2a2c');
+	t.assert.equal(glyphs.get(0x2a2e), '\u2a2d');
+	t.assert.equal(glyphs.get(0x28), ')');
+	t.assert.equal(glyphs.get(0x29), '(');
 });
 
 test('Unicode 3.1.1 uses its corrected property list', async (t) => {
