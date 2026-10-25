@@ -481,6 +481,30 @@ test('Generated Bidi_Mirroring_Glyph keeps one-way mappings', async (t) => {
 	t.assert.equal(glyphs.get(0x29), '(');
 });
 
+test('Joining_Type is available from Unicode 2.0', async (t) => {
+	for (const version of [
+		'2.0.14',
+		'2.1.9',
+		'3.0.0',
+		'3.1.0',
+		'3.1.1',
+		'4.0.1',
+	]) {
+		const joiningType = await parseJoiningType(version);
+		t.assert.ok(joiningType.Right_Joining.contains(0x627), version);
+		t.assert.ok(joiningType.Dual_Joining.contains(0x628), version);
+		t.assert.ok(joiningType.Join_Causing.contains(0x640), version);
+		t.assert.ok(joiningType.Transparent.contains(0x64b), version);
+		t.assert.ok(joiningType.Non_Joining.contains(0x41), version);
+	}
+	// Syriac was added in Unicode 3.0.
+	t.assert.ok((await parseJoiningType('2.1.9')).Non_Joining.contains(0x712));
+	t.assert.ok((await parseJoiningType('3.0.0')).Dual_Joining.contains(0x712));
+	// DerivedJoiningType lists ZWJ as Join_Causing from Unicode 3.1.1.
+	t.assert.ok((await parseJoiningType('3.1.1')).Join_Causing.contains(0x200d));
+	t.assert.equal(await parseJoiningType('1.1.5'), undefined);
+});
+
 test('Unicode 3.1.1 uses its corrected property list', async (t) => {
 	const v310 = await parseProperties('3.1.0');
 	const v311 = await parseProperties('3.1.1');
