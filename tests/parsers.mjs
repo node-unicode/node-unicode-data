@@ -17,6 +17,22 @@ import {
 	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
 
+test('Unicode 2.1.8 property values exclude discrepancy diagnostics', async (t) => {
+	const properties = await parseProperties('2.1.8');
+	t.assert.equal(properties.Math.toArray().length, 345);
+	t.assert.equal(properties.Alphabetic.toArray().length, 15181);
+	t.assert.equal(properties.Diacritic.toArray().length, 274);
+	t.assert.ok(properties.Math.contains(0xffe9));
+	t.assert.ok(!properties.Math.contains(0xffe8));
+	t.assert.ok(properties.Alphabetic.contains(0x41));
+	t.assert.ok(!properties.Alphabetic.contains(0x2d0));
+	t.assert.ok(!properties.Alphabetic.contains(0x4e00));
+	t.assert.ok(properties.Diacritic.contains(0x300));
+	t.assert.ok(!properties.Diacritic.contains(0x640));
+	// The next property's real records still include the ideograph.
+	t.assert.ok(properties.Ideographic.contains(0x4e00));
+});
+
 test('Unicode 5.0 through 6.0 provide their historical correction aliases', async (t) => {
 	for (const version of ['5.0.0', '5.1.0', '5.2.0', '6.0.0']) {
 		const aliases = await parseNameAliases(version);
