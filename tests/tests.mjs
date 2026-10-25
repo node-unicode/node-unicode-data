@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { suite, test } from 'node:test';
 import './parsers.mjs';
+import './legacy-names.mjs';
 import './line-endings.mjs';
 import resources from '../data/resources.mjs';
 
