@@ -16,7 +16,8 @@ const parseNameAliases = async (version) => {
 		const data = record.split(';').map((field) => field.trim());
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
-		const type = data[2];
+		// Before Unicode 6.1, the two-field format lists only name corrections.
+		const type = data[2] ?? 'correction';
 
 		if (!isNaN(codePoint)) {
 			if (map[type] === undefined) {

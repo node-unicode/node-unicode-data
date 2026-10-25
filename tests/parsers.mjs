@@ -8,6 +8,7 @@ import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mj
 import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
 import parseJoiningType from '../scripts/parse-joining-type.mjs';
 import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
+import parseNameAliases from '../scripts/parse-name-aliases.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
@@ -15,6 +16,20 @@ import {
 	parseProperties,
 	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
+
+test('Unicode 5.0 through 6.0 provide their historical correction aliases', async (t) => {
+	for (const version of ['5.0.0', '5.1.0', '5.2.0', '6.0.0']) {
+		const aliases = await parseNameAliases(version);
+		t.assert.deepEqual(Object.keys(aliases), ['correction']);
+		t.assert.equal(Object.keys(aliases.correction).length, 11);
+		t.assert.deepEqual(aliases.correction[0x1a2], ['LATIN CAPITAL LETTER GHA']);
+		t.assert.deepEqual(aliases.correction[0x1a3], ['LATIN SMALL LETTER GHA']);
+		t.assert.deepEqual(aliases.correction[0x1d0c5], [
+			'BYZANTINE MUSICAL SYMBOL FTHORA SKLIRON CHROMA VASIS',
+		]);
+	}
+	t.assert.equal(await parseNameAliases('4.1.0'), undefined);
+});
 
 test('Historical titlecase digraphs retain their identity mapping', async (t) => {
 	for (const version of ['1.1.5', '2.0.14', '3.2.0', '4.0.0', '18.0.0']) {
