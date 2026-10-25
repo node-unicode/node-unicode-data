@@ -12,10 +12,11 @@ const parseGraphemeWordSentenceBreak = async (version, kind) => {
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
-		if (!line || /^#/.test(line)) {
+		const trimmed = line.trim();
+		if (!trimmed || trimmed.startsWith('#')) {
 			continue;
 		}
-		const data = line.trim().split(';');
+		const data = trimmed.split(';');
 		const charRange = data[0].replace('..', '-').trim();
 		const rangeParts = charRange.split('-');
 		const value = data[1].split('#')[0].trim();

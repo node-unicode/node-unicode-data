@@ -110,10 +110,11 @@ const parseNames = async (version) => {
 	let flag = false;
 	let first = 0;
 	for (const line of lines) {
-		if (line === '' || line.startsWith('#')) {
+		const trimmed = line.trim();
+		if (!trimmed || trimmed.startsWith('#')) {
 			continue;
 		}
-		const data = line.trim().split(';');
+		const data = trimmed.split(';');
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
 		if (flag) {

@@ -136,10 +136,11 @@ const parseDerivedBinaryProperties = async (version) => {
 		}
 		const result = [];
 		for (const line of source.split('\n')) {
-			if (line === '' || line.startsWith('#')) {
+			const trimmed = line.trim();
+			if (!trimmed || trimmed.startsWith('#')) {
 				continue;
 			}
-			const data = line.split(';');
+			const data = trimmed.split(';');
 			if (data[9] === 'Y') {
 				const codePoint = parseInt(data[0], 16);
 				result.push(codePoint);
@@ -182,10 +183,11 @@ const parseDerivedGeneralCategory = async (version) => {
 		// http://unicode.org/reports/tr44/#GC_Values_Table
 		// http://unicode.org/reports/tr18/#Categories
 		for (const line of lines) {
-			if (line === '' || line.startsWith('#')) {
+			const trimmed = line.trim();
+			if (!trimmed || trimmed.startsWith('#')) {
 				continue;
 			}
-			const data = line.trim().split(';');
+			const data = trimmed.split(';');
 			const codePoint = parseInt(data[0], 16);
 			const name = data[1];
 			const generalCategory = data[2];
@@ -339,7 +341,7 @@ const parseProperties = async (version) => {
 		const lines = source.trimEnd().split('\n');
 		let currentProperty, maybeProperty, maybeRange;
 		for (let i = 0; i < lines.length; i++) {
-			const line = lines[i];
+			const line = lines[i].trim();
 			if ((maybeProperty = /0x[A-F\d]+ \((.+?)\)$/.exec(line)) != null) {
 				currentProperty = maybeProperty[1];
 				if (
@@ -350,7 +352,7 @@ const parseProperties = async (version) => {
 				) {
 					// Skip contents.
 					i++;
-					while (++i < lines.length && lines[i] !== '');
+					while (++i < lines.length && lines[i].trim() !== '');
 					continue;
 				}
 				if (currentProperty === 'Not a Character') {

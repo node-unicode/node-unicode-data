@@ -8,10 +8,11 @@ const parseCaseFolding = async (version) => {
 	}
 	const lines = source.split('\n');
 	for (const line of lines) {
-		if (!line || /^#/.test(line)) {
+		const trimmed = line.trim();
+		if (!trimmed || trimmed.startsWith('#')) {
 			continue;
 		}
-		const data = line.trim().split(';');
+		const data = trimmed.split(';');
 		const codePoint = parseInt(data[0], 16);
 		const status = data[1].trim();
 		const mappings = data[2]
