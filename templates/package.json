@@ -1,6 +1,6 @@
 {
 	"name": "@unicode/unicode-<%= version %>",
-	"version": "2.0.8",
+	"version": "2.0.9",
 	"description": "JavaScript-compatible Unicode data. Arrays of code points, arrays of symbols, and regular expressions for Unicode v<%= version %>’s categories, scripts, blocks, bidi, and other properties.",
 	"homepage": "https://github.com/node-unicode/unicode-<%= version %>",
 	"main": "index.mjs",
@@ -25,5 +25,9 @@
 		"type": "git",
 		"url": "git+https://github.com/node-unicode/unicode-<%= version %>.git"
 	},
-	"bugs": "https://github.com/node-unicode/node-unicode-data/issues"
+	"bugs": "https://github.com/node-unicode/node-unicode-data/issues",
+	"engines": {
+		"node": ">=12"
+	},
+	"typesVersions": <%= typesVersions %>
 }

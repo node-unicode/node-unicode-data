@@ -82,4 +82,5 @@ const decodeRanges = (input) => {
 	return ranges;
 };
 
+export { decodeDeltas };
 export default decodeRanges;

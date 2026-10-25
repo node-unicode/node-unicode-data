@@ -338,9 +338,11 @@ const generateData = async (version) => {
 	);
 	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/index.d.mts`),
+		// `index.mjs` has a single default export: an object mapping each
+		// property type to the list of its directories.
 		[
 			'declare const data: {',
-			...Object.keys(dirMap).map((key) => `\t${key}: string[];`),
+			...Object.keys(dirMap).map((key) => `\treadonly ${key}: string[];`),
 			'};',
 			'export default data;',
 			'',
@@ -348,7 +350,12 @@ const generateData = async (version) => {
 	);
 	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/package.json`),
-		compilePackage({ version: version }),
+		compilePackage({
+			version: version,
+			typesVersions: JSON.stringify(utils.typesVersions(dirMap), null, '\t')
+				// Indent to match the surrounding JSON.
+				.replace(/\n/g, '\n\t'),
+		}),
 	);
 	fs.mkdirSync(
 		path.resolve(__dirname, `output/unicode-${version}/.github/workflows`),
@@ -356,6 +363,9 @@ const generateData = async (version) => {
 			recursive: true,
 		},
 	);
+	fs.mkdirSync(path.resolve(__dirname, `output/unicode-${version}/types`), {
+		recursive: true,
+	});
 	const staticFiles = [
 		'.github/workflows/publish-on-tag.yml',
 		'.gitattributes',
@@ -365,6 +375,13 @@ const generateData = async (version) => {
 		'decode-property-map.d.mts',
 		'decode-ranges.mjs',
 		'decode-ranges.d.mts',
+		'mapping-to-symbols.mjs',
+		'mapping-to-symbols.d.mts',
+		'decode-names.mjs',
+		'decode-names.d.mts',
+		'decode-mapping.mjs',
+		'decode-mapping.d.mts',
+		...utils.SHARED_DECLARATIONS.map((file) => `types/${file}.d.mts`),
 	];
 	for (const file of staticFiles) {
 		fs.copyFileSync(

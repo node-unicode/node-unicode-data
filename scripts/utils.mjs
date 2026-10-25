@@ -4,19 +4,48 @@ import { fileURLToPath } from 'node:url';
 import zlib from 'node:zlib';
 import jsesc from 'jsesc';
 import regenerate from 'regenerate';
-import { encodeRanges, encodeRegenerate } from './encode-ranges.mjs';
+import {
+	base64enc,
+	encodeDeltas,
+	encodeRanges,
+	encodeRegenerate,
+} from './encode-ranges.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const gzipInline = (data) => {
-	if (data instanceof Map) {
-		return `new Map(${gzipInline([...data])})`;
-	}
-	const json = JSON.stringify(data);
-	const gzipBuffer = zlib.gzipSync(json);
-	const str = gzipBuffer.toString('base64');
-	return `JSON.parse(gunzipSync(Buffer.from('${str}', 'base64')))`;
+// Brotli-compress `text` and return a JS expression that decompresses it into
+// a Buffer at runtime.
+const brotliInlineBuffer = (text) => {
+	const brotliBuffer = zlib.brotliCompressSync(text, {
+		params: {
+			[zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
+			[zlib.constants.BROTLI_PARAM_LGWIN]:
+				zlib.constants.BROTLI_MAX_WINDOW_BITS,
+			[zlib.constants.BROTLI_PARAM_SIZE_HINT]: Buffer.byteLength(text),
+		},
+	});
+	const str = brotliBuffer.toString('base64');
+	return `brotliDecompressSync(Buffer.from('${str}', 'base64'))`;
 };
+
+const brotliInline = (data) => {
+	if (data instanceof Map) {
+		return `new Map(${brotliInline([...data])})`;
+	}
+	return `JSON.parse(${brotliInlineBuffer(JSON.stringify(data))})`;
+};
+
+// Modules whose declarations are shared via `types/*.d.mts` and
+// `typesVersions` instead of being repeated in every directory.
+const SHARED_DECLARATIONS = ['ranges', 'regex', 'code-points', 'symbols'];
+
+// Directories under these types declare their own `code-points`/`symbols` types.
+const MAPPING_TYPES = [
+	'Case_Folding',
+	'Simple_Case_Mapping',
+	'Special_Casing',
+	'Decomposition_Mapping',
+];
 
 const range = (start, stop) => {
 	// Inclusive, e.g. `range(1, 3)` → `[1, 2, 3]`.
@@ -76,6 +105,59 @@ const samePropertyRuns = (codePointProperties) => {
 	return result;
 };
 
+// Front-code the names in the flat runs produced by `samePropertyRuns`.
+// See static/decode-names.mjs for the format and the decoder.
+const encodeNames = (flatRuns) => {
+	const runs = [];
+	const lines = [];
+	let previous = '';
+	for (let i = 0; i < flatRuns.length; i += 3) {
+		runs.push(flatRuns[i], flatRuns[i + 1]);
+		const name = flatRuns[i + 2];
+		let shared = 0;
+		while (
+			shared < 63 &&
+			shared < name.length &&
+			shared < previous.length &&
+			name.charCodeAt(shared) === previous.charCodeAt(shared)
+		) {
+			shared++;
+		}
+		lines.push(base64enc[shared] + name.slice(shared));
+		previous = name;
+	}
+	return JSON.stringify(runs) + '\n' + lines.join('\n');
+};
+
+// Zigzag encoding maps signed integers to unsigned ones: 0 → 0, -1 → 1, 1 → 2,
+// -2 → 3, … so that small differences in either direction stay small.
+const zigzag = (value) => ((value << 1) ^ (value >> 31)) >>> 0;
+
+// Delta-encode a mapping from code points to code point(s), e.g. a case
+// mapping or a decomposition mapping, preserving entry order and whether
+// each entry maps to a single code point or to an array.
+// See static/decode-mapping.mjs for the format and the decoder.
+const encodeMapping = (codePoints) => {
+	const output = [];
+	let previousFrom = 0;
+	for (const [from, to] of codePoints) {
+		output.push(zigzag(from - previousFrom));
+		previousFrom = from;
+		let previous = from;
+		if (Array.isArray(to)) {
+			console.assert(to.length > 0, `empty mapping for U+${from.toString(16)}`);
+			output.push(to.length);
+			for (const codePoint of to) {
+				output.push(zigzag(codePoint - previous));
+				previous = codePoint;
+			}
+		} else {
+			output.push(0, zigzag(to - previous));
+		}
+	}
+	return encodeDeltas(output);
+};
+
 // Only write the file if its content has changed.
 // Reading files is cheaper than writing files, and most files don’t change between builds.
 const writeFileIfChanged = (filePath, content) => {
@@ -111,11 +193,7 @@ const writeFiles = (options) => {
 		const codePoints = map[item];
 		const type =
 			typeof options.type === 'function' ? options.type(item) : options.type;
-		const isCodePointMapping =
-			type === 'Case_Folding' ||
-			type === 'Simple_Case_Mapping' ||
-			type === 'Special_Casing' ||
-			type === 'Decomposition_Mapping';
+		const isCodePointMapping = MAPPING_TYPES.includes(type);
 		const isNamesCanon = type === 'Names' && !subType;
 		const isNameAliases = type === 'Names' && subType === 'name-aliases';
 		const subdir = isNameAliases
@@ -157,7 +235,7 @@ const writeFiles = (options) => {
 		// Sequence properties are special.
 		if (type === 'Sequence_Property' || isNameAliases) {
 			const sequences = codePoints;
-			const output = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(sequences)};\n`;
+			const output = `import { brotliDecompressSync } from 'node:zlib';\n\nexport default ${brotliInline(sequences)};\n`;
 			writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
 			writeFileIfChanged(
 				path.resolve(dir, 'index.d.mts'),
@@ -183,16 +261,8 @@ const writeFiles = (options) => {
 				`import decodeRanges from '../../decode-ranges.mjs';\n\nexport default decodeRanges('${encodedRanges}');\n`,
 			);
 			writeFileIfChanged(
-				path.resolve(dir, 'ranges.d.mts'),
-				'import type { UnicodeRange } from "../../decode-ranges.mjs";\n\ndeclare const ranges: UnicodeRange[];\nexport default ranges;\n',
-			);
-			writeFileIfChanged(
 				path.resolve(dir, 'regex.mjs'),
 				'export default /' + regenerate(codePoints).toString() + '/;\n',
-			);
-			writeFileIfChanged(
-				path.resolve(dir, 'regex.d.mts'),
-				'declare const regex: RegExp;\nexport default regex;\n',
 			);
 			if (codePointsSizeLt(codePoints, 10)) {
 				const codePointsAsArray =
@@ -201,25 +271,30 @@ const writeFiles = (options) => {
 				symbolsFileContent = `export default ${jsesc(codePointsAsArray.map((cp) => String.fromCodePoint(cp)))};\n`;
 			}
 		} else {
-			const symbols = new Map();
 			const valueTypes = new Set();
-			for (let [from, to] of codePoints) {
-				from = String.fromCodePoint(from);
-				if (Array.isArray(to)) {
-					valueTypes.add('number[]');
-					to = String.fromCodePoint.apply(null, to);
-				} else {
-					valueTypes.add('number');
-					to = String.fromCodePoint(to);
-				}
-				symbols.set(from, to);
+			for (const to of codePoints.values()) {
+				valueTypes.add(Array.isArray(to) ? 'number[]' : 'number');
 			}
 			if (codePoints.size < 10) {
+				const symbols = new Map();
+				for (let [from, to] of codePoints) {
+					from = String.fromCodePoint(from);
+					if (Array.isArray(to)) {
+						to = String.fromCodePoint.apply(null, to);
+					} else {
+						to = String.fromCodePoint(to);
+					}
+					symbols.set(from, to);
+				}
 				codePointsFileContent = `export default ${jsesc(codePoints)};\n`;
 				symbolsFileContent = `export default ${jsesc(symbols)};\n`;
 			} else {
-				codePointsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(codePoints)};\n`;
-				symbolsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(symbols)};\n`;
+				codePointsFileContent = `import { brotliDecompressSync } from 'node:zlib';\nimport decodeMapping from '../../decode-mapping.mjs';\n\nexport default decodeMapping(${brotliInlineBuffer(
+					encodeMapping(codePoints),
+				)}.toString());\n`;
+				// The symbols map is derived from the code points map at runtime
+				// rather than shipped as a second copy of the same data.
+				symbolsFileContent = `import codePoints from './code-points.mjs';\nimport mappingToSymbols from '../../mapping-to-symbols.mjs';\n\nexport default mappingToSymbols(codePoints);\n`;
 			}
 			codePointsType = `Map<number, ${[...valueTypes].sort().join(' | ') || 'number'}>`;
 			symbolsType = 'Map<string, string>';
@@ -228,15 +303,26 @@ const writeFiles = (options) => {
 			path.resolve(dir, 'code-points.mjs'),
 			codePointsFileContent,
 		);
-		writeFileIfChanged(
-			path.resolve(dir, 'code-points.d.mts'),
-			`declare const codePoints: ${codePointsType};\nexport default codePoints;\n`,
-		);
 		writeFileIfChanged(path.resolve(dir, 'symbols.mjs'), symbolsFileContent);
-		writeFileIfChanged(
-			path.resolve(dir, 'symbols.d.mts'),
-			`declare const symbols: ${symbolsType};\nexport default symbols;\n`,
-		);
+		if (isCodePointMapping) {
+			// Mapping directories declare their own types, since the value type
+			// differs per directory (`Map<number, number>` vs. `Map<number, number[]>`).
+			writeFileIfChanged(
+				path.resolve(dir, 'code-points.d.mts'),
+				`declare const codePoints: ${codePointsType};\nexport default codePoints;\n`,
+			);
+			writeFileIfChanged(
+				path.resolve(dir, 'symbols.d.mts'),
+				`declare const symbols: ${symbolsType};\nexport default symbols;\n`,
+			);
+		} else {
+			// All other directories share the declarations in `types/`, selected
+			// through `typesVersions` in package.json. Remove per-directory
+			// declarations left over from earlier builds.
+			for (const file of SHARED_DECLARATIONS) {
+				fs.rmSync(path.resolve(dir, file + '.d.mts'), { force: true });
+			}
+		}
 	}
 	if (options.type === 'Bidi_Mirroring_Glyph') {
 		const type = options.type;
@@ -272,7 +358,7 @@ const writeFiles = (options) => {
 			bidiMirroringGlyphFlatPairs,
 		)}.map((v, i, a) => pair(i & 1, a[i ^ 1], v))`;
 		// `Bidi_Mirroring_Glyph/index.mjs`
-		// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
+		// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t compress.
 		const output = [
 			`const chr = String.fromCodePoint;`,
 			`const pair = (t, u, v) => [t ? u + v : v, chr(t ? u : u + v)];`,
@@ -305,9 +391,14 @@ const writeFiles = (options) => {
 			// or `bidi-brackets/index.mjs`
 			// or `Names/index.mjs`
 			const flatRuns = samePropertyRuns(auxMap[type]);
-			const output = `import { gunzipSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${gzipInline(
-				flatRuns,
-			)});\n`;
+			const output =
+				type === 'Names'
+					? `import { brotliDecompressSync } from 'node:zlib';\nimport decodeNames from '../decode-names.mjs';\n\nexport default decodeNames(${brotliInlineBuffer(
+							encodeNames(flatRuns),
+						)}.toString());\n`
+					: `import { brotliDecompressSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${brotliInline(
+							flatRuns,
+						)});\n`;
 			writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
 			writeFileIfChanged(
 				path.resolve(dir, 'index.d.mts'),
@@ -361,7 +452,26 @@ const isVersionBefore = (version, target) => {
 	return false;
 };
 
+// The `typesVersions` map for package.json. TypeScript picks the most specific
+// matching pattern, so mapping directories keep their own declarations while
+// everything else resolves to the shared ones in `types/`.
+const typesVersions = (dirMap) => {
+	const map = {};
+	for (const type of MAPPING_TYPES) {
+		if (hasKey(dirMap, type)) {
+			map[`${type}/*/code-points.mjs`] = [`${type}/*/code-points.d.mts`];
+			map[`${type}/*/symbols.mjs`] = [`${type}/*/symbols.d.mts`];
+		}
+	}
+	for (const file of SHARED_DECLARATIONS) {
+		map[`*/${file}.mjs`] = [`types/${file}.d.mts`];
+	}
+	return { '*': map };
+};
+
 export default {
+	SHARED_DECLARATIONS,
+	typesVersions,
 	range,
 	append,
 	extend,
