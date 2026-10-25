@@ -387,6 +387,20 @@ test('Historical Script values use canonical names', async (t) => {
 	}
 });
 
+test('Unicode 3.1.1 uses its corrected property list', async (t) => {
+	const v310 = await parseProperties('3.1.0');
+	const v311 = await parseProperties('3.1.1');
+	t.assert.ok(v310.Hex_Digit.contains(0x1d7ce));
+	t.assert.equal(v310.ASCII_Hex_Digit, undefined);
+	t.assert.ok(!v311.Hex_Digit.contains(0x1d7ce));
+	t.assert.ok(!v311.Hex_Digit.contains(0x1d7ff));
+	t.assert.ok(v311.Hex_Digit.contains(0xff21));
+	t.assert.deepEqual(
+		v311.ASCII_Hex_Digit.toArray(),
+		[...'0123456789ABCDEFabcdef'].map((c) => c.codePointAt(0)),
+	);
+});
+
 test('Legacy property ranges preserve six-digit code points', async (t) => {
 	const properties = await parseProperties('3.0.1');
 	t.assert.ok(properties.Private_Use.contains(0x100000));
