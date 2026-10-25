@@ -84,7 +84,7 @@ const resources = [
 		main: 'https://unicode.org/Public/3.1-Update/UnicodeData-3.1.0.txt',
 		scripts: 'https://unicode.org/Public/3.1-Update/Scripts-3.1.0.txt',
 		blocks: 'https://unicode.org/Public/3.1-Update/Blocks-4.txt',
-		properties: 'https://unicode.org/Public/3.1-Update/PropList-3.1.0.txt',
+		properties: 'https://unicode.org/Public/3.1-Update1/PropList-3.1.1.txt',
 		'derived-core-properties':
 			'https://unicode.org/Public/3.1-Update/DerivedCoreProperties-3.1.0.txt',
 		'derived-general-category':
