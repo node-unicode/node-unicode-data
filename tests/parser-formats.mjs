@@ -6,11 +6,23 @@ import parseBidiBrackets from '../scripts/parse-bidi-brackets.mjs';
 import parseNameAliases from '../scripts/parse-name-aliases.mjs';
 import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
 import parseJoiningType from '../scripts/parse-joining-type.mjs';
+import parseCaseFolding from '../scripts/parse-case-folding.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
 import utils from '../scripts/utils.mjs';
+
+test('Case-folding expansions accept runs of whitespace between code points', async (t) => {
+	let source;
+	t.mock.method(utils, 'readDataFile', () => source);
+	for (const separator of [' ', '  ', '\t', ' \t  ']) {
+		source = `0130; F; 0069${separator}0307; # I WITH DOT\n0041; C; 0061; # A\n`;
+		const map = await parseCaseFolding('18.0.0');
+		t.assert.deepEqual(map.F.get(0x130), [0x69, 0x307]);
+		t.assert.equal(map.C.get(0x41), 0x61);
+	}
+});
 
 test('Explicit Non_Joining records remain in the default joining set', async (t) => {
 	t.mock.method(utils, 'readDataFile', (version, type) =>
