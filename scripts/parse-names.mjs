@@ -117,7 +117,9 @@ const parseNames = async (version) => {
 		const data = trimmed.split(';');
 		const codePoint = parseInt(data[0], 16);
 		// Unicode 4.0.0 has trailing spaces after the names of U+02AE and U+0615.
-		const name = data[1].trim();
+		const name = utils.isVersionBefore(version, '4.0.1')
+			? data[1].trim()
+			: data[1];
 		if (flag) {
 			if (/<.+, Last>/.test(name)) {
 				flag = false;

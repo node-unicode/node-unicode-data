@@ -11,10 +11,14 @@ const canonicalPropertyNames = new Map(
 	[...propertyAliases.values()].map((name) => [name.toLowerCase(), name]),
 );
 
-const findCanonicalName = (shortName) => {
+const findCanonicalName = (shortName, version) => {
 	const canonicalName =
 		propertyAliases.get(shortName) ??
-		canonicalPropertyNames.get(shortName.toLowerCase());
+		// Unicode 3.1.1 and earlier spell some names differently, such as
+		// `White_space` for `White_Space`.
+		(utils.isVersionBefore(version, '3.2.0')
+			? canonicalPropertyNames.get(shortName.toLowerCase())
+			: undefined);
 	if (!canonicalName) {
 		return shortName;
 	}
@@ -59,14 +63,17 @@ const parseBlocksScriptsProperties = async (type, version) => {
 		const charRange = data[0].replace('..', '-').trim();
 		let item = data[1].trim().replace(/\x20/g, '_');
 		if (type === 'derived-normalization-properties') {
-			if (item === 'FNC' || /^NFK?[CD]_(?:NO|MAYBE)$/.test(item)) {
+			if (
+				utils.isVersionBefore(version, '4.0.1') &&
+				(item === 'FNC' || /^NFK?[CD]_(?:NO|MAYBE)$/.test(item))
+			) {
 				// Old Unicode versions up to v4.0.0 use the `FNC` alias instead of
 				// `FC_NFKC` (for `FC_NFKC_Closure`), and record Quick_Check values
 				// as e.g. `NFC_NO` or `NFC_MAYBE` instead of `NFC_QC; N`. These are
 				// not binary properties.
 				continue;
 			} else {
-				const canonical = findCanonicalName(item);
+				const canonical = findCanonicalName(item, version);
 				if (canonical) {
 					if (
 						/FC_NFKC_Closure|^NFKC_(?:Simple_)?Casefold$|(?:NFC|NFD|NFKC|NFKD)_Quick_Check/.test(
@@ -94,13 +101,16 @@ const parseBlocksScriptsProperties = async (type, version) => {
 		} else if (type === 'derived-general-category') {
 			item = categoryAliases.get(item) || item;
 		} else if (type === 'scripts') {
-			// Older Scripts.txt files use names such as LATIN and OLD_ITALIC.
-			item = looseMatch('Script', item).value;
-			if (!item) {
-				throw new Error(`Canonical script name not found in ${line}.`);
+			if (utils.isVersionBefore(version, '4.0.1')) {
+				// Scripts.txt up to Unicode 4.0.0 uses names such as LATIN and
+				// OLD_ITALIC. Later files use the canonical names.
+				item = looseMatch('Script', item).value;
+				if (!item) {
+					throw new Error(`Canonical script name not found in ${line}.`);
+				}
 			}
 		} else {
-			item = findCanonicalName(item);
+			item = findCanonicalName(item, version);
 		}
 		map[item] ??= regenerate();
 		const rangeParts = charRange.split('-');
@@ -416,7 +426,8 @@ const parseProperties = async (version) => {
 					currentProperty = 'Noncharacter_Code_Point';
 				}
 				currentProperty = currentProperty.replaceAll(' ', '_');
-				currentProperty = findCanonicalName(currentProperty) ?? currentProperty;
+				currentProperty =
+					findCanonicalName(currentProperty, version) ?? currentProperty;
 				map[currentProperty] = regenerate();
 			} else if (line.startsWith('Discrepancy ')) {
 				// Unicode 2.1.8 includes comparisons with UnicodeData after each

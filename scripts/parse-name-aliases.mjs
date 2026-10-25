@@ -17,7 +17,9 @@ const parseNameAliases = async (version) => {
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
 		// Before Unicode 6.1, the two-field format lists only name corrections.
-		const type = data[2] ?? 'correction';
+		const type = utils.isVersionBefore(version, '6.1.0')
+			? 'correction'
+			: data[2];
 
 		if (!isNaN(codePoint)) {
 			if (map[type] === undefined) {
