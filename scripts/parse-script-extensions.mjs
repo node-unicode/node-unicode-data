@@ -26,7 +26,7 @@ const parseScriptExtensions = async (version, scriptsMap) => {
 		const data = trimmed.split(';');
 		const charRange = data[0].replace('..', '-').trim();
 		const rangeParts = charRange.split('-');
-		const scripts = data[1].split('#')[0].trim().split(' ');
+		const scripts = data[1].split('#')[0].trim().split(/\s+/);
 		if (rangeParts.length === 2) {
 			const from = parseInt(rangeParts[0], 16);
 			const to = parseInt(rangeParts[1], 16);

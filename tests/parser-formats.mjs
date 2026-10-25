@@ -7,11 +7,37 @@ import parseNameAliases from '../scripts/parse-name-aliases.mjs';
 import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
 import parseJoiningType from '../scripts/parse-joining-type.mjs';
 import parseCaseFolding from '../scripts/parse-case-folding.mjs';
+import parseScriptExtensions from '../scripts/parse-script-extensions.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
+	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
 import utils from '../scripts/utils.mjs';
+
+test('Script_Extensions accepts whitespace runs for singletons and ranges', async (t) => {
+	const read = utils.readDataFile;
+	let source;
+	t.mock.method(utils, 'readDataFile', (version, type) =>
+		type === 'script-extensions' ? source : read(version, type),
+	);
+	for (const separator of [' ', '  ', '\t', ' \t  ']) {
+		source = `30FC; Hira${separator}Kana\n3031..3035; Hira${separator}Kana\n3099; Hira${separator}Kana\n`;
+		const map = await parseScriptExtensions(
+			'18.0.0',
+			await parseScripts('18.0.0'),
+		);
+		for (const cp of [0x30fc, 0x3031, 0x3035, 0x3099]) {
+			t.assert.ok(map.Hiragana.contains(cp));
+			t.assert.ok(map.Katakana.contains(cp));
+			t.assert.ok(!map.Common.contains(cp));
+			t.assert.ok(!map.Inherited.contains(cp));
+		}
+		t.assert.ok(map.Hiragana.contains(0x3042));
+		t.assert.ok(map.Katakana.contains(0x30a2));
+		t.assert.ok(map.Common.contains(0x20));
+	}
+});
 
 test('Case-folding expansions accept runs of whitespace between code points', async (t) => {
 	let source;
