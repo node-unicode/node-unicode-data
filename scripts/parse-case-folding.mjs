@@ -17,7 +17,7 @@ const parseCaseFolding = async (version) => {
 		const status = data[1].trim();
 		const mappings = data[2]
 			.trim()
-			.split(' ')
+			.split(/\s+/)
 			.map((cp) => parseInt(cp, 16)); // Note: this could be two characters!
 		if (!caseFoldingMap[status]) {
 			caseFoldingMap[status] = new Map();
