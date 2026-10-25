@@ -195,6 +195,7 @@ const parseDerivedGeneralCategory = async (version) => {
 		let flag = false;
 		let first = 0;
 		let lastCodePoint = -1;
+		let hasPrivateUseHighSurrogates = false;
 		// Unicode 1.1.5 lists only U+4E00 as a representative of the Unified
 		// Han ideographs. The Unicode 1.1 Han cross-reference table assigns the
 		// whole 4E00..9FA5 range:
@@ -241,6 +242,8 @@ const parseDerivedGeneralCategory = async (version) => {
 				if (/<.+, First>/.test(name)) {
 					flag = true;
 					first = codePoint;
+					hasPrivateUseHighSurrogates ||=
+						name === '<Private Use High Surrogate, First>';
 				} else {
 					for (const category of categories) {
 						categoryMap[category].addRange(codePoint, recordEnd);
@@ -265,6 +268,13 @@ const parseDerivedGeneralCategory = async (version) => {
 			// UnicodeData-1.1.5 omits the CJK Compatibility Ideographs, which the
 			// Unicode 1.1 Han cross-reference table lists as F900..FA2D.
 			unlistedRanges.push([0xf900, 0xfa2d, 'Lo']);
+		}
+		if (hasPrivateUseHighSurrogates && lastCodePoint < 0x10000) {
+			// Before Unicode 3.0.1, UnicodeData lists the Private Use High
+			// Surrogates but not the planes 15 and 16 private-use characters
+			// their surrogate pairs encode. Unicode 3.0.1 added those ranges:
+			// https://www.unicode.org/Public/3.0-Update1/UnicodeData-3.0.1.html
+			unlistedRanges.push([0xf0000, 0xffffd, 'Co'], [0x100000, 0x10fffd, 'Co']);
 		}
 		for (const [start, end, generalCategory] of unlistedRanges) {
 			// Undo the gap handling, which recorded the range as unassigned.

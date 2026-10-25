@@ -186,6 +186,24 @@ test('Unicode 1.1.5 assigns the unlisted CJK compatibility ideographs', async (t
 	}
 });
 
+test('Supplementary private-use planes are assigned from Unicode 2.0', async (t) => {
+	for (const version of ['2.0.14', '2.1.9', '3.0.0', '3.0.1', '3.1.0']) {
+		const categories = await parseDerivedGeneralCategory(version);
+		for (const cp of [0xf0000, 0xffffd, 0x100000, 0x10fffd]) {
+			const message = `${version}: ${cp.toString(16)}`;
+			t.assert.ok(categories.Private_Use.contains(cp), message);
+			t.assert.ok(categories.Assigned.contains(cp), message);
+			t.assert.ok(!categories.Unassigned.contains(cp), message);
+		}
+		for (const cp of [0xeffff, 0xffffe, 0xfffff, 0x10ffff]) {
+			const message = `${version}: ${cp.toString(16)}`;
+			t.assert.ok(categories.Unassigned.contains(cp), message);
+		}
+	}
+	const categories = await parseDerivedGeneralCategory('1.1.5');
+	t.assert.ok(categories.Unassigned.contains(0xf0000));
+});
+
 test('Bidi class applies historical and current unassigned defaults', async (t) => {
 	for (const version of [
 		'3.0.0',
