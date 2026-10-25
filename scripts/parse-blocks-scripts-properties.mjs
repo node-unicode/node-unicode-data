@@ -305,10 +305,8 @@ const parseBlocks = async (version) => {
 				.split(';')
 				.map((field) => field.trim());
 			const canonicalBlockName = looseMatch('Block', blockName).value;
-			map[canonicalBlockName] = regenerate().addRange(
-				parseInt(start, 16),
-				parseInt(end, 16),
-			);
+			map[canonicalBlockName] ??= regenerate();
+			map[canonicalBlockName].addRange(parseInt(start, 16), parseInt(end, 16));
 		}
 	} else {
 		map = await parseBlocksScriptsProperties('blocks', version);
