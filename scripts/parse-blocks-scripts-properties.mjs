@@ -59,9 +59,11 @@ const parseBlocksScriptsProperties = async (type, version) => {
 		const charRange = data[0].replace('..', '-').trim();
 		let item = data[1].trim().replace(/\x20/g, '_');
 		if (type === 'derived-normalization-properties') {
-			if (item === 'FNC') {
+			if (item === 'FNC' || /^NFK?[CD]_(?:NO|MAYBE)$/.test(item)) {
 				// Old Unicode versions up to v4.0.0 use the `FNC` alias instead of
-				// `FC_NFKC` (for `FC_NFKC_Closure`). This is not a binary property.
+				// `FC_NFKC` (for `FC_NFKC_Closure`), and record Quick_Check values
+				// as e.g. `NFC_NO` or `NFC_MAYBE` instead of `NFC_QC; N`. These are
+				// not binary properties.
 				continue;
 			} else {
 				const canonical = findCanonicalName(item);
