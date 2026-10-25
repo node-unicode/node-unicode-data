@@ -8,14 +8,21 @@ import { encodeRanges, encodeRegenerate } from './encode-ranges.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const gzipInline = (data) => {
+const brotliInline = (data) => {
 	if (data instanceof Map) {
-		return `new Map(${gzipInline([...data])})`;
+		return `new Map(${brotliInline([...data])})`;
 	}
 	const json = JSON.stringify(data);
-	const gzipBuffer = zlib.gzipSync(json);
-	const str = gzipBuffer.toString('base64');
-	return `JSON.parse(gunzipSync(Buffer.from('${str}', 'base64')))`;
+	const brotliBuffer = zlib.brotliCompressSync(json, {
+		params: {
+			[zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
+			[zlib.constants.BROTLI_PARAM_LGWIN]:
+				zlib.constants.BROTLI_MAX_WINDOW_BITS,
+			[zlib.constants.BROTLI_PARAM_SIZE_HINT]: Buffer.byteLength(json),
+		},
+	});
+	const str = brotliBuffer.toString('base64');
+	return `JSON.parse(brotliDecompressSync(Buffer.from('${str}', 'base64')))`;
 };
 
 const range = (start, stop) => {
@@ -164,7 +171,7 @@ const writeFiles = (options) => {
 		// Sequence properties are special.
 		if (type === 'Sequence_Property' || isNameAliases) {
 			const sequences = codePoints;
-			const output = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(sequences)};\n`;
+			const output = `import { brotliDecompressSync } from 'node:zlib';\n\nexport default ${brotliInline(sequences)};\n`;
 			writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
 			writeFileIfChanged(
 				path.resolve(dir, 'index.d.mts'),
@@ -222,8 +229,8 @@ const writeFiles = (options) => {
 				codePointsFileContent = `export default ${jsesc(codePoints)};\n`;
 				symbolsFileContent = `export default ${jsesc(symbols)};\n`;
 			} else {
-				codePointsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(codePoints)};\n`;
-				symbolsFileContent = `import { gunzipSync } from 'node:zlib';\n\nexport default ${gzipInline(symbols)};\n`;
+				codePointsFileContent = `import { brotliDecompressSync } from 'node:zlib';\n\nexport default ${brotliInline(codePoints)};\n`;
+				symbolsFileContent = `import { brotliDecompressSync } from 'node:zlib';\n\nexport default ${brotliInline(symbols)};\n`;
 			}
 			if (
 				(type === 'Case_Folding' && item === 'F') ||
@@ -264,7 +271,7 @@ const writeFiles = (options) => {
 		}
 		fs.mkdirSync(dir, { recursive: true });
 		// `Bidi_Mirroring_Glyph/index.mjs`
-		// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
+		// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t compress.
 		const output = [
 			`const chr = String.fromCodePoint;`,
 			`const pair = (t, u, v) => [t ? u + v : v, chr(t ? u : u + v)];`,
@@ -295,7 +302,7 @@ const writeFiles = (options) => {
 			// or `bidi-brackets/index.mjs`
 			// or `Names/index.mjs`
 			const flatRuns = samePropertyRuns(auxMap[type]);
-			const output = `import { gunzipSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${gzipInline(
+			const output = `import { brotliDecompressSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${brotliInline(
 				flatRuns,
 			)});\n`;
 			writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
