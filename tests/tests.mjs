@@ -2,6 +2,7 @@ import { suite, test } from 'node:test';
 import fs from 'node:fs';
 import './parsers.mjs';
 import './legacy-names.mjs';
+import './legacy-joining.mjs';
 import './line-endings.mjs';
 import resources from '../data/resources.mjs';
 
