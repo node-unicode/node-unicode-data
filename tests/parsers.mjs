@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import fs from 'node:fs';
 import parseCaseFolding from '../scripts/parse-case-folding.mjs';
+import parseBidiClass from '../scripts/parse-bidi-class.mjs';
 import utils from '../scripts/utils.mjs';
 import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mjs';
 import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
@@ -23,6 +24,47 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 		}
 	}
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
+});
+
+test('Bidi class applies historical and current unassigned defaults', async (t) => {
+	for (const version of [
+		'3.0.0',
+		'3.1.0',
+		'3.2.0',
+		'4.0.1',
+		'14.0.0',
+		'18.0.0',
+	]) {
+		const map = await parseBidiClass(version);
+		t.assert.ok(map.Left_To_Right.contains(0x378));
+		t.assert.ok(map.Right_To_Left.contains(0x590));
+		t.assert.ok(map.Left_To_Right.contains(0x41));
+		t.assert.ok(!map.Right_To_Left.contains(0x5b0));
+		t.assert.ok(map.Nonspacing_Mark.contains(0x5b0));
+		const ranges = Object.values(map)
+			.flatMap((set) => {
+				const result = [];
+				for (let i = 0; i < set.data.length; i += 2)
+					result.push(set.data.slice(i, i + 2));
+				return result;
+			})
+			.sort((a, b) => a[0] - b[0]);
+		let end = 0;
+		for (const [start, next] of ranges) {
+			t.assert.equal(
+				start,
+				end,
+				`${version}: bidi classes must partition Unicode`,
+			);
+			end = next;
+		}
+		t.assert.equal(end, 0x110000);
+	}
+	const current = await parseBidiClass('18.0.0');
+	t.assert.ok(current.Arabic_Letter.contains(0x7b2));
+	t.assert.ok(current.European_Terminator.contains(0x20c2));
+	t.assert.ok(current.Boundary_Neutral.contains(0xffff));
+	t.assert.ok(current.Right_To_Left.contains(0x10cff));
 });
 
 test('Case folding declarations describe scalar and expansion values', async (t) => {
