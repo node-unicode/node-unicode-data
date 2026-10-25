@@ -1,6 +1,7 @@
 import valueAliases from 'unicode-property-value-aliases';
 import utils from './utils.mjs';
 import regenerate from 'regenerate';
+import { parseDerivedGeneralCategory } from './parse-blocks-scripts-properties.mjs';
 
 const aliases = valueAliases.get('Line_Break');
 
@@ -24,6 +25,13 @@ const parseLineBreak = async (version) => {
 		// are given the value `XX`.
 		Unknown: regenerate().addRange(0, 0x10ffff),
 	};
+	// Before Unicode 4.0, only unassigned code points default to `XX`:
+	// “Assigned characters that are not listed explicitly are given the
+	// value "AL".”
+	const assignedDefault =
+		/Assigned characters that are not listed explicitly are given the value\s*#?\s*"(\w+)"/.exec(
+			source,
+		)?.[1];
 	const lines = source.split('\n');
 	for (const line of lines) {
 		const trimmed = line.trim();
@@ -31,23 +39,23 @@ const parseLineBreak = async (version) => {
 			continue;
 		}
 		const data = trimmed.split(';');
-		const charRange = data[0].replace('..', '-').trim();
-		const rangeParts = charRange.split('-');
 		const value = data[1].split('#')[0].trim();
 		const canonicalName = findCanonicalName(value);
+		const [from, to = from] = data[0]
+			.trim()
+			.split('..')
+			.map((codePoint) => parseInt(codePoint, 16));
 		map[canonicalName] ??= regenerate();
-		if (rangeParts.length === 2) {
-			const [from, to] = [
-				parseInt(rangeParts[0], 16),
-				parseInt(rangeParts[1], 16),
-			];
-			map['Unknown'].removeRange(from, to);
-			map[canonicalName].addRange(from, to);
-		} else {
-			const codePoint = parseInt(charRange, 16);
-			map['Unknown'].remove(codePoint);
-			map[canonicalName].add(codePoint);
-		}
+		map['Unknown'].removeRange(from, to);
+		map[canonicalName].addRange(from, to);
+	}
+	if (assignedDefault) {
+		const canonicalName = findCanonicalName(assignedDefault);
+		const { Assigned } = await parseDerivedGeneralCategory(version);
+		const unlistedAssigned = map['Unknown'].clone().intersection(Assigned);
+		map['Unknown'].remove(unlistedAssigned);
+		map[canonicalName] ??= regenerate();
+		map[canonicalName].add(unlistedAssigned);
 	}
 
 	return map;
