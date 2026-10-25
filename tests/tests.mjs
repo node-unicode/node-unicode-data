@@ -149,15 +149,17 @@ suite(`The generated latest Unicode js`, () => {
 			`../output/unicode-${newest}/Names/index.mjs`
 		);
 		const entries = [...names];
-		t.assert.deepStrictEqual(entries[0], [0, '<control>']);
+		// Code points without a Name, such as controls, are omitted.
+		t.assert.deepStrictEqual(entries[0], [0x20, 'SPACE']);
+		t.assert.strictEqual(names.get(0), undefined);
 		t.assert.strictEqual(names.get(0x41), 'LATIN CAPITAL LETTER A');
-		t.assert.strictEqual(names.get(0x4e00), 'CJK Ideograph');
-		t.assert.strictEqual(names.get(0xac00), 'Hangul Syllable');
+		t.assert.strictEqual(names.get(0x4e00), 'CJK UNIFIED IDEOGRAPH-4E00');
+		t.assert.strictEqual(names.get(0xac00), 'HANGUL SYLLABLE GA');
 		t.assert.strictEqual(names.get(0xf900), 'CJK COMPATIBILITY IDEOGRAPH-F900');
 		t.assert.strictEqual(names.get(0x1f600), 'GRINNING FACE');
 		t.assert.deepStrictEqual(entries.at(-1), [
-			0x10fffd,
-			'Plane 16 Private Use',
+			0xe01ef,
+			'VARIATION SELECTOR-256',
 		]);
 		// Entries are in code point order.
 		for (let i = 1; i < entries.length; i++) {

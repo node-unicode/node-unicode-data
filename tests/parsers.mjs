@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import fs from 'node:fs';
 import parseCaseFolding from '../scripts/parse-case-folding.mjs';
 import parseBidiClass from '../scripts/parse-bidi-class.mjs';
+import parseNames from '../scripts/parse-names.mjs';
 import utils from '../scripts/utils.mjs';
 import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mjs';
 import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
@@ -24,6 +25,37 @@ test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 		}
 	}
 	t.assert.equal(await parseDecompositionMapping('1.1.5'), undefined);
+});
+
+test('Algorithmic ranges have individual formal names', async (t) => {
+	for (const version of ['2.0.14', '3.2.0', '18.0.0']) {
+		const names = await parseNames(version);
+		for (const [cp, name] of [
+			[0xac00, 'HANGUL SYLLABLE GA'],
+			[0xac01, 'HANGUL SYLLABLE GAG'],
+			[0xd7a3, 'HANGUL SYLLABLE HIH'],
+			[0x4e00, 'CJK UNIFIED IDEOGRAPH-4E00'],
+			[0xf900, 'CJK COMPATIBILITY IDEOGRAPH-F900'],
+		]) {
+			t.assert.ok(names[name]?.contains(cp), `${version}: ${name}`);
+		}
+		t.assert.equal(names['Hangul Syllable'], undefined);
+		t.assert.equal(names['CJK Ideograph'], undefined);
+		t.assert.equal(names['Private Use'], undefined);
+		t.assert.equal(names['<control>'], undefined);
+	}
+	const names = await parseNames('18.0.0');
+	for (const [cp, name] of [
+		[0x20000, 'CJK UNIFIED IDEOGRAPH-20000'],
+		[0x17000, 'TANGUT IDEOGRAPH-17000'],
+		[0x18d00, 'TANGUT IDEOGRAPH-18D00'],
+		[0x18e00, 'JURCHEN CHARACTER-18E00'],
+		[0x19191, 'JURCHEN CHARACTER-19191'],
+		[0x3d000, 'SMALL SEAL CHARACTER-3D000'],
+		[0x3fc3f, 'SMALL SEAL CHARACTER-3FC3F'],
+	]) {
+		t.assert.ok(names[name]?.contains(cp), name);
+	}
 });
 
 test('Bidi class applies historical and current unassigned defaults', async (t) => {
