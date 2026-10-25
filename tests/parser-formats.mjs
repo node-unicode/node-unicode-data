@@ -11,9 +11,60 @@ import parseScriptExtensions from '../scripts/parse-script-extensions.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
+	parseProperties,
 	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
 import utils from '../scripts/utils.mjs';
+
+test('Legacy property diagnostics end a record section until the next heading', async (t) => {
+	t.mock.method(
+		utils,
+		'readDataFile',
+		() => `
+Property dump for: 0x20000001 (Alphabetic)
+
+  0041..005A  (26 chars)
+Discrepancy A: Unilib but not UnicodeData
+
+0041
+Discrepancy B: UnicodeData but not Unilib
+
+4E00..9FA5  (20902 chars)
+Property dump for: 0x20010000 (Diacritic)
+
+0300
+  Discrepancy B: UnicodeData but not Unilib
+0640
+Property dump for: 0x01000000 (Bidi: Left-to-Right)
+
+0041
+
+Discrepancy B: UnicodeData but not Unilib
+
+0042
+
+Property dump for: 0x00000000 (Unassigned Code Value)
+
+0378
+
+Property dump for: 0x10000004 (White space)
+
+0020
+`,
+	);
+	const properties = await parseProperties('2.1.8');
+	t.assert.deepEqual(Object.keys(properties), [
+		'Alphabetic',
+		'Diacritic',
+		'White_Space',
+	]);
+	t.assert.deepEqual(
+		properties.Alphabetic.toArray(),
+		Array.from({ length: 26 }, (_, i) => 0x41 + i),
+	);
+	t.assert.deepEqual(properties.Diacritic.toArray(), [0x300]);
+	t.assert.deepEqual(properties.White_Space.toArray(), [0x20]);
+});
 
 test('Simple case mappings ignore comments after empty and explicit titlecase fields', async (t) => {
 	t.mock.method(utils, 'readDataFile', () =>

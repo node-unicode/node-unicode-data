@@ -348,9 +348,7 @@ const parseProperties = async (version) => {
 					// Unassigned code points are already available as General_Category=Cn.
 					currentProperty === 'Unassigned Code Value'
 				) {
-					// Skip contents.
-					i++;
-					while (++i < lines.length && lines[i].trim() !== '');
+					currentProperty = undefined;
 					continue;
 				}
 				if (currentProperty === 'Not a Character') {
@@ -359,7 +357,12 @@ const parseProperties = async (version) => {
 				currentProperty = currentProperty.replaceAll(' ', '_');
 				currentProperty = findCanonicalName(currentProperty) ?? currentProperty;
 				map[currentProperty] = regenerate();
+			} else if (line.startsWith('Discrepancy ')) {
+				// Unicode 2.1.8 includes comparisons with UnicodeData after each
+				// record list. Those ranges are diagnostics, not property members.
+				currentProperty = undefined;
 			} else if (
+				currentProperty &&
 				(maybeRange = /^([A-F\d]{4,6})(?:\.\.([A-F\d]{4,6}))?(?=\s|$)/.exec(
 					line,
 				)) != null
