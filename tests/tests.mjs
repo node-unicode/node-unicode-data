@@ -1,5 +1,6 @@
 import { suite, test } from 'node:test';
 import './parsers.mjs';
+import './line-endings.mjs';
 import resources from '../data/resources.mjs';
 
 const oldest = resources[0].version;

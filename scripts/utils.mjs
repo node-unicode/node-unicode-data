@@ -325,7 +325,7 @@ const readDataFile = (version, type) => {
 	);
 	try {
 		const source = fs.readFileSync(sourceFile, 'utf-8');
-		return source;
+		return source.replace(/\r\n?/g, '\n');
 	} catch {
 		return;
 	}
