@@ -26,5 +26,8 @@
 		"url": "git+https://github.com/node-unicode/unicode-<%= version %>.git"
 	},
 	"bugs": "https://github.com/node-unicode/node-unicode-data/issues",
+	"engines": {
+		"node": ">=12"
+	},
 	"typesVersions": <%= typesVersions %>
 }
