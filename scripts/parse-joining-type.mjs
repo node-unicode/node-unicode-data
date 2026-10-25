@@ -45,8 +45,10 @@ const parseDerivedJoiningType = (source) => {
 };
 
 const parseArabicShaping = (source, categories) => {
-	// The older releases that need this fallback define implicit T as Mn or Cf,
-	// excluding joining controls. Explicit ArabicShaping records override defaults.
+	// ArabicShaping files from Unicode 3.1.1 define implicit T as Mn or Cf,
+	// excluding joining controls, and DerivedJoiningType agrees for 3.1.1
+	// through 4.0.1. Earlier files state no rule, so apply the same one.
+	// Explicit ArabicShaping records override defaults.
 	const transparent = regenerate()
 		.add(categories.Nonspacing_Mark)
 		.add(categories.Format)

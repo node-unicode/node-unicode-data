@@ -8,17 +8,23 @@ const resources = [
 		main: 'https://unicode.org/Public/2.0-Update/UnicodeData-2.0.14.txt',
 		blocks: 'https://unicode.org/Public/2.0-Update/Blocks-1.txt',
 		properties: 'https://unicode.org/Public/2.0-Update/PropList-2.0.14.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/2.0-Update/ArabicShaping-1.txt',
 	},
 	{
 		version: '2.1.2',
 		main: 'https://unicode.org/Public/2.1-Update/UnicodeData-2.1.2.txt',
 		blocks: 'https://unicode.org/Public/2.0-Update/Blocks-1.txt',
 		properties: 'https://unicode.org/Public/2.1-Update/PropList-2.1.2.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/2.0-Update/ArabicShaping-1.txt',
 	},
 	{
 		version: '2.1.5',
 		main: 'https://unicode.org/Public/2.1-Update2/UnicodeData-2.1.5.txt',
 		blocks: 'https://unicode.org/Public/2.0-Update/Blocks-1.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/2.0-Update/ArabicShaping-1.txt',
 	},
 	{
 		version: '2.1.8',
@@ -27,6 +33,8 @@ const resources = [
 		properties: 'https://unicode.org/Public/2.1-Update3/PropList-2.1.8.txt',
 		'special-casing':
 			'https://unicode.org/Public/2.1-Update3/SpecialCasing-1.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/2.0-Update/ArabicShaping-1.txt',
 	},
 	{
 		version: '2.1.9',
@@ -35,6 +43,8 @@ const resources = [
 		properties: 'https://unicode.org/Public/2.1-Update4/PropList-2.1.9.txt',
 		'special-casing':
 			'https://unicode.org/Public/2.1-Update4/SpecialCasing-2.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/2.0-Update/ArabicShaping-1.txt',
 	},
 	{
 		version: '3.0.0',
@@ -46,6 +56,8 @@ const resources = [
 		'special-casing':
 			'https://unicode.org/Public/3.0-Update/SpecialCasing-2.txt',
 		'line-break': 'https://unicode.org/Public/3.0-Update/LineBreak-5.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/3.0-Update/ArabicShaping-2.txt',
 	},
 	{
 		// Some resources are from Unicode 3.0.0
@@ -65,6 +77,8 @@ const resources = [
 		'bidi-mirroring':
 			'https://unicode.org/Public/3.0-Update1/BidiMirroring-1.txt',
 		'line-break': 'https://unicode.org/Public/3.0-Update/LineBreak-5.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/3.0-Update1/ArabicShaping-3.txt',
 	},
 	{
 		version: '3.1.0',
@@ -86,6 +100,8 @@ const resources = [
 		'bidi-mirroring':
 			'https://unicode.org/Public/3.0-Update1/BidiMirroring-1.txt',
 		'line-break': 'https://unicode.org/Public/3.1-Update/LineBreak-6.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/3.0-Update1/ArabicShaping-3.txt',
 	},
 	{
 		// Some resources are from Unicode 3.1.0
@@ -111,6 +127,10 @@ const resources = [
 		'bidi-mirroring':
 			'https://unicode.org/Public/3.0-Update1/BidiMirroring-1.txt',
 		'line-break': 'https://unicode.org/Public/3.1-Update/LineBreak-6.txt',
+		'arabic-shaping':
+			'https://unicode.org/Public/3.1-Update1/ArabicShaping-4.txt',
+		'derived-joining-type':
+			'https://unicode.org/Public/3.1-Update1/DerivedJoiningType-3.1.1.txt',
 	},
 	{
 		version: '3.2.0',
@@ -139,6 +159,8 @@ const resources = [
 		'line-break': 'https://unicode.org/Public/3.2-Update/LineBreak-3.2.0.txt',
 		'arabic-shaping':
 			'https://unicode.org/Public/3.2-Update/ArabicShaping-3.2.0.txt',
+		'derived-joining-type':
+			'https://unicode.org/Public/3.2-Update/extracted/DerivedJoiningType-3.2.0.txt',
 	},
 	{
 		version: '4.0.0',
@@ -167,6 +189,8 @@ const resources = [
 		'line-break': 'https://unicode.org/Public/4.0-Update/LineBreak-4.0.0.txt',
 		'arabic-shaping':
 			'https://unicode.org/Public/4.0-Update/ArabicShaping-4.0.0.txt',
+		'derived-joining-type':
+			'https://unicode.org/Public/4.0-Update/extracted/DerivedJoiningType-4.0.0.txt',
 	},
 	{
 		version: '4.0.1',
@@ -195,6 +219,8 @@ const resources = [
 		'line-break': 'https://unicode.org/Public/4.0-Update1/LineBreak-4.0.1.txt',
 		'arabic-shaping':
 			'https://unicode.org/Public/4.0-Update1/ArabicShaping-4.0.1.txt',
+		'derived-joining-type':
+			'https://unicode.org/Public/4.0-Update1/extracted/DerivedJoiningType-4.0.1.txt',
 	},
 	{
 		version: '4.1.0',
