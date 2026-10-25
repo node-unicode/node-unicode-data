@@ -180,6 +180,21 @@ test('Name aliases ignore inline comments without splitting alias groups', async
 	});
 });
 
+test('Two-field historical name aliases are corrections', async (t) => {
+	t.mock.method(
+		utils,
+		'readDataFile',
+		() =>
+			'  # Historical format\n01A2;LATIN CAPITAL LETTER GHA # corrected name\n01A3; LATIN SMALL LETTER GHA\n',
+	);
+	t.assert.deepEqual(await parseNameAliases('6.0.0'), {
+		correction: {
+			418: ['LATIN CAPITAL LETTER GHA'],
+			419: ['LATIN SMALL LETTER GHA'],
+		},
+	});
+});
+
 test('Emoji properties accept compact and padded field separators', async (t) => {
 	let source;
 	t.mock.method(utils, 'readDataFile', () => source);

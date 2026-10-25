@@ -206,6 +206,7 @@ const resources = [
 		scripts: 'https://unicode.org/Public/5.0.0/ucd/Scripts.txt',
 		blocks: 'https://unicode.org/Public/5.0.0/ucd/Blocks.txt',
 		properties: 'https://unicode.org/Public/5.0.0/ucd/PropList.txt',
+		'name-aliases': 'https://unicode.org/Public/5.0.0/ucd/NameAliases.txt',
 		'derived-binary-properties':
 			'https://unicode.org/Public/5.0.0/ucd/extracted/DerivedBinaryProperties.txt',
 		'derived-core-properties':
@@ -238,6 +239,7 @@ const resources = [
 		scripts: 'https://unicode.org/Public/5.1.0/ucd/Scripts.txt',
 		blocks: 'https://unicode.org/Public/5.1.0/ucd/Blocks.txt',
 		properties: 'https://unicode.org/Public/5.1.0/ucd/PropList.txt',
+		'name-aliases': 'https://unicode.org/Public/5.1.0/ucd/NameAliases.txt',
 		'derived-binary-properties':
 			'https://unicode.org/Public/5.1.0/ucd/extracted/DerivedBinaryProperties.txt',
 		'derived-core-properties':
@@ -270,6 +272,7 @@ const resources = [
 		scripts: 'https://unicode.org/Public/5.2.0/ucd/Scripts.txt',
 		blocks: 'https://unicode.org/Public/5.2.0/ucd/Blocks.txt',
 		properties: 'https://unicode.org/Public/5.2.0/ucd/PropList.txt',
+		'name-aliases': 'https://unicode.org/Public/5.2.0/ucd/NameAliases.txt',
 		'derived-binary-properties':
 			'https://unicode.org/Public/5.2.0/ucd/extracted/DerivedBinaryProperties.txt',
 		'derived-core-properties':
@@ -304,6 +307,7 @@ const resources = [
 			'https://unicode.org/Public/6.0.0/ucd/ScriptExtensions.txt',
 		blocks: 'https://unicode.org/Public/6.0.0/ucd/Blocks.txt',
 		properties: 'https://unicode.org/Public/6.0.0/ucd/PropList.txt',
+		'name-aliases': 'https://unicode.org/Public/6.0.0/ucd/NameAliases.txt',
 		'derived-binary-properties':
 			'https://unicode.org/Public/6.0.0/ucd/extracted/DerivedBinaryProperties.txt',
 		'derived-core-properties':
