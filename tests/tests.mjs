@@ -21,6 +21,25 @@ if (!process.env.CI) {
 // Format fixtures mock the data reader, so register them after generation.
 await import('./parser-formats.mjs');
 
+test('Root declarations match the default runtime export', async (t) => {
+	for (const version of [oldest, newest]) {
+		const module = await import(`../output/unicode-${version}/index.mjs`);
+		t.assert.deepEqual(Object.keys(module), ['default']);
+		const declaration = fs.readFileSync(
+			new URL(`../output/unicode-${version}/index.d.mts`, import.meta.url),
+			'utf8',
+		);
+		t.assert.match(declaration, /export\s+default\s+\w+\s*;/);
+		t.assert.doesNotMatch(declaration, /export\s+const\s/);
+		for (const property of Object.keys(module.default)) {
+			t.assert.match(
+				declaration,
+				new RegExp(`\\b${property}:\\s*string\\[\\]`),
+			);
+		}
+	}
+});
+
 // Every mapping `symbols.mjs` must equal its `code-points.mjs` with each code
 // point replaced by the corresponding symbol.
 const assertSymbolsMatchCodePoints = async (t, version) => {
