@@ -144,6 +144,21 @@ const parseNames = async (version) => {
 		}
 	}
 
+	if (version === '1.1.5') {
+		// UnicodeData-1.1.5 has one representative Han record and omits the
+		// compatibility ideographs. CJKXREF lists both complete ranges:
+		// https://www.unicode.org/Public/1.1-Update/CJKXREF.TXT
+		for (const [rangeName, start, end] of [
+			['CJK Ideograph', 0x4e00, 0x9fa5],
+			['CJK Compatibility Ideograph', 0xf900, 0xfa2d],
+		]) {
+			for (let cp = start; cp <= end; cp++) {
+				const name = getRangeName(rangeName, cp);
+				map[name] ??= regenerate();
+				map[name].add(cp);
+			}
+		}
+	}
 	return map;
 };
 
