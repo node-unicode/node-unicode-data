@@ -56,7 +56,13 @@ const parseArabicShaping = (source, categories) => {
 		.remove(0x200d);
 	const map = {
 		Transparent: transparent,
-		Non_Joining: regenerate().addRange(0, 0x10ffff).remove(transparent),
+		// Before Unicode 3.1.1, ArabicShaping omits the joining controls.
+		// ZWJ still causes cursive joining; ZWNJ remains Non_Joining.
+		Join_Causing: regenerate(0x200d),
+		Non_Joining: regenerate()
+			.addRange(0, 0x10ffff)
+			.remove(transparent)
+			.remove(0x200d),
 	};
 	const lines = source.split('\n');
 	for (const line of lines) {
@@ -71,6 +77,7 @@ const parseArabicShaping = (source, categories) => {
 		const codePoint = parseInt(data[0].trim(), 16);
 		const joiningType = findCanonicalName(data[2].trim());
 		map.Transparent.remove(codePoint);
+		map.Join_Causing.remove(codePoint);
 		map.Non_Joining.remove(codePoint);
 		map[joiningType] ??= regenerate();
 		map[joiningType].add(codePoint);
