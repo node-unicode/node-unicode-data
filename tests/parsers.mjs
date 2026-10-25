@@ -59,8 +59,7 @@ test('Historical titlecase digraphs retain their identity mapping', async (t) =>
 });
 
 test('Block values cover Unicode, including No_Block gaps', async (t) => {
-	// Earlier files overlap Arabic Presentation Forms-B and Specials at U+FEFF.
-	for (const version of ['2.1.9', '3.1.0', '18.0.0']) {
+	for (const version of ['2.0.14', '2.1.8', '2.1.9', '3.1.0', '18.0.0']) {
 		const blocks = await parseBlocks(version);
 		t.assert.ok(blocks.No_Block.contains(0x40000), version);
 		t.assert.ok(!blocks.No_Block.contains(0x41), version);
@@ -99,12 +98,10 @@ test('Legacy blocks retain every discontiguous Specials range', async (t) => {
 		t.assert.ok(blocks.Specials.contains(0xfffd), version);
 		t.assert.ok(!blocks.Specials.contains(0xff00), version);
 		t.assert.ok(!blocks.No_Block.contains(0xfeff), version);
-		// Preserve the overlap explicitly recorded by the earliest source files.
-		t.assert.equal(
-			blocks.Arabic_Presentation_Forms_B.contains(0xfeff),
-			['2.0.14', '2.1.2', '2.1.5', '2.1.8'].includes(version),
-			version,
-		);
+		// The earliest source files also list U+FEFF in Arabic Presentation
+		// Forms-B. The more specific Specials entry wins.
+		t.assert.ok(!blocks.Arabic_Presentation_Forms_B.contains(0xfeff), version);
+		t.assert.ok(blocks.Arabic_Presentation_Forms_B.contains(0xfefe), version);
 	}
 });
 
