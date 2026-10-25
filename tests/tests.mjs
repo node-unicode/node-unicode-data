@@ -165,6 +165,16 @@ suite(`The generated latest Unicode js`, () => {
 			}
 		}
 	});
+	test('index.d.mts should declare the default export of index.mjs', async (t) => {
+		const root = path.resolve(__dirname, '..', 'output', `unicode-${newest}`);
+		const { default: data } = await import(path.join(root, 'index.mjs'));
+		const declaration = fs.readFileSync(path.join(root, 'index.d.mts'), 'utf8');
+		t.assert.match(declaration, /^export default data;$/m);
+		const declaredKeys = [
+			...declaration.matchAll(/^\treadonly (\w+): string\[\];$/gm),
+		].map((m) => m[1]);
+		t.assert.deepStrictEqual(declaredKeys, Object.keys(data));
+	});
 	test('type declarations should be shared via typesVersions', async (t) => {
 		const root = path.resolve(__dirname, '..', 'output', `unicode-${newest}`);
 		const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json')));
