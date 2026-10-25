@@ -12,6 +12,10 @@ const parseSimpleCaseMapping = async (version) => {
 	// The column index of Simple_Uppercase_Mapping in UnicodeData.txt:
 	// https://www.unicode.org/reports/tr44/#UnicodeData.txt
 	const columnIndexOfSimpleUppercaseMapping = 12;
+	// Unicode 4.0 standardized the null titlecase fallback to uppercase.
+	// Earlier files leave the identity mapping of titlecase digraphs empty.
+	// https://www.unicode.org/L2/L2002/02345.htm (93-C12)
+	const titlecaseDefaultsToUppercase = parseInt(version, 10) >= 4;
 
 	const source = utils.readDataFile(version, 'database');
 	if (!source) {
@@ -24,6 +28,9 @@ const parseSimpleCaseMapping = async (version) => {
 			continue;
 		}
 		const data = lineTrimmed.split(';');
+		if (titlecaseDefaultsToUppercase && data[14] === '') {
+			data[14] = data[columnIndexOfSimpleUppercaseMapping];
+		}
 		const from = parseInt(data[0], 16);
 		for (let columnOffset = 0; columnOffset <= 2; columnOffset++) {
 			const raw = data[columnIndexOfSimpleUppercaseMapping + columnOffset];

@@ -4,11 +4,28 @@ import parseEmoji from '../scripts/parse-emoji.mjs';
 import parseEmojiSequences from '../scripts/parse-emoji-sequences.mjs';
 import parseBidiBrackets from '../scripts/parse-bidi-brackets.mjs';
 import parseNameAliases from '../scripts/parse-name-aliases.mjs';
+import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
 import utils from '../scripts/utils.mjs';
+
+test('Null simple titlecase mappings default to uppercase mappings', async (t) => {
+	t.mock.method(utils, 'readDataFile', () =>
+		[
+			'0061;LATIN SMALL LETTER A;Ll;0;L;;;;;N;;;0041;;',
+			'01C6;LATIN SMALL LETTER DZ WITH CARON;Ll;0;L;<compat> 0064 017E;;;;N;;;01C4;;01C5',
+			'0030;DIGIT ZERO;Nd;0;EN;;0;0;0;N;;;;;',
+		].join('\n'),
+	);
+	for (const version of ['4.0.0', '18.0.0']) {
+		const map = await parseSimpleCaseMapping(version);
+		t.assert.equal(map.Titlecase.get(0x61), 0x41);
+		t.assert.equal(map.Titlecase.get(0x1c6), 0x1c5);
+		t.assert.ok(!map.Titlecase.has(0x30));
+	}
+});
 
 test('SpecialCasing accepts optional comments and flexible whitespace', async (t) => {
 	t.mock.method(
