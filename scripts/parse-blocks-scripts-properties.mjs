@@ -47,7 +47,7 @@ const parseBlocksScriptsProperties = async (type, version) => {
 	}
 	const lines = source.split('\n');
 	for (const line of lines) {
-		const trimmed = line.trim();
+		const trimmed = line.split('#')[0].trim();
 		if (!trimmed || trimmed.startsWith('#')) {
 			continue;
 		}
@@ -57,10 +57,7 @@ const parseBlocksScriptsProperties = async (type, version) => {
 			continue;
 		}
 		const charRange = data[0].replace('..', '-').trim();
-		let item = data[1]
-			.split(type === 'blocks' ? ';' : '#')[0]
-			.trim()
-			.replace(/\x20/g, '_');
+		let item = data[1].trim().replace(/\x20/g, '_');
 		if (type === 'derived-normalization-properties') {
 			if (item === 'FNC') {
 				// Old Unicode versions up to v4.0.0 use the `FNC` alias instead of
@@ -297,10 +294,13 @@ const parseBlocks = async (version) => {
 		}
 		const map = {};
 		for (const line of source.trimEnd().split('\n')) {
-			if (line.startsWith('#')) {
+			const record = line.split('#')[0].trim();
+			if (!record) {
 				continue;
 			}
-			const [start, end, blockName] = line.split('; ');
+			const [start, end, blockName] = record
+				.split(';')
+				.map((field) => field.trim());
 			const canonicalBlockName = looseMatch('Block', blockName).value;
 			map[canonicalBlockName] = regenerate().addRange(
 				parseInt(start, 16),

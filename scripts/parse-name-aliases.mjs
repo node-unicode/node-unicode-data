@@ -9,7 +9,11 @@ const parseNameAliases = async (version) => {
 	const lines = source.split('\n');
 
 	for (const line of lines) {
-		const data = line.trim().split(';');
+		const record = line.split('#')[0].trim();
+		if (!record) {
+			continue;
+		}
+		const data = record.split(';').map((field) => field.trim());
 		const codePoint = parseInt(data[0], 16);
 		const name = data[1];
 		const type = data[2];

@@ -3,6 +3,11 @@ import parseSpecialCasing from '../scripts/parse-special-casing.mjs';
 import parseEmoji from '../scripts/parse-emoji.mjs';
 import parseEmojiSequences from '../scripts/parse-emoji-sequences.mjs';
 import parseBidiBrackets from '../scripts/parse-bidi-brackets.mjs';
+import parseNameAliases from '../scripts/parse-name-aliases.mjs';
+import {
+	parseBlocks,
+	parseDerivedCoreProperties,
+} from '../scripts/parse-blocks-scripts-properties.mjs';
 import utils from '../scripts/utils.mjs';
 
 test('SpecialCasing accepts optional comments and flexible whitespace', async (t) => {
@@ -26,6 +31,52 @@ FB00 ; FB00 ; 0046 0066 ; 0046 0046 ; # comment with # and ; characters
 		'Titlecase',
 		'Uppercase',
 	]);
+});
+
+test('Semicolons inside comments do not turn binary records into enumerated records', async (t) => {
+	t.mock.method(
+		utils,
+		'readDataFile',
+		() => `
+0041 ; Alphabetic # note; still a comment
+0300 ; InCB; Extend # an actual enumerated property
+`,
+	);
+	const map = await parseDerivedCoreProperties('18.0.0');
+	t.assert.deepEqual(Object.keys(map), ['Alphabetic']);
+	t.assert.deepEqual(map.Alphabetic.toArray(), [0x41]);
+});
+
+test('Block names exclude inline comments in modern and legacy formats', async (t) => {
+	t.mock.method(utils, 'readDataFile', (version) =>
+		version === '3.0.1'
+			? '\n  # comment\n0000;007F;Basic Latin # ASCII; block\n'
+			: '\n  # comment\n0000..007F;Basic Latin # ASCII; block\n',
+	);
+	for (const version of ['3.0.1', '18.0.0']) {
+		const map = await parseBlocks(version);
+		t.assert.deepEqual(Object.keys(map), ['Basic_Latin']);
+		t.assert.ok(map.Basic_Latin.contains(0));
+		t.assert.ok(map.Basic_Latin.contains(0x7f));
+		t.assert.ok(!map.Basic_Latin.contains(0x80));
+	}
+});
+
+test('Name aliases ignore inline comments without splitting alias groups', async (t) => {
+	t.mock.method(
+		utils,
+		'readDataFile',
+		() => `
+  # comment
+000A;LINE FEED;control # note; still a comment
+000A ; NEW LINE ; control
+000A;LF;abbreviation # another name
+`,
+	);
+	t.assert.deepEqual(await parseNameAliases('18.0.0'), {
+		control: { 10: ['LINE FEED', 'NEW LINE'] },
+		abbreviation: { 10: ['LF'] },
+	});
 });
 
 test('Emoji properties accept compact and padded field separators', async (t) => {
