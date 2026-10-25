@@ -55,10 +55,13 @@ test('Block names exclude inline comments in modern and legacy formats', async (
 	);
 	for (const version of ['3.0.1', '18.0.0']) {
 		const map = await parseBlocks(version);
-		t.assert.deepEqual(Object.keys(map), ['Basic_Latin']);
+		t.assert.deepEqual(Object.keys(map).sort(), ['Basic_Latin', 'No_Block']);
 		t.assert.ok(map.Basic_Latin.contains(0));
 		t.assert.ok(map.Basic_Latin.contains(0x7f));
 		t.assert.ok(!map.Basic_Latin.contains(0x80));
+		t.assert.ok(!map.No_Block.contains(0x7f));
+		t.assert.ok(map.No_Block.contains(0x80));
+		t.assert.ok(map.No_Block.contains(0x10ffff));
 	}
 });
 
