@@ -231,6 +231,20 @@ test('Legacy property ranges preserve six-digit code points', async (t) => {
 	t.assert.ok(!properties.Private_Use.contains(0xffff));
 });
 
+test('Legacy noncharacter records are preserved as a binary property', async (t) => {
+	const properties = await parseProperties('3.0.1');
+	const noncharacters = properties.Noncharacter_Code_Point;
+	t.assert.equal(noncharacters.toArray().length, 34);
+	for (let plane = 0; plane <= 16; plane++) {
+		t.assert.ok(noncharacters.contains((plane << 16) + 0xfffe));
+		t.assert.ok(noncharacters.contains((plane << 16) + 0xffff));
+	}
+	t.assert.ok(!noncharacters.contains(0x378));
+	// FDD0..FDEF became noncharacters in Unicode 3.1.
+	t.assert.ok(!noncharacters.contains(0xfdd0));
+	t.assert.equal(properties.Unassigned_Code_Value, undefined);
+});
+
 test('Property records do not require spaces around semicolons', async (t) => {
 	for (const version of ['4.0.1', '4.1.0']) {
 		const scripts = await parseScripts(version);

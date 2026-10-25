@@ -333,14 +333,16 @@ const parseProperties = async (version) => {
 				if (
 					// Ignore Bidi_Class as they have been generated from UnicodeData.
 					currentProperty.startsWith('Bidi:') ||
-					// Ignore Not a Character and Unassigned Code Value as they have been generated from UnicodeData.
-					currentProperty === 'Not a Character' ||
+					// Unassigned code points are already available as General_Category=Cn.
 					currentProperty === 'Unassigned Code Value'
 				) {
 					// Skip contents.
 					i++;
 					while (++i < lines.length && lines[i] !== '');
 					continue;
+				}
+				if (currentProperty === 'Not a Character') {
+					currentProperty = 'Noncharacter_Code_Point';
 				}
 				currentProperty = currentProperty.replaceAll(' ', '_');
 				currentProperty = findCanonicalName(currentProperty) ?? currentProperty;
