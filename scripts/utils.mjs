@@ -437,6 +437,21 @@ const readDataFile = (version, type) => {
 	}
 };
 
+// Whether a dotted Unicode version precedes another one, e.g.
+// `isVersionBefore('3.1.1', '3.2.0')`. Use it to confine workarounds for
+// historical data files to the releases that need them.
+const isVersionBefore = (version, target) => {
+	const a = version.split('.').map(Number);
+	const b = target.split('.').map(Number);
+	for (let i = 0; i < Math.max(a.length, b.length); i++) {
+		const difference = (a[i] ?? 0) - (b[i] ?? 0);
+		if (difference !== 0) {
+			return difference < 0;
+		}
+	}
+	return false;
+};
+
 // The `typesVersions` map for package.json. TypeScript picks the most specific
 // matching pattern, so mapping directories keep their own declarations while
 // everything else resolves to the shared ones in `types/`.
@@ -460,6 +475,7 @@ export default {
 	range,
 	append,
 	extend,
+	isVersionBefore,
 	readDataFile,
 	writeFiles,
 };

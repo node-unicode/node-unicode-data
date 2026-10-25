@@ -8,9 +8,12 @@ import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
 import parseJoiningType from '../scripts/parse-joining-type.mjs';
 import parseCaseFolding from '../scripts/parse-case-folding.mjs';
 import parseScriptExtensions from '../scripts/parse-script-extensions.mjs';
+import parseLineBreak from '../scripts/parse-line-break.mjs';
+import parseNames from '../scripts/parse-names.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
+	parseDerivedNormalizationProperties,
 	parseProperties,
 	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
@@ -323,4 +326,63 @@ test('SpecialCasing preserves empty mappings and normalizes condition separators
 	);
 	t.assert.deepEqual(map['Titlecase--lt--After_Soft_Dotted'].get(0x307), []);
 	t.assert.deepEqual(map['Uppercase--lt--After_Soft_Dotted'].get(0x307), []);
+});
+
+test('Unicode versions compare numerically', (t) => {
+	t.assert.ok(utils.isVersionBefore('3.1.1', '3.2.0'));
+	t.assert.ok(utils.isVersionBefore('4.0.0', '4.0.1'));
+	t.assert.ok(utils.isVersionBefore('9.0.0', '10.0.0'));
+	t.assert.ok(utils.isVersionBefore('2.0.14', '2.1.2'));
+	t.assert.ok(!utils.isVersionBefore('4.0.1', '4.0.1'));
+	t.assert.ok(!utils.isVersionBefore('12.1.0', '12.0.0'));
+	t.assert.ok(!utils.isVersionBefore('18.0.0', '4.0.1'));
+});
+
+test('Workarounds for historical data are skipped for current versions', async (t) => {
+	const sources = {
+		scripts: '0041..005A    ; LATIN\n',
+		properties: '0020          ; White_space\n',
+		'derived-normalization-properties': '0340..0341    ; NFC_NO\n',
+		'name-aliases': '01A2;LATIN CAPITAL LETTER GHA\n',
+		database:
+			'02AE;LATIN SMALL LETTER TURNED H WITH FISHHOOK ;Ll;0;L;;;;;N;;;;;\n',
+		'line-break':
+			'#  - Assigned characters that are not listed explicitly are given the value\n#    "AL".\n3400;ID;<CJK Ideograph Extension A, First>\n4DB5;ID;<CJK Ideograph Extension A, Last>\n',
+	};
+	t.mock.method(utils, 'readDataFile', (version, type) => sources[type]);
+	// Each workaround applies to the historical release that needs it…
+	t.assert.ok((await parseScripts('3.1.0')).Latin.contains(0x41));
+	t.assert.ok((await parseProperties('3.1.0')).White_Space.contains(0x20));
+	t.assert.equal(
+		(await parseDerivedNormalizationProperties('3.1.0')).NFC_NO,
+		undefined,
+	);
+	t.assert.ok(
+		(await parseNameAliases('5.0.0')).correction[0x1a2].includes(
+			'LATIN CAPITAL LETTER GHA',
+		),
+	);
+	t.assert.ok(
+		(await parseNames('4.0.0'))[
+			'LATIN SMALL LETTER TURNED H WITH FISHHOOK'
+		].contains(0x2ae),
+	);
+	t.assert.ok((await parseLineBreak('3.0.0')).Ideographic.contains(0x3401));
+	// …and current releases parse their data as written.
+	t.assert.ok((await parseScripts('18.0.0')).LATIN.contains(0x41));
+	t.assert.ok((await parseProperties('18.0.0')).White_space.contains(0x20));
+	t.assert.ok(
+		(await parseDerivedNormalizationProperties('18.0.0')).NFC_NO.contains(
+			0x340,
+		),
+	);
+	t.assert.equal((await parseNameAliases('18.0.0')).correction, undefined);
+	t.assert.ok(
+		(await parseNames('18.0.0'))[
+			'LATIN SMALL LETTER TURNED H WITH FISHHOOK '
+		].contains(0x2ae),
+	);
+	const lineBreak = await parseLineBreak('18.0.0');
+	t.assert.ok(!lineBreak.Ideographic.contains(0x3401));
+	t.assert.ok(lineBreak.Unknown.contains(0x3401));
 });
