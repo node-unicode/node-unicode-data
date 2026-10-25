@@ -43,6 +43,7 @@ const resources = [
 		properties: 'https://unicode.org/Public/3.0-Update/PropList-3.0.0.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.0-Update/SpecialCasing-2.txt',
+		'line-break': 'https://unicode.org/Public/3.0-Update/LineBreak-5.txt',
 	},
 	{
 		// Some resources are from Unicode 3.0.0
@@ -57,6 +58,7 @@ const resources = [
 		'case-folding': 'https://unicode.org/Public/3.0-Update1/CaseFolding-2.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.0-Update1/SpecialCasing-3.txt',
+		'line-break': 'https://unicode.org/Public/3.0-Update/LineBreak-5.txt',
 	},
 	{
 		version: '3.1.0',
