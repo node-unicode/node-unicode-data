@@ -149,6 +149,18 @@ test('Algorithmic ranges have individual formal names', async (t) => {
 	}
 });
 
+test('Names omit trailing spaces from the source data', async (t) => {
+	const names = await parseNames('4.0.0');
+	t.assert.ok(
+		names['LATIN SMALL LETTER TURNED H WITH FISHHOOK'].contains(0x2ae),
+	);
+	t.assert.ok(names['ARABIC SMALL HIGH TAH'].contains(0x615));
+	t.assert.deepEqual(
+		Object.keys(names).filter((name) => name !== name.trim()),
+		[],
+	);
+});
+
 test('Unicode 1.1.5 assigns the Unified Han range represented by U+4E00', async (t) => {
 	const categories = await parseDerivedGeneralCategory('1.1.5');
 	for (const cp of [0x4e00, 0x4e01, 0x9fa5]) {
