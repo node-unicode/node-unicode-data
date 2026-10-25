@@ -5,11 +5,38 @@ import parseEmojiSequences from '../scripts/parse-emoji-sequences.mjs';
 import parseBidiBrackets from '../scripts/parse-bidi-brackets.mjs';
 import parseNameAliases from '../scripts/parse-name-aliases.mjs';
 import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
+import parseJoiningType from '../scripts/parse-joining-type.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
 import utils from '../scripts/utils.mjs';
+
+test('Explicit Non_Joining records remain in the default joining set', async (t) => {
+	t.mock.method(utils, 'readDataFile', (version, type) =>
+		type === 'derived-joining-type'
+			? '0041; U\n0042..0043; U\n0628; D\n0300..0301; T\n'
+			: undefined,
+	);
+	const map = await parseJoiningType('18.0.0');
+	for (const [cp, type] of [
+		[0x41, 'Non_Joining'],
+		[0x42, 'Non_Joining'],
+		[0x43, 'Non_Joining'],
+		[0x378, 'Non_Joining'],
+		[0x10ffff, 'Non_Joining'],
+		[0x628, 'Dual_Joining'],
+		[0x300, 'Transparent'],
+		[0x301, 'Transparent'],
+	]) {
+		t.assert.ok(map[type].contains(cp));
+		t.assert.equal(
+			Object.values(map).filter((set) => set.contains(cp)).length,
+			1,
+		);
+	}
+	t.assert.equal(map.Non_Joining.toArray().length, 0x110000 - 3);
+});
 
 test('Null simple titlecase mappings default to uppercase mappings', async (t) => {
 	t.mock.method(utils, 'readDataFile', () =>
