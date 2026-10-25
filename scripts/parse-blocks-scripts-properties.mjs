@@ -159,6 +159,19 @@ const parseDerivedBinaryProperties = async (version) => {
 	}
 };
 
+// The General_Category values a legacy UnicodeData record contributes to.
+const legacyCategoriesOf = (generalCategory) => {
+	const categories = [
+		categoryAliases.get(generalCategory),
+		categoryAliases.get(generalCategory.charAt(0)),
+		'Assigned',
+	];
+	if (/^(?:Ll|Lu|Lt)$/.test(generalCategory)) {
+		categories.push(categoryAliases.get('LC'));
+	}
+	return categories;
+};
+
 const parseDerivedGeneralCategory = async (version) => {
 	if (
 		version === '3.0.1' ||
@@ -200,15 +213,7 @@ const parseDerivedGeneralCategory = async (version) => {
 			const codePoint = parseInt(data[0], 16);
 			const name = data[1];
 			const recordEnd = representativeRangeEnds.get(name) ?? codePoint;
-			const generalCategory = data[2];
-			const categories = [
-				categoryAliases.get(generalCategory),
-				categoryAliases.get(generalCategory.charAt(0)),
-				'Assigned',
-			];
-			if (/^(?:Ll|Lu|Lt)$/.test(generalCategory)) {
-				categories.push(categoryAliases.get('LC'));
-			}
+			const categories = legacyCategoriesOf(data[2]);
 			for (const category of categories) {
 				categoryMap[category] ??= regenerate();
 			}
@@ -251,6 +256,27 @@ const parseDerivedGeneralCategory = async (version) => {
 			for (const category of categories) {
 				categoryMap[category] ??= regenerate();
 				categoryMap[category].addRange(lastCodePoint + 1, CODEPOINT_MAX);
+			}
+		}
+
+		// Assigned ranges that a legacy UnicodeData file leaves out entirely.
+		const unlistedRanges = [];
+		if (version === '1.1.5') {
+			// UnicodeData-1.1.5 omits the CJK Compatibility Ideographs, which the
+			// Unicode 1.1 Han cross-reference table lists as F900..FA2D.
+			unlistedRanges.push([0xf900, 0xfa2d, 'Lo']);
+		}
+		for (const [start, end, generalCategory] of unlistedRanges) {
+			// Undo the gap handling, which recorded the range as unassigned.
+			for (const category of [
+				categoryAliases.get('C'),
+				categoryAliases.get('Cn'),
+			]) {
+				categoryMap[category].removeRange(start, end);
+			}
+			for (const category of legacyCategoriesOf(generalCategory)) {
+				categoryMap[category] ??= regenerate();
+				categoryMap[category].addRange(start, end);
 			}
 		}
 
