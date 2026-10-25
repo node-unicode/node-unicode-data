@@ -23,6 +23,7 @@ const resources = [
 		version: '2.1.5',
 		main: 'https://unicode.org/Public/2.1-Update2/UnicodeData-2.1.5.txt',
 		blocks: 'https://unicode.org/Public/2.0-Update/Blocks-1.txt',
+		properties: 'https://unicode.org/Public/2.1-Update/PropList-2.1.2.txt',
 		'arabic-shaping':
 			'https://unicode.org/Public/2.0-Update/ArabicShaping-1.txt',
 	},

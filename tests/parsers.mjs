@@ -505,6 +505,16 @@ test('Joining_Type is available from Unicode 2.0', async (t) => {
 	t.assert.equal(await parseJoiningType('1.1.5'), undefined);
 });
 
+test('Unicode 2.1.5 reuses the Unicode 2.1.2 property list', async (t) => {
+	const v212 = await parseProperties('2.1.2');
+	const v215 = await parseProperties('2.1.5');
+	t.assert.deepEqual(Object.keys(v215), Object.keys(v212));
+	for (const [name, codePoints] of Object.entries(v212)) {
+		t.assert.equal(v215[name].toString(), codePoints.toString(), name);
+	}
+	t.assert.ok(v215.White_Space.contains(0x20));
+});
+
 test('Unicode 3.1.1 uses its corrected property list', async (t) => {
 	const v310 = await parseProperties('3.1.0');
 	const v311 = await parseProperties('3.1.1');
