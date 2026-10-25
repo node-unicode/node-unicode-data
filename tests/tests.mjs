@@ -165,6 +165,47 @@ suite(`The generated latest Unicode js`, () => {
 			}
 		}
 	});
+	test('type declarations should be shared via typesVersions', async (t) => {
+		const root = path.resolve(__dirname, '..', 'output', `unicode-${newest}`);
+		const pkg = JSON.parse(fs.readFileSync(path.join(root, 'package.json')));
+		// Every typesVersions target that is not a wildcard must exist.
+		for (const targets of Object.values(pkg.typesVersions['*'])) {
+			for (const target of targets) {
+				if (!target.includes('*')) {
+					t.assert.ok(fs.existsSync(path.join(root, target)), target);
+				}
+			}
+		}
+		for (const type of fs.readdirSync(root)) {
+			const typeDir = path.join(root, type);
+			if (type.startsWith('.') || !fs.statSync(typeDir).isDirectory()) {
+				continue;
+			}
+			const isMapping = Object.hasOwn(
+				pkg.typesVersions['*'],
+				`${type}/*/symbols.mjs`,
+			);
+			for (const name of fs.readdirSync(typeDir)) {
+				const dir = path.join(typeDir, name);
+				if (!fs.existsSync(path.join(dir, 'symbols.mjs'))) {
+					continue;
+				}
+				// Mapping directories keep their own declarations; others share.
+				t.assert.strictEqual(
+					fs.existsSync(path.join(dir, 'symbols.d.mts')),
+					isMapping,
+					dir,
+				);
+				t.assert.strictEqual(
+					fs.existsSync(path.join(dir, 'code-points.d.mts')),
+					isMapping,
+					dir,
+				);
+				t.assert.ok(!fs.existsSync(path.join(dir, 'ranges.d.mts')), dir);
+				t.assert.ok(!fs.existsSync(path.join(dir, 'regex.d.mts')), dir);
+			}
+		}
+	});
 	test('every mapping symbols.mjs should match code-points.mjs', async (t) => {
 		await assertSymbolsMatchCodePoints(t, newest);
 	});

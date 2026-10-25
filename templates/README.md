@@ -12,6 +12,8 @@ npm install @unicode/unicode-<%= version %> --save-dev
 
 **Note:** _@unicode/unicode-<%= version %>_ is supposed to be used in build scripts (i.e. as a `devDependency`), and not at runtime (i.e. as a regular `dependency`).
 
+TypeScript declarations are included. They require TypeScript 4.7 or newer, which is the first version that understands `.d.mts` declaration files.
+
 ## Regular expressions
 
 The Unicode data modules ship with pre-compiled regular expressions for categories, scripts, script extensions, blocks, and properties. But maybe you want to create a single regular expression that combines several categories, scripts, etc. In that case, [***you should use Regenerate***](https://mths.be/regenerate). For example, to construct a regex that matches all symbols in the Arabic and Greek scripts as per Unicode v6.3.0:

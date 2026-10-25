@@ -22,5 +22,8 @@ declare function decodeRanges(input: string): decodeRanges.UnicodeRange[];
  */
 declare function decodeDeltas(input: string): number[];
 
+type UnicodeRange = decodeRanges.UnicodeRange;
+
 export { decodeDeltas };
+export type { UnicodeRange };
 export default decodeRanges;
