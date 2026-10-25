@@ -4,7 +4,12 @@ import { fileURLToPath } from 'node:url';
 import zlib from 'node:zlib';
 import jsesc from 'jsesc';
 import regenerate from 'regenerate';
-import { base64enc, encodeRanges, encodeRegenerate } from './encode-ranges.mjs';
+import {
+	base64enc,
+	encodeDeltas,
+	encodeRanges,
+	encodeRegenerate,
+} from './encode-ranges.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -110,6 +115,35 @@ const encodeNames = (flatRuns) => {
 		previous = name;
 	}
 	return JSON.stringify(runs) + '\n' + lines.join('\n');
+};
+
+// Zigzag encoding maps signed integers to unsigned ones: 0 → 0, -1 → 1, 1 → 2,
+// -2 → 3, … so that small differences in either direction stay small.
+const zigzag = (value) => ((value << 1) ^ (value >> 31)) >>> 0;
+
+// Delta-encode a mapping from code points to code point(s), e.g. a case
+// mapping or a decomposition mapping, preserving entry order and whether
+// each entry maps to a single code point or to an array.
+// See static/decode-mapping.mjs for the format and the decoder.
+const encodeMapping = (codePoints) => {
+	const output = [];
+	let previousFrom = 0;
+	for (const [from, to] of codePoints) {
+		output.push(zigzag(from - previousFrom));
+		previousFrom = from;
+		let previous = from;
+		if (Array.isArray(to)) {
+			console.assert(to.length > 0, `empty mapping for U+${from.toString(16)}`);
+			output.push(to.length);
+			for (const codePoint of to) {
+				output.push(zigzag(codePoint - previous));
+				previous = codePoint;
+			}
+		} else {
+			output.push(0, zigzag(to - previous));
+		}
+	}
+	return encodeDeltas(output);
 };
 
 // Only write the file if its content has changed.
@@ -258,7 +292,9 @@ const writeFiles = (options) => {
 				codePointsFileContent = `export default ${jsesc(codePoints)};\n`;
 				symbolsFileContent = `export default ${jsesc(symbols)};\n`;
 			} else {
-				codePointsFileContent = `import { brotliDecompressSync } from 'node:zlib';\n\nexport default ${brotliInline(codePoints)};\n`;
+				codePointsFileContent = `import { brotliDecompressSync } from 'node:zlib';\nimport decodeMapping from '../../decode-mapping.mjs';\n\nexport default decodeMapping(${brotliInlineBuffer(
+					encodeMapping(codePoints),
+				)}.toString());\n`;
 				// The symbols map is derived from the code points map at runtime
 				// rather than shipped as a second copy of the same data.
 				symbolsFileContent = `import codePoints from './code-points.mjs';\nimport mappingToSymbols from '../../mapping-to-symbols.mjs';\n\nexport default mappingToSymbols(codePoints);\n`;

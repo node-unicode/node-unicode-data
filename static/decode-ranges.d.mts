@@ -17,4 +17,10 @@ declare namespace decodeRanges {
  */
 declare function decodeRanges(input: string): decodeRanges.UnicodeRange[];
 
+/**
+ * Base64 decode variable-length deltas (5/10/15/21-bit).
+ */
+declare function decodeDeltas(input: string): number[];
+
+export { decodeDeltas };
 export default decodeRanges;
