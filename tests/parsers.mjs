@@ -7,6 +7,7 @@ import utils from '../scripts/utils.mjs';
 import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mjs';
 import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
 import parseJoiningType from '../scripts/parse-joining-type.mjs';
+import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
@@ -14,6 +15,16 @@ import {
 	parseProperties,
 	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
+
+test('Historical titlecase digraphs retain their identity mapping', async (t) => {
+	for (const version of ['1.1.5', '2.0.14', '3.2.0', '4.0.0', '18.0.0']) {
+		const { Titlecase, Uppercase } = await parseSimpleCaseMapping(version);
+		for (const cp of [0x1c5, 0x1c8, 0x1cb, 0x1f2]) {
+			t.assert.equal(Titlecase.get(cp) ?? cp, cp, version);
+			t.assert.equal(Uppercase.get(cp), cp - 1, version);
+		}
+	}
+});
 
 test('Block values cover Unicode, including No_Block gaps', async (t) => {
 	for (const version of ['2.0.14', '3.1.0', '18.0.0']) {
