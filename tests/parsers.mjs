@@ -10,6 +10,7 @@ import parseJoiningType from '../scripts/parse-joining-type.mjs';
 import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
 import parseNameAliases from '../scripts/parse-name-aliases.mjs';
 import parseLineBreak from '../scripts/parse-line-break.mjs';
+import parseCompositionExclusions from '../scripts/parse-composition-exclusions.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
@@ -417,6 +418,24 @@ test('Unicode 3.0 Line_Break data expands First/Last ranges', async (t) => {
 		t.assert.ok(lineBreak.Contingent_Break.contains(0xfffc), version);
 		t.assert.ok(lineBreak.Unknown.contains(0x0378), version);
 	}
+});
+
+test('Composition exclusions are available from Unicode 3.0', async (t) => {
+	for (const [version, size] of [
+		['3.0.0', 66],
+		['3.0.1', 66],
+		['3.1.0', 80],
+		['3.1.1', 80],
+		['3.2.0', 81],
+		['4.0.0', 81],
+		['4.0.1', 81],
+	]) {
+		const { Composition_Exclusion } = await parseCompositionExclusions(version);
+		t.assert.equal(Composition_Exclusion.toArray().length, size, version);
+		t.assert.ok(Composition_Exclusion.contains(0x958), version);
+		t.assert.equal(Composition_Exclusion.contains(0x1d1bf), size > 66, version);
+	}
+	t.assert.equal(await parseCompositionExclusions('2.1.9'), undefined);
 });
 
 test('Unicode 3.1.1 uses its corrected property list', async (t) => {

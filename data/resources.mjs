@@ -41,6 +41,8 @@ const resources = [
 		main: 'https://unicode.org/Public/3.0-Update/UnicodeData-3.0.0.txt',
 		blocks: 'https://unicode.org/Public/3.0-Update/Blocks-3.txt',
 		properties: 'https://unicode.org/Public/3.0-Update/PropList-3.0.0.txt',
+		'composition-exclusions':
+			'https://unicode.org/Public/3.0-Update/CompositionExclusions-1.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.0-Update/SpecialCasing-2.txt',
 		'line-break': 'https://unicode.org/Public/3.0-Update/LineBreak-5.txt',
@@ -55,6 +57,8 @@ const resources = [
 		main: 'https://unicode.org/Public/3.0-Update1/UnicodeData-3.0.1.txt',
 		blocks: 'https://unicode.org/Public/3.0-Update/Blocks-3.txt',
 		properties: 'https://unicode.org/Public/3.0-Update1/PropList-3.0.1.txt',
+		'composition-exclusions':
+			'https://unicode.org/Public/3.0-Update1/CompositionExclusions-2.txt',
 		'case-folding': 'https://unicode.org/Public/3.0-Update1/CaseFolding-2.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.0-Update1/SpecialCasing-3.txt',
@@ -72,6 +76,8 @@ const resources = [
 			'https://unicode.org/Public/3.1-Update/DerivedGeneralCategory-3.1.0.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/3.1-Update/DerivedNormalizationProperties-3.1.0.txt',
+		'composition-exclusions':
+			'https://unicode.org/Public/3.1-Update/CompositionExclusions-3.txt',
 		'case-folding': 'https://unicode.org/Public/3.1-Update/CaseFolding-3.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.1-Update/SpecialCasing-4.txt',
@@ -93,6 +99,8 @@ const resources = [
 			'https://unicode.org/Public/3.1-Update/DerivedGeneralCategory-3.1.0.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/3.1-Update/DerivedNormalizationProperties-3.1.0.txt',
+		'composition-exclusions':
+			'https://unicode.org/Public/3.1-Update/CompositionExclusions-3.txt',
 		'case-folding': 'https://unicode.org/Public/3.1-Update1/CaseFolding-4.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.1-Update1/SpecialCasing-5.txt',
@@ -114,6 +122,8 @@ const resources = [
 			'https://unicode.org/Public/3.2-Update/extracted/DerivedBidiClass-3.2.0.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/3.2-Update/DerivedNormalizationProps-3.2.0.txt',
+		'composition-exclusions':
+			'https://unicode.org/Public/3.2-Update/CompositionExclusions-3.2.0.txt',
 		'case-folding':
 			'https://unicode.org/Public/3.2-Update/CaseFolding-3.2.0.txt',
 		'special-casing':
@@ -138,6 +148,8 @@ const resources = [
 			'https://unicode.org/Public/4.0-Update/extracted/DerivedBidiClass-4.0.0.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/4.0-Update/DerivedNormalizationProps-4.0.0.txt',
+		'composition-exclusions':
+			'https://unicode.org/Public/4.0-Update/CompositionExclusions-4.0.0.txt',
 		'case-folding':
 			'https://unicode.org/Public/4.0-Update/CaseFolding-4.0.0.txt',
 		'special-casing':
@@ -162,6 +174,8 @@ const resources = [
 			'https://unicode.org/Public/4.0-Update1/extracted/DerivedBidiClass-4.0.1.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/4.0-Update1/DerivedNormalizationProps-4.0.1.txt',
+		'composition-exclusions':
+			'https://unicode.org/Public/4.0-Update/CompositionExclusions-4.0.0.txt',
 		'case-folding':
 			'https://unicode.org/Public/4.0-Update1/CaseFolding-4.0.1.txt',
 		'special-casing':
