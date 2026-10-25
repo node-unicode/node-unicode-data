@@ -179,6 +179,28 @@ suite(`The generated latest Unicode js`, () => {
 	test('every regex.mjs should match Regenerate output', async (t) => {
 		await assertRegexesMatchRegenerate(t, newest);
 	});
+	test('Names should decode to the expected names', async (t) => {
+		const { default: names } = await import(
+			`../output/unicode-${newest}/Names/index.mjs`
+		);
+		const entries = [...names];
+		t.assert.deepStrictEqual(entries[0], [0, '<control>']);
+		t.assert.strictEqual(names.get(0x41), 'LATIN CAPITAL LETTER A');
+		t.assert.strictEqual(names.get(0x4e00), 'CJK Ideograph');
+		t.assert.strictEqual(names.get(0xac00), 'Hangul Syllable');
+		t.assert.strictEqual(names.get(0xf900), 'CJK COMPATIBILITY IDEOGRAPH-F900');
+		t.assert.strictEqual(names.get(0x1f600), 'GRINNING FACE');
+		t.assert.deepStrictEqual(entries.at(-1), [
+			0x10fffd,
+			'Plane 16 Private Use',
+		]);
+		// Entries are in code point order.
+		for (let i = 1; i < entries.length; i++) {
+			if (entries[i][0] <= entries[i - 1][0]) {
+				t.assert.fail(`entry ${i} out of order`);
+			}
+		}
+	});
 	test('every mapping symbols.mjs should match code-points.mjs', async (t) => {
 		await assertSymbolsMatchCodePoints(t, newest);
 	});
