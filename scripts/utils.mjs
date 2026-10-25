@@ -35,6 +35,18 @@ const brotliInline = (data) => {
 	return `JSON.parse(${brotliInlineBuffer(JSON.stringify(data))})`;
 };
 
+// Modules whose declarations are shared via `types/*.d.mts` and
+// `typesVersions` instead of being repeated in every directory.
+const SHARED_DECLARATIONS = ['ranges', 'regex', 'code-points', 'symbols'];
+
+// Directories under these types declare their own `code-points`/`symbols` types.
+const MAPPING_TYPES = [
+	'Case_Folding',
+	'Simple_Case_Mapping',
+	'Special_Casing',
+	'Decomposition_Mapping',
+];
+
 const range = (start, stop) => {
 	// Inclusive, e.g. `range(1, 3)` → `[1, 2, 3]`.
 	const result = [];
@@ -183,11 +195,7 @@ const writeFiles = (options) => {
 		const codePoints = map[item];
 		const type =
 			typeof options.type === 'function' ? options.type(item) : options.type;
-		const isCodePointMapping =
-			type === 'Case_Folding' ||
-			type === 'Simple_Case_Mapping' ||
-			type === 'Special_Casing' ||
-			type === 'Decomposition_Mapping';
+		const isCodePointMapping = MAPPING_TYPES.includes(type);
 		const isNamesCanon = type === 'Names' && !subType;
 		const isNameAliases = type === 'Names' && subType === 'name-aliases';
 		const subdir = isNameAliases
@@ -260,16 +268,8 @@ const writeFiles = (options) => {
 				`import decodeRanges from '../../decode-ranges.mjs';\n\nexport default decodeRanges('${encodedRanges}');\n`,
 			);
 			writeFileIfChanged(
-				path.resolve(dir, 'ranges.d.mts'),
-				'import type { UnicodeRange } from "../../decode-ranges.mjs";\n\ndeclare const ranges: UnicodeRange[];\nexport default ranges;\n',
-			);
-			writeFileIfChanged(
 				path.resolve(dir, 'regex.mjs'),
 				`import ranges from './ranges.mjs';\nimport rangesToRegex from '../../ranges-to-regex.mjs';\n\nexport default rangesToRegex(ranges);\n`,
-			);
-			writeFileIfChanged(
-				path.resolve(dir, 'regex.d.mts'),
-				'declare const regex: RegExp;\nexport default regex;\n',
 			);
 			if (codePointsSizeLt(codePoints, 10)) {
 				const codePointsAsArray =
@@ -314,15 +314,26 @@ const writeFiles = (options) => {
 			path.resolve(dir, 'code-points.mjs'),
 			codePointsFileContent,
 		);
-		writeFileIfChanged(
-			path.resolve(dir, 'code-points.d.mts'),
-			`declare const codePoints: ${codePointsType};\nexport default codePoints;\n`,
-		);
 		writeFileIfChanged(path.resolve(dir, 'symbols.mjs'), symbolsFileContent);
-		writeFileIfChanged(
-			path.resolve(dir, 'symbols.d.mts'),
-			`declare const symbols: ${symbolsType};\nexport default symbols;\n`,
-		);
+		if (isCodePointMapping) {
+			// Mapping directories declare their own types, since the value type
+			// differs per directory (`Map<number, number>` vs. `Map<number, number[]>`).
+			writeFileIfChanged(
+				path.resolve(dir, 'code-points.d.mts'),
+				`declare const codePoints: ${codePointsType};\nexport default codePoints;\n`,
+			);
+			writeFileIfChanged(
+				path.resolve(dir, 'symbols.d.mts'),
+				`declare const symbols: ${symbolsType};\nexport default symbols;\n`,
+			);
+		} else {
+			// All other directories share the declarations in `types/`, selected
+			// through `typesVersions` in package.json. Remove per-directory
+			// declarations left over from earlier builds.
+			for (const file of SHARED_DECLARATIONS) {
+				fs.rmSync(path.resolve(dir, file + '.d.mts'), { force: true });
+			}
+		}
 	}
 	if (options.type === 'Bidi_Mirroring_Glyph') {
 		const type = options.type;
@@ -415,7 +426,26 @@ const readDataFile = (version, type) => {
 	}
 };
 
+// The `typesVersions` map for package.json. TypeScript picks the most specific
+// matching pattern, so mapping directories keep their own declarations while
+// everything else resolves to the shared ones in `types/`.
+const typesVersions = (dirMap) => {
+	const map = {};
+	for (const type of MAPPING_TYPES) {
+		if (hasKey(dirMap, type)) {
+			map[`${type}/*/code-points.mjs`] = [`${type}/*/code-points.d.mts`];
+			map[`${type}/*/symbols.mjs`] = [`${type}/*/symbols.d.mts`];
+		}
+	}
+	for (const file of SHARED_DECLARATIONS) {
+		map[`*/${file}.mjs`] = [`types/${file}.d.mts`];
+	}
+	return { '*': map };
+};
+
 export default {
+	SHARED_DECLARATIONS,
+	typesVersions,
 	range,
 	append,
 	extend,

@@ -334,7 +334,12 @@ const generateData = async (version) => {
 	);
 	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/package.json`),
-		compilePackage({ version: version }),
+		compilePackage({
+			version: version,
+			typesVersions: JSON.stringify(utils.typesVersions(dirMap), null, '\t')
+				// Indent to match the surrounding JSON.
+				.replace(/\n/g, '\n\t'),
+		}),
 	);
 	fs.mkdirSync(
 		path.resolve(__dirname, `output/unicode-${version}/.github/workflows`),
@@ -342,6 +347,9 @@ const generateData = async (version) => {
 			recursive: true,
 		},
 	);
+	fs.mkdirSync(path.resolve(__dirname, `output/unicode-${version}/types`), {
+		recursive: true,
+	});
 	const staticFiles = [
 		'.github/workflows/publish-on-tag.yml',
 		'.gitattributes',
@@ -359,6 +367,7 @@ const generateData = async (version) => {
 		'decode-names.d.mts',
 		'decode-mapping.mjs',
 		'decode-mapping.d.mts',
+		...utils.SHARED_DECLARATIONS.map((file) => `types/${file}.d.mts`),
 	];
 	for (const file of staticFiles) {
 		fs.copyFileSync(
