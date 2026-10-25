@@ -15,6 +15,28 @@ import {
 } from '../scripts/parse-blocks-scripts-properties.mjs';
 import utils from '../scripts/utils.mjs';
 
+test('Simple case mappings ignore comments after empty and explicit titlecase fields', async (t) => {
+	t.mock.method(utils, 'readDataFile', () =>
+		[
+			'  # A comment; with field delimiters',
+			'0000;<control>;Cc;0;BN;;;;;N;;;;;# no case mappings; still a comment',
+			'0041;LATIN CAPITAL LETTER A;Lu;0;L;;;;;N;;;;0061;# lowercase only',
+			'0061;LATIN SMALL LETTER A;Ll;0;L;;;;;N;;;0041;;# null titlecase defaults to uppercase',
+			'01C6;LATIN SMALL LETTER DZ WITH CARON;Ll;0;L;<compat> 0064 017E;;;;N;;;01C4;;01C5# explicit titlecase; # extra comment marker',
+		].join('\n'),
+	);
+	for (const version of ['4.0.0', '18.0.0']) {
+		const map = await parseSimpleCaseMapping(version);
+		t.assert.equal(map.Uppercase.get(0x61), 0x41);
+		t.assert.equal(map.Lowercase.get(0x41), 0x61);
+		t.assert.equal(map.Titlecase.get(0x61), 0x41);
+		t.assert.equal(map.Titlecase.get(0x1c6), 0x1c5);
+		for (const mappings of Object.values(map)) {
+			t.assert.ok(!mappings.has(0));
+		}
+	}
+});
+
 test('Script_Extensions accepts whitespace runs for singletons and ranges', async (t) => {
 	const read = utils.readDataFile;
 	let source;

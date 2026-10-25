@@ -18,6 +18,20 @@ for (const file of fs.readdirSync(new URL('../scripts/', import.meta.url))) {
 const formats = [
 	['CRLF', (source) => source.replace(/\r?\n/g, '\r\n')],
 	[
+		'inline comments',
+		(source) =>
+			source
+				.split('\n')
+				.map((line) => {
+					if (line.trim().startsWith('#') || !line.includes(';')) return line;
+					return (
+						line.split('#')[0].trimEnd() +
+						'# explanatory comment; with field delimiters'
+					);
+				})
+				.join('\n'),
+	],
+	[
 		'whitespace-only lines and indented comments',
 		(source) =>
 			source
