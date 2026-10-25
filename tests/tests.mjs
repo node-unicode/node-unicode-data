@@ -1,5 +1,11 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { suite, test } from 'node:test';
+import regenerate from 'regenerate';
 import resources from '../data/resources.mjs';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const oldest = resources[0].version;
 const newest = resources.at(-1).version;
@@ -10,6 +16,35 @@ if (!process.env.CI) {
 	await generateData(oldest);
 	await generateData(newest);
 }
+
+// Every `regex.mjs` is built at runtime from `ranges.mjs`; its source must be
+// identical to what Regenerate produces for the same set of code points.
+const assertRegexesMatchRegenerate = async (t, version) => {
+	const root = path.resolve(__dirname, '..', 'output', `unicode-${version}`);
+	let count = 0;
+	for (const type of fs.readdirSync(root)) {
+		const typeDir = path.join(root, type);
+		if (type.startsWith('.') || !fs.statSync(typeDir).isDirectory()) {
+			continue;
+		}
+		for (const name of fs.readdirSync(typeDir)) {
+			const dir = path.join(typeDir, name);
+			if (!fs.existsSync(path.join(dir, 'regex.mjs'))) {
+				continue;
+			}
+			const { default: ranges } = await import(path.join(dir, 'ranges.mjs'));
+			const { default: regex } = await import(path.join(dir, 'regex.mjs'));
+			const set = regenerate();
+			for (const range of ranges) {
+				set.addRange(range.begin, range.end - 1);
+			}
+			t.assert.strictEqual(regex.source, set.toString(), `${type}/${name}`);
+			t.assert.strictEqual(regex.flags, '', `${type}/${name}`);
+			count++;
+		}
+	}
+	t.assert.ok(count > 0, 'found regex.mjs files');
+};
 
 suite(`The generated Unicode ${oldest} js`, () => {
 	test('General_Category/Modifier_Letter should match the snapshot', async (t) => {
@@ -29,6 +64,9 @@ suite(`The generated Unicode ${oldest} js`, () => {
 			`../output/unicode-${oldest}/Bidi_Class/Right_To_Left/ranges.mjs`
 		);
 		t.assert.snapshot(data);
+	});
+	test('every regex.mjs should match Regenerate output', async (t) => {
+		await assertRegexesMatchRegenerate(t, oldest);
 	});
 });
 
@@ -105,5 +143,8 @@ suite(`The generated latest Unicode js`, () => {
 			`../output/unicode-${newest}/Decomposition_Mapping/Isolated/code-points.mjs`
 		);
 		t.assert.snapshot([...map.entries()]);
+	});
+	test('every regex.mjs should match Regenerate output', async (t) => {
+		await assertRegexesMatchRegenerate(t, newest);
 	});
 });

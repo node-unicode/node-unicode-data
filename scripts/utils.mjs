@@ -202,7 +202,7 @@ const writeFiles = (options) => {
 			);
 			writeFileIfChanged(
 				path.resolve(dir, 'regex.mjs'),
-				'export default /' + regenerate(codePoints).toString() + '/;\n',
+				`import ranges from './ranges.mjs';\nimport rangesToRegex from '../../ranges-to-regex.mjs';\n\nexport default rangesToRegex(ranges);\n`,
 			);
 			writeFileIfChanged(
 				path.resolve(dir, 'regex.d.mts'),
