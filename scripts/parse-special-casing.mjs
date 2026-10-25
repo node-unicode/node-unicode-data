@@ -7,37 +7,26 @@ const parseSpecialCasing = async (version) => {
 		return;
 	}
 	for (const line of source.split('\n')) {
-		if (line === '' || line.startsWith('#')) {
+		const record = line.split('#')[0].trim();
+		if (!record) {
 			continue;
 		}
-		const data = line.slice(0, line.lastIndexOf('#')).split('; ');
+		const data = record.split(';').map((field) => field.trim());
 		const from = parseInt(data[0], 16);
-
-		const lowercase =
-			data[1] === ''
-				? []
-				: data[1].split(' ').map((codePoint) => {
-						return parseInt(codePoint, 16);
-					}); // Note: this could be zero or two characters!
-		const titlecase =
-			data[2] === ''
-				? []
-				: data[2].split(' ').map((codePoint) => {
-						return parseInt(codePoint, 16);
-					}); // Note: this could be zero or two characters!
-		const uppercase =
-			data[3] === ''
-				? []
-				: data[3].split(' ').map((codePoint) => {
-						return parseInt(codePoint, 16);
-					}); // Note: this could be zero or two characters!
+		const [lowercase, titlecase, uppercase] = data
+			.slice(1, 4)
+			.map((mapping) =>
+				mapping === ''
+					? []
+					: mapping.split(/\s+/).map((codePoint) => parseInt(codePoint, 16)),
+			);
 
 		// Conditions can contain a language ID defined by BCP 47 and casing contexts
 		// defined in Table 3-17 Context Specification for Casing:
 		// https://www.unicode.org/versions/Unicode16.0.0/core-spec/chapter-3/#G54277
 		// Because the language ID may contain `-`, we let `--` be the separator
 		// between the language ID and the casing contexts.
-		const conditions = data[4].trim().replaceAll(' ', '--');
+		const conditions = (data[4] ?? '').replace(/\s+/g, '--');
 		const storageKeyPostfix = conditions ? '--' + conditions : '';
 		specialCasingMap['Lowercase' + storageKeyPostfix] ??= new Map();
 		specialCasingMap['Lowercase' + storageKeyPostfix].set(from, lowercase);

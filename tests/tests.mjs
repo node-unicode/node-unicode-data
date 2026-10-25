@@ -13,6 +13,9 @@ if (!process.env.CI) {
 	await generateData(newest);
 }
 
+// Format fixtures mock the data reader, so register them after generation.
+await import('./parser-formats.mjs');
+
 suite(`The generated Unicode ${oldest} js`, () => {
 	test('General_Category/Modifier_Letter should match the snapshot', async (t) => {
 		const { default: data } = await import(
