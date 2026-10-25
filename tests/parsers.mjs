@@ -9,6 +9,7 @@ import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
 import parseJoiningType from '../scripts/parse-joining-type.mjs';
 import parseSimpleCaseMapping from '../scripts/parse-simple-case-mapping.mjs';
 import parseNameAliases from '../scripts/parse-name-aliases.mjs';
+import parseLineBreak from '../scripts/parse-line-break.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
@@ -385,6 +386,24 @@ test('Historical Script values use canonical names', async (t) => {
 			t.assert.ok(scripts.Old_Italic.contains(0x10300));
 		}
 	}
+});
+
+test('Early Line_Break data gives unlisted assigned code points AL', async (t) => {
+	for (const version of ['3.1.0', '3.1.1', '3.2.0']) {
+		const lineBreak = await parseLineBreak(version);
+		for (const cp of [0xe000, 0xf8ff, 0xf0000, 0x10fffd]) {
+			const message = `${version}: ${cp.toString(16)}`;
+			t.assert.ok(lineBreak.Alphabetic.contains(cp), message);
+			t.assert.ok(!lineBreak.Unknown.contains(cp), message);
+		}
+		// Unassigned code points keep XX.
+		t.assert.ok(lineBreak.Unknown.contains(0x0378), version);
+		t.assert.ok(lineBreak.Unknown.contains(0xfffff), version);
+	}
+	// Unicode 4.0 gives every unlisted code point XX.
+	const lineBreak = await parseLineBreak('4.0.0');
+	t.assert.ok(lineBreak.Unknown.contains(0xe000));
+	t.assert.ok(!lineBreak.Alphabetic.contains(0xe000));
 });
 
 test('Unicode 3.1.1 uses its corrected property list', async (t) => {
