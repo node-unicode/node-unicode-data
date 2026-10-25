@@ -57,4 +57,4 @@ const encodeRegenerate = (regenerateSet) => {
 	return encodeDeltas(deltas);
 };
 
-export { encodeRanges, encodeRegenerate };
+export { base64enc, encodeRanges, encodeRegenerate };

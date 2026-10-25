@@ -4,25 +4,30 @@ import { fileURLToPath } from 'node:url';
 import zlib from 'node:zlib';
 import jsesc from 'jsesc';
 import regenerate from 'regenerate';
-import { encodeRanges, encodeRegenerate } from './encode-ranges.mjs';
+import { base64enc, encodeRanges, encodeRegenerate } from './encode-ranges.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Brotli-compress `text` and return a JS expression that decompresses it into
+// a Buffer at runtime.
+const brotliInlineBuffer = (text) => {
+	const brotliBuffer = zlib.brotliCompressSync(text, {
+		params: {
+			[zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
+			[zlib.constants.BROTLI_PARAM_LGWIN]:
+				zlib.constants.BROTLI_MAX_WINDOW_BITS,
+			[zlib.constants.BROTLI_PARAM_SIZE_HINT]: Buffer.byteLength(text),
+		},
+	});
+	const str = brotliBuffer.toString('base64');
+	return `brotliDecompressSync(Buffer.from('${str}', 'base64'))`;
+};
 
 const brotliInline = (data) => {
 	if (data instanceof Map) {
 		return `new Map(${brotliInline([...data])})`;
 	}
-	const json = JSON.stringify(data);
-	const brotliBuffer = zlib.brotliCompressSync(json, {
-		params: {
-			[zlib.constants.BROTLI_PARAM_QUALITY]: zlib.constants.BROTLI_MAX_QUALITY,
-			[zlib.constants.BROTLI_PARAM_LGWIN]:
-				zlib.constants.BROTLI_MAX_WINDOW_BITS,
-			[zlib.constants.BROTLI_PARAM_SIZE_HINT]: Buffer.byteLength(json),
-		},
-	});
-	const str = brotliBuffer.toString('base64');
-	return `JSON.parse(brotliDecompressSync(Buffer.from('${str}', 'base64')))`;
+	return `JSON.parse(${brotliInlineBuffer(JSON.stringify(data))})`;
 };
 
 const range = (start, stop) => {
@@ -81,6 +86,30 @@ const samePropertyRuns = (codePointProperties) => {
 		last = element[0] + element[1];
 	}
 	return result;
+};
+
+// Front-code the names in the flat runs produced by `samePropertyRuns`.
+// See static/decode-names.mjs for the format and the decoder.
+const encodeNames = (flatRuns) => {
+	const runs = [];
+	const lines = [];
+	let previous = '';
+	for (let i = 0; i < flatRuns.length; i += 3) {
+		runs.push(flatRuns[i], flatRuns[i + 1]);
+		const name = flatRuns[i + 2];
+		let shared = 0;
+		while (
+			shared < 63 &&
+			shared < name.length &&
+			shared < previous.length &&
+			name.charCodeAt(shared) === previous.charCodeAt(shared)
+		) {
+			shared++;
+		}
+		lines.push(base64enc[shared] + name.slice(shared));
+		previous = name;
+	}
+	return JSON.stringify(runs) + '\n' + lines.join('\n');
 };
 
 // Only write the file if its content has changed.
@@ -304,9 +333,14 @@ const writeFiles = (options) => {
 			// or `bidi-brackets/index.mjs`
 			// or `Names/index.mjs`
 			const flatRuns = samePropertyRuns(auxMap[type]);
-			const output = `import { brotliDecompressSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${brotliInline(
-				flatRuns,
-			)});\n`;
+			const output =
+				type === 'Names'
+					? `import { brotliDecompressSync } from 'node:zlib';\nimport decodeNames from '../decode-names.mjs';\n\nexport default decodeNames(${brotliInlineBuffer(
+							encodeNames(flatRuns),
+						)}.toString());\n`
+					: `import { brotliDecompressSync } from 'node:zlib';\nimport decodePropertyMap from '../decode-property-map.mjs';\n\nexport default decodePropertyMap(${brotliInline(
+							flatRuns,
+						)});\n`;
 			writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
 			writeFileIfChanged(
 				path.resolve(dir, 'index.d.mts'),
