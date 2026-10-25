@@ -235,6 +235,24 @@ test('ArabicShaping fallback derives implicit joining types', async (t) => {
 	}
 });
 
+test('Historical Quick_Check values are not emitted as binary properties', async (t) => {
+	for (const version of ['3.1.0', '3.1.1', '3.2.0', '4.0.0']) {
+		const binary = await parseDerivedNormalizationProperties(version);
+		for (const name of [
+			'NFD_NO',
+			'NFC_NO',
+			'NFC_MAYBE',
+			'NFKD_NO',
+			'NFKC_NO',
+			'NFKC_MAYBE',
+		]) {
+			t.assert.equal(binary[name], undefined, `${version}: ${name}`);
+		}
+		t.assert.ok(binary.Full_Composition_Exclusion.contains(0x340), version);
+		t.assert.ok(binary.Expands_On_NFD.contains(0xc0), version);
+	}
+});
+
 test('Normalization mappings are not emitted as binary properties', async (t) => {
 	for (const version of ['15.1.0', '16.0.0', '17.0.0', '18.0.0']) {
 		const binary = await parseDerivedNormalizationProperties(version);
