@@ -283,6 +283,7 @@ const parseDerivedGeneralCategory = async (version) => {
 };
 
 const parseBlocks = async (version) => {
+	let map;
 	if (
 		version === '3.0.1' ||
 		version === '3.0.0' ||
@@ -292,7 +293,7 @@ const parseBlocks = async (version) => {
 		if (!source) {
 			return;
 		}
-		const map = {};
+		map = {};
 		for (const line of source.trimEnd().split('\n')) {
 			const record = line.split('#')[0].trim();
 			if (!record) {
@@ -307,10 +308,21 @@ const parseBlocks = async (version) => {
 				parseInt(end, 16),
 			);
 		}
-		return map;
 	} else {
-		return await parseBlocksScriptsProperties('blocks', version);
+		map = await parseBlocksScriptsProperties('blocks', version);
 	}
+	if (!map) {
+		return;
+	}
+	// Block=No_Block covers every gap between the explicitly named blocks.
+	const noBlock = regenerate().addRange(0, CODEPOINT_MAX);
+	for (const [block, codePoints] of Object.entries(map)) {
+		if (block !== 'No_Block') {
+			noBlock.remove(codePoints);
+		}
+	}
+	map.No_Block = noBlock;
+	return map;
 };
 
 const parseProperties = async (version) => {

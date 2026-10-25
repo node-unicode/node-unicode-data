@@ -8,11 +8,36 @@ import parseDecompositionMapping from '../scripts/parse-decomposition-mapping.mj
 import parseIndicConjunctBreak from '../scripts/parse-indic-conjunct-break.mjs';
 import parseJoiningType from '../scripts/parse-joining-type.mjs';
 import {
+	parseBlocks,
 	parseDerivedCoreProperties,
 	parseDerivedNormalizationProperties,
 	parseProperties,
 	parseScripts,
 } from '../scripts/parse-blocks-scripts-properties.mjs';
+
+test('Block values cover Unicode, including No_Block gaps', async (t) => {
+	for (const version of ['2.0.14', '3.1.0', '18.0.0']) {
+		const blocks = await parseBlocks(version);
+		t.assert.ok(blocks.No_Block.contains(0x40000), version);
+		t.assert.ok(!blocks.No_Block.contains(0x41), version);
+		const ranges = Object.values(blocks)
+			.flatMap((set) => {
+				const result = [];
+				for (let i = 0; i < set.data.length; i += 2) {
+					result.push(set.data.slice(i, i + 2));
+				}
+				return result;
+			})
+			.sort((a, b) => a[0] - b[0]);
+		let end = 0;
+		for (const [start, next] of ranges) {
+			t.assert.equal(start, end, `${version}: Block must partition Unicode`);
+			end = next;
+		}
+		t.assert.equal(end, 0x110000);
+	}
+	t.assert.equal(await parseBlocks('1.1.5'), undefined);
+});
 
 test('Hangul has pairwise canonical decomposition mappings', async (t) => {
 	for (const version of ['2.0.14', '3.2.0', '18.0.0']) {
