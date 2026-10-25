@@ -102,12 +102,10 @@ const writeFiles = (options) => {
 	const rootDir = path.resolve(__dirname, '..', 'output', 'unicode-' + version);
 
 	/**
-	 * A list of flatten (x, y) pairs,
-	 * where x is a codepoint, y := codepoint(z) - x,
-	 * where z is the BidiMirroringGlyph of character(x) and codepoint(z) > x.
-	 * @type number[]
+	 * Every `[codePoint, Bidi_Mirroring_Glyph codePoint]` mapping, in file order.
+	 * @type [number, number][]
 	 */
-	const bidiMirroringGlyphFlatPairs = [];
+	const bidiMirroringGlyphEntries = [];
 	const auxMap = {};
 	for (const item of Object.keys(map)) {
 		const codePoints = map[item];
@@ -139,12 +137,7 @@ const writeFiles = (options) => {
 			if (type === 'Bidi_Mirroring_Glyph') {
 				const toCodepoint = item.codePointAt(0);
 				codePoints.toArray().forEach((codePoint) => {
-					if (codePoint < toCodepoint) {
-						bidiMirroringGlyphFlatPairs.push(
-							codePoint,
-							toCodepoint - codePoint,
-						);
-					}
+					bidiMirroringGlyphEntries.push([codePoint, toCodepoint]);
 				});
 			} else {
 				if (!auxMap[type]) {
@@ -258,14 +251,36 @@ const writeFiles = (options) => {
 			dirMap[type] = [];
 		}
 		fs.mkdirSync(dir, { recursive: true });
+		/**
+		 * A list of flatten (x, y) pairs for mappings that go both ways,
+		 * where x is a codepoint, y := codepoint(z) - x,
+		 * where z is the BidiMirroringGlyph of character(x) and codepoint(z) > x.
+		 * @type number[]
+		 */
+		const bidiMirroringGlyphFlatPairs = [];
+		// Unicode 3.2 and 4.0 also map U+2A2D to U+2A2C, which maps elsewhere.
+		const oneWayEntries = [];
+		const glyphOf = new Map(bidiMirroringGlyphEntries);
+		for (const [from, to] of bidiMirroringGlyphEntries) {
+			if (glyphOf.get(to) !== from) {
+				oneWayEntries.push([from, to]);
+			} else if (from < to) {
+				bidiMirroringGlyphFlatPairs.push(from, to - from);
+			}
+		}
+		const pairs = `${JSON.stringify(
+			bidiMirroringGlyphFlatPairs,
+		)}.map((v, i, a) => pair(i & 1, a[i ^ 1], v))`;
 		// `Bidi_Mirroring_Glyph/index.mjs`
 		// Note: `Bidi_Mirroring_Glyph` doesn’t have repeated strings; don’t gzip.
 		const output = [
 			`const chr = String.fromCodePoint;`,
 			`const pair = (t, u, v) => [t ? u + v : v, chr(t ? u : u + v)];`,
-			`export default new Map(${JSON.stringify(
-				bidiMirroringGlyphFlatPairs,
-			)}.map((v, i, a) => pair(i & 1, a[i ^ 1], v)));\n`,
+			oneWayEntries.length
+				? `export default new Map([...${pairs}, ...${JSON.stringify(
+						oneWayEntries,
+					)}.map(([u, v]) => [u, chr(v)])]);\n`
+				: `export default new Map(${pairs});\n`,
 		].join('\n');
 		writeFileIfChanged(path.resolve(dir, 'index.mjs'), output);
 		writeFileIfChanged(

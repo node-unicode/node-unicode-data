@@ -62,6 +62,8 @@ const resources = [
 		'case-folding': 'https://unicode.org/Public/3.0-Update1/CaseFolding-2.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.0-Update1/SpecialCasing-3.txt',
+		'bidi-mirroring':
+			'https://unicode.org/Public/3.0-Update1/BidiMirroring-1.txt',
 		'line-break': 'https://unicode.org/Public/3.0-Update/LineBreak-5.txt',
 	},
 	{
@@ -81,6 +83,8 @@ const resources = [
 		'case-folding': 'https://unicode.org/Public/3.1-Update/CaseFolding-3.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.1-Update/SpecialCasing-4.txt',
+		'bidi-mirroring':
+			'https://unicode.org/Public/3.0-Update1/BidiMirroring-1.txt',
 		'line-break': 'https://unicode.org/Public/3.1-Update/LineBreak-6.txt',
 	},
 	{
@@ -104,6 +108,8 @@ const resources = [
 		'case-folding': 'https://unicode.org/Public/3.1-Update1/CaseFolding-4.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.1-Update1/SpecialCasing-5.txt',
+		'bidi-mirroring':
+			'https://unicode.org/Public/3.0-Update1/BidiMirroring-1.txt',
 		'line-break': 'https://unicode.org/Public/3.1-Update/LineBreak-6.txt',
 	},
 	{
@@ -128,6 +134,8 @@ const resources = [
 			'https://unicode.org/Public/3.2-Update/CaseFolding-3.2.0.txt',
 		'special-casing':
 			'https://unicode.org/Public/3.2-Update/SpecialCasing-3.2.0.txt',
+		'bidi-mirroring':
+			'https://unicode.org/Public/3.2-Update/BidiMirroring-3.2.0.txt',
 		'line-break': 'https://unicode.org/Public/3.2-Update/LineBreak-3.2.0.txt',
 		'arabic-shaping':
 			'https://unicode.org/Public/3.2-Update/ArabicShaping-3.2.0.txt',
@@ -154,6 +162,8 @@ const resources = [
 			'https://unicode.org/Public/4.0-Update/CaseFolding-4.0.0.txt',
 		'special-casing':
 			'https://unicode.org/Public/4.0-Update/SpecialCasing-4.0.0.txt',
+		'bidi-mirroring':
+			'https://unicode.org/Public/4.0-Update/BidiMirroring-4.0.0.txt',
 		'line-break': 'https://unicode.org/Public/4.0-Update/LineBreak-4.0.0.txt',
 		'arabic-shaping':
 			'https://unicode.org/Public/4.0-Update/ArabicShaping-4.0.0.txt',
@@ -180,6 +190,8 @@ const resources = [
 			'https://unicode.org/Public/4.0-Update1/CaseFolding-4.0.1.txt',
 		'special-casing':
 			'https://unicode.org/Public/4.0-Update1/SpecialCasing-4.0.1.txt',
+		'bidi-mirroring':
+			'https://unicode.org/Public/4.0-Update/BidiMirroring-4.0.0.txt',
 		'line-break': 'https://unicode.org/Public/4.0-Update1/LineBreak-4.0.1.txt',
 		'arabic-shaping':
 			'https://unicode.org/Public/4.0-Update1/ArabicShaping-4.0.1.txt',
