@@ -306,6 +306,7 @@ const parseBlocks = async (version) => {
 			return;
 		}
 		map = {};
+		const records = [];
 		for (const line of source.trimEnd().split('\n')) {
 			const record = line.split('#')[0].trim();
 			if (!record) {
@@ -316,7 +317,21 @@ const parseBlocks = async (version) => {
 				.map((field) => field.trim());
 			const canonicalBlockName = looseMatch('Block', blockName).value;
 			map[canonicalBlockName] ??= regenerate();
-			map[canonicalBlockName].addRange(parseInt(start, 16), parseInt(end, 16));
+			records.push({
+				block: canonicalBlockName,
+				start: parseInt(start, 16),
+				end: parseInt(end, 16),
+			});
+		}
+		// The Unicode 2.0 blocks file lists FE70..FEFF as Arabic Presentation
+		// Forms-B and FEFF..FEFF as Specials. Apply narrower ranges last so the
+		// more specific entry wins, as the corrected Unicode 2.1.9 file does.
+		records.sort((a, b) => b.end - b.start - (a.end - a.start));
+		for (const { block, start, end } of records) {
+			for (const codePoints of Object.values(map)) {
+				codePoints.removeRange(start, end);
+			}
+			map[block].addRange(start, end);
 		}
 	} else {
 		map = await parseBlocksScriptsProperties('blocks', version);
