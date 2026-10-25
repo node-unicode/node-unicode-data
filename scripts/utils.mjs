@@ -215,22 +215,24 @@ const writeFiles = (options) => {
 				symbolsFileContent = `export default ${jsesc(codePointsAsArray.map((cp) => String.fromCodePoint(cp)))};\n`;
 			}
 		} else {
-			const symbols = new Map();
-			for (let [from, to] of codePoints) {
-				from = String.fromCodePoint(from);
-				if (Array.isArray(to)) {
-					to = String.fromCodePoint.apply(null, to);
-				} else {
-					to = String.fromCodePoint(to);
-				}
-				symbols.set(from, to);
-			}
 			if (codePoints.size < 10) {
+				const symbols = new Map();
+				for (let [from, to] of codePoints) {
+					from = String.fromCodePoint(from);
+					if (Array.isArray(to)) {
+						to = String.fromCodePoint.apply(null, to);
+					} else {
+						to = String.fromCodePoint(to);
+					}
+					symbols.set(from, to);
+				}
 				codePointsFileContent = `export default ${jsesc(codePoints)};\n`;
 				symbolsFileContent = `export default ${jsesc(symbols)};\n`;
 			} else {
 				codePointsFileContent = `import { brotliDecompressSync } from 'node:zlib';\n\nexport default ${brotliInline(codePoints)};\n`;
-				symbolsFileContent = `import { brotliDecompressSync } from 'node:zlib';\n\nexport default ${brotliInline(symbols)};\n`;
+				// The symbols map is derived from the code points map at runtime
+				// rather than shipped as a second copy of the same data.
+				symbolsFileContent = `import codePoints from './code-points.mjs';\nimport mappingToSymbols from '../../mapping-to-symbols.mjs';\n\nexport default mappingToSymbols(codePoints);\n`;
 			}
 			if (
 				(type === 'Case_Folding' && item === 'F') ||

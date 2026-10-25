@@ -351,6 +351,8 @@ const generateData = async (version) => {
 		'decode-property-map.d.mts',
 		'decode-ranges.mjs',
 		'decode-ranges.d.mts',
+		'mapping-to-symbols.mjs',
+		'mapping-to-symbols.d.mts',
 	];
 	for (const file of staticFiles) {
 		fs.copyFileSync(
