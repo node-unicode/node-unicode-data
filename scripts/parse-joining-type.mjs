@@ -35,8 +35,10 @@ const parseDerivedJoiningType = (source) => {
 	}
 	// Code points that aren’t listed have the default value `Non_Joining`.
 	const nonJoining = regenerate().addRange(0, 0x10ffff);
-	for (const codePoints of Object.values(map)) {
-		nonJoining.remove(codePoints);
+	for (const [joiningType, codePoints] of Object.entries(map)) {
+		if (joiningType !== 'Non_Joining') {
+			nonJoining.remove(codePoints);
+		}
 	}
 	map.Non_Joining = nonJoining;
 	return map;
