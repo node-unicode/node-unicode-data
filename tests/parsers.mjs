@@ -187,6 +187,29 @@ test('Binary property aliases use canonical names', async (t) => {
 	}
 });
 
+test('Historical White_space uses the canonical White_Space name', async (t) => {
+	for (const version of [
+		'2.0.14',
+		'2.1.2',
+		'2.1.8',
+		'2.1.9',
+		'3.0.0',
+		'3.0.1',
+		'3.1.0',
+		'3.1.1',
+	]) {
+		const properties = await parseProperties(version);
+		t.assert.ok(properties.White_Space.contains(0x20));
+		t.assert.ok(properties.White_Space.contains(0x9));
+		t.assert.equal(properties.White_space, undefined);
+		// The legacy Space property is a distinct set, despite its modern alias.
+		if (properties.Space) {
+			t.assert.ok(properties.Space.contains(0x20));
+			t.assert.ok(!properties.Space.contains(0x9));
+		}
+	}
+});
+
 test('Historical Script values use canonical names', async (t) => {
 	for (const version of ['3.1.0', '3.1.1', '3.2.0', '4.0.0']) {
 		const scripts = await parseScripts(version);

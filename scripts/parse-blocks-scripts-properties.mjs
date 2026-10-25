@@ -7,8 +7,14 @@ import valueAliases from 'unicode-property-value-aliases';
 const categoryAliases = valueAliases.get('General_Category');
 const CODEPOINT_MAX = 0x10ffff;
 
+const canonicalPropertyNames = new Map(
+	[...propertyAliases.values()].map((name) => [name.toLowerCase(), name]),
+);
+
 const findCanonicalName = (shortName) => {
-	const canonicalName = propertyAliases.get(shortName);
+	const canonicalName =
+		propertyAliases.get(shortName) ??
+		canonicalPropertyNames.get(shortName.toLowerCase());
 	if (!canonicalName) {
 		return shortName;
 	}
