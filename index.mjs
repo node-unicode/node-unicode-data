@@ -338,9 +338,13 @@ const generateData = async (version) => {
 	);
 	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/index.d.mts`),
-		Object.keys(dirMap)
-			.map((key) => `export const ${key}: string[];`)
-			.join('\n'),
+		[
+			'declare const data: {',
+			...Object.keys(dirMap).map((key) => `\t${key}: string[];`),
+			'};',
+			'export default data;',
+			'',
+		].join('\n'),
 	);
 	fs.writeFileSync(
 		path.resolve(__dirname, `output/unicode-${version}/package.json`),
