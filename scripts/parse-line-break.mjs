@@ -32,6 +32,10 @@ const parseLineBreak = async (version) => {
 		/Assigned characters that are not listed explicitly are given the value\s*#?\s*"(\w+)"/.exec(
 			source,
 		)?.[1];
+	// Unicode 3.0 lists ranges as UnicodeData does, e.g.
+	// `3400;ID;<CJK Ideograph Extension A, First>` and
+	// `4DB5;ID;<CJK Ideograph Extension A, Last>`.
+	let rangeStart;
 	const lines = source.split('\n');
 	for (const line of lines) {
 		const trimmed = line.trim();
@@ -41,10 +45,22 @@ const parseLineBreak = async (version) => {
 		const data = trimmed.split(';');
 		const value = data[1].split('#')[0].trim();
 		const canonicalName = findCanonicalName(value);
-		const [from, to = from] = data[0]
+		const name = data[2]?.split('#')[0].trim() ?? '';
+		let [from, to = from] = data[0]
 			.trim()
 			.split('..')
 			.map((codePoint) => parseInt(codePoint, 16));
+		if (/^<.+, First>$/.test(name)) {
+			rangeStart = from;
+			continue;
+		}
+		if (/^<.+, Last>$/.test(name)) {
+			if (rangeStart === undefined) {
+				throw new Error(`Range end without a start: ${line}`);
+			}
+			from = rangeStart;
+			rangeStart = undefined;
+		}
 		map[canonicalName] ??= regenerate();
 		map['Unknown'].removeRange(from, to);
 		map[canonicalName].addRange(from, to);

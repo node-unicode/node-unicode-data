@@ -406,6 +406,19 @@ test('Early Line_Break data gives unlisted assigned code points AL', async (t) =
 	t.assert.ok(!lineBreak.Alphabetic.contains(0xe000));
 });
 
+test('Unicode 3.0 Line_Break data expands First/Last ranges', async (t) => {
+	for (const version of ['3.0.0', '3.0.1']) {
+		const lineBreak = await parseLineBreak(version);
+		for (const cp of [0x3400, 0x3401, 0x4db5, 0x4e00, 0x9fa5, 0xac00, 0xd7a3]) {
+			t.assert.ok(lineBreak.Ideographic.contains(cp), `${version}: ${cp}`);
+		}
+		t.assert.ok(lineBreak.Surrogate.contains(0xdb80), version);
+		t.assert.ok(lineBreak.Ambiguous.contains(0xe001), version);
+		t.assert.ok(lineBreak.Contingent_Break.contains(0xfffc), version);
+		t.assert.ok(lineBreak.Unknown.contains(0x0378), version);
+	}
+});
+
 test('Unicode 3.1.1 uses its corrected property list', async (t) => {
 	const v310 = await parseProperties('3.1.0');
 	const v311 = await parseProperties('3.1.1');
