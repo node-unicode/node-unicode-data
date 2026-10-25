@@ -172,6 +172,20 @@ test('Unicode 1.1.5 assigns the Unified Han range represented by U+4E00', async 
 	t.assert.ok(!categories.Assigned.contains(0x9fa6));
 });
 
+test('Unicode 1.1.5 assigns the unlisted CJK compatibility ideographs', async (t) => {
+	const categories = await parseDerivedGeneralCategory('1.1.5');
+	for (const cp of [0xf900, 0xfa0e, 0xfa2d]) {
+		t.assert.ok(categories.Other_Letter.contains(cp), cp.toString(16));
+		t.assert.ok(categories.Letter.contains(cp), cp.toString(16));
+		t.assert.ok(categories.Assigned.contains(cp), cp.toString(16));
+		t.assert.ok(!categories.Unassigned.contains(cp), cp.toString(16));
+		t.assert.ok(!categories.Other.contains(cp), cp.toString(16));
+	}
+	for (const cp of [0xf8ff, 0xfa2e]) {
+		t.assert.ok(categories.Unassigned.contains(cp), cp.toString(16));
+	}
+});
+
 test('Bidi class applies historical and current unassigned defaults', async (t) => {
 	for (const version of [
 		'3.0.0',
