@@ -147,6 +147,22 @@ test('Block names exclude inline comments in modern and legacy formats', async (
 	}
 });
 
+test('Repeated legacy block records accumulate without filling their gaps', async (t) => {
+	t.mock.method(
+		utils,
+		'readDataFile',
+		() => 'FEFF; FEFF; Specials\nFFF0; FFFD; Specials\n',
+	);
+	const blocks = await parseBlocks('3.0.1');
+	t.assert.deepEqual(blocks.Specials.toArray(), [
+		0xfeff,
+		...Array.from({ length: 14 }, (_, i) => 0xfff0 + i),
+	]);
+	t.assert.ok(!blocks.No_Block.contains(0xfeff));
+	t.assert.ok(!blocks.No_Block.contains(0xfffd));
+	t.assert.ok(blocks.No_Block.contains(0xff00));
+});
+
 test('Name aliases ignore inline comments without splitting alias groups', async (t) => {
 	t.mock.method(
 		utils,
