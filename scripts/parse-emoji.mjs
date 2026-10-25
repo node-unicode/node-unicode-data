@@ -8,13 +8,14 @@ const parseEmoji = async (version) => {
 	const propertyMap = new Map();
 	const lines = source.split('\n');
 	for (const line of lines) {
-		if (!line || /^#/.test(line)) {
+		const record = line.split('#')[0].trim();
+		if (!record) {
 			continue;
 		}
-		const data = line.trim().split(' ; ');
+		const data = record.split(';').map((field) => field.trim());
 		const charRange = data[0].replace('..', '-').trim();
 		const rangeParts = charRange.split('-');
-		const property = data[1].split('#')[0].trim();
+		const property = data[1];
 		if (rangeParts.length === 2) {
 			utils
 				.range(parseInt(rangeParts[0], 16), parseInt(rangeParts[1], 16))
