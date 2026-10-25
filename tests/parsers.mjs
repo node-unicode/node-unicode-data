@@ -12,6 +12,7 @@ import parseNameAliases from '../scripts/parse-name-aliases.mjs';
 import {
 	parseBlocks,
 	parseDerivedCoreProperties,
+	parseDerivedGeneralCategory,
 	parseDerivedNormalizationProperties,
 	parseProperties,
 	parseScripts,
@@ -149,6 +150,17 @@ test('Algorithmic ranges have individual formal names', async (t) => {
 	]) {
 		t.assert.ok(names[name]?.contains(cp), name);
 	}
+});
+
+test('Unicode 1.1.5 assigns the Unified Han range represented by U+4E00', async (t) => {
+	const categories = await parseDerivedGeneralCategory('1.1.5');
+	for (const cp of [0x4e00, 0x4e01, 0x9fa5]) {
+		t.assert.ok(categories.Other_Letter.contains(cp), cp.toString(16));
+		t.assert.ok(categories.Assigned.contains(cp), cp.toString(16));
+		t.assert.ok(!categories.Unassigned.contains(cp), cp.toString(16));
+	}
+	t.assert.ok(categories.Unassigned.contains(0x9fa6));
+	t.assert.ok(!categories.Assigned.contains(0x9fa6));
 });
 
 test('Bidi class applies historical and current unassigned defaults', async (t) => {

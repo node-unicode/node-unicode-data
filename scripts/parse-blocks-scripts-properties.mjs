@@ -182,6 +182,13 @@ const parseDerivedGeneralCategory = async (version) => {
 		let flag = false;
 		let first = 0;
 		let lastCodePoint = -1;
+		// Unicode 1.1.5 lists only U+4E00 as a representative of the Unified
+		// Han ideographs. The Unicode 1.1 Han cross-reference table assigns the
+		// whole 4E00..9FA5 range:
+		// https://www.unicode.org/Public/1.1-Update/CJKXREF.TXT
+		const representativeRangeEnds = new Map([
+			['<CJK IDEOGRAPH REPRESENTATIVE>', 0x9fa5],
+		]);
 		// http://unicode.org/reports/tr44/#GC_Values_Table
 		// http://unicode.org/reports/tr18/#Categories
 		for (const line of lines) {
@@ -192,6 +199,7 @@ const parseDerivedGeneralCategory = async (version) => {
 			const data = trimmed.split(';');
 			const codePoint = parseInt(data[0], 16);
 			const name = data[1];
+			const recordEnd = representativeRangeEnds.get(name) ?? codePoint;
 			const generalCategory = data[2];
 			const categories = [
 				categoryAliases.get(generalCategory),
@@ -230,11 +238,11 @@ const parseDerivedGeneralCategory = async (version) => {
 					first = codePoint;
 				} else {
 					for (const category of categories) {
-						categoryMap[category].add(codePoint);
+						categoryMap[category].addRange(codePoint, recordEnd);
 					}
 				}
 			}
-			lastCodePoint = codePoint;
+			lastCodePoint = recordEnd;
 		}
 
 		if (lastCodePoint < CODEPOINT_MAX) {
