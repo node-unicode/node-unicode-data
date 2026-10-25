@@ -18,6 +18,9 @@ if (!process.env.CI) {
 	await generateData(newest);
 }
 
+// Format fixtures mock the data reader, so register them after generation.
+await import('./parser-formats.mjs');
+
 // Every mapping `symbols.mjs` must equal its `code-points.mjs` with each code
 // point replaced by the corresponding symbol.
 const assertSymbolsMatchCodePoints = async (t, version) => {
