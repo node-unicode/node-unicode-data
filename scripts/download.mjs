@@ -56,6 +56,7 @@ const TYPES = [
 	'derived-binary-properties',
 	'derived-core-properties',
 	'derived-general-category',
+	'derived-bidi-class',
 	'derived-normalization-properties',
 	'composition-exclusions',
 	'case-folding',

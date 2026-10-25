@@ -108,6 +108,8 @@ const resources = [
 			'https://unicode.org/Public/3.2-Update/DerivedCoreProperties-3.2.0.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/3.2-Update/extracted/DerivedGeneralCategory-3.2.0.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/3.2-Update/extracted/DerivedBidiClass-3.2.0.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/3.2-Update/DerivedNormalizationProps-3.2.0.txt',
 		'case-folding':
@@ -130,6 +132,8 @@ const resources = [
 			'https://unicode.org/Public/4.0-Update/DerivedCoreProperties-4.0.0.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/4.0-Update/extracted/DerivedGeneralCategory-4.0.0.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/4.0-Update/extracted/DerivedBidiClass-4.0.0.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/4.0-Update/DerivedNormalizationProps-4.0.0.txt',
 		'case-folding':
@@ -152,6 +156,8 @@ const resources = [
 			'https://unicode.org/Public/4.0-Update1/DerivedCoreProperties-4.0.1.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/4.0-Update1/extracted/DerivedGeneralCategory-4.0.1.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/4.0-Update1/extracted/DerivedBidiClass-4.0.1.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/4.0-Update1/DerivedNormalizationProps-4.0.1.txt',
 		'case-folding':
@@ -174,6 +180,8 @@ const resources = [
 			'https://unicode.org/Public/4.1.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/4.1.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/4.1.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/4.1.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -204,6 +212,8 @@ const resources = [
 			'https://unicode.org/Public/5.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/5.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/5.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/5.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -234,6 +244,8 @@ const resources = [
 			'https://unicode.org/Public/5.1.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/5.1.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/5.1.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/5.1.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -264,6 +276,8 @@ const resources = [
 			'https://unicode.org/Public/5.2.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/5.2.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/5.2.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/5.2.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -296,6 +310,8 @@ const resources = [
 			'https://unicode.org/Public/6.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/6.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/6.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/6.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -333,6 +349,8 @@ const resources = [
 			'https://unicode.org/Public/6.1.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/6.1.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/6.1.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/6.1.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -370,6 +388,8 @@ const resources = [
 			'https://unicode.org/Public/6.2.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/6.2.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/6.2.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/6.2.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -407,6 +427,8 @@ const resources = [
 			'https://unicode.org/Public/6.3.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/6.3.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/6.3.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/6.3.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -445,6 +467,8 @@ const resources = [
 			'https://unicode.org/Public/7.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/7.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/7.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/7.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -483,6 +507,8 @@ const resources = [
 			'https://unicode.org/Public/8.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/8.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/8.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/8.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -521,6 +547,8 @@ const resources = [
 			'https://unicode.org/Public/9.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/9.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/9.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/9.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -559,6 +587,8 @@ const resources = [
 			'https://unicode.org/Public/10.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/10.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/10.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/10.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -599,6 +629,8 @@ const resources = [
 			'https://unicode.org/Public/11.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/11.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/11.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/11.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -649,6 +681,8 @@ const resources = [
 			'https://unicode.org/Public/12.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/12.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/12.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/12.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -699,6 +733,8 @@ const resources = [
 			'https://unicode.org/Public/12.1.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/12.1.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/12.1.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/12.1.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -749,6 +785,8 @@ const resources = [
 			'https://unicode.org/Public/13.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/13.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/13.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/13.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -799,6 +837,8 @@ const resources = [
 			'https://unicode.org/Public/14.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/14.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/14.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/14.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -849,6 +889,8 @@ const resources = [
 			'https://unicode.org/Public/15.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/15.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/15.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/15.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -899,6 +941,8 @@ const resources = [
 			'https://unicode.org/Public/15.1.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/15.1.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/15.1.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/15.1.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -949,6 +993,8 @@ const resources = [
 			'https://unicode.org/Public/16.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/16.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/16.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/16.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -999,6 +1045,8 @@ const resources = [
 			'https://unicode.org/Public/17.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/17.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/17.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/17.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
@@ -1049,6 +1097,8 @@ const resources = [
 			'https://unicode.org/Public/18.0.0/ucd/DerivedCoreProperties.txt',
 		'derived-general-category':
 			'https://unicode.org/Public/18.0.0/ucd/extracted/DerivedGeneralCategory.txt',
+		'derived-bidi-class':
+			'https://unicode.org/Public/18.0.0/ucd/extracted/DerivedBidiClass.txt',
 		'derived-normalization-properties':
 			'https://unicode.org/Public/18.0.0/ucd/DerivedNormalizationProps.txt',
 		'composition-exclusions':
