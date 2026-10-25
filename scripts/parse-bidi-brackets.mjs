@@ -19,12 +19,13 @@ const parseBidiBrackets = async (version) => {
 	}
 	const lines = source.split('\n');
 	for (const line of lines) {
-		if (/^#/.test(line) || !/;\x20/.test(line)) {
+		const record = line.split('#')[0].trim();
+		if (!record) {
 			continue;
 		}
-		const data = line.trim().split(';');
+		const data = record.split(';').map((field) => field.trim());
 		const charRange = data[0].replace('..', '-').trim();
-		let item = data[2].split('#')[0].trim();
+		let item = data[2];
 		item = bidiBracketMap.get(item);
 		const rangeParts = charRange.split('-');
 		if (rangeParts.length === 2) {
